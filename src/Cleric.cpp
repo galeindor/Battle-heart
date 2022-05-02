@@ -24,7 +24,3 @@ void Cleric::hitPlayer()
 	m_hpBar.lowerHealth(1);
 }
 
-bool Cleric::handleCollision(sf::Vector2f location)
-{
-	return m_sprite.getGlobalBounds().contains(location);
-}

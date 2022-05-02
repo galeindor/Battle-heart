@@ -4,4 +4,5 @@
                                               "GameController.cpp"
                                               "Cleric.cpp"
                                               "Player.cpp"
+                                              "Knight.cpp"
                                               )

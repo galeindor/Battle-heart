@@ -13,6 +13,7 @@ public:
 
 	bool moveValidator(sf::Vector2f dest);
 	void movePlayer(sf::Vector2f direction, float delta);
+	bool checkCollision(sf::Vector2f loc);
 
 protected:
 	sf::Vector2f m_loc;

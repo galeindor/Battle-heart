@@ -3,6 +3,7 @@
 #include "Resources.h"
 #include "HealthBar.h"
 #include "Cleric.h"
+#include "Knight.h"
 
 using std::vector;
 
@@ -16,14 +17,18 @@ public:
 	void resetBoard();
 
 private:
-	void movePlayer(sf::Vector2f dest);
+	void movePlayer(int playerIndex, sf::Vector2f dest);
 	void drawGame();
 	void MouseClick(sf::Vector2f location);
 
 	sf::RenderWindow m_window;
 	sf::Sprite m_bg;
 	sf::Sprite m_selected;
-	Cleric m_cleric;
+
+	std::vector < std::unique_ptr < Player > > m_players;
+
+	//Cleric m_cleric;
+	//Knight m_knight;
 
 	bool m_charSelected = false;
 

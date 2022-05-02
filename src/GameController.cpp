@@ -2,11 +2,14 @@
 #include "GameController.h"
 
 GameController::GameController()
-	:m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "BattleHeart") , m_cleric(sf::Vector2f(200,200))
+	:m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Heart")
 {
 	m_bg.setTexture(*Resources::instance().getBackground(0));
 	m_bg.setColor(sf::Color(255, 255, 255, 255));
 	m_selected.setTexture(*Resources::instance().getTexture(_select));
+
+	m_players.push_back(std::make_unique < Cleric >(sf::Vector2f(200, 200)));
+	m_players.push_back(std::make_unique < Knight >(sf::Vector2f(300, 300)));
 
 	auto origin = m_selected.getOrigin();
 	m_selected.setOrigin( origin.x + 45 , origin.y - 20);
@@ -52,39 +55,43 @@ void GameController::MouseClick(sf::Vector2f location)
 {
 
 	static bool stopCondition = false;
-	if (m_cleric.handleCollision(location))
+	for (int i= 0; i< m_players.size(); i++)
 	{
-		m_selected.setPosition(m_cleric.getPosition().x , m_cleric.getPosition().y);
-		m_charSelected = true;
 
-		while (!stopCondition)
+		if (m_players[i]->checkCollision(location))
 		{
+			m_selected.setPosition(m_players[i]->getPosition().x, m_players[i]->getPosition().y);
+			m_charSelected = true;
 
-			drawGame();
-
-			for (auto event = sf::Event{}; m_window.waitEvent(event) && !stopCondition; )
+			while (!stopCondition)
 			{
-				switch (event.type)
+
+				drawGame();
+
+				for (auto event = sf::Event{}; m_window.waitEvent(event) && !stopCondition; )
 				{
-
-				case sf::Event::Closed:
-					m_window.close();
-					break;
-
-				case sf::Event::MouseButtonPressed:
-
-					auto mouseLoc = m_window.mapPixelToCoords(
-						{ event.mouseButton.x, event.mouseButton.y });
-
-					m_selected.setPosition(mouseLoc);
-
-					if (!stopCondition)
+					switch (event.type)
 					{
-						stopCondition = true;
-						movePlayer(mouseLoc);
-						m_charSelected = false;
+
+					case sf::Event::Closed:
+						m_window.close();
+						break;
+
+					case sf::Event::MouseButtonPressed:
+
+						auto mouseLoc = m_window.mapPixelToCoords(
+							{ event.mouseButton.x, event.mouseButton.y });
+
+						m_selected.setPosition(mouseLoc);
+
+						if (!stopCondition)
+						{
+							stopCondition = true;
+							movePlayer( i , mouseLoc );
+							m_charSelected = false;
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
@@ -103,22 +110,25 @@ void GameController::drawGame()
 	if(m_charSelected)
 		m_window.draw(m_selected);
 
-	m_cleric.draw(m_window);
+	for (int i = 0; i < m_players.size(); i++)
+	{
+		m_players[i]->draw(m_window);
+	}
 	m_window.display();
 }
 
 //=======================================================================================
 
-void GameController::movePlayer(sf::Vector2f dest)
+void GameController::movePlayer(int playerIndex , sf::Vector2f dest)
 {
 	sf::Clock clock;
 
-	auto direction = dest - m_cleric.getPosition();
+	auto direction = dest - m_players[playerIndex]->getPosition();
 
-	while (m_cleric.moveValidator(dest))
+	while (m_players[playerIndex]->moveValidator(dest))
 	{
 		auto delta = clock.restart().asSeconds();
-		m_cleric.movePlayer(direction, delta);
+		m_players[playerIndex]->movePlayer(direction, delta);
 		drawGame();
 	}
 }

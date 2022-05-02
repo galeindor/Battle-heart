@@ -15,10 +15,14 @@ void Player::draw(sf::RenderWindow& window)
 	window.draw(m_sprite);
 }
 
+//==========================================================
+
 sf::Vector2f Player::getPosition() const
 {
 	return m_sprite.getPosition();
 }
+
+//==========================================================
 
 bool Player::moveValidator(sf::Vector2f dest)
 {
@@ -26,9 +30,19 @@ bool Player::moveValidator(sf::Vector2f dest)
 	return (std::abs(m_sprite.getPosition().x - dest.x) > epsilon || std::abs(m_sprite.getPosition().y - dest.y) > epsilon);
 }
 
+//==========================================================
+
 void Player::movePlayer(sf::Vector2f direction, float delta)
 {
-	auto speedPerSecond = 0.5f;
+	float distance = std::sqrt(std::pow(direction.x, 2) + std::pow(direction.y, 2));
+	auto speedPerSecond = 140.f / distance ;
 	m_sprite.move(direction * speedPerSecond * delta);
 	m_hpBar.setPosition(m_sprite.getPosition());
+}
+
+//==========================================================
+
+bool Player::checkCollision(sf::Vector2f location)
+{
+	return m_sprite.getGlobalBounds().contains(location);
 }
