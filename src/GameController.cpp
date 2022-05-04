@@ -65,7 +65,7 @@ void GameController::MouseClick(sf::Vector2f location)
 
 			while (!stopCondition)
 			{
-
+				m_selected.setColor(sf::Color::White);
 				drawGame();
 
 				for (auto event = sf::Event{}; m_window.waitEvent(event) && !stopCondition; )
@@ -84,15 +84,28 @@ void GameController::MouseClick(sf::Vector2f location)
 
 						m_selected.setPosition(mouseLoc);
 
+						auto found = false;
 						if (!stopCondition)
 						{
 							stopCondition = true;
-							movePlayer( i , mouseLoc );
-							m_charSelected = false;
+							for (int i = 0; i < m_players.size(); i++)
+							{
+								if (m_players[i]->checkCollision(mouseLoc))
+								{
+									m_selected.setPosition(m_players[i]->getPosition());
+									m_selected.setColor(sf::Color::Magenta);
+									drawGame();
+									found = true;
+									break;
+								}
+							}
+							if(!found)
+								movePlayer( i , mouseLoc );
 						}
 						break;
 					}
 				}
+				m_charSelected = false;
 			}
 		}
 	}
