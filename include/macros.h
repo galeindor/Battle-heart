@@ -8,7 +8,7 @@ constexpr auto SPACING = 75;
 constexpr auto WINDOW_WIDTH = 1400;
 constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto HEIGHT_LIMIT = 200;
-
+constexpr auto CUT_CORNERS = 50;
 constexpr auto DIRECTIONS = 4;
 constexpr auto NUM_OF_PICS = 3;
 constexpr auto NUM_OF_BG = 2;

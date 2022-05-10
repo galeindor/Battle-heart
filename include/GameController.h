@@ -17,9 +17,11 @@ public:
 	void resetBoard();
 
 private:
-	void movePlayer(int playerIndex, sf::Vector2f dest);
+	void updatePlayer(int playerIndex, sf::Vector2f dest);
 	void drawGame();
 	void MouseClick(sf::Vector2f location);
+
+	bool outOfRange(sf::Vector2f location);
 
 	sf::RenderWindow m_window;
 	sf::Sprite m_bg;

@@ -10,17 +10,10 @@ Cleric::Cleric(const sf::Vector2f pos)
 	m_sprite.setOrigin(size.x/2, size.y/2);
 }
 
-
-/*
-void Cleric::draw(sf::RenderWindow& window)
-{
-	m_hpBar.draw(window);
-	window.draw(m_sprite);
-}
-*/
-
 void Cleric::hitPlayer()
 {
 	m_hpBar.lowerHealth(1);
 }
+
+
 
