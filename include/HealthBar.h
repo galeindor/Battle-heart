@@ -9,7 +9,7 @@ public:
 	HealthBar(sf::Vector2f pos);
 	bool lowerHealth(int amount);
 	void draw(sf::RenderWindow& window);
-	void setPosition(const sf::Vector2f newLoc);
+	void setPosition(const sf::Vector2f pos);
 
 private:
 

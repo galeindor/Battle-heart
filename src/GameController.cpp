@@ -40,11 +40,8 @@ void GameController::run()
 				switch (event.mouseButton.button)
 				{
 				case sf::Mouse::Button::Left:
-					if (!inProgress)
-					{
-						inProgress = true;
-						MouseClick(location);	
-					}
+					inProgress = true;
+					MouseClick(location);	
 					break;
 				}
 				break;

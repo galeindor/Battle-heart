@@ -2,7 +2,7 @@
 #include "HealthBar.h"
 
 HealthBar::HealthBar(sf::Vector2f pos)
-	:m_hp(MAX_HEALTH)
+	: m_hp(MAX_HEALTH)
 {
 	auto size = sf::Vector2f(BAR_WIDTH, 15);
 	auto origin = m_bar.getOrigin();
@@ -48,8 +48,8 @@ void HealthBar::draw(sf::RenderWindow& window)
 
 //=====================================================================
 
-void HealthBar::setPosition(const sf::Vector2f newLoc)
+void HealthBar::setPosition(const sf::Vector2f pos)
 {
-	m_bar.setPosition(newLoc);
-	m_currHealth.setPosition(newLoc);
+	m_bar.setPosition(pos);
+	m_currHealth.setPosition(pos);
 }
