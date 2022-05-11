@@ -1,0 +1,2 @@
+
+1. fix movement - no waiting for player to stop moving

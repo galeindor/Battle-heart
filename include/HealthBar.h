@@ -13,7 +13,7 @@ public:
 
 private:
 
-	int m_hp; // maximum number of hitpoints
+	float m_hp; // maximum number of hitpoints
 	sf::RectangleShape m_bar; 
 	sf::RectangleShape m_currHealth;
 
