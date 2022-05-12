@@ -1,7 +1,7 @@
 
-#include "GameController.h"
+#include "Controller.h"
 
-GameController::GameController()
+Controller::Controller()
 	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Heart")
 {
 	m_bg.setTexture(*Resources::instance().getBackground(0));
@@ -9,7 +9,7 @@ GameController::GameController()
 }
 
 //=======================================================================================
-void GameController::run()
+void Controller::run()
 {
 	float deltaTime = 0.0f;
 	auto inProgress = false;
@@ -45,14 +45,14 @@ void GameController::run()
 	}
 }
 
-void GameController::update(float deltaTime)
+void Controller::update(float deltaTime)
 {
 	this->m_board.updateBoard(deltaTime, this->m_charSelected);
 }
 
 //=======================================================================================
 
-void GameController::handleMouseClick(sf::Vector2f location)
+void Controller::handleMouseClick(sf::Vector2f location)
 {
 	if (!this->m_charSelected)
 		this->m_charSelected = this->m_board.handleFirstClick(location);
@@ -66,7 +66,7 @@ void GameController::handleMouseClick(sf::Vector2f location)
 
 //=======================================================================================
 
-void GameController::drawGame()
+void Controller::drawGame()
 {
 	m_window.clear(sf::Color::White);
 	m_window.draw(m_bg);
@@ -78,7 +78,7 @@ void GameController::drawGame()
 
 //=======================================================================================
 /*
-void GameController::updatePlayer(int playerIndex , sf::Vector2f dest)
+void Controller::updatePlayer(int playerIndex , sf::Vector2f dest)
 {
 	sf::Clock clock;
 

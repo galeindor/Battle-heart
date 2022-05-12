@@ -6,10 +6,10 @@
 #include "Knight.h"
 using namespace std;
 
-class GameBoard 
+class Board 
 {
 public:
-	GameBoard();
+	Board();
 	bool handleFirstClick(sf::Vector2f location);
 	void handleSecondClick(sf::Vector2f location);
 	void updateBoard(float deltaTime, bool charSelected);
@@ -18,7 +18,7 @@ public:
 	/*void nextLevel();
 	void resetBoard();*/
 
-	bool outOfRange(sf::Vector2f location);
+	sf::Vector2f adjustLocation(sf::Vector2f location); // move the location inside board boundries
 	bool checkMoving();
 private:
 	vector < unique_ptr < Player > > m_players; // move to board
