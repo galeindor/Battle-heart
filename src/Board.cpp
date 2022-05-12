@@ -24,19 +24,16 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 
 bool Board::handleFirstClick(sf::Vector2f location)
 {
-	bool charSelected = false;
-
 	for (int index = 0; index < m_players.size(); index++)
 	{
 		if (m_players[index]->checkCollision(location))
 		{
-			charSelected = true;
 			this->m_selectedPlayerIndex = index;
-			break;
+			return true;
 		}
 	}
 
-	return charSelected;
+	return false;
 }
 
 //==========================================================
