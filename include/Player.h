@@ -10,13 +10,16 @@ public:
 
 	sf::Vector2f getPosition() const;
 	void draw(sf::RenderWindow& window);
-
-	bool moveValidator(sf::Vector2f dest);
-	void movePlayer(sf::Vector2f direction, float delta);
 	bool checkCollision(sf::Vector2f loc);
+	bool moveValidator();
 
+	void updatePlayer(float deltaTime);
+	void movePlayer(float deltaTime);
+	void setDestination(sf::Vector2f dest) { this->m_dest = dest; }
+	bool getIsMoving() const { return this->m_isMoving; }
 protected:
-	sf::Vector2f m_loc;
+	bool m_isMoving;
+	sf::Vector2f m_dest;
 	sf::Sprite m_sprite;
 	HealthBar m_hpBar;
 };

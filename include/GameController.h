@@ -1,39 +1,26 @@
 #pragma once
-
-#include "Resources.h"
-#include "HealthBar.h"
-#include "Cleric.h"
-#include "Knight.h"
-
-using std::vector;
+#include "GameBoard.h"
 
 class GameController
 {
 public:
 	GameController();
 	void run();
+	void update(float deltaTime);
 
-	void nextLevel();
-	void resetBoard();
 
 private:
-	void updatePlayer(int playerIndex, sf::Vector2f dest);
 	void drawGame();
-	void MouseClick(sf::Vector2f location);
+	void handleMouseClick(sf::Vector2f location);
 
-	bool outOfRange(sf::Vector2f location);
+	GameBoard m_board;
 
+	// SFML
 	sf::RenderWindow m_window;
-	sf::Sprite m_bg;
-	sf::Sprite m_selected;
-
-	std::vector < std::unique_ptr < Player > > m_players;
-
-	//Cleric m_cleric;
-	//Knight m_knight;
+	sf::Sprite m_bg; // move to utility
+	sf::Clock m_clock;
 
 	bool m_charSelected = false;
-
 };
 
 

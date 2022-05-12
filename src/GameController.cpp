@@ -2,28 +2,22 @@
 #include "GameController.h"
 
 GameController::GameController()
-	:m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Heart")
+	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Heart")
 {
 	m_bg.setTexture(*Resources::instance().getBackground(0));
 	m_bg.setColor(sf::Color(255, 255, 255, 255));
-	m_selected.setTexture(*Resources::instance().getTexture(_select));
-
-	m_players.push_back(std::make_unique < Cleric >(sf::Vector2f(200, 200)));
-	m_players.push_back(std::make_unique < Knight >(sf::Vector2f(300, 300)));
-
-	auto origin = m_selected.getOrigin();
-	m_selected.setOrigin( origin.x + 45 , origin.y - 20);
-
 }
 
 //=======================================================================================
-
 void GameController::run()
 {
+	float deltaTime = 0.0f;
 	auto inProgress = false;
+
 	while (m_window.isOpen())
 	{
 		drawGame();
+		deltaTime = this->m_clock.restart().asSeconds();
 
 		for (auto event = sf::Event{}; m_window.pollEvent(event); )
 		{
@@ -37,85 +31,36 @@ void GameController::run()
 				auto location = m_window.mapPixelToCoords(
 					{ event.mouseButton.x, event.mouseButton.y });
 
-				switch (event.mouseButton.button)
+				if (event.mouseButton.button == sf::Mouse::Button::Left)
 				{
-				case sf::Mouse::Button::Left:
 					inProgress = true;
-					MouseClick(location);	
-					break;
+					handleMouseClick(location);
 				}
 				break;
 			}
+
 		}
+		this->update(deltaTime);
 		inProgress = false;
-		
 	}
+}
+
+void GameController::update(float deltaTime)
+{
+	this->m_board.updateBoard(deltaTime, this->m_charSelected);
 }
 
 //=======================================================================================
 
-void GameController::MouseClick(sf::Vector2f location)
+void GameController::handleMouseClick(sf::Vector2f location)
 {
-
-	static bool stopCondition = false;
-
-	for (int i= 0; i < m_players.size(); i++)
+	if (!this->m_charSelected)
+		this->m_charSelected = this->m_board.handleFirstClick(location);
+	else
 	{
-		if (m_players[i]->checkCollision(location))
-		{
-			m_selected.setPosition(m_players[i]->getPosition().x, m_players[i]->getPosition().y);
-			m_charSelected = true;
-
-			while (!stopCondition)
-			{
-				m_selected.setColor(sf::Color::White);
-				drawGame();
-
-				for (auto event = sf::Event{}; m_window.waitEvent(event) && !stopCondition; )
-				{
-					switch (event.type)
-					{
-
-					case sf::Event::Closed:
-						m_window.close();
-						break;
-
-					case sf::Event::MouseButtonPressed:
-
-						auto mouseLoc = m_window.mapPixelToCoords(
-							{ event.mouseButton.x, event.mouseButton.y });
-
-						if (outOfRange(mouseLoc))
-							break;
-
-						m_selected.setPosition(mouseLoc);
-
-						auto found = false;
-						if (!stopCondition)
-						{
-							stopCondition = true;
-							for (int j = 0; j < m_players.size(); j++)
-							{
-								if (m_players[j]->checkCollision(mouseLoc) && i == _cleric)
-								{
-									m_selected.setPosition(m_players[j]->getPosition());
-									m_selected.setColor(sf::Color::Magenta);
-									drawGame();
-									found = true;
-									break;
-								}
-							}
-							if(!found)
-								updatePlayer( i , mouseLoc );
-						}
-						break;
-					}
-				}
-				m_charSelected = false;
-			}
-		}
+		this->m_charSelected = false;
+		this->m_board.handleSecondClick(location);
 	}
-	stopCondition = false;
 }
 
 
@@ -126,37 +71,24 @@ void GameController::drawGame()
 	m_window.clear(sf::Color::White);
 	m_window.draw(m_bg);
 
-	if(m_charSelected)
-		m_window.draw(m_selected);
+	this->m_board.drawBoard(this->m_window, this->m_charSelected);
 
-	for (int i = 0; i < m_players.size(); i++)
-	{
-		m_players[i]->draw(m_window);
-	}
 	m_window.display();
 }
 
 //=======================================================================================
-
+/*
 void GameController::updatePlayer(int playerIndex , sf::Vector2f dest)
 {
 	sf::Clock clock;
 
 	auto direction = dest - m_players[playerIndex]->getPosition();
 
-	while (m_players[playerIndex]->moveValidator(dest))
+	if (m_players[playerIndex]->moveValidator())
 	{
 		auto delta = clock.restart().asSeconds();
 		m_players[playerIndex]->movePlayer(direction, delta);
-		drawGame();
 	}
 }
-
+*/
 //=======================================================================================
-
-
-bool GameController::outOfRange(sf::Vector2f location)
-{
-	return (location.x >= WINDOW_WIDTH - CUT_CORNERS || location.x <= CUT_CORNERS ||
-			location.y >= WINDOW_HEIGHT - CUT_CORNERS || location.y <= HEIGHT_LIMIT);
-}

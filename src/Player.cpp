@@ -2,7 +2,7 @@
 #include "Player.h"
 
 Player::Player(const sf::Vector2f loc)
-	:m_loc(loc) , m_hpBar(loc)
+	:m_dest(loc) , m_hpBar(loc), m_isMoving(false)
 {
 	m_sprite.setPosition(loc);
 }
@@ -24,19 +24,38 @@ sf::Vector2f Player::getPosition() const
 
 //==========================================================
 
-bool Player::moveValidator(sf::Vector2f dest)
+bool Player::moveValidator()
 {
 	const auto epsilon = 1.f;
-	return (std::abs(m_sprite.getPosition().x - dest.x) > epsilon || std::abs(m_sprite.getPosition().y - dest.y) > epsilon);
+	return (std::abs(m_sprite.getPosition().x - this->m_dest.x) > epsilon || std::abs(m_sprite.getPosition().y - this->m_dest.y) > epsilon);
 }
 
 //==========================================================
 
-void Player::movePlayer(sf::Vector2f direction, float delta)
+void Player::updatePlayer(float deltaTime)
 {
-	float distance = std::sqrt(std::pow(direction.x, 2) + std::pow(direction.y, 2));
-	auto speedPerSecond = 140.f / distance ;
-	m_sprite.move(direction * speedPerSecond * delta);
+	bool moving = true;
+
+	if (this->moveValidator())
+		this->movePlayer(deltaTime);
+	else
+	{
+		this->m_sprite.setPosition(this->m_dest);
+		moving = false;
+	}
+
+	this->m_isMoving = moving;
+}
+
+//==========================================================
+
+void Player::movePlayer(float deltaTime)
+{
+	sf::Vector2f movement = sf::Vector2f(this->m_dest.x - this->m_sprite.getPosition().x, 
+										 this->m_dest.y - this->m_sprite.getPosition().y);
+	float distance = std::sqrt(std::pow(movement.x, 2) + std::pow(movement.y, 2));
+	auto speedPerSecond = 180.f / distance ;
+	m_sprite.move(movement * speedPerSecond * deltaTime);
 	m_hpBar.setPosition(m_sprite.getPosition());
 }
 
