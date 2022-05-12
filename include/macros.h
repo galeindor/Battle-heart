@@ -11,6 +11,8 @@ constexpr auto HEIGHT_LIMIT = 200;
 constexpr auto CUT_CORNERS = 50;
 constexpr auto DIRECTIONS = 4;
 constexpr auto NUM_OF_PICS = 3;
+constexpr auto MAX_SKILL = 2;
+constexpr auto NUM_OF_PLAYERS = 3;
 constexpr auto NUM_OF_BG = 2;
 constexpr auto MAX_HEALTH = 20;
 constexpr auto BAR_WIDTH = 60;
@@ -33,6 +35,10 @@ enum Directions
 
 
 const std::string textures[NUM_OF_PICS] = { "cleric.png" , "knight.png" , "select.png"};
+
+const std::string skillTextures[NUM_OF_PLAYERS][MAX_SKILL] = {  { "heal.png"	, "clericShield.png"} ,
+																{ "shield.png"	, "swing.png"		}
+															 };
 
 const std::string bg_textures[NUM_OF_PICS] = { "plain.png" };
 
