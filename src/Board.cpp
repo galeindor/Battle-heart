@@ -28,6 +28,8 @@ bool Board::handleFirstClick(sf::Vector2f location)
 	{
 		if (m_players[index]->checkCollision(location))
 		{
+			m_players[m_selectedPlayerIndex]->setSelected(false);
+			m_players[index]->setSelected(true);
 			this->m_selectedPlayerIndex = index;
 			return true;
 		}

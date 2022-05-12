@@ -2,7 +2,7 @@
 #include "Cleric.h"
 
 Cleric::Cleric(const sf::Vector2f pos)
-	:Player(pos)
+	:Player(pos , _cleric)
 {
 	m_sprite.setTexture(*Resources::instance().getTexture(_cleric));
 

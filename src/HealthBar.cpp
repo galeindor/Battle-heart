@@ -4,7 +4,7 @@
 HealthBar::HealthBar(sf::Vector2f pos)
 	: m_hp(MAX_HEALTH)
 {
-	auto size = sf::Vector2f(BAR_WIDTH, 15);
+	auto size = sf::Vector2f(BAR_WIDTH, 10);
 	auto origin = m_bar.getOrigin();
 
 	m_bar.setOrigin(origin.x + 30 , origin.y + 70);
