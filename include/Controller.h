@@ -1,10 +1,10 @@
 #pragma once
-#include "GameBoard.h"
+#include "Board.h"
 
-class GameController
+class Controller
 {
 public:
-	GameController();
+	Controller();
 	void run();
 	void update(float deltaTime);
 
@@ -13,7 +13,7 @@ private:
 	void drawGame();
 	void handleMouseClick(sf::Vector2f location);
 
-	GameBoard m_board;
+	Board m_board;
 
 	// SFML
 	sf::RenderWindow m_window;

@@ -1,6 +1,6 @@
-#include "GameBoard.h"
+#include "Board.h"
 
-GameBoard::GameBoard()
+Board::Board()
 	: m_selectedPlayerIndex(0)
 {
 	this->initPlayers();
@@ -9,7 +9,7 @@ GameBoard::GameBoard()
 
 //==========================================================
 
-void GameBoard::updateBoard(float deltaTime, bool charSelected)
+void Board::updateBoard(float deltaTime, bool charSelected)
 {
 	if (charSelected)
 		m_selected.setPosition(m_players[this->m_selectedPlayerIndex]->getPosition());
@@ -22,7 +22,7 @@ void GameBoard::updateBoard(float deltaTime, bool charSelected)
 
 //==========================================================
 
-bool GameBoard::handleFirstClick(sf::Vector2f location)
+bool Board::handleFirstClick(sf::Vector2f location)
 {
 	for (int index = 0; index < m_players.size(); index++)
 	{
@@ -38,7 +38,7 @@ bool GameBoard::handleFirstClick(sf::Vector2f location)
 
 //==========================================================
 
-void GameBoard::handleSecondClick(sf::Vector2f location)
+void Board::handleSecondClick(sf::Vector2f location)
 {
 	for (int index = 0; index < m_players.size(); index++)
 	{
@@ -49,16 +49,16 @@ void GameBoard::handleSecondClick(sf::Vector2f location)
 
 	// Enemies loop
 
-	if (!this->outOfRange(location))
-	{
-		this->m_players[this->m_selectedPlayerIndex]->setDestination(location);
-		this->m_selected.setPosition(location);
-	}
+	location=adjustLocation(location);
+
+	this->m_players[this->m_selectedPlayerIndex]->setDestination(location);
+	this->m_selected.setPosition(location);
+
 }
 
 //==========================================================
 
-void GameBoard::drawBoard(sf::RenderWindow& window, bool charSelected)
+void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 {
 	bool draw = checkMoving();
 
@@ -71,15 +71,22 @@ void GameBoard::drawBoard(sf::RenderWindow& window, bool charSelected)
 
 //==========================================================
 
-bool GameBoard::outOfRange(sf::Vector2f location)
+sf::Vector2f Board::adjustLocation(sf::Vector2f location)
 {
-	return (location.x >= WINDOW_WIDTH - CUT_CORNERS || location.x <= CUT_CORNERS ||
-		location.y >= WINDOW_HEIGHT - CUT_CORNERS || location.y <= HEIGHT_LIMIT);
+	auto newLoc = sf::Vector2f();
+	newLoc.x = min(location.x, float(WINDOW_WIDTH  - CUT_CORNERS));
+	newLoc.y = min(location.y, float(WINDOW_HEIGHT - 1.5f * CUT_CORNERS));
+
+	newLoc.x = max(newLoc.x, float(CUT_CORNERS));
+	newLoc.y = max(newLoc.y, float(HEIGHT_LIMIT));
+
+	return newLoc;
 }
+
 
 //==========================================================
 
-bool GameBoard::checkMoving()
+bool Board::checkMoving()
 {
 	for (int i = 0; i < m_players.size(); i++)
 		if (this->m_players[i]->getIsMoving())
@@ -90,7 +97,7 @@ bool GameBoard::checkMoving()
 
 //==========================================================
 
-void GameBoard::initPlayers()
+void Board::initPlayers()
 {
 	m_players.push_back(std::make_unique < Cleric >(sf::Vector2f(200, 200)));
 	m_players.push_back(std::make_unique < Knight >(sf::Vector2f(300, 300)));
@@ -98,7 +105,7 @@ void GameBoard::initPlayers()
 
 //==========================================================
 
-void GameBoard::initSelected()
+void Board::initSelected()
 {
 	m_selected.setTexture(*Resources::instance().getTexture(_select));
 	auto origin = m_selected.getOrigin();

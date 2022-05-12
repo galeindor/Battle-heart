@@ -1,7 +1,7 @@
-#include "GameController.h"
+#include "Controller.h"
 
 int main()
 {
-	auto game = GameController();
+	auto game = Controller();
 	game.run();
 }
