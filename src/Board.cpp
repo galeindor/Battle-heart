@@ -49,7 +49,7 @@ void Board::handleSecondClick(sf::Vector2f location)
 
 	// Enemies loop
 
-	location=adjustLocation(location);
+	location = adjustLocation(location);
 
 	this->m_players[this->m_selectedPlayerIndex]->setDestination(location);
 	this->m_selected.setPosition(location);
