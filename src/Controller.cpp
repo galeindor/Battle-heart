@@ -58,11 +58,10 @@ void Controller::handleMouseClick(sf::Vector2f location)
 {
 	if (!this->m_charSelected)
 		this->m_charSelected = this->m_board.handleFirstClick(location);
-	else
-	{
-		this->m_charSelected = false;
-		this->m_board.handleSecondClick(location);
-	}
+
+	else // if a click made the player move - charSelected is no longer true
+		this->m_charSelected = !m_board.handleSecondClick(location); 
+	
 }
 
 

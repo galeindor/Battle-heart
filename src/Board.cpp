@@ -25,6 +25,9 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 
 bool Board::handleFirstClick(sf::Vector2f location)
 {
+	if (m_players[m_selectedPlayerIndex]->checkSkillClick(location))
+		return false;;
+
 	for (int index = 0; index < m_players.size(); index++)
 	{
 		if (m_players[index]->checkCollision(location))
@@ -34,8 +37,6 @@ bool Board::handleFirstClick(sf::Vector2f location)
 			this->m_selectedPlayerIndex = index;
 			return true;
 		}
-		if (m_players[index]->checkSkillClick(location))
-			break;
 	}
 
 	return false;
@@ -43,17 +44,16 @@ bool Board::handleFirstClick(sf::Vector2f location)
 
 //==========================================================
 
-void Board::handleSecondClick(sf::Vector2f location)
+bool Board::handleSecondClick(sf::Vector2f location)
 {
-	if (this->m_players[m_selectedPlayerIndex]->checkSkillClick(location))
-	{
-		return;
-	}
+	if (m_players[m_selectedPlayerIndex]->checkSkillClick(location))
+		return false;
 
-	for (int index = 0; index < m_players.size(); index++)
+	for (auto& player : m_players)
 	{
-		if (this->m_players[index]->checkCollision(location))
+		if (player->checkCollision(location)) // if a the click happened on a player
 		{
+			return true; 
 		}
 	}
 
@@ -61,9 +61,10 @@ void Board::handleSecondClick(sf::Vector2f location)
 
 	location=adjustLocation(location);
 
-	this->m_players[this->m_selectedPlayerIndex]->setDestination(location);
+	this->m_players[m_selectedPlayerIndex]->setDestination(location);
 	this->m_selected.setPosition(location);
 
+	return true;
 }
 
 //==========================================================

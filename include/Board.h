@@ -11,7 +11,7 @@ class Board
 public:
 	Board();
 	bool handleFirstClick(sf::Vector2f location);
-	void handleSecondClick(sf::Vector2f location);
+	bool handleSecondClick(sf::Vector2f location);
 	void updateBoard(float deltaTime, bool charSelected);
 	void drawBoard(sf::RenderWindow& window, bool charSelected);
 
