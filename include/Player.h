@@ -11,7 +11,8 @@ public:
 
 	sf::Vector2f getPosition() const;
 	void draw(sf::RenderWindow& window);
-	bool checkCollision(sf::Vector2f loc);
+	bool checkCollision(const sf::Vector2f& loc);
+	bool checkSkillClick(const sf::Vector2f& loc);
 	bool moveValidator();
 
 	void updatePlayer(float deltaTime);

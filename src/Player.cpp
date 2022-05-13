@@ -73,15 +73,21 @@ void Player::movePlayer(float deltaTime)
 
 //==========================================================
 
-bool Player::checkCollision(sf::Vector2f location)
+bool Player::checkCollision(const sf::Vector2f& location)
+{
+	return m_sprite.getGlobalBounds().contains(location);
+	
+}
+
+//==========================================================
+
+bool Player::checkSkillClick(const sf::Vector2f& location)
 {
 	for (auto& skill : m_skills) // check for presses
 		if (skill->checkClick(location))
 		{
 			skill->handleClick();
-			return false;
+			return true;
 		}
-
-	return m_sprite.getGlobalBounds().contains(location);
-	
+	return false;
 }

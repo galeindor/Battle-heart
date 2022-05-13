@@ -47,6 +47,8 @@ void Skill::update()
 
 void Skill::draw(sf::RenderWindow& window)
 {
+	if (m_timeLeft == 0)
+		m_clock.restart();
 	update();
 	window.draw(m_shape);
 	window.draw(m_cooldownScale);
