@@ -2,44 +2,27 @@
 #include "Player.h"
 
 Player::Player(const sf::Vector2f loc , int index)
-	:m_dest(loc) , m_hpBar(loc), m_isMoving(false) , m_selected(false)
+	: GameObject(loc, index), m_dest(loc) , m_isMoving(false) , m_selected(false)
 {
-	m_sprite.setPosition(loc);
 	
-	for (int i = 0; i < MAX_SKILL; i++)
-	{
-		auto skill = Skill(Resources::instance().getSkill(index, i), sf::Vector2f( i * (SKILL_RECT_SIZE+ 20) + 30 , 30 ));
-		m_skills.push_back(std::make_unique<Skill>(skill));
-	}
 }
-
 //==========================================================
-
 void Player::draw(sf::RenderWindow& window)
 {
 	if (m_selected)
-		for (auto& skill : m_skills)
-		{
-			skill->draw(window); // draw all skills
-		}
-
-	m_hpBar.draw(window);
-	window.draw(m_sprite);
+		//here was the loop
+	this->getHpBar().draw(window);
+	window.draw(this->getSprite());
 }
-
 //==========================================================
 
-sf::Vector2f Player::getPosition() const
-{
-	return m_sprite.getPosition();
-}
 
 //==========================================================
 
 bool Player::moveValidator()
 {
 	const auto epsilon = 1.f;
-	return (std::abs(m_sprite.getPosition().x - this->m_dest.x) > epsilon || std::abs(m_sprite.getPosition().y - this->m_dest.y) > epsilon);
+	return (std::abs(this->getSprite().getPosition().x - this->m_dest.x) > epsilon || std::abs(this->getSprite().getPosition().y - this->m_dest.y) > epsilon);
 }
 
 //==========================================================
@@ -49,10 +32,10 @@ void Player::updatePlayer(float deltaTime)
 	bool moving = true;
 
 	if (this->moveValidator())
-		this->movePlayer(deltaTime);
+		this->move(deltaTime);
 	else
 	{
-		this->m_sprite.setPosition(this->m_dest);
+		this->getSprite().setPosition(this->m_dest);
 		moving = false;
 	}
 
@@ -61,33 +44,15 @@ void Player::updatePlayer(float deltaTime)
 
 //==========================================================
 
-void Player::movePlayer(float deltaTime)
+void Player::move(float deltaTime)
 {
-	sf::Vector2f movement = sf::Vector2f(this->m_dest.x - this->m_sprite.getPosition().x, 
-										 this->m_dest.y - this->m_sprite.getPosition().y);
+	sf::Vector2f movement = sf::Vector2f(this->m_dest.x - this->getSprite().getPosition().x, 
+										 this->m_dest.y - this->getSprite().getPosition().y);
 	float distance = std::sqrt(std::pow(movement.x, 2) + std::pow(movement.y, 2));
 	auto speedPerSecond = 180.f / distance ;
-	m_sprite.move(movement * speedPerSecond * deltaTime);
-	m_hpBar.setPosition(m_sprite.getPosition());
+	this->getSprite().move(movement * speedPerSecond * deltaTime);
+	this->getHpBar().setPosition(this->getSprite().getPosition());
 }
 
 //==========================================================
 
-bool Player::checkCollision(const sf::Vector2f& location)
-{
-	return m_sprite.getGlobalBounds().contains(location);
-	
-}
-
-//==========================================================
-
-bool Player::checkSkillClick(const sf::Vector2f& location)
-{
-	for (auto& skill : m_skills) // check for presses
-		if (skill->checkClick(location))
-		{
-			skill->handleClick();
-			return true;
-		}
-	return false;
-}

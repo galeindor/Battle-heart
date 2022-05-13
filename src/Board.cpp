@@ -12,12 +12,13 @@ Board::Board()
 void Board::updateBoard(float deltaTime, bool charSelected)
 {
 	if (charSelected)
-		m_selected.setPosition(m_players[this->m_selectedPlayerIndex]->getPosition());
+		m_selected.setPosition(m_players[this->m_selectedPlayerIndex]->getSprite().getPosition());
 
 	for (int index = 0; index < m_players.size(); index++)
 		this->m_players[index]->updatePlayer(deltaTime);
 
 	// Enemies
+
 }
 
 //==========================================================
@@ -33,8 +34,6 @@ bool Board::handleFirstClick(sf::Vector2f location)
 			this->m_selectedPlayerIndex = index;
 			return true;
 		}
-		if (m_players[index]->checkSkillClick(location))
-			break;
 	}
 
 	return false;
@@ -44,14 +43,11 @@ bool Board::handleFirstClick(sf::Vector2f location)
 
 void Board::handleSecondClick(sf::Vector2f location)
 {
-	if (m_players[m_selectedPlayerIndex]->checkSkillClick(location))
-		return;
-
 	for (int index = 0; index < m_players.size(); index++)
-	{	
+	{
 		if (this->m_players[index]->checkCollision(location))
-		{}
-		
+		{
+		}
 	}
 
 	// Enemies loop
