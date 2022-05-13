@@ -19,7 +19,7 @@ public:
 	void setDestination(sf::Vector2f dest) { this->m_dest = dest; }
 	bool getIsMoving() const { return this->m_isMoving; }
 	void setSelected(bool state) { this->m_selected = state; }
-
+	bool handleSkill(sf::Vector2f pos);
 protected:
 
 	bool m_isMoving;

@@ -42,20 +42,23 @@ bool Board::handleFirstClick(sf::Vector2f location)
 
 void Board::handleSecondClick(sf::Vector2f location)
 {
-	for (int index = 0; index < m_players.size(); index++)
+	if (!this->m_players[this->m_selectedPlayerIndex]->handleSkill(location))
 	{
-		if (this->m_players[index]->checkCollision(location))
+		for (int index = 0; index < m_players.size(); index++)
 		{
+			if (this->m_players[index]->checkCollision(location))
+			{
+			}
 		}
+
+		// Enemies loop
+
+		location = adjustLocation(location);
+
+		this->m_players[this->m_selectedPlayerIndex]->setDestination(location);
+		this->m_players[this->m_selectedPlayerIndex]->setSelected(false);
+		this->m_selected.setPosition(location);
 	}
-
-	// Enemies loop
-
-	location = adjustLocation(location);
-
-	this->m_players[this->m_selectedPlayerIndex]->setDestination(location);
-	this->m_selected.setPosition(location);
-
 }
 
 //==========================================================

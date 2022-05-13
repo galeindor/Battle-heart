@@ -2,7 +2,7 @@
 #include "Player.h"
 
 Player::Player(const sf::Vector2f loc , int index)
-	:m_dest(loc) , m_hpBar(loc), m_isMoving(false) , m_selected(false)
+	: m_dest(loc) , m_hpBar(loc), m_isMoving(false) , m_selected(false)
 {
 	m_sprite.setPosition(loc);
 	
@@ -71,17 +71,21 @@ void Player::movePlayer(float deltaTime)
 	m_hpBar.setPosition(m_sprite.getPosition());
 }
 
+bool Player::handleSkill(sf::Vector2f pos)
+{
+	for (auto& skill : m_skills) // check for presses
+		if (skill->checkClick(pos))
+		{
+			skill->handleClick();
+			return true;
+		}
+
+	return false;
+}
+
 //==========================================================
 
 bool Player::checkCollision(sf::Vector2f location)
 {
-	for (auto& skill : m_skills) // check for presses
-		if (skill->checkClick(location))
-		{
-			skill->handleClick();
-			return false;
-		}
-
 	return m_sprite.getGlobalBounds().contains(location);
-	
 }
