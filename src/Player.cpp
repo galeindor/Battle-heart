@@ -1,16 +1,28 @@
 
 #include "Player.h"
 
-Player::Player(const sf::Vector2f loc)
-	:m_dest(loc) , m_hpBar(loc), m_isMoving(false)
+Player::Player(const sf::Vector2f loc , int index)
+	:m_dest(loc) , m_hpBar(loc), m_isMoving(false) , m_selected(false)
 {
 	m_sprite.setPosition(loc);
+	
+	for (int i = 0; i < MAX_SKILL; i++)
+	{
+		auto skill = Skill(Resources::instance().getSkill(index, i), sf::Vector2f( i * (SKILL_RECT_SIZE+ 20) + 30 , 30 ));
+		m_skills.push_back(std::make_unique<Skill>(skill));
+	}
 }
 
 //==========================================================
 
 void Player::draw(sf::RenderWindow& window)
 {
+	if (m_selected)
+		for (auto& skill : m_skills)
+		{
+			skill->draw(window); // draw all skills
+		}
+
 	m_hpBar.draw(window);
 	window.draw(m_sprite);
 }
@@ -63,5 +75,13 @@ void Player::movePlayer(float deltaTime)
 
 bool Player::checkCollision(sf::Vector2f location)
 {
+	for (auto& skill : m_skills) // check for presses
+		if (skill->checkClick(location))
+		{
+			skill->handleClick();
+			return false;
+		}
+
 	return m_sprite.getGlobalBounds().contains(location);
+	
 }

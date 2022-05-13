@@ -6,4 +6,5 @@
                                               "Cleric.cpp"
                                               "Player.cpp"
                                               "Knight.cpp"
+                                              "Skill.cpp"
                                               )

@@ -45,6 +45,8 @@ void Controller::run()
 	}
 }
 
+//=======================================================================================
+
 void Controller::update(float deltaTime)
 {
 	this->m_board.updateBoard(deltaTime, this->m_charSelected);

@@ -2,7 +2,7 @@
 #include "Knight.h"
 
 Knight::Knight(const sf::Vector2f pos)
-	:Player(pos)
+	:Player(pos , _knight)
 {
 	m_sprite.setTexture(*Resources::instance().getTexture(_knight));
 
