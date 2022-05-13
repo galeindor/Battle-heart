@@ -4,24 +4,8 @@
 HealthBar::HealthBar(sf::Vector2f pos)
 	: m_hp(MAX_HEALTH)
 {
-	auto size = sf::Vector2f(BAR_WIDTH, 10);
-	auto origin = m_bar.getOrigin();
-
-	m_bar.setOrigin(origin.x + 30 , origin.y + 70);
-	m_currHealth.setOrigin(sf::Vector2f(origin.x + 30 , origin.y + 70 ));
-
-	m_bar.setSize(size);
-	m_currHealth.setSize(size);
-
-	m_bar.setPosition(pos);
-	m_currHealth.setPosition(pos);
-
-	m_bar.setFillColor(sf::Color::Black);
-	m_bar.setOutlineColor(sf::Color::Black);
-	m_bar.setOutlineThickness(3);
-	m_currHealth.setFillColor(sf::Color::Green);
-	m_currHealth.setOutlineColor(sf::Color::Black);
-	m_currHealth.setOutlineThickness(2);
+	this->initCurrHp(pos);
+	this->initHealthBar(pos);
 }
 
 //====================================================================
@@ -52,4 +36,28 @@ void HealthBar::setPosition(const sf::Vector2f pos)
 {
 	m_bar.setPosition(pos);
 	m_currHealth.setPosition(pos);
+}
+
+void HealthBar::initHealthBar(const sf::Vector2f pos)
+{
+	auto size = sf::Vector2f(BAR_WIDTH, 10);
+	auto origin = m_bar.getOrigin();
+	m_bar.setOrigin(origin.x + 30, origin.y + 70);
+	m_bar.setSize(size);
+	m_bar.setPosition(pos);
+	m_bar.setFillColor(sf::Color::Black);
+	m_bar.setOutlineColor(sf::Color::Black);
+	m_bar.setOutlineThickness(3);
+}
+
+void HealthBar::initCurrHp(const sf::Vector2f pos)
+{
+	auto size = sf::Vector2f(BAR_WIDTH, 10);
+	auto origin = m_bar.getOrigin();
+	m_currHealth.setOrigin(sf::Vector2f(origin.x + 30, origin.y + 70));
+	m_currHealth.setSize(size);
+	m_currHealth.setPosition(pos);
+	m_currHealth.setFillColor(sf::Color::Green);
+	m_currHealth.setOutlineColor(sf::Color::Black);
+	m_currHealth.setOutlineThickness(2);
 }

@@ -3,29 +3,23 @@
 
 Player::Player(const sf::Vector2f loc , int index)
 	: GameObject(loc, index), m_dest(loc) , m_isMoving(false) , m_selected(false)
-{
-	
-}
+{}
 //===========================================================
 void Player::draw(sf::RenderWindow& window)
 {
 	if (m_selected)
 	{
 		this->getHpBar().draw(window);
-		for (auto& skill : m_skills)
-		{
+		for (auto& skill : this->getSkills())
 			skill->draw(window); // draw all skills
-
-		}
 	}
-	
 	window.draw(this->getSprite());
 }
 //==========================================================
 
 bool Player::checkSkillClick(const sf::Vector2f& location)
 {
-	for (auto& skill : m_skills) // check for presses on a skill
+	for (auto& skill : this->getSkills()) // check for presses on a skill
 		if (skill->checkClick(location))
 		{
 			skill->handleClick();
@@ -69,5 +63,4 @@ void Player::move(float deltaTime)
 	this->getSprite().move(movement * speedPerSecond * deltaTime);
 	this->getHpBar().setPosition(this->getSprite().getPosition());
 }
-
 //==========================================================

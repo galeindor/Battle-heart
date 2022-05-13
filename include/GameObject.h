@@ -13,20 +13,17 @@ public:
 	virtual void move(const float deltaTime) = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
 
-	sf::Sprite& getSprite()		{ return this->m_sprite; }
-	HealthBar& getHpBar()		{ return this->m_health; }
+	sf::Sprite& getSprite()  { return this->m_sprite; }
+	HealthBar& getHpBar()  { return this->m_health; }
 
 	bool checkCollision(const sf::Vector2f& location);
 
 	void hitCharacter(int amount);
 	void healCharacter(int amount);
-
+	vector<std::unique_ptr<Skill>>& getSkills() { return this->m_skills; }
 private:
-	
+	vector<std::unique_ptr<Skill>> m_skills;
 	HealthBar m_health;
 	sf::Sprite m_sprite;
 	bool m_isAttacking;
-
-protected:
-	vector<std::unique_ptr<Skill>> m_skills;
 };
