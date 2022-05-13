@@ -1,5 +1,6 @@
 #include "GameController.h"
-//hello world
+
+
 GameController::GameController()
 	:m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Heart")
 {
@@ -156,9 +157,16 @@ void GameController::updatePlayer(int playerIndex , sf::Vector2f dest)
 
 //=======================================================================================
 
-
 bool GameController::outOfRange(sf::Vector2f location)
 {
 	return (location.x >= WINDOW_WIDTH - CUT_CORNERS || location.x <= CUT_CORNERS ||
 			location.y >= WINDOW_HEIGHT - CUT_CORNERS || location.y <= HEIGHT_LIMIT);
 }
+
+//=======================================================================================
+
+//=======================================================================================
+
+//=======================================================================================
+
+//=======================================================================================

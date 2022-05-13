@@ -16,6 +16,9 @@ public:
 	bool getIsMoving() const { return this->m_isMoving; }
 	void setSelected(bool state) { this->m_selected = state; }
 
+	bool checkSkillClick(const sf::Vector2f& loc);
+	void handleSkill();
+
 private:
 
 	bool m_isMoving;

@@ -5,7 +5,7 @@
 class Skill
 {
 public:
-	Skill(sf::Texture* texture, const sf::Vector2f& pos);
+	Skill(sf::Texture* texture, const sf::Vector2f& pos, float cooldown);
 	void castSkill(int index);
 
 	bool checkClick(const sf::Vector2f& pos);

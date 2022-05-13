@@ -1,8 +1,8 @@
 
 #include "Skill.h"
 
-Skill::Skill(sf::Texture* texture , const sf::Vector2f& pos)
-	:m_cooldown(ATK_CD) , m_skillDmg(BASIC_DMG) , m_skillRange(5) , m_timeLeft(0)
+Skill::Skill(sf::Texture* texture , const sf::Vector2f& pos ,float cooldown)
+	:m_cooldown(cooldown) , m_skillDmg(BASIC_DMG) , m_skillRange(5) , m_timeLeft(0)
 {
 	m_shape.setTexture(texture);
 	m_shape.setPosition(pos);
@@ -12,8 +12,6 @@ Skill::Skill(sf::Texture* texture , const sf::Vector2f& pos)
 	m_cooldownScale.setSize({ SKILL_RECT_SIZE , 0 });
 	m_cooldownScale.setPosition(pos);
 
-	auto origin = m_cooldownScale.getOrigin();
-	//m_cooldownScale.setOrigin({ origin.x , origin.y - SKILL_RECT_SIZE });
 }
 
 //==========================================================

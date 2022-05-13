@@ -6,17 +6,33 @@ Player::Player(const sf::Vector2f loc , int index)
 {
 	
 }
-//==========================================================
+//===========================================================
 void Player::draw(sf::RenderWindow& window)
 {
 	if (m_selected)
-		//here was the loop
-	this->getHpBar().draw(window);
+	{
+		this->getHpBar().draw(window);
+		for (auto& skill : m_skills)
+		{
+			skill->draw(window); // draw all skills
+
+		}
+	}
+	
 	window.draw(this->getSprite());
 }
 //==========================================================
 
-
+bool Player::checkSkillClick(const sf::Vector2f& location)
+{
+	for (auto& skill : m_skills) // check for presses on a skill
+		if (skill->checkClick(location))
+		{
+			skill->handleClick();
+			return true;
+		}
+	return false;
+}
 //==========================================================
 
 bool Player::moveValidator()
@@ -55,4 +71,3 @@ void Player::move(float deltaTime)
 }
 
 //==========================================================
-

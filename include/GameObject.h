@@ -10,14 +10,23 @@ public:
 	GameObject(const sf::Vector2f pos, const int index);
 	~GameObject() = default;
 
-	virtual void move(float deltaTime) = 0;
+	virtual void move(const float deltaTime) = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
-	sf::Sprite& getSprite() { return this->m_sprite; }
-	HealthBar& getHpBar() { return this->m_health; }
-	bool checkCollision(sf::Vector2f location);
+
+	sf::Sprite& getSprite()		{ return this->m_sprite; }
+	HealthBar& getHpBar()		{ return this->m_health; }
+
+	bool checkCollision(const sf::Vector2f& location);
+
+	void hitCharacter(int amount);
+	void healCharacter(int amount);
+
 private:
-	vector<std::unique_ptr<Skill>> m_skills;
+	
 	HealthBar m_health;
 	sf::Sprite m_sprite;
 	bool m_isAttacking;
+
+protected:
+	vector<std::unique_ptr<Skill>> m_skills;
 };

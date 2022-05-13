@@ -34,6 +34,8 @@ bool Board::handleFirstClick(sf::Vector2f location)
 			this->m_selectedPlayerIndex = index;
 			return true;
 		}
+		if (m_players[index]->checkSkillClick(location))
+			break;
 	}
 
 	return false;
@@ -43,6 +45,11 @@ bool Board::handleFirstClick(sf::Vector2f location)
 
 void Board::handleSecondClick(sf::Vector2f location)
 {
+	if (this->m_players[m_selectedPlayerIndex]->checkSkillClick(location))
+	{
+		return;
+	}
+
 	for (int index = 0; index < m_players.size(); index++)
 	{
 		if (this->m_players[index]->checkCollision(location))
@@ -65,7 +72,7 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 {
 	bool draw = checkMoving();
 
-	if(draw || charSelected)
+	if( draw || charSelected)
 		window.draw(this->m_selected);
 
 	for (int i = 0; i < m_players.size(); i++)
@@ -85,7 +92,6 @@ sf::Vector2f Board::adjustLocation(sf::Vector2f location)
 
 	return newLoc;
 }
-
 
 //==========================================================
 
