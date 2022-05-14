@@ -88,7 +88,6 @@ sf::Vector2f Board::adjustLocation(sf::Vector2f location)
 	return newLoc;
 }
 
-
 //==========================================================
 
 bool Board::checkMoving()
