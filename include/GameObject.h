@@ -10,10 +10,11 @@ class Knight;
 class GameObject
 {
 public:
-	//C-tor Dtor
+	// C-tor/D-tor
 	GameObject(const sf::Vector2f pos, const int index);
 	~GameObject() = default;
-	//virtuals
+
+	// Virtuals
 	void move(const float deltaTime);
 	virtual void draw(sf::RenderWindow& window) = 0;
 	virtual void update(const float deltaTime) = 0;
@@ -22,13 +23,14 @@ public:
 	virtual void handleCollision(Dummy& dummy) = 0;
 	virtual void handleCollision(Cleric& cleric) = 0;
 
-	//Getters
+	// Getters
 	sf::Sprite& getSprite()  { return this->m_sprite; }
 	HealthBar& getHpBar()  { return this->m_health; }
 	sf::Vector2f getDest() const { return this->m_dest; }
 	bool getIsMoving() const { return this->m_isMoving; }
 	bool getIsAttacking() const { return this->m_isAttacking; }
-	//Setters
+
+	// Setters
 	void setDestination(sf::Vector2f dest) { this->m_dest = dest; }
 	void setAttack(bool isAttacking) { this->m_isAttacking = isAttacking;}
 	void setMovement(bool movement) { this->m_isMoving = movement; }

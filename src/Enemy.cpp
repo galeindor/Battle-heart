@@ -1,9 +1,8 @@
 #include "Enemy.h"
 
 Enemy::Enemy(sf::Vector2f pos)
-	:GameObject(pos, ENEMY_POS)
-{
-}
+	: GameObject(pos, ENEMY_POS)
+{}
 
 void Enemy::draw(sf::RenderWindow& window)
 {

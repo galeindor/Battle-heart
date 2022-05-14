@@ -22,8 +22,6 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 
 	for (auto& enemy : m_enemies)
 		enemy->update(deltaTime);
-
-
 }
 
 //==========================================================
@@ -74,12 +72,8 @@ bool Board::handleSecondClick(sf::Vector2f location)
 {
 	if (m_players[m_selectedPlayerIndex]->checkSkillClick(location))
 		return false;
-		/*for (auto& player : m_players)
-		if (m_board.getCharacters()[index]->collidesWith(*player))
-		{
-			m_board.getCharacters()[index]->handleCollision(*player);
-			player->handleCollision(*m_board.getCharacters()[index]);
-		}*/
+		for (auto& player : m_players)
+
 	for (int i=0; i < m_players.size(); i++)
 	{
 		if(i != m_selectedPlayerIndex)
@@ -88,10 +82,10 @@ bool Board::handleSecondClick(sf::Vector2f location)
 				m_players[m_selectedPlayerIndex]->handleCollision(*m_players[i]);
 			}
 	}
-    for (int i=0; i< m_enemies.size(); i++)
-		for (auto& player : m_players)
-			if (checkIntersection(m_enemies[i]->getSprite(), player->getSprite()))
-			//player->handleColiision(*m_enemies[i])
+		for (int i = 0; i < m_enemies.size(); i++)
+			for (auto& player : m_players)
+				if (checkIntersection(m_enemies[i]->getSprite(), player->getSprite()))
+					player->handleColiision(*m_enemies[i]);
 
 	for (int i = 0; i < m_players.size(); i++)
 		for (int j = 0; j < m_enemies.size(); j++)

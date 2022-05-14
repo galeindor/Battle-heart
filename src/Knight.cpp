@@ -25,5 +25,7 @@ void Knight::handleCollision(Dummy& dummy)
 void Knight::handleCollision(Cleric& cleric)
 {}//nothing to do here rly
 
+
+// Will never proc.
 void Knight::handleColiision(Knight& knight)
-{}//wont happend
+{}

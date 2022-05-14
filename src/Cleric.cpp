@@ -18,7 +18,6 @@ void Cleric::handleCollision(GameObject& object)
 
 void Cleric::handleCollision(Dummy& dummy)
 {
-
 }
 
 void Cleric::handleCollision(Cleric& cleric)
@@ -27,6 +26,7 @@ void Cleric::handleCollision(Cleric& cleric)
 
 void Cleric::handleColiision(Knight& knight)
 {
+
 }
 
 void Cleric::hitPlayer()
