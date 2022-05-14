@@ -4,6 +4,7 @@ Board::Board()
 	: m_selectedPlayerIndex(0)
 {
 	this->initPlayers();
+	this->initEnemies();
 	this->initSelected();
 }
 
@@ -11,14 +12,39 @@ Board::Board()
 
 void Board::updateBoard(float deltaTime, bool charSelected)
 {
+	this->updateEnemyDest();
+
 	if (charSelected)
 		m_selected.setPosition(m_players[this->m_selectedPlayerIndex]->getSprite().getPosition());
 
-	for (int index = 0; index < m_players.size(); index++)
-		this->m_players[index]->updatePlayer(deltaTime);
+	for (auto& player : m_players)
+		player->update(deltaTime);
 
-	// Enemies
+	for (auto& enemy : m_enemies)
+		enemy->update(deltaTime);
 
+
+}
+
+//==========================================================
+
+void Board::updateEnemyDest()
+{
+	int max = 0;
+	sf::Vector2f pos;
+
+	for (auto& player : m_players)
+		if (player->getHpBar().getHp()> max)
+		{
+			max = player->getHpBar().getHp();
+			pos = player->getSprite().getPosition();
+		}
+
+	for (auto& enemy : m_enemies)
+	{
+		if (!enemy->getIsMoving())
+			enemy->setDestination(pos);
+	}
 }
 
 //==========================================================
@@ -53,13 +79,13 @@ bool Board::handleSecondClick(sf::Vector2f location)
 	{
 		if (player->checkCollision(location)) // if a the click happened on a player
 		{
-			return true; 
+			return true;
 		}
 	}
 
 	// Enemies loop
 
-	location=adjustLocation(location);
+	location = adjustLocation(location);
 
 	this->m_players[m_selectedPlayerIndex]->setDestination(location);
 	this->m_selected.setPosition(location);
@@ -76,8 +102,11 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 	if( draw || charSelected)
 		window.draw(this->m_selected);
 
-	for (int i = 0; i < m_players.size(); i++)
-		m_players[i]->draw(window);
+	for (auto &player : m_players)
+		player->draw(window);
+
+	for (auto& enemy : m_enemies)
+		enemy->draw(window);
 }
 
 //==========================================================
@@ -107,10 +136,21 @@ bool Board::checkMoving()
 
 //==========================================================
 
+
+
 void Board::initPlayers()
 {
 	m_players.push_back(std::make_unique < Cleric >(sf::Vector2f(200, 200)));
 	m_players.push_back(std::make_unique < Knight >(sf::Vector2f(300, 300)));
+}
+
+//==========================================================
+
+void Board::initEnemies()
+{	
+	srand(time(NULL));
+	for (int i = 0; i < 3; i++) // for now , will be changed soon 
+	this->m_enemies.push_back(std::make_unique <Dummy >());
 }
 
 //==========================================================

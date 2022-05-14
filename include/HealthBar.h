@@ -12,6 +12,7 @@ public:
 	void setPosition(const sf::Vector2f pos);
 	void initHealthBar(const sf::Vector2f pos);
 	void initCurrHp(const sf::Vector2f pos);
+	int getHp() const { return m_hp; }
 private:
 	
 	int m_hp; // maximum number of hitpoints
