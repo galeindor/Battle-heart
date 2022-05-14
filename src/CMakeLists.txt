@@ -1,10 +1,12 @@
 ﻿target_sources (${CMAKE_PROJECT_NAME} PRIVATE "main.cpp"
+                                              "Controller.cpp"
+                                              "GameObject.cpp"
+                                              "Player.cpp"
+                                              "Enemy.cpp"
                                               "HealthBar.cpp"
                                               "Resources.cpp"
-                                              "Controller.cpp"
                                               "Board.cpp"
-                                              "Cleric.cpp"
-                                              "Player.cpp"
+                                              "Cleric.cpp"  
                                               "Knight.cpp"
-                                              "Skill.cpp"
-                                              )
+                                              "Dummy.cpp"
+                                              "Skill.cpp")

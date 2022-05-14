@@ -1,32 +1,26 @@
 #pragma once
 
-#include "Resources.h"
-#include "HealthBar.h"
-#include "Skill.h"
+#include "GameObject.h"
 
-class Player
+class Player : public GameObject
 {
 public:
-	Player(const sf::Vector2f loc, int index);
+	Player(const sf::Vector2f pos, int index);
 
-	sf::Vector2f getPosition() const;
-	void draw(sf::RenderWindow& window);
-	bool checkCollision(sf::Vector2f loc);
-	bool moveValidator();
+	//overrides
+	void draw(sf::RenderWindow& window) override;
 
-	void updatePlayer(float deltaTime);
-	void movePlayer(float deltaTime);
-	void setDestination(sf::Vector2f dest) { this->m_dest = dest; }
-	bool getIsMoving() const { return this->m_isMoving; }
+	//-------------------
+	void update(float deltaTime) override;
+
+	//setters
+
 	void setSelected(bool state) { this->m_selected = state; }
-	bool handleSkill(sf::Vector2f pos);
-protected:
+	//handling skills
+	bool checkSkillClick(const sf::Vector2f& loc);
+	//void handleSkill();
 
-	bool m_isMoving;
+private:
+	
 	bool m_selected;
-	sf::Vector2f m_dest;
-	sf::Sprite m_sprite;
-	HealthBar m_hpBar;
-
-	vector < std::unique_ptr <Skill> > m_skills; // vector of skills
 };
