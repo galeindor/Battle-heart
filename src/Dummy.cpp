@@ -8,7 +8,31 @@ Dummy::Dummy()
 	sf::Vector2f temp;
 }
 
-sf::Vector2f Dummy::randEnemyPos() 
+void Dummy::handleCollision(GameObject& object)
+{
+	if (&object == this) return;
+	object.handleCollision(*this);
+}
+
+void Dummy::handleCollision(Dummy& dummy)
+{
+	if (&dummy == this) return;
+	dummy.handleCollision(*this);
+}
+
+void Dummy::handleCollision(Cleric& cleric)
+{
+	this->setAttack(true);
+	//cleric.handleCollision(*this);
+}
+
+void Dummy::handleColiision(Knight& knight)
+{
+	this->setAttack(true);
+	//knight.handleCollision(*this);
+}
+
+sf::Vector2f Dummy::randEnemyPos()
 {
 	//return sf::Vector2f{ 400,400 };
 	

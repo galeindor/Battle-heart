@@ -3,6 +3,9 @@
 #include "Skill.h"
 #include "HealthBar.h"
 #include "Resources.h"
+class Dummy;
+class Cleric;
+class Knight;
 
 class GameObject
 {
@@ -14,6 +17,11 @@ public:
 	void move(const float deltaTime);
 	virtual void draw(sf::RenderWindow& window) = 0;
 	virtual void update(const float deltaTime) = 0;
+	virtual void handleCollision(GameObject& object) = 0;
+	virtual void handleColiision(Knight& knight) = 0;
+	virtual void handleCollision(Dummy& dummy) = 0;
+	virtual void handleCollision(Cleric& cleric) = 0;
+
 	//Getters
 	sf::Sprite& getSprite()  { return this->m_sprite; }
 	HealthBar& getHpBar()  { return this->m_health; }

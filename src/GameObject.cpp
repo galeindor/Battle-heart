@@ -29,6 +29,9 @@ bool GameObject::checkCollision(const sf::Vector2f& location)
 	//	}
 
 	return this->m_sprite.getGlobalBounds().contains(location);
+	// note the line above is not good since we want to stop before one is contained in the other
+	//return this->m_sprite.getGlobalBounds().intersects(location);
+
 }
 
 bool GameObject::moveValidator()
