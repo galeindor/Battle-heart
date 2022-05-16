@@ -8,6 +8,7 @@
 #include "Dummy.h"
 
 using namespace std;
+using std::shared_ptr;
 
 class Board 
 {
@@ -25,8 +26,8 @@ public:
 	sf::Vector2f adjustLocation(sf::Vector2f location); // move the location inside board boundries
 	bool checkMoving();
 private:
-	vector < unique_ptr < Player > > m_players;
-	vector < unique_ptr < Enemy > > m_enemies;
+	vector < shared_ptr < Player > > m_players;
+	vector < shared_ptr < Enemy > > m_enemies;
 
 	unsigned int m_selectedPlayerIndex;
 	sf::Sprite m_selected;

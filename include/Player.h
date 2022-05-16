@@ -7,6 +7,9 @@ class Player : public GameObject
 public:
 	Player(const sf::Vector2f pos, int index);
 
+	virtual bool setTarget(Enemy& obj) override;
+	virtual bool setTarget(Player& obj) override;
+
 	//overrides
 	void draw(sf::RenderWindow& window) override;
 

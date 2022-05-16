@@ -29,7 +29,6 @@ bool Player::checkSkillClick(const sf::Vector2f& location)
 }
 //==========================================================
 
-
 //==========================================================
 
 void Player::update(float deltaTime)
@@ -39,5 +38,15 @@ void Player::update(float deltaTime)
 
 //==========================================================
 
-
+bool Player::setTarget(Enemy& obj)
+{
+	m_target = (GameObject*)&obj;
+	return true;
+}
 //==========================================================
+
+bool Player::setTarget(Player& obj)
+{
+	return false;
+}
+

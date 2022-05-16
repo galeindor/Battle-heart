@@ -3,6 +3,9 @@
 #include "Skill.h"
 #include "HealthBar.h"
 #include "Resources.h"
+
+class Enemy;
+class Player;
 class Dummy;
 class Cleric;
 class Knight;
@@ -23,6 +26,10 @@ public:
 	virtual void handleCollision(Dummy& dummy) = 0;
 	virtual void handleCollision(Cleric& cleric) = 0;
 
+	virtual bool setTarget(GameObject& obj);
+	virtual bool setTarget(Enemy& obj) = 0;
+	virtual bool setTarget(Player& obj) = 0;
+
 	// Getters
 	sf::Sprite& getSprite()  { return this->m_sprite; }
 	HealthBar& getHpBar()  { return this->m_health; }
@@ -41,6 +48,11 @@ public:
 	void updateMovement(const float deltaTime);
 	vector<std::unique_ptr<Skill>>& getSkills() { return this->m_skills; }
 
+
+protected:
+
+	GameObject* m_target; // target of basic attack and most of the skills.
+
 private:
 	void initSkills(int index);
 	bool m_isMoving;
@@ -49,4 +61,6 @@ private:
 	HealthBar m_health;
 	sf::Sprite m_sprite;
 	bool m_isAttacking;
+
+	
 };

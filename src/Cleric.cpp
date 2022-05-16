@@ -10,6 +10,8 @@ Cleric::Cleric(const sf::Vector2f pos)
 	this->getSprite().setOrigin(size.x/2, size.y/2);
 }
 
+//==========================================================
+
 void Cleric::handleCollision(GameObject& object)
 {
 	if (&object == this) return;
@@ -29,10 +31,16 @@ void Cleric::handleColiision(Knight& knight)
 
 }
 
-void Cleric::hitPlayer()
+//==========================================================
+
+bool Cleric::setTarget(Player& obj) // cleric can get an ally target
 {
-	this->getHpBar().lowerHealth(1);
+	m_target = (GameObject*)&obj;
+	return true;
 }
+//==========================================================
 
-
-
+bool Cleric::setTarget(Enemy& obj) // cleric can't have enemy target
+{
+	return false;
+}

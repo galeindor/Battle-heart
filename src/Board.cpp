@@ -72,9 +72,18 @@ bool Board::handleSecondClick(sf::Vector2f location)
 {
 	if (m_players[m_selectedPlayerIndex]->checkSkillClick(location))
 		return false;
-		for (auto& player : m_players)
 
-	for (int i=0; i < m_players.size(); i++)
+	for (auto& player : m_players)
+		if (player->checkCollision(location))
+			if(m_players[m_selectedPlayerIndex]->setTarget(*player) )
+				return true;
+
+	for (auto& enemy : m_enemies)
+		if (enemy->checkCollision(location))
+			if (m_players[m_selectedPlayerIndex]->setTarget(*enemy))
+				return true;
+
+	/*for (int i = 0; i < m_players.size(); i++)
 	{
 		if(i != m_selectedPlayerIndex)
 			if (checkIntersection(m_players[m_selectedPlayerIndex]->getSprite(), m_players[i]->getSprite()))
@@ -93,8 +102,9 @@ bool Board::handleSecondClick(sf::Vector2f location)
 				//m_enemies[j]->handleColiision(*m_players[i]);
 	// Enemies loop
 
-	location = adjustLocation(location);
+	*/
 
+	location = adjustLocation(location);
 	this->m_players[m_selectedPlayerIndex]->setDestination(location);
 	this->m_selected.setPosition(location);
 
@@ -153,8 +163,8 @@ bool Board::checkMoving()
 
 void Board::initPlayers()
 {
-	m_players.push_back(std::make_unique < Cleric >(sf::Vector2f(200, 200)));
-	m_players.push_back(std::make_unique < Knight >(sf::Vector2f(300, 300)));
+	m_players.push_back(std::make_shared < Cleric >(sf::Vector2f(200, 200)));
+	m_players.push_back(std::make_shared < Knight >(sf::Vector2f(300, 300)));
 }
 
 //==========================================================
@@ -163,7 +173,7 @@ void Board::initEnemies()
 {	
 	srand(time(NULL));
 	for (int i = 0; i < 3; i++) // for now , will be changed soon 
-	this->m_enemies.push_back(std::make_unique <Dummy >());
+	this->m_enemies.push_back(std::make_shared <Dummy >());
 }
 
 //==========================================================
