@@ -20,13 +20,8 @@ public:
 	// Virtuals
 	void move(const float deltaTime);
 	virtual void draw(sf::RenderWindow& window) = 0;
-	virtual void update(const float deltaTime) = 0;
-	virtual void handleCollision(GameObject& object) = 0;
-	virtual void handleColiision(Knight& knight) = 0;
-	virtual void handleCollision(Dummy& dummy) = 0;
-	virtual void handleCollision(Cleric& cleric) = 0;
+	virtual void update(const float deltaTime);
 
-	virtual bool setTarget(GameObject& obj);
 	virtual bool setTarget(Enemy& obj) = 0;
 	virtual bool setTarget(Player& obj) = 0;
 
@@ -41,13 +36,13 @@ public:
 	void setDestination(sf::Vector2f dest) { this->m_dest = dest; }
 	void setAttack(bool isAttacking) { this->m_isAttacking = isAttacking;}
 	void setMovement(bool movement) { this->m_isMoving = movement; }
+	bool checkIntersection() const;
 	bool checkCollision(const sf::Vector2f& location);
 	bool moveValidator();
 	void hitCharacter(int amount);
 	void healCharacter(int amount);
-	void updateMovement(const float deltaTime);
+	virtual void updateMovement(const float deltaTime) = 0;
 	vector<std::unique_ptr<Skill>>& getSkills() { return this->m_skills; }
-
 
 protected:
 
@@ -55,12 +50,11 @@ protected:
 
 private:
 	void initSkills(int index);
-	bool m_isMoving;
 	sf::Vector2f m_dest; 
 	vector<std::unique_ptr<Skill>> m_skills;
 	HealthBar m_health;
 	sf::Sprite m_sprite;
 	bool m_isAttacking;
+	bool m_isMoving;
 
-	
 };

@@ -30,10 +30,12 @@ void Board::updateEnemyDest()
 {
 	int max = 0;
 	sf::Vector2f pos;
+	Player* maxPlayer = NULL;
 
 	for (auto& player : m_players)
 		if (player->getHpBar().getHp()> max)
 		{
+			maxPlayer = player.get();
 			max = player->getHpBar().getHp();
 			pos = player->getSprite().getPosition();
 		}
@@ -41,7 +43,10 @@ void Board::updateEnemyDest()
 	for (auto& enemy : m_enemies)
 	{
 		if (!enemy->getIsMoving())
+		{
 			enemy->setDestination(pos);
+			enemy->setTarget(*maxPlayer);
+		}
 	}
 }
 
@@ -82,27 +87,6 @@ bool Board::handleSecondClick(sf::Vector2f location)
 		if (enemy->checkCollision(location))
 			if (m_players[m_selectedPlayerIndex]->setTarget(*enemy))
 				return true;
-
-	/*for (int i = 0; i < m_players.size(); i++)
-	{
-		if(i != m_selectedPlayerIndex)
-			if (checkIntersection(m_players[m_selectedPlayerIndex]->getSprite(), m_players[i]->getSprite()))
-			{
-				m_players[m_selectedPlayerIndex]->handleCollision(*m_players[i]);
-			}
-	}
-		for (int i = 0; i < m_enemies.size(); i++)
-			for (auto& player : m_players)
-				if (checkIntersection(m_enemies[i]->getSprite(), player->getSprite()))
-					player->handleColiision(*m_enemies[i]);
-
-	for (int i = 0; i < m_players.size(); i++)
-		for (int j = 0; j < m_enemies.size(); j++)
-			if (checkIntersection(m_players[i]->getSprite(), m_enemies[j]->getSprite()))
-				//m_enemies[j]->handleColiision(*m_players[i]);
-	// Enemies loop
-
-	*/
 
 	location = adjustLocation(location);
 	this->m_players[m_selectedPlayerIndex]->setDestination(location);

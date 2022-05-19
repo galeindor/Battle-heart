@@ -6,10 +6,10 @@
 class Enemy : public GameObject
 {
 public:
-	Enemy(sf::Vector2f enemy);
+	Enemy(sf::Vector2f enemy, const int index);
 	void draw(sf::RenderWindow& window) override;
-	void update(const float deltaTime) override;
 
+	virtual void updateMovement(const float deltaTime) override;
 	virtual bool setTarget(Enemy& obj) override;
 	virtual bool setTarget(Player& obj) override;
 	

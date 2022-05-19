@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Vector2f pos)
-	: GameObject(pos, ENEMY_POS)
+Enemy::Enemy(sf::Vector2f pos, const int index)
+	: GameObject(pos, index)
 {}
 
 //=======================================================================================
@@ -10,10 +10,16 @@ void Enemy::draw(sf::RenderWindow& window)
 	window.draw(this->getSprite());
 }
 
-//=======================================================================================
-void Enemy::update(const float deltaTime)
+void Enemy::updateMovement(const float deltaTime)
 {
-	this->updateMovement(deltaTime);
+	bool moving = true;
+
+	if (this->moveValidator() && !this->checkIntersection())
+		this->move(deltaTime);
+	else
+		moving = false;
+
+	this->setMovement(moving);
 }
 
 //=======================================================================================
