@@ -80,13 +80,19 @@ bool Board::handleSecondClick(sf::Vector2f location)
 
 	for (auto& player : m_players)
 		if (player->checkCollision(location))
-			if(m_players[m_selectedPlayerIndex]->setTarget(*player) )
+			if (m_players[m_selectedPlayerIndex]->setTarget(*player))
+			{
+				this->m_players[m_selectedPlayerIndex]->setDestination(player->getPosition());
 				return true;
+			}
 
 	for (auto& enemy : m_enemies)
 		if (enemy->checkCollision(location))
 			if (m_players[m_selectedPlayerIndex]->setTarget(*enemy))
+			{
+				this->m_players[m_selectedPlayerIndex]->setDestination(enemy->getPosition());
 				return true;
+			}
 
 	location = adjustLocation(location);
 	this->m_players[m_selectedPlayerIndex]->setDestination(location);

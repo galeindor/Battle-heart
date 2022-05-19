@@ -29,6 +29,7 @@ public:
 	sf::Sprite& getSprite()  { return this->m_sprite; }
 	HealthBar& getHpBar()  { return this->m_health; }
 	sf::Vector2f getDest() const { return this->m_dest; }
+	sf::Vector2f getPosition() const { return this->m_sprite.getPosition(); }
 	bool getIsMoving() const { return this->m_isMoving; }
 	bool getIsAttacking() const { return this->m_isAttacking; }
 
