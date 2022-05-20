@@ -17,7 +17,7 @@ constexpr auto NUM_OF_PLAYERS = 3;
 constexpr auto MAX_SKILL = 2;
 constexpr auto BASIC_DMG = 1;
 constexpr auto MAX_HEALTH = 20;
-constexpr auto SKILL_RECT_SIZE= 80;
+constexpr auto SKILL_RECT_SIZE= 80; // size of the rectangle where skills are shown
 
 constexpr auto BAR_WIDTH = 60;
 constexpr auto ATK_CD = 10.f; // regular attack cooldown
@@ -34,7 +34,7 @@ enum State
 	EnemyTrapped = true , EnemyEscaped = false
 };
 
-const std::string textures[NUM_OF_PICS] = { "cleric.png" , "knight.png" , "select.png","dummy.png" };
+const std::string textures[NUM_OF_PICS] = { "cleric.png" , "knight.png" , "select.png", "enemy.png" };
 
 const std::string skillTextures[NUM_OF_PLAYERS][MAX_SKILL] = {  { "heal.png"	, "clericShield.png"} ,
 																{ "shield.png"	, "swing.png"		}

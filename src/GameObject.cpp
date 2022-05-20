@@ -3,11 +3,11 @@
 GameObject::GameObject(const sf::Vector2f pos, const int index)
 	: m_health(pos), m_isAttacking(false), m_dest(pos), m_isMoving(false), m_target(NULL)
 {
-	this->m_sprite.setPosition(pos);
-	this->initSkills(index);
-	this->getSprite().setTexture(*Resources::instance().getTexture(index));
-	auto size = this->m_sprite.getTexture()->getSize();
-	this->getSprite().setOrigin(size.x / 2, size.y / 2);
+	m_sprite.setPosition(pos);
+	initSkills(index);
+	m_sprite.setTexture(*Resources::instance().getTexture(index));
+	auto size = m_sprite.getTexture()->getSize();
+	m_sprite.setOrigin(size.x / 2, size.y / 2);
 }
 
 //=======================================================================================
@@ -45,7 +45,7 @@ bool GameObject::checkCollision(const sf::Vector2f& location)
 bool GameObject::moveValidator()
 {
 	const auto epsilon = 5.f;
-	return (std::abs(this->getSprite().getPosition().x - this->m_dest.x) > epsilon || std::abs(this->getSprite().getPosition().y - this->m_dest.y) > epsilon);
+	return (std::abs(m_sprite.getPosition().x - m_dest.x) > epsilon || std::abs(m_sprite.getPosition().y - m_dest.y) > epsilon);
 }
 
 //=======================================================================================
@@ -68,8 +68,6 @@ void GameObject::update(float deltaTime)
 {
 	this->updateMovement(deltaTime);
 }
-
-//=======================================================================================
 
 //=======================================================================================
 

@@ -15,7 +15,7 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 	this->updateEnemyDest();
 
 	if (charSelected)
-		m_selected.setPosition(m_players[this->m_selectedPlayerIndex]->getSprite().getPosition());
+		m_selected.setPosition(m_players[this->m_selectedPlayerIndex]->getPosition());
 
 	for (auto& player : m_players)
 		player->update(deltaTime);
@@ -33,11 +33,11 @@ void Board::updateEnemyDest()
 	Player* maxPlayer = NULL;
 
 	for (auto& player : m_players)
-		if (player->getHpBar().getHp()> max)
+		if (player->getHp()> max)
 		{
 			maxPlayer = player.get();
-			max = player->getHpBar().getHp();
-			pos = player->getSprite().getPosition();
+			max = player->getHp();
+			pos = player->getPosition();
 		}
 
 	for (auto& enemy : m_enemies)

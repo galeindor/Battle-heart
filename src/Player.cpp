@@ -35,8 +35,8 @@ bool Player::checkSkillClick(const sf::Vector2f& location)
 
 bool Player::setTarget(Enemy& obj)
 {
-	m_target = (GameObject*)&obj;
-	this->setAttack(true);
+	setAsTarget((GameObject*)&obj);
+	this->setAttacking(true);
 	return true;
 }
 
@@ -59,7 +59,7 @@ void Player::updateMovement(const float deltaTime)
 			this->move(deltaTime);
 		else
 		{
-			this->setAttack(false); // player reached his attack target
+			this->setAttacking(false); // player reached his attack target
 			this->setDestination(this->getPosition()); 
 		}
 	}
@@ -68,6 +68,6 @@ void Player::updateMovement(const float deltaTime)
 	else
 		moving = false;
 
-	this->setMovement(moving);
+	this->setMoving(moving);
 }
 

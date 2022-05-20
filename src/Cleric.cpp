@@ -9,8 +9,8 @@ Cleric::Cleric(const sf::Vector2f pos)
 
 bool Cleric::setTarget(Player& obj) // cleric can get an ally target
 {
-	this->setAttack(true);
-	m_target = (GameObject*)&obj;
+	this->setAttacking(true);
+	setAsTarget((GameObject*)&obj); 
 	return true;
 }
 //==========================================================

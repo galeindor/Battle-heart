@@ -10,6 +10,8 @@ void Enemy::draw(sf::RenderWindow& window)
 	window.draw(this->getSprite());
 }
 
+//=======================================================================================
+
 void Enemy::updateMovement(const float deltaTime)
 {
 	bool moving = true;
@@ -19,7 +21,7 @@ void Enemy::updateMovement(const float deltaTime)
 	else
 		moving = false;
 
-	this->setMovement(moving);
+	this->setMoving(moving);
 }
 
 //=======================================================================================
@@ -31,6 +33,6 @@ bool Enemy::setTarget(Enemy& obj) // enemies can't target another enemy - only h
 //=======================================================================================
 bool Enemy::setTarget(Player& obj) // all enemies can target only players
 {
-	m_target = (GameObject*)&obj;
+	setAsTarget((GameObject*)&obj);
 	return true;
 }
