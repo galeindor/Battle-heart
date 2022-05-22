@@ -15,7 +15,7 @@ bool Cleric::setTarget(Player& obj) // cleric can get an ally target
 }
 //==========================================================
 
-bool Cleric::setTarget(Enemy& obj) // cleric can't have enemy target
+bool Cleric::setTarget(Enemy&) // cleric can't have enemy target
 {
 	return false;
 }

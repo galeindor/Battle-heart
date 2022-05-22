@@ -15,7 +15,7 @@ class GameObject
 public:
 	// C-tor/D-tor
 	GameObject(const sf::Vector2f pos, const int index);
-	~GameObject() = default;
+	virtual ~GameObject() = default;
 
 	// Virtuals
 	void move(const float deltaTime);

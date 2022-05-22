@@ -42,7 +42,7 @@ bool Player::setTarget(Enemy& obj)
 
 //==========================================================
 
-bool Player::setTarget(Player& obj)
+bool Player::setTarget(Player&)
 {
 	return false;
 }
@@ -53,7 +53,7 @@ void Player::updateMovement(const float deltaTime)
 {
 	bool moving = true;
 
-	if (this->getIsAttacking()) // if not going to attack target
+	if (this->getIsAttacking()) // if going to attack target
 	{
 		if (!this->checkIntersection())
 			this->move(deltaTime);
@@ -63,7 +63,7 @@ void Player::updateMovement(const float deltaTime)
 			this->setDestination(this->getPosition()); 
 		}
 	}
-	else if (this->moveValidator()) // if havent reached the destination 
+	else if (this->moveValidator()) // if going toward a destination point on the field
 		this->move(deltaTime);
 	else
 		moving = false;

@@ -25,7 +25,7 @@ void Enemy::updateMovement(const float deltaTime)
 }
 
 //=======================================================================================
-bool Enemy::setTarget(Enemy& obj) // enemies can't target another enemy - only healer enemy might
+bool Enemy::setTarget(Enemy&) // enemies can't target another enemy - only healer enemy might
 {
 	return false;
 }
