@@ -19,64 +19,52 @@ public:
 	virtual ~GameObject() = default;
 
 	// Virtuals
-	void move(const float deltaTime);
-
 	virtual void draw(sf::RenderWindow& window) = 0;
-
 	virtual void update(const float deltaTime); // NOTE : isn't this function useless?
+	virtual bool setTarget(Enemy& obj) = 0;
+	virtual bool setTarget(Player& obj) = 0;
+	virtual void updateMovement(const float deltaTime) = 0;
 
 	void useBaseAttack();
 	void useSkill(int index);
+	void move(const float deltaTime);
 
-	// set enemy/player target - basic attack and most of the skills will use the target
-
-	virtual bool setTarget(Enemy& obj) = 0;
-	virtual bool setTarget(Player& obj) = 0;
-
-	// Getters
-	
+	// Getters/setters
 	int getHp() const { return this->m_health.getHp(); } // get current HP
-	
-	sf::Vector2f getDest() const { return this->m_dest; } 
 	sf::Vector2f getPosition() const { return this->m_sprite.getPosition(); }
-	
 	bool getIsMoving() const { return this->m_isMoving; }
-	bool getIsAttacking() const { return this->m_isAttacking; }
-
-	// Setters
 	void setDestination(sf::Vector2f dest) { this->m_dest = dest; }
-	void setAttacking(bool isAttacking) { this->m_isAttacking = isAttacking;}
-	void setMoving(bool movement) { this->m_isMoving = movement; }
+
+	// Checks/validators
 	bool checkIntersection() const;
 	bool checkCollision(const sf::Vector2f& location);
 	bool moveValidator();
+	bool collidesWith(const GameObject& obj);
 
-	// damage or heal the object
+	// Combat mangement
 	void hitCharacter(int amount);
 	void healCharacter(int amount);
 
-	virtual void updateMovement(const float deltaTime) = 0;
-
 protected:
-
-	// get functions
+	// Getters
 	HealthBar	getHpBar()  const		{ return this->m_health; }
 	sf::Sprite	getSprite() const		{ return this->m_sprite; }
 	GameObject* getTarget() const		{ return this->m_target; }
-
 	vector<std::unique_ptr<Skill>>& getSkills() { return this->m_skills; }
+	bool getIsAttacking() const { return this->m_isAttacking; }
+	sf::Vector2f getDest() const { return this->m_dest; }
+	sf::FloatRect getGlobalBounds() const;
 
-	// set functions
-	
+	// Setters
 	void setAsTarget(GameObject* obj) { this->m_target = obj; }
-
+	void setAttacking(bool isAttacking) { this->m_isAttacking = isAttacking; }
+	void setMoving(bool movement) { this->m_isMoving = movement; }
 
 private:
 	void initSkills(int index);
+
 	sf::Vector2f m_dest; 
-
 	std::unique_ptr<BaseAttack> m_baseAttack; // each character basic attack
-
 	vector<std::unique_ptr<Skill>> m_skills; // skills useable
 	HealthBar m_health;
 	sf::Sprite m_sprite;

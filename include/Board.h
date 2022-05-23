@@ -16,10 +16,12 @@ public:
 	Board();
 	bool handleFirstClick(sf::Vector2f location);
 	bool handleSecondClick(sf::Vector2f location);
+	bool checkIntersection(sf::Sprite obj, sf::Sprite secObj); //for collisions..
+	void checkEnemyCollision(Enemy& enemy);
+
 	void updateBoard(float deltaTime, bool charSelected);
 	void updateEnemyDest();
 	void drawBoard(sf::RenderWindow& window, bool charSelected);
-	bool checkIntersection(sf::Sprite obj, sf::Sprite secObj); //for collisions..
 	/*void nextLevel();
 	void resetBoard();*/
 

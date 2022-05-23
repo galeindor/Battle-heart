@@ -9,6 +9,7 @@ class Skill
 public:
 	Skill(float cooldown, int damage, float range);
 	Skill(sf::Texture* texture, const sf::Vector2f& pos, float cooldown , int damage , float range);
+	~Skill() = default;
 	virtual int castSkill();
 
 	float getRange() const { return m_skillRange; }

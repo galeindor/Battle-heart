@@ -29,6 +29,7 @@ float distance(float f1, float f2)
 	return std::abs(f1 - f2);
 }
 
+//=======================================================================================
 
 bool GameObject::checkIntersection() const
 {
@@ -61,6 +62,13 @@ bool GameObject::moveValidator()
 
 //=======================================================================================
 
+bool GameObject::collidesWith(const GameObject& obj)
+{
+	return getGlobalBounds().intersects(obj.getGlobalBounds());
+}
+
+//=======================================================================================
+
 void GameObject::hitCharacter(int amount)
 {
 	this->m_health.lowerHealth(amount); // deal damage to the character
@@ -81,6 +89,11 @@ void GameObject::update(float deltaTime)
 }
 
 //=======================================================================================
+
+sf::FloatRect GameObject::getGlobalBounds() const
+{
+	return m_sprite.getGlobalBounds();
+}
 
 void GameObject::initSkills(int index)
 {

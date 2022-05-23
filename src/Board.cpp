@@ -21,7 +21,10 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 		player->update(deltaTime);
 
 	for (auto& enemy : m_enemies)
+	{
 		enemy->update(deltaTime);
+		this->checkEnemyCollision(*enemy);
+	}
 }
 
 //==========================================================
@@ -45,7 +48,9 @@ void Board::updateEnemyDest()
 		if (!enemy->getIsMoving())
 		{
 			enemy->setDestination(pos);
-			enemy->setTarget(*maxPlayer);
+
+			if(maxPlayer)
+				enemy->setTarget(*maxPlayer);
 		}
 	}
 }
@@ -117,9 +122,20 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 		enemy->draw(window);
 }
 
+//==========================================================
+
 bool Board::checkIntersection(sf::Sprite obj,sf::Sprite secObj)
 {
 	return obj.getGlobalBounds().intersects(secObj.getGlobalBounds());
+}
+
+//==========================================================
+
+void Board::checkEnemyCollision(Enemy& enemy)
+{
+	for (auto& other : m_enemies)
+		if (other->collidesWith(enemy))
+			other->handleCollision(enemy);
 }
 
 //==========================================================
