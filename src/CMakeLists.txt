@@ -9,4 +9,5 @@
                                               "Cleric.cpp"  
                                               "Knight.cpp"
                                               "Dummy.cpp"
-                                              "Skill.cpp")
+                                              "Skill.cpp"
+                                              "BasicAttack.cpp")

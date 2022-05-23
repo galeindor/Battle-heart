@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Skill.h"
+#include "includeSkill/Skill.h"
+#include "includeSkill/BasicAttack.h"
 #include "HealthBar.h"
 #include "Resources.h"
 
@@ -24,7 +25,10 @@ public:
 
 	virtual void update(const float deltaTime); // NOTE : isn't this function useless?
 
-	// set enemy/player target - basic attack and most of the skills will use the target 
+	void useBaseAttack();
+	void useSkill(int index);
+
+	// set enemy/player target - basic attack and most of the skills will use the target
 
 	virtual bool setTarget(Enemy& obj) = 0;
 	virtual bool setTarget(Player& obj) = 0;
@@ -70,9 +74,13 @@ protected:
 private:
 	void initSkills(int index);
 	sf::Vector2f m_dest; 
-	vector<std::unique_ptr<Skill>> m_skills;
+
+	std::unique_ptr<BaseAttack> m_baseAttack; // each character basic attack
+
+	vector<std::unique_ptr<Skill>> m_skills; // skills useable
 	HealthBar m_health;
 	sf::Sprite m_sprite;
+
 	bool m_isAttacking;
 	bool m_isMoving;
 

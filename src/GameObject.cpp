@@ -24,11 +24,22 @@ void GameObject::move(const float deltaTime)
 
 //=======================================================================================
 
+float distance(float f1, float f2)
+{
+	return std::abs(f1 - f2);
+}
+
 
 bool GameObject::checkIntersection() const
 {
-	if(this->m_target)
-		return this->m_sprite.getGlobalBounds().intersects(this->m_target->getSprite().getGlobalBounds());
+	if (this->m_target)
+	{
+		auto tarPos = m_target->getPosition();
+		auto myPos = this->getPosition();
+		auto range = m_baseAttack->getRange();
+		return (distance(tarPos.x, myPos.x) <= range) && (distance(tarPos.y, myPos.y) <= range);
+	}
+		//return this->m_sprite.getGlobalBounds().intersects(this->m_target->getSprite().getGlobalBounds());
 
 	return false;
 }
@@ -73,11 +84,28 @@ void GameObject::update(float deltaTime)
 
 void GameObject::initSkills(int index)
 {
+	auto base = BaseAttack(2.f, BASIC_DMG, 50.f);
+	m_baseAttack = std::make_unique<BaseAttack>(base);
+
 	for (int i = 0; i < MAX_SKILL; i++)
 	{
-		auto skill = Skill(Resources::instance().getSkill(index, i), sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30), ATK_CD);
+		auto skill = Skill(Resources::instance().getSkill(index, i), sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30), ATK_CD,BASIC_DMG,5.f);
 		m_skills.push_back(std::make_unique<Skill>(skill));
 	}
+}
+
+//=======================================================================================
+
+void GameObject::useBaseAttack()
+{
+	m_target->hitCharacter(m_baseAttack->castSkill());
+}
+
+//=======================================================================================
+
+void GameObject::useSkill(int index)
+{
+	m_target->hitCharacter(m_skills[index]->castSkill());
 }
 
 //=======================================================================================

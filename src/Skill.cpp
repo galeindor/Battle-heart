@@ -1,8 +1,14 @@
 
-#include "Skill.h"
+#include "includeSkill/Skill.h"
 
-Skill::Skill(sf::Texture* texture , const sf::Vector2f& pos ,float cooldown)
-	:m_cooldown(cooldown) , m_skillDmg(BASIC_DMG) , m_skillRange(5) , m_timeLeft(0)
+Skill::Skill(float cooldown, int damage, float range)
+	:m_cooldown(cooldown), m_skillDmg(damage), m_skillRange(range)
+{}
+
+//==========================================================
+
+Skill::Skill(sf::Texture* texture , const sf::Vector2f& pos ,float cooldown, int damage = BASIC_DMG, float range = 5)
+	:m_cooldown(cooldown) , m_skillDmg(damage) , m_skillRange(range) , m_timeLeft(0)
 {
 	m_shape.setTexture(texture);
 	m_shape.setPosition(pos);
@@ -51,3 +57,11 @@ void Skill::draw(sf::RenderWindow& window)
 }
 //==========================================================
 
+int Skill::castSkill()
+{
+	m_timeLeft = m_cooldown; // set cooldown to the skill
+
+	// add here animations
+	return m_skillDmg;
+	
+}
