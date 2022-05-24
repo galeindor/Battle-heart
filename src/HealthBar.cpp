@@ -42,7 +42,7 @@ void HealthBar::initHealthBar(const sf::Vector2f pos)
 {
 	auto size = sf::Vector2f(BAR_WIDTH, 10);
 	auto origin = m_bar.getOrigin();
-	m_bar.setOrigin(origin.x + 30, origin.y + 70);
+	m_bar.setOrigin(origin + healthOffset);
 	m_bar.setSize(size);
 	m_bar.setPosition(pos);
 	m_bar.setFillColor(sf::Color::Black);
@@ -54,7 +54,7 @@ void HealthBar::initCurrHp(const sf::Vector2f pos)
 {
 	auto size = sf::Vector2f(BAR_WIDTH, 10);
 	auto origin = m_bar.getOrigin();
-	m_currHealth.setOrigin(sf::Vector2f(origin.x + 30, origin.y + 70));
+	m_currHealth.setOrigin((origin + healthOffset));
 	m_currHealth.setSize(size);
 	m_currHealth.setPosition(pos);
 	m_currHealth.setFillColor(sf::Color::Green);

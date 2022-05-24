@@ -2,14 +2,15 @@
 
 #include <SFML/Graphics.hpp>
 
+const sf::Vector2f healthOffset(30, 113);
+const sf::Vector2f selectedOffset(45, 30);
+
 constexpr auto TILES_NUM = 11;
 constexpr auto SPACING = 75;
-
 constexpr auto WINDOW_WIDTH = 1400;
 constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto HEIGHT_LIMIT = 200;
 constexpr auto CUT_CORNERS = 50; // used to limit the player movement to not touch corners
-
 constexpr auto NUM_OF_PICS = 4;
 constexpr auto NUM_OF_BG = 2;
 constexpr auto NUM_OF_PLAYERS = 3;

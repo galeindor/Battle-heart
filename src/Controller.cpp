@@ -75,20 +75,3 @@ void Controller::drawGame()
 
 	m_window.display();
 }
-
-//=======================================================================================
-/*
-void Controller::updatePlayer(int playerIndex , sf::Vector2f dest)
-{
-	sf::Clock clock;
-
-	auto direction = dest - m_players[playerIndex]->getPosition();
-
-	if (m_players[playerIndex]->moveValidator())
-	{
-		auto delta = clock.restart().asSeconds();
-		m_players[playerIndex]->movePlayer(direction, delta);
-	}
-}
-*/
-//=======================================================================================

@@ -49,25 +49,10 @@ bool Player::setTarget(Player&)
 
 //==========================================================
 
-void Player::updateMovement(const float deltaTime)
+bool Player::checkIntersection() const
 {
-	bool moving = true;
-
-	if (this->getIsAttacking()) // if going to attack target
-	{
-		if (!this->checkIntersection())
-			this->move(deltaTime);
-		else
-		{
-			this->setAttacking(false); // player reached his attack target
-			this->setDestination(this->getPosition()); 
-		}
-	}
-	else if (this->moveValidator()) // if going toward a destination point on the field
-		this->move(deltaTime);
-	else
-		moving = false;
-
-	this->setMoving(moving);
+	const auto epsilon = 10.f;
+	return (std::abs(this->getSprite().getPosition().x - this->getDest().x) < epsilon || std::abs(this->getSprite().getPosition().y - this->getDest().y) < epsilon);
 }
 
+//==========================================================

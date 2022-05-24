@@ -1,48 +1,14 @@
 #include "GameObject.h"
 
 GameObject::GameObject(const sf::Vector2f pos, const int index)
-	: m_health(pos), m_isAttacking(false), m_dest(pos), m_isMoving(false), m_target(NULL)
+	: m_health(pos), m_isAttacking(false), m_dest(pos), m_isMoving(false), m_target(NULL),
+	  m_velocity(sf::Vector2f(0, 0)), m_mass(0.1f), m_maxForce(30), m_maxVelocity(150)
 {
+	this->initSkills(index);
 	m_sprite.setPosition(pos);
-	initSkills(index);
 	m_sprite.setTexture(*Resources::instance().getTexture(index));
 	auto size = m_sprite.getTexture()->getSize();
-	m_sprite.setOrigin(size.x / 2, size.y / 2);
-}
-
-//=======================================================================================
-
-void GameObject::move(const float deltaTime)
-{
-	sf::Vector2f movement = sf::Vector2f(this->m_dest.x - this->m_sprite.getPosition().x,
-	this->m_dest.y - this->m_sprite.getPosition().y);
-	float distance = std::sqrt(std::pow(movement.x, 2) + std::pow(movement.y, 2));
-	auto speedPerSecond = 140.f / distance;
-	this->m_sprite.move(movement * speedPerSecond * deltaTime);
-	this->m_health.setPosition(this->m_sprite.getPosition());
-}
-
-//=======================================================================================
-
-float distance(float f1, float f2)
-{
-	return std::abs(f1 - f2);
-}
-
-//=======================================================================================
-
-bool GameObject::checkIntersection() const
-{
-	if (this->m_target)
-	{
-		auto tarPos = m_target->getPosition();
-		auto myPos = this->getPosition();
-		auto range = m_baseAttack->getRange();
-		return (distance(tarPos.x, myPos.x) <= range) && (distance(tarPos.y, myPos.y) <= range);
-	}
-		//return this->m_sprite.getGlobalBounds().intersects(this->m_target->getSprite().getGlobalBounds());
-
-	return false;
+	m_sprite.setOrigin(size.x / 2, size.y);
 }
 
 //=======================================================================================
@@ -50,21 +16,6 @@ bool GameObject::checkIntersection() const
 bool GameObject::checkCollision(const sf::Vector2f& location)
 {
 	return this->m_sprite.getGlobalBounds().contains(location);
-}
-
-//=======================================================================================
-
-bool GameObject::moveValidator()
-{
-	const auto epsilon = 5.f;
-	return (std::abs(m_sprite.getPosition().x - m_dest.x) > epsilon || std::abs(m_sprite.getPosition().y - m_dest.y) > epsilon);
-}
-
-//=======================================================================================
-
-bool GameObject::collidesWith(const GameObject& obj)
-{
-	return getGlobalBounds().intersects(obj.getGlobalBounds());
 }
 
 //=======================================================================================
@@ -83,17 +34,27 @@ void GameObject::healCharacter(int amount)
 
 //=======================================================================================
 
-void GameObject::update(float deltaTime)
+void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 {
-	this->updateMovement(deltaTime);
+	sf::Vector2f acceleration = steerForce / this->m_mass;
+	this->m_velocity = this->m_velocity + acceleration * deltaTime;
+	this->m_velocity = this->m_steering->Truncate(this->m_velocity, this->m_maxVelocity);
+
+	if (!this->checkIntersection())
+	{
+		this->m_isMoving = true;
+		this->m_sprite.move(this->m_velocity * deltaTime);
+	}
+	else
+		this->m_isMoving = false;
+
+	// Trim position values to window size
+	this->m_sprite.setPosition(this->adjustLocation(this->m_sprite.getPosition()));
+
+	this->m_health.setPosition(this->m_sprite.getPosition());
 }
 
 //=======================================================================================
-
-sf::FloatRect GameObject::getGlobalBounds() const
-{
-	return m_sprite.getGlobalBounds();
-}
 
 void GameObject::initSkills(int index)
 {
@@ -122,3 +83,15 @@ void GameObject::useSkill(int index)
 }
 
 //=======================================================================================
+
+sf::Vector2f GameObject::adjustLocation(sf::Vector2f location)
+{
+	auto newLoc = sf::Vector2f();
+	newLoc.x = std::min(location.x, float(WINDOW_WIDTH - CUT_CORNERS));
+	newLoc.y = std::min(location.y, float(WINDOW_HEIGHT - 1.5f * CUT_CORNERS));
+
+	newLoc.x = std::max(newLoc.x, float(CUT_CORNERS));
+	newLoc.y = std::max(newLoc.y, float(HEIGHT_LIMIT));
+
+	return newLoc;
+}

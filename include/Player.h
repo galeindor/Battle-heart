@@ -9,7 +9,7 @@ public:
 
 	virtual bool setTarget(Enemy& obj) override;
 	virtual bool setTarget(Player& obj) override;
-	virtual void updateMovement(const float deltaTime) override;
+	virtual bool checkIntersection() const override;
 
 	//overrides
 	void draw(sf::RenderWindow& window) override;

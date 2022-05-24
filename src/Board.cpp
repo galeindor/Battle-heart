@@ -1,7 +1,7 @@
 #include "Board.h"
 
 Board::Board()
-	: m_selectedPlayerIndex(0)
+	: m_playerIndex(0)
 {
 	this->initPlayers();
 	this->initEnemies();
@@ -10,20 +10,71 @@ Board::Board()
 
 //==========================================================
 
+void Board::seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime)
+{
+	sf::Vector2f alignment, cohesion, seperation;
+
+	for (int index = 1; index < this->m_enemies.size(); index++)
+	{
+		float farness = enemy->behaviour()->distance(enemy->getPosition(), this->m_enemies[index]->getPosition());
+		sf::Vector2f farVec = sf::Vector2f(farness, farness);
+
+		if (this->m_enemies[index]->behaviour()->length(farVec) <= 55) // 50 = radius
+		{
+			alignment += (this->m_enemies[index]->getVelocity());
+			cohesion += this->m_enemies[index]->getPosition();
+			seperation += this->m_enemies[index]->getPosition() - enemy->getPosition();
+		}
+	}
+
+	alignment /= float(this->m_enemies.size() - 1);
+	alignment = enemy->behaviour()->Normalize(alignment);
+
+	cohesion /= float(this->m_enemies.size() - 1);;
+	cohesion = sf::Vector2f(cohesion.x - enemy->getPosition().x, cohesion.y - enemy->getPosition().y);
+	cohesion = enemy->behaviour()->Normalize(cohesion);
+
+	seperation /= float(this->m_enemies.size() - 1);
+	seperation *= -1.f;
+	seperation = enemy->behaviour()->Normalize(seperation);
+
+	enemy->update(steerForce + seperation * 60.f + cohesion * 25.f + alignment * 20.f, deltaTime);
+}
+
+//==========================================================
+
 void Board::updateBoard(float deltaTime, bool charSelected)
 {
-	this->updateEnemyDest();
+	this->updateEnemyDest(); // Targets the player with highest max HP.
+
+	float t;
+	sf::Vector2f firstEnemyDist = this->m_enemies.begin()->get()->getTarget()->getPosition() - this->m_enemies.begin()->get()->getPosition();
 
 	if (charSelected)
-		m_selected.setPosition(m_players[this->m_selectedPlayerIndex]->getPosition());
+		m_selected.setPosition(m_players[this->m_playerIndex]->getPosition());
 
 	for (auto& player : m_players)
-		player->update(deltaTime);
+	{
+		sf::Vector2f steerForce;
+
+		if(player->getTarget())
+			steerForce = player->behaviour()->Arrive(player.get(), player->getTarget()->getPosition(), 10, deltaTime);
+		else
+			steerForce = player->behaviour()->Arrive(player.get(), player->getDest(), 10, deltaTime);
+
+		player->update(steerForce, deltaTime);
+	}
 
 	for (auto& enemy : m_enemies)
 	{
-		enemy->update(deltaTime);
-		this->checkEnemyCollision(*enemy);
+		if (enemy->behaviour()->length(enemy->getTarget()->getVelocity()) == 0.f)
+			t = 2;
+		else
+			t = enemy->behaviour()->length(firstEnemyDist) / enemy->behaviour()->length(enemy->getTarget()->getVelocity());
+
+		sf::Vector2f steerForce = enemy->behaviour()->Pursue(enemy.get(), enemy->getTarget()->getPosition() + enemy->getTarget()->getVelocity() * t, 100, deltaTime);
+		Enemy* enemyPtr = enemy.get();
+		this->seperation(enemyPtr, steerForce, deltaTime);
 	}
 }
 
@@ -59,16 +110,16 @@ void Board::updateEnemyDest()
 
 bool Board::handleFirstClick(sf::Vector2f location)
 {
-	if (m_players[m_selectedPlayerIndex]->checkSkillClick(location))
+	if (m_players[m_playerIndex]->checkSkillClick(location))
 		return false;;
 
 	for (int index = 0; index < m_players.size(); index++)
 	{
 		if (m_players[index]->checkCollision(location))
 		{
-			m_players[m_selectedPlayerIndex]->setSelected(false);
+			m_players[m_playerIndex]->setSelected(false);
 			m_players[index]->setSelected(true);
-			this->m_selectedPlayerIndex = index;
+			this->m_playerIndex = index;
 			return true;
 		}
 	}
@@ -80,27 +131,29 @@ bool Board::handleFirstClick(sf::Vector2f location)
 
 bool Board::handleSecondClick(sf::Vector2f location)
 {
-	if (m_players[m_selectedPlayerIndex]->checkSkillClick(location))
+	if (m_players[m_playerIndex]->checkSkillClick(location))
 		return false;
 
 	for (auto& player : m_players)
 		if (player->checkCollision(location))
-			if (m_players[m_selectedPlayerIndex]->setTarget(*player))
+			if (m_players[m_playerIndex]->setTarget(*player))
 			{
-				this->m_players[m_selectedPlayerIndex]->setDestination(player->getPosition());
+				this->m_selected.setPosition(player->getPosition());
+				this->m_players[m_playerIndex]->setDestination(player->getPosition());
 				return true;
 			}
 
 	for (auto& enemy : m_enemies)
 		if (enemy->checkCollision(location))
-			if (m_players[m_selectedPlayerIndex]->setTarget(*enemy))
+			if (m_players[m_playerIndex]->setTarget(*enemy))
 			{
-				this->m_players[m_selectedPlayerIndex]->setDestination(enemy->getPosition());
+				this->m_selected.setPosition(enemy->getPosition());
+				this->m_players[m_playerIndex]->setDestination(enemy->getPosition());
 				return true;
 			}
 
-	location = adjustLocation(location);
-	this->m_players[m_selectedPlayerIndex]->setDestination(location);
+	this->m_players[m_playerIndex]->setAsTarget(nullptr);
+	this->m_players[m_playerIndex]->setDestination(location);
 	this->m_selected.setPosition(location);
 
 	return true;
@@ -131,30 +184,7 @@ bool Board::checkIntersection(sf::Sprite obj,sf::Sprite secObj)
 
 //==========================================================
 
-void Board::checkEnemyCollision(Enemy& enemy)
-{
-	for (auto& other : m_enemies)
-		if (other->collidesWith(enemy))
-			other->handleCollision(enemy);
-}
-
-//==========================================================
-
-sf::Vector2f Board::adjustLocation(sf::Vector2f location)
-{
-	auto newLoc = sf::Vector2f();
-	newLoc.x = min(location.x, float(WINDOW_WIDTH  - CUT_CORNERS));
-	newLoc.y = min(location.y, float(WINDOW_HEIGHT - 1.5f * CUT_CORNERS));
-
-	newLoc.x = max(newLoc.x, float(CUT_CORNERS));
-	newLoc.y = max(newLoc.y, float(HEIGHT_LIMIT));
-
-	return newLoc;
-}
-
-//==========================================================
-
-bool Board::checkMoving()
+bool Board::checkMoving() const
 {
 	for (int i = 0; i < m_players.size(); i++)
 		if (this->m_players[i]->getIsMoving())
@@ -164,8 +194,6 @@ bool Board::checkMoving()
 }
 
 //==========================================================
-
-
 
 void Board::initPlayers()
 {
@@ -188,5 +216,5 @@ void Board::initSelected()
 {
 	m_selected.setTexture(*Resources::instance().getTexture(_select));
 	auto origin = m_selected.getOrigin();
-	m_selected.setOrigin(origin.x + 45, origin.y - 20);
+	m_selected.setOrigin(origin + selectedOffset);
 }
