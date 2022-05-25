@@ -46,8 +46,7 @@ public:
 	sf::FloatRect getGlobalBounds() const		{ return m_sprite.getGlobalBounds(); }
 
 	// Setters
-	void setDestination(sf::Vector2f dest) { dest = adjustLocation(dest);
-											 this->m_dest = dest; }
+	void setDestination(sf::Vector2f dest) {  this->m_dest = adjustLocation(dest); }
 	void setAsTarget(GameObject* obj) { this->m_target = obj; }
 	void setAttacking(bool isAttacking) { this->m_isAttacking = isAttacking; }
 	void setMoving(bool movement) { this->m_isMoving = movement; }
@@ -67,7 +66,7 @@ private:
 	void initStats(const sf::Vector2f pos, int index);
 	std::unique_ptr<BaseAttack> m_baseAttack; // each character basic attack
 	vector<std::unique_ptr<Skill>> m_skills; // skills useable
-	vector<std::unique_ptr<Stat>> m_stats;
+	vector<std::unique_ptr<Stat>> m_stats; // all of the character stats
 	HealthBar m_hpBar;
 	sf::Sprite m_sprite;
 	bool m_isAttacking;

@@ -32,7 +32,7 @@ void GameObject::hitCharacter(int amount)
 
 void GameObject::healCharacter(int amount)
 {
-	this->m_stats[_hp]->handleStat(amount);
+	this->m_stats[_hp]->handleStat(-amount);
 }
 
 //=======================================================================================
@@ -53,6 +53,7 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 
 	// Trim position values to window size
 	this->m_sprite.setPosition(this->adjustLocation(this->m_sprite.getPosition()));
+	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->m_sprite.getPosition());
 }
 

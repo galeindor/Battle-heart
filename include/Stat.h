@@ -11,8 +11,8 @@ public:
 
 	virtual bool handleStat(int amount);
 
-	int getStat() { return this->m_val; }
-	int setStat(int val);
+	int getStat() const { return this->m_val; }
+	int setStat(int val) { this->m_val = val; }
 
 protected:
 
