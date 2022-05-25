@@ -2,6 +2,7 @@
 
 #include "includeSkill/Skill.h"
 #include "includeSkill/BasicAttack.h"
+#include "Health.h"
 #include "HealthBar.h"
 #include "Resources.h"
 #include "SteeringInterface.h"
@@ -31,7 +32,7 @@ public:
 	sf::Vector2f adjustLocation(sf::Vector2f location);
 
 	// Getters
-	int getHp() const { return this->m_health.getHp(); } // get current HP
+	int getStat(int index) const { return this->m_stats[index]->getStatCopy(); }
 	bool getIsMoving() const { return this->m_isMoving; }
 	sf::Vector2f getPosition() const { return this->m_sprite.getPosition(); }
 	sf::Vector2f getVelocity() const { return this->m_velocity; }
@@ -40,7 +41,7 @@ public:
 	SteeringInterface* behaviour() const { return this->m_steering; }
 	sf::Vector2f getDest() const { return this->m_dest; }
 	GameObject* getTarget() const { return this->m_target; }
-	HealthBar	getHpBar()  const { return this->m_health; }
+	HealthBar	getHpBar()  const { return this->m_hpBar; }
 	sf::Sprite	getSprite() const { return this->m_sprite; }
 	bool getIsAttacking() const { return this->m_isAttacking; }
 	sf::FloatRect getGlobalBounds() const { return m_sprite.getGlobalBounds(); }
@@ -64,12 +65,12 @@ protected:
 
 private:
 	void initSkills(int index);
-
+	void initStats(const sf::Vector2f pos, int index);
 	std::unique_ptr<BaseAttack> m_baseAttack; // each character basic attack
 	vector<std::unique_ptr<Skill>> m_skills; // skills useable
-	HealthBar m_health;
+	vector<std::unique_ptr<Stat>> m_stats;
+	HealthBar m_hpBar;
 	sf::Sprite m_sprite;
-
 	bool m_isAttacking;
 	bool m_isMoving;
 

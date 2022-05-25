@@ -1,10 +1,13 @@
 #include "GameObject.h"
 
 GameObject::GameObject(const sf::Vector2f pos, const int index)
-	: m_health(pos), m_isAttacking(false), m_dest(pos), m_isMoving(false), m_target(NULL),
-	  m_velocity(sf::Vector2f(0, 0)), m_mass(0.1f), m_maxForce(30), m_maxVelocity(150)
+	: m_isAttacking(false), m_dest(pos), m_isMoving(false), m_target(NULL),
+	  m_velocity(sf::Vector2f(0, 0)), m_mass(0.1f), m_maxForce(30), m_maxVelocity(150),
+	  m_hpBar(HealthBar(pos))
 {
 	this->initSkills(index);
+	this->initStats(pos, index);
+
 	m_sprite.setPosition(pos);
 	m_sprite.setTexture(*Resources::instance().getTexture(index));
 	auto size = m_sprite.getTexture()->getSize();
@@ -22,14 +25,14 @@ bool GameObject::checkCollision(const sf::Vector2f& location)
 
 void GameObject::hitCharacter(int amount)
 {
-	this->m_health.lowerHealth(amount); // deal damage to the character
+	this->m_stats[_hp]->handleStat(amount);
 }
 
 //=======================================================================================
 
 void GameObject::healCharacter(int amount)
 {
-	this->m_health.lowerHealth(-amount); // increase health by lowering negative damage
+	this->m_stats[_hp]->handleStat(amount);
 }
 
 //=======================================================================================
@@ -50,8 +53,7 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 
 	// Trim position values to window size
 	this->m_sprite.setPosition(this->adjustLocation(this->m_sprite.getPosition()));
-
-	this->m_health.setPosition(this->m_sprite.getPosition());
+	this->m_hpBar.setPosition(this->m_sprite.getPosition());
 }
 
 //=======================================================================================
@@ -65,6 +67,18 @@ void GameObject::initSkills(int index)
 	{
 		auto skill = Skill(Resources::instance().getSkill(index, i), sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30), ATK_CD,BASIC_DMG,5.f);
 		m_skills.push_back(std::make_unique<Skill>(skill));
+	}
+}
+
+void GameObject::initStats(const sf::Vector2f pos, int index)
+{
+	for (int index = 0; index < MAX_STATS; index++)
+	{
+		switch (index)
+		{
+		case Stats::_hp:
+			this->m_stats.push_back(std::make_unique<Health>(MAX_HEALTH));
+		}
 	}
 }
 

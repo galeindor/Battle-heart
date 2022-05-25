@@ -87,10 +87,10 @@ void Board::updateEnemyDest()
 	Player* maxPlayer = NULL;
 
 	for (auto& player : m_players)
-		if (player->getHp()> max)
+		if (player->getStat(_hp)> max)
 		{
 			maxPlayer = player.get();
-			max = player->getHp();
+			max = player->getStat(_hp);
 			pos = player->getPosition();
 		}
 

@@ -15,6 +15,7 @@ constexpr auto NUM_OF_PICS = 4;
 constexpr auto NUM_OF_BG = 2;
 constexpr auto NUM_OF_PLAYERS = 3;
 
+
 constexpr auto MAX_SKILL = 2;
 constexpr auto BASIC_DMG = 1;
 constexpr auto MAX_HEALTH = 20;
@@ -28,6 +29,11 @@ const int ENEMY_POS = -1;
 enum LoadTextures
 {
 	_cleric , _knight , _select, _dummy
+};
+
+enum Stats
+{
+	_hp, MAX_STATS
 };
 
 enum State
