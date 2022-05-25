@@ -6,5 +6,6 @@ Stat::Stat(int initVal)
 
 bool Stat::handleStat(int amount)
 {
-	return false;
+	m_val -= amount;
+	return (m_val > 0);
 }

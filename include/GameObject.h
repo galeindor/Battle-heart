@@ -2,15 +2,14 @@
 
 #include "includeSkill/Skill.h"
 #include "includeSkill/BasicAttack.h"
-#include "Health.h"
 #include "HealthBar.h"
 #include "Resources.h"
 #include "SteeringInterface.h"
+#include "Stat.h"
+
+
 class Enemy;
 class Player;
-class Dummy;
-class Cleric;
-class Knight;
 class SteeringInterface;
 
 class GameObject
@@ -32,19 +31,19 @@ public:
 	sf::Vector2f adjustLocation(sf::Vector2f location);
 
 	// Getters
-	int getStat(int index) const { return this->m_stats[index]->getStatCopy(); }
-	bool getIsMoving() const { return this->m_isMoving; }
-	sf::Vector2f getPosition() const { return this->m_sprite.getPosition(); }
-	sf::Vector2f getVelocity() const { return this->m_velocity; }
-	float getMaxVelocity() const { return this->m_maxVelocity; }
-	float getMaxForce() const { return this->m_maxForce; }
-	SteeringInterface* behaviour() const { return this->m_steering; }
-	sf::Vector2f getDest() const { return this->m_dest; }
-	GameObject* getTarget() const { return this->m_target; }
-	HealthBar	getHpBar()  const { return this->m_hpBar; }
-	sf::Sprite	getSprite() const { return this->m_sprite; }
-	bool getIsAttacking() const { return this->m_isAttacking; }
-	sf::FloatRect getGlobalBounds() const { return m_sprite.getGlobalBounds(); }
+	int getStat(int index)			const		{ return this->m_stats[index]->getStat(); }
+	bool getIsMoving()				const		{ return this->m_isMoving; }
+	bool getIsAttacking()			const		{ return this->m_isAttacking; }
+	sf::Vector2f getPosition()		const		{ return this->m_sprite.getPosition(); }
+	sf::Vector2f getVelocity()		const		{ return this->m_velocity; }
+	float getMaxVelocity()			const		{ return this->m_maxVelocity; }
+	float getMaxForce()				const		{ return this->m_maxForce; }
+	SteeringInterface* behaviour()	const		{ return this->m_steering; }
+	sf::Vector2f	getDest()		const		{ return this->m_dest; }
+	GameObject*		getTarget()		const		{ return this->m_target; }
+	HealthBar		getHpBar()		const		{ return this->m_hpBar; }
+	sf::Sprite		getSprite()		const		{ return this->m_sprite; }
+	sf::FloatRect getGlobalBounds() const		{ return m_sprite.getGlobalBounds(); }
 
 	// Setters
 	void setDestination(sf::Vector2f dest) { dest = adjustLocation(dest);

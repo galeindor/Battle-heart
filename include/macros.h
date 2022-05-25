@@ -11,7 +11,7 @@ constexpr auto WINDOW_WIDTH = 1400;
 constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto HEIGHT_LIMIT = 200;
 constexpr auto CUT_CORNERS = 50; // used to limit the player movement to not touch corners
-constexpr auto NUM_OF_PICS = 4;
+//constexpr auto NUM_OF_PICS = 4;
 constexpr auto NUM_OF_BG = 2;
 constexpr auto NUM_OF_PLAYERS = 3;
 
@@ -28,17 +28,12 @@ const int ENEMY_POS = -1;
 
 enum LoadTextures
 {
-	_cleric , _knight , _select, _dummy
+	_cleric , _knight , _select, _dummy , NUM_OF_PICS
 };
 
 enum Stats
 {
 	_hp, MAX_STATS
-};
-
-enum State
-{
-	EnemyTrapped = true , EnemyEscaped = false
 };
 
 const std::string textures[NUM_OF_PICS] = { "cleric.png" , "knight.png" , "select.png", "enemy.png" };

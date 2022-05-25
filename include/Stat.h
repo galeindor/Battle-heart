@@ -1,5 +1,8 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+#include "macros.h"
+
 class Stat
 {
 public:
@@ -7,10 +10,12 @@ public:
 	~Stat() = default;
 
 	virtual bool handleStat(int amount);
-	int getStatCopy() { return this->m_val; }
+
+	int getStat() { return this->m_val; }
+	int setStat(int val);
 
 protected:
-	int& getStat() { return this->m_val; }
+
 
 private:
 	int m_val;

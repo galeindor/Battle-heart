@@ -77,7 +77,7 @@ void GameObject::initStats(const sf::Vector2f pos, int index)
 		switch (index)
 		{
 		case Stats::_hp:
-			this->m_stats.push_back(std::make_unique<Health>(MAX_HEALTH));
+			this->m_stats.push_back(std::make_unique<Stat>(MAX_HEALTH));
 		}
 	}
 }

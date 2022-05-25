@@ -6,7 +6,6 @@
                                               "Enemy.cpp"
                                               "HealthBar.cpp"
                                               "Stat.cpp"
-                                              "Health.cpp"
                                               "Resources.cpp"
                                               "Board.cpp"
                                               "Cleric.cpp"  
