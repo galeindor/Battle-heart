@@ -24,6 +24,8 @@ public:
 	void updateBoard(float deltaTime, bool charSelected);
 	void updateEnemyDest();
 	void drawBoard(sf::RenderWindow& window, bool charSelected);
+	void sortObjects();
+	void drawObjects(sf::RenderWindow& window);
 	/*void nextLevel();
 	void resetBoard();*/
 

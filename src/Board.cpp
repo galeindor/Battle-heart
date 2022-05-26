@@ -178,11 +178,53 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 	if( draw || charSelected)
 		window.draw(this->m_selected);
 
-	for (auto &player : m_players)
-		player->draw(window);
+	this->drawObjects(window);
+}
 
-	for (auto& enemy : m_enemies)
-		enemy->draw(window);
+void Board::sortObjects()
+{
+	std::sort(this->m_enemies.begin(), this->m_enemies.end(), 
+		[&](shared_ptr<Enemy> obj1, shared_ptr<Enemy> obj2) { 
+			return (obj1.get()->getPosition().y < obj2.get()->getPosition().y); 
+		});
+
+	std::sort(this->m_players.begin(), this->m_players.end(),
+		[&](shared_ptr<Player> obj1, shared_ptr<Player> obj2) {
+			return (obj1.get()->getPosition().y < obj2.get()->getPosition().y);
+		});
+}
+
+void Board::drawObjects(sf::RenderWindow& window)
+{
+	this->sortObjects();
+	int enemyIndex = 0, playerIndex = 0;
+
+	while(enemyIndex < this->m_enemies.size() || playerIndex < this->m_players.size())
+	{
+		if (enemyIndex < this->m_enemies.size() && playerIndex < this->m_players.size())
+		{
+			if (this->m_players[playerIndex].get()->getPosition().y > this->m_enemies[enemyIndex].get()->getPosition().y)
+			{
+				this->m_enemies[enemyIndex]->draw(window);
+				enemyIndex++;
+			}
+			else
+			{
+				this->m_players[playerIndex]->draw(window);
+				playerIndex++;
+			}
+		}
+		else if (enemyIndex < this->m_enemies.size())
+		{
+			this->m_enemies[enemyIndex]->draw(window);
+			enemyIndex++;
+		}
+		else
+		{
+			this->m_players[playerIndex]->draw(window);
+			playerIndex++;
+		}
+	}
 }
 
 //==========================================================

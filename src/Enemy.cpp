@@ -29,8 +29,20 @@ bool Enemy::setTarget(Player& obj) // all enemies can target only players
 
 bool Enemy::checkIntersection() const
 {
+	int dx = this->getSprite().getPosition().x - this->getDest().x;
+	int dy = this->getSprite().getPosition().y - this->getDest().y;
+	float d3 = (dx * dx) + (dy * dy);
+	float d = sqrt(d3);
+
+	if (d < 60)
+		return true;
+
+	return false;
+
+	/*
 	if (this->getTarget())
 		return this->getSprite().getGlobalBounds().intersects(this->getTarget()->getSprite().getGlobalBounds());
 
 	return false;
+	*/
 }
