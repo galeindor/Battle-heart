@@ -163,13 +163,13 @@ bool Board::handleSecondClick(sf::Vector2f location)
 			}
 
 	this->m_players[m_playerIndex]->setAsTarget(nullptr);
-	this->m_players[m_playerIndex]->setDestination(location);
-	this->m_selected.setPosition(location);
+	this->m_players[m_playerIndex]->setDestination(adjustLocation(location));
+	this->m_selected.setPosition(adjustLocation(location));
 
 	return true;
 }
 
-//==========================================================
+//===================================================================================
 
 void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 {
@@ -181,18 +181,17 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 	this->drawObjects(window);
 }
 
+//===================================================================================
+
 void Board::sortObjects()
 {
-	std::sort(this->m_enemies.begin(), this->m_enemies.end(), 
-		[&](shared_ptr<Enemy> obj1, shared_ptr<Enemy> obj2) { 
-			return (obj1.get()->getPosition().y < obj2.get()->getPosition().y); 
-		});
+	std::sort(m_players.begin(), m_players.end(), [](auto obj1, auto obj2) { return obj1->getPosition().y < obj2->getPosition().y; });
 
-	std::sort(this->m_players.begin(), this->m_players.end(),
-		[&](shared_ptr<Player> obj1, shared_ptr<Player> obj2) {
-			return (obj1.get()->getPosition().y < obj2.get()->getPosition().y);
-		});
+	std::sort(m_enemies.begin(), m_enemies.end(), [](auto obj1, auto obj2) { return obj1->getPosition().y < obj2->getPosition().y; });
+
 }
+
+//===================================================================================
 
 void Board::drawObjects(sf::RenderWindow& window)
 {
@@ -266,4 +265,18 @@ void Board::initSelected()
 	m_selected.setTexture(*Resources::instance().getTexture(_select));
 	auto origin = m_selected.getOrigin();
 	m_selected.setOrigin(origin + selectedOffset);
+}
+
+//==========================================================
+
+sf::Vector2f Board::adjustLocation(sf::Vector2f location)
+{
+	auto newLoc = sf::Vector2f();
+	newLoc.x = std::min(location.x, float(WINDOW_WIDTH - CUT_CORNERS));
+	newLoc.y = std::min(location.y, float(WINDOW_HEIGHT - 1.5f * CUT_CORNERS));
+
+	newLoc.x = std::max(newLoc.x, float(CUT_CORNERS));
+	newLoc.y = std::max(newLoc.y, float(HEIGHT_LIMIT));
+
+	return newLoc;
 }

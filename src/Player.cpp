@@ -25,7 +25,7 @@ bool Player::checkSkillClick(const sf::Vector2f& location)
 	for (auto& skill : this->getSkills()) // check for presses on a skill
 		if (skill->checkClick(location))
 		{
-			skill->castSkill();
+			skill->handleClick();
 			return true;
 		}
 

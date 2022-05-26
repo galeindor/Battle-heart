@@ -65,7 +65,6 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->m_sprite.getPosition());
 
-
 	
 
 }

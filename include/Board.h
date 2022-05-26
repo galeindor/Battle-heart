@@ -26,6 +26,8 @@ public:
 	void drawBoard(sf::RenderWindow& window, bool charSelected);
 	void sortObjects();
 	void drawObjects(sf::RenderWindow& window);
+
+	sf::Vector2f adjustLocation(sf::Vector2f location);
 	/*void nextLevel();
 	void resetBoard();*/
 
