@@ -17,7 +17,7 @@ constexpr auto NUM_OF_PLAYERS = 3;
 
 
 constexpr auto MAX_SKILL = 2;
-constexpr auto BASIC_DMG = 1;
+constexpr auto BASIC_DMG = 5;
 constexpr auto MAX_HEALTH = 20;
 constexpr auto SKILL_RECT_SIZE= 80; // size of the rectangle where skills are shown
 

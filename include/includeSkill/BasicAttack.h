@@ -8,6 +8,8 @@ public:
 	BaseAttack(float cooldown, int damage, float range);
 	~BaseAttack() = default;
 
+	virtual int castSkill(Stat stat) override;
+
 private:
 
 };

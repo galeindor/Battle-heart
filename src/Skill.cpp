@@ -55,13 +55,5 @@ void Skill::draw(sf::RenderWindow& window)
 	window.draw(m_shape);
 	window.draw(m_cooldownScale);
 }
-//==========================================================
 
-int Skill::castSkill()
-{
-	m_timeLeft = m_cooldown; // set cooldown to the skill
-
-	// add here animations
-	return m_skillDmg;
-	
-}
+//===========================================================

@@ -12,7 +12,7 @@ public:
 	virtual bool handleStat(int amount);
 
 	int getStat() const { return this->m_val; }
-	int setStat(int val) { this->m_val = val; }
+	void setStat(int val) { this->m_val = val; }
 
 protected:
 

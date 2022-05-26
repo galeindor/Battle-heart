@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Resources.h"
+#include "Stat.h"
 
 class GameObject;
 
@@ -10,7 +11,9 @@ public:
 	Skill(float cooldown, int damage, float range);
 	Skill(sf::Texture* texture, const sf::Vector2f& pos, float cooldown , int damage , float range);
 	~Skill() = default;
-	virtual int castSkill();
+	virtual int castSkill(Stat stat) { return 1; };
+
+	int getWantedStat() const { return  m_wantedStat; }
 
 	float getRange() const { return m_skillRange; }
 	bool checkClick(const sf::Vector2f& pos);
@@ -21,10 +24,15 @@ public:
 protected:
 
 	int getDmg() const { return m_skillDmg; }
+	float getCD() const { return m_cooldown; }
+	float getTimeLeft() const { return m_timeLeft; }
 
+	void setTimeLeft(float val) { m_timeLeft = val; }
 private:
 
 	// skill functionality part 
+
+	int m_wantedStat;
 
 	int m_skillDmg;
 	float m_skillRange;

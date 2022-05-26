@@ -49,12 +49,22 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 		this->m_sprite.move(this->m_velocity * deltaTime);
 	}
 	else
+	{
 		this->m_isMoving = false;
+		
+		if (targetInRange()) 
+		{
+			useBaseAttack();
+		}
+	}
 
 	// Trim position values to window size
 	this->m_sprite.setPosition(this->adjustLocation(this->m_sprite.getPosition()));
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->m_sprite.getPosition());
+
+	
+
 }
 
 //=======================================================================================
@@ -79,6 +89,7 @@ void GameObject::initStats(const sf::Vector2f pos, int index)
 		{
 		case Stats::_hp:
 			this->m_stats.push_back(std::make_unique<Stat>(MAX_HEALTH));
+			this->m_stats.push_back(std::make_unique<Stat>(m_baseAttack->getRange()));
 		}
 	}
 }
@@ -87,14 +98,16 @@ void GameObject::initStats(const sf::Vector2f pos, int index)
 
 void GameObject::useBaseAttack()
 {
-	m_target->hitCharacter(m_baseAttack->castSkill());
+	auto index = m_baseAttack->getWantedStat();
+	m_target->setStat(index, m_baseAttack->castSkill(m_target->getStat(index)));
 }
 
 //=======================================================================================
 
-void GameObject::useSkill(int index)
+void GameObject::useSkill(int skillIndex)
 {
-	m_target->hitCharacter(m_skills[index]->castSkill());
+	auto index = m_baseAttack->getWantedStat();
+	m_target->setStat(index, m_skills[skillIndex]->castSkill(m_target->getStat(index)));
 }
 
 //=======================================================================================
@@ -109,4 +122,25 @@ sf::Vector2f GameObject::adjustLocation(sf::Vector2f location)
 	newLoc.y = std::max(newLoc.y, float(HEIGHT_LIMIT));
 
 	return newLoc;
+}
+
+//=======================================================================================
+float distance(float f1, float f2)
+{
+	return std::abs(f1 - f2);
+}
+
+//=======================================================================================
+
+bool GameObject::targetInRange() const
+{
+	if (this->m_target)
+	{
+		auto tarPos = m_target->getPosition();
+		auto myPos = this->getPosition();
+		auto range = m_baseAttack->getRange();
+		return (distance(tarPos.x, myPos.x) <= range) && (distance(tarPos.y, myPos.y) <= range);
+	}
+
+	return false;
 }

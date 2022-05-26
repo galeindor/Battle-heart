@@ -1,9 +1,10 @@
 ANIMATION
 1. add animations - add class and each gameObject need to handle his animation
 2. skills - create castSkill and find where to use it
-3. sync the health bar to current hp - DONE ( need to be checked )
+3. sync the health bar to current hp - DONE
 4. no more dancing enemies for god's sake
 5. too much 'handleCollision' 'handleIntersection' , organize the collision types
+6. Characters showing by Y value - DONE
 
 ART 
 1. think about skill animations 

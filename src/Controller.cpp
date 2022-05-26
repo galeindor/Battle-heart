@@ -9,9 +9,10 @@ Controller::Controller()
 }
 
 //=======================================================================================
+
 void Controller::run()
 {
-	float deltaTime = 0.0f;
+	float deltaTime = 0.f;
 	auto inProgress = false;
 
 	while (m_window.isOpen())

@@ -30,6 +30,8 @@ public:
 	void useSkill(int index);
 	sf::Vector2f adjustLocation(sf::Vector2f location);
 
+	bool targetInRange() const;
+
 	// Getters
 	int getStat(int index)			const		{ return this->m_stats[index]->getStat(); }
 	bool getIsMoving()				const		{ return this->m_isMoving; }
@@ -50,6 +52,7 @@ public:
 	void setAsTarget(GameObject* obj) { this->m_target = obj; }
 	void setAttacking(bool isAttacking) { this->m_isAttacking = isAttacking; }
 	void setMoving(bool movement) { this->m_isMoving = movement; }
+	void setStat(int index, int newVal) { this->m_stats[index]->setStat(newVal); }
 
 	// Checks/validators
 	bool checkCollision(const sf::Vector2f& location);

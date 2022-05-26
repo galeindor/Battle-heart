@@ -168,6 +168,9 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 	if( draw || charSelected)
 		window.draw(this->m_selected);
 
+	std::sort(m_players.begin(), m_players.end(), [](auto p1, auto p2) { return p1->getPosition().y < p2->getPosition().y; });
+	std::sort(m_enemies.begin(), m_enemies.end(), [](auto p1, auto p2) { return p1->getPosition().y < p2->getPosition().y; });
+
 	for (auto &player : m_players)
 		player->draw(window);
 
