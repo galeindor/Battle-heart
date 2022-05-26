@@ -4,8 +4,9 @@
 
 #include "Cleric.h"
 #include "Knight.h"
-#include "Dummy.h"
+#include "Archer.h"
 
+#include "Dummy.h"
 using namespace std;
 using std::shared_ptr;
 
@@ -18,12 +19,16 @@ public:
 	bool checkIntersection(sf::Sprite obj, sf::Sprite secObj); //for collisions..
 	bool checkMoving() const;
 
+	vector<sf::Vector2f> createObstaclesVec();
 	void seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime);
 	void updateBoard(float deltaTime, bool charSelected);
 	void updateEnemyDest();
 	void drawBoard(sf::RenderWindow& window, bool charSelected);
+	void sortObjects();
+	void drawObjects(sf::RenderWindow& window);
 	/*void nextLevel();
 	void resetBoard();*/
+
 private:
 	vector<shared_ptr<Player>> m_players;
 	vector<shared_ptr<Enemy>> m_enemies;

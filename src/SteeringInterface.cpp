@@ -41,19 +41,7 @@ sf::Vector2f SteeringInterface::Truncate(const sf::Vector2f& vec, float max)
 	return truncated;
 }
 
-sf::Vector2f SteeringInterface::Seek(GameObject* object, sf::Vector2f target, float dtime)
-{
-	sf::Vector2f desiredV = target - object->getPosition(); // agafam el vector que resulta de restar posició on volem anar - posició actual. Resultat= velocitat adecuada
-	desiredV = Normalize(desiredV);
-	desiredV *= object->getMaxVelocity();
-	sf::Vector2f steeringForce = desiredV - object->getVelocity();
-	steeringForce /= object->getMaxVelocity();
-	steeringForce *= object->getMaxForce();
-
-	return steeringForce;
-}
-
-sf::Vector2f SteeringInterface::Flee(GameObject* object, sf::Vector2f target, float dtime)
+sf::Vector2f SteeringInterface::Flee(GameObject* object, sf::Vector2f target)
 {
 	sf::Vector2f DesiredVelocity = object->getPosition() - target;
 	DesiredVelocity = Normalize(DesiredVelocity);
@@ -63,7 +51,7 @@ sf::Vector2f SteeringInterface::Flee(GameObject* object, sf::Vector2f target, fl
 	return SteeringForce * object->getMaxForce();
 }
 
-sf::Vector2f SteeringInterface::Arrive(GameObject* object, sf::Vector2f target, float r, float dtime) {
+sf::Vector2f SteeringInterface::Arrive(GameObject* object, sf::Vector2f target, float r) {
 	sf::Vector2f desiredV = target - object->getPosition();
 	sf::Vector2f steeringForce = desiredV - object->getVelocity();
 	float factor;
@@ -85,33 +73,8 @@ sf::Vector2f SteeringInterface::Arrive(GameObject* object, sf::Vector2f target, 
 	return steeringForce;
 }
 
-sf::Vector2f SteeringInterface::Pursue(GameObject* object, sf::Vector2f target, float maxSpeed, float dtime)
+sf::Vector2f SteeringInterface::Pursue(GameObject* object, sf::Vector2f target)
 {
-
-	sf::Vector2f desiredV = target - object->getPosition();
-	desiredV = Normalize(desiredV);
-	desiredV *= object->getMaxVelocity();
-	sf::Vector2f steeringForce = desiredV - object->getVelocity();
-	steeringForce /= object->getMaxVelocity();
-	steeringForce *= object->getMaxForce();
-
-	return steeringForce;
-}
-sf::Vector2f SteeringInterface::Evade(GameObject* object, sf::Vector2f target, float maxSpeed, float dtime)
-{
-
-	sf::Vector2f desiredV = target - object->getPosition();
-	desiredV = Normalize(desiredV);
-	desiredV *= object->getMaxVelocity();
-	sf::Vector2f steeringForce = desiredV - object->getVelocity();
-	steeringForce /= object->getMaxVelocity();
-	steeringForce *= object->getMaxForce();
-
-	return steeringForce;
-}
-sf::Vector2f SteeringInterface::Wander(GameObject* object, sf::Vector2f target, float dtime)
-{
-
 	sf::Vector2f desiredV = target - object->getPosition();
 	desiredV = Normalize(desiredV);
 	desiredV *= object->getMaxVelocity();
@@ -122,7 +85,7 @@ sf::Vector2f SteeringInterface::Wander(GameObject* object, sf::Vector2f target, 
 	return steeringForce;
 }
 
-sf::Vector2f SteeringInterface::CollisionAvoidance(GameObject* object, sf::Vector2f target, std::vector <sf::Vector2f> obstacles, float dtime, float MAX_AHEAD, float MAX_AVOID_FORCE)
+sf::Vector2f SteeringInterface::CollisionAvoidance(GameObject* object, sf::Vector2f target, std::vector<sf::Vector2f> obstacles, float MAX_AVOID_FORCE)
 {
 	float v = length(object->getVelocity()) / object->getMaxVelocity();
 	sf::Vector2f ahead = object->getPosition() + object->getVelocity() * v;

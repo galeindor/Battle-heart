@@ -10,6 +10,20 @@ Board::Board()
 
 //==========================================================
 
+vector<sf::Vector2f> Board::createObstaclesVec()
+{
+	vector<sf::Vector2f> obstacles;
+	for (auto& enemy : this->m_enemies)
+		obstacles.push_back(enemy->getPosition());
+
+	for (auto& player : this->m_players)
+		obstacles.push_back(player->getPosition());
+
+	return obstacles;
+}
+
+//==========================================================
+
 void Board::seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime)
 {
 	sf::Vector2f alignment, cohesion, seperation;
@@ -56,12 +70,7 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 	for (auto& player : m_players)
 	{
 		sf::Vector2f steerForce;
-
-		if(player->getTarget())
-			steerForce = player->behaviour()->Arrive(player.get(), player->getTarget()->getPosition(), 10, deltaTime);
-		else
-			steerForce = player->behaviour()->Arrive(player.get(), player->getDest(), 10, deltaTime);
-
+		steerForce = player->behaviour()->Arrive(player.get(), player->getDest(), 10);
 		player->update(steerForce, deltaTime);
 	}
 
@@ -72,9 +81,10 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 		else
 			t = enemy->behaviour()->length(firstEnemyDist) / enemy->behaviour()->length(enemy->getTarget()->getVelocity());
 
-		sf::Vector2f steerForce = enemy->behaviour()->Pursue(enemy.get(), enemy->getTarget()->getPosition() + enemy->getTarget()->getVelocity() * t, 100, deltaTime);
+		sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(enemy.get(), enemy->getTarget()->getPosition(), createObstaclesVec(), 10);
 		Enemy* enemyPtr = enemy.get();
 		this->seperation(enemyPtr, steerForce, deltaTime);
+		enemy->update(steerForce, deltaTime);
 	}
 }
 
@@ -168,14 +178,53 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 	if( draw || charSelected)
 		window.draw(this->m_selected);
 
-	std::sort(m_players.begin(), m_players.end(), [](auto p1, auto p2) { return p1->getPosition().y < p2->getPosition().y; });
-	std::sort(m_enemies.begin(), m_enemies.end(), [](auto p1, auto p2) { return p1->getPosition().y < p2->getPosition().y; });
+	this->drawObjects(window);
+}
 
-	for (auto &player : m_players)
-		player->draw(window);
+void Board::sortObjects()
+{
+	std::sort(this->m_enemies.begin(), this->m_enemies.end(), 
+		[&](shared_ptr<Enemy> obj1, shared_ptr<Enemy> obj2) { 
+			return (obj1.get()->getPosition().y < obj2.get()->getPosition().y); 
+		});
 
-	for (auto& enemy : m_enemies)
-		enemy->draw(window);
+	std::sort(this->m_players.begin(), this->m_players.end(),
+		[&](shared_ptr<Player> obj1, shared_ptr<Player> obj2) {
+			return (obj1.get()->getPosition().y < obj2.get()->getPosition().y);
+		});
+}
+
+void Board::drawObjects(sf::RenderWindow& window)
+{
+	this->sortObjects();
+	int enemyIndex = 0, playerIndex = 0;
+
+	while(enemyIndex < this->m_enemies.size() || playerIndex < this->m_players.size())
+	{
+		if (enemyIndex < this->m_enemies.size() && playerIndex < this->m_players.size())
+		{
+			if (this->m_players[playerIndex].get()->getPosition().y > this->m_enemies[enemyIndex].get()->getPosition().y)
+			{
+				this->m_enemies[enemyIndex]->draw(window);
+				enemyIndex++;
+			}
+			else
+			{
+				this->m_players[playerIndex]->draw(window);
+				playerIndex++;
+			}
+		}
+		else if (enemyIndex < this->m_enemies.size())
+		{
+			this->m_enemies[enemyIndex]->draw(window);
+			enemyIndex++;
+		}
+		else
+		{
+			this->m_players[playerIndex]->draw(window);
+			playerIndex++;
+		}
+	}
 }
 
 //==========================================================
@@ -189,11 +238,7 @@ bool Board::checkIntersection(sf::Sprite obj,sf::Sprite secObj)
 
 bool Board::checkMoving() const
 {
-	for (int i = 0; i < m_players.size(); i++)
-		if (this->m_players[i]->getIsMoving())
-			return true;
-
-	return false;
+	return this->m_players[this->m_playerIndex]->getIsMoving();
 }
 
 //==========================================================
@@ -202,6 +247,7 @@ void Board::initPlayers()
 {
 	m_players.push_back(std::make_shared < Cleric >(sf::Vector2f(200, 200)));
 	m_players.push_back(std::make_shared < Knight >(sf::Vector2f(300, 300)));
+	m_players.push_back(std::make_shared < Archer >(sf::Vector2f(300, 300)));
 }
 
 //==========================================================
@@ -210,7 +256,7 @@ void Board::initEnemies()
 {	
 	srand(time(NULL));
 	for (int i = 0; i < 3; i++) // for now , will be changed soon 
-	this->m_enemies.push_back(std::make_shared <Dummy >());
+		this->m_enemies.push_back(std::make_shared <Dummy>());
 }
 
 //==========================================================
