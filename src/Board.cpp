@@ -10,6 +10,20 @@ Board::Board()
 
 //==========================================================
 
+vector<sf::Vector2f> Board::createObstaclesVec()
+{
+	vector<sf::Vector2f> obstacles;
+	for (auto& enemy : this->m_enemies)
+		obstacles.push_back(enemy->getPosition());
+
+	for (auto& player : this->m_players)
+		obstacles.push_back(player->getPosition());
+
+	return obstacles;
+}
+
+//==========================================================
+
 void Board::seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime)
 {
 	sf::Vector2f alignment, cohesion, seperation;
@@ -56,12 +70,7 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 	for (auto& player : m_players)
 	{
 		sf::Vector2f steerForce;
-
-		if(player->getTarget())
-			steerForce = player->behaviour()->Arrive(player.get(), player->getTarget()->getPosition(), 10, deltaTime);
-		else
-			steerForce = player->behaviour()->Arrive(player.get(), player->getDest(), 10, deltaTime);
-
+		steerForce = player->behaviour()->Arrive(player.get(), player->getDest(), 10);
 		player->update(steerForce, deltaTime);
 	}
 
@@ -72,9 +81,10 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 		else
 			t = enemy->behaviour()->length(firstEnemyDist) / enemy->behaviour()->length(enemy->getTarget()->getVelocity());
 
-		sf::Vector2f steerForce = enemy->behaviour()->Pursue(enemy.get(), enemy->getTarget()->getPosition() + enemy->getTarget()->getVelocity() * t, 100, deltaTime);
+		sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(enemy.get(), enemy->getTarget()->getPosition(), createObstaclesVec(), 10);
 		Enemy* enemyPtr = enemy.get();
 		this->seperation(enemyPtr, steerForce, deltaTime);
+		enemy->update(steerForce, deltaTime);
 	}
 }
 
@@ -186,11 +196,7 @@ bool Board::checkIntersection(sf::Sprite obj,sf::Sprite secObj)
 
 bool Board::checkMoving() const
 {
-	for (int i = 0; i < m_players.size(); i++)
-		if (this->m_players[i]->getIsMoving())
-			return true;
-
-	return false;
+	return this->m_players[this->m_playerIndex]->getIsMoving();
 }
 
 //==========================================================
@@ -199,6 +205,7 @@ void Board::initPlayers()
 {
 	m_players.push_back(std::make_shared < Cleric >(sf::Vector2f(200, 200)));
 	m_players.push_back(std::make_shared < Knight >(sf::Vector2f(300, 300)));
+	m_players.push_back(std::make_shared < Archer >(sf::Vector2f(300, 300)));
 }
 
 //==========================================================
@@ -207,7 +214,7 @@ void Board::initEnemies()
 {	
 	srand(time(NULL));
 	for (int i = 0; i < 3; i++) // for now , will be changed soon 
-	this->m_enemies.push_back(std::make_shared <Dummy >());
+		this->m_enemies.push_back(std::make_shared <Dummy>());
 }
 
 //==========================================================

@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-const sf::Vector2f healthOffset(30, 113);
+const sf::Vector2f healthOffset(30, 100);
 const sf::Vector2f selectedOffset(45, 30);
 
 constexpr auto TILES_NUM = 11;
@@ -26,9 +26,14 @@ constexpr auto ATK_CD = 10.f; // regular attack cooldown
 
 const int ENEMY_POS = -1;
 
+enum ObjectAnimation
+{
+	_walk, _basicAtt, _idle, _cast, _death
+};
+
 enum LoadTextures
 {
-	_cleric , _knight , _select, _dummy , NUM_OF_PICS
+	_cleric , _knight, _archer, _select, _dummy , NUM_OF_PICS
 };
 
 enum Stats
@@ -36,10 +41,11 @@ enum Stats
 	_hp, MAX_STATS
 };
 
-const std::string textures[NUM_OF_PICS] = { "cleric.png" , "knight.png" , "select.png", "enemy.png" };
+const std::string textures[NUM_OF_PICS] = { "cleric.png" , "knight.png", "archer.png" , "select.png", "enemy.png"};
 
 const std::string skillTextures[NUM_OF_PLAYERS][MAX_SKILL] = {  { "heal.png"	, "clericShield.png"} ,
-																{ "shield.png"	, "swing.png"		}
+																{ "shield.png"	, "swing.png"		} ,
+																{ "barrage.png" , "apolloarrow.png"		}
 															 };
 
 const std::string bg_textures[NUM_OF_PICS] = { "plain.png" };

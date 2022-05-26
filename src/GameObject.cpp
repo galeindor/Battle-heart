@@ -1,17 +1,18 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const sf::Vector2f pos, const int index)
+GameObject::GameObject(const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime)
 	: m_isAttacking(false), m_dest(pos), m_isMoving(false), m_target(NULL),
-	  m_velocity(sf::Vector2f(0, 0)), m_mass(0.1f), m_maxForce(30), m_maxVelocity(150),
-	  m_hpBar(HealthBar(pos))
+	  m_velocity(sf::Vector2f(0, 0)), m_mass(0.1f), m_maxForce(30), m_maxVelocity(100),
+	  m_hpBar(HealthBar(pos)), m_animation(Resources::instance().getTexture(index), imageCount, switchTime)
 {
 	this->initSkills(index);
 	this->initStats(pos, index);
 
 	m_sprite.setPosition(pos);
 	m_sprite.setTexture(*Resources::instance().getTexture(index));
-	auto size = m_sprite.getTexture()->getSize();
-	m_sprite.setOrigin(size.x / 2, size.y);
+	sf::IntRect size = m_sprite.getTextureRect();
+	this->m_sprite.setScale(1.5, 1.5);
+	m_sprite.setOrigin(64 / 2, 64);
 }
 
 //=======================================================================================
@@ -43,15 +44,23 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 	this->m_velocity = this->m_velocity + acceleration * deltaTime;
 	this->m_velocity = this->m_steering->Truncate(this->m_velocity, this->m_maxVelocity);
 
+	if (this->getTarget())
+		this->setDestination(this->getTarget()->getPosition());
+
 	if (!this->checkIntersection())
 	{
 		this->m_isMoving = true;
 		this->m_sprite.move(this->m_velocity * deltaTime);
+		this->m_row = _walk;
 	}
 	else
+	{
 		this->m_isMoving = false;
+		this->m_row = _idle;
+	}
 
-	// Trim position values to window size
+	// Trim position values to window size and handle animation
+	this->handleAnimation(this->m_velocity * deltaTime, deltaTime);
 	this->m_sprite.setPosition(this->adjustLocation(this->m_sprite.getPosition()));
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->m_sprite.getPosition());
@@ -71,6 +80,8 @@ void GameObject::initSkills(int index)
 	}
 }
 
+//=======================================================================================
+
 void GameObject::initStats(const sf::Vector2f pos, int index)
 {
 	for (int index = 0; index < MAX_STATS; index++)
@@ -84,6 +95,18 @@ void GameObject::initStats(const sf::Vector2f pos, int index)
 }
 
 //=======================================================================================
+
+void GameObject::handleAnimation(sf::Vector2f movement, float deltaTime)
+{
+	// If facing right.
+	if (movement.x > 0.0f)
+		this->m_faceRight = true;
+	else if (movement.x < 0.0f)
+		this->m_faceRight = false;
+
+	this->m_animation.update(this->m_row, deltaTime, this->m_faceRight);
+	this->m_sprite.setTextureRect(this->m_animation.getUVRect());
+}
 
 void GameObject::useBaseAttack()
 {

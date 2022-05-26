@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 Enemy::Enemy(sf::Vector2f pos, const int index)
-	: GameObject(pos, index)
+	: GameObject(pos, index, sf::Vector2f(9, 5), 0.3f)
 {}
 
 //=======================================================================================

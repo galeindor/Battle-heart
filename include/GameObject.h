@@ -6,7 +6,7 @@
 #include "Resources.h"
 #include "SteeringInterface.h"
 #include "Stat.h"
-
+#include "Animation.h"
 
 class Enemy;
 class Player;
@@ -16,7 +16,7 @@ class GameObject
 {
 public:
 	// C-tor/D-tor
-	GameObject(const sf::Vector2f pos, const int index);
+	GameObject(const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime);
 	virtual ~GameObject() = default;
 
 	// Virtuals
@@ -25,6 +25,7 @@ public:
 	virtual bool setTarget(Enemy& obj) = 0;
 	virtual bool setTarget(Player& obj) = 0;
 	virtual bool checkIntersection() const = 0;
+	virtual void handleAnimation(sf::Vector2f movement, float deltaTime);
 
 	void useBaseAttack();
 	void useSkill(int index);
@@ -82,4 +83,11 @@ private:
 	float m_mass;
 	float m_maxForce;
 	float m_maxVelocity;
+
+	// For animation.
+	Animation m_animation;
+	unsigned int m_row;
+	float m_speed;
+	bool m_faceRight;
+	sf::Sprite m_newPosition;
 };

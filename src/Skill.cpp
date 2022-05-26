@@ -55,6 +55,7 @@ void Skill::draw(sf::RenderWindow& window)
 	window.draw(m_shape);
 	window.draw(m_cooldownScale);
 }
+
 //==========================================================
 
 int Skill::castSkill()

@@ -2,7 +2,7 @@
 #include "Player.h"
 
 Player::Player(const sf::Vector2f loc , int index)
-	: GameObject(loc, index) , m_selected(false)
+	: GameObject(loc, index, sf::Vector2f(9, 5), 0.3f) , m_selected(false)
 {}
 
 //===========================================================
@@ -11,7 +11,6 @@ void Player::draw(sf::RenderWindow& window)
 {
 	if (m_selected)
 	{
-
 		this->getHpBar().draw(window);
 		for (auto& skill : this->getSkills())
 			skill->draw(window); // draw all skills
@@ -26,9 +25,10 @@ bool Player::checkSkillClick(const sf::Vector2f& location)
 	for (auto& skill : this->getSkills()) // check for presses on a skill
 		if (skill->checkClick(location))
 		{
-			skill->handleClick();
+			skill->castSkill();
 			return true;
 		}
+
 	return false;
 }
 
