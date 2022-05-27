@@ -18,5 +18,6 @@ protected:
 
 
 private:
+	int m_max;
 	int m_val;
 };

@@ -8,8 +8,8 @@ class GameObject;
 class Skill
 {
 public:
-	Skill(float cooldown, int damage, float range);
-	Skill(sf::Texture* texture, const sf::Vector2f& pos, float cooldown , int damage , float range);
+	Skill(float cooldown, int damage, float range , int wantedStat);
+	Skill(sf::Texture* texture, const sf::Vector2f& pos, float cooldown , int damage , float range, int wantedStat);
 	~Skill() = default;
 	virtual int castSkill(Stat stat) { return 1; };
 

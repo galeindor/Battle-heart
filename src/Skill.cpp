@@ -1,13 +1,13 @@
 
 #include "includeSkill/Skill.h"
 
-Skill::Skill(float cooldown, int damage, float range)
-	:m_cooldown(cooldown), m_skillDmg(damage), m_skillRange(range)
+Skill::Skill(float cooldown, int damage, float range, int wantedStat)
+	:m_cooldown(cooldown), m_skillDmg(damage), m_skillRange(range) , m_wantedStat(wantedStat)
 {}
 
 //==========================================================
 
-Skill::Skill(sf::Texture* texture , const sf::Vector2f& pos ,float cooldown, int damage = BASIC_DMG, float range = 5)
+Skill::Skill(sf::Texture* texture , const sf::Vector2f& pos ,float cooldown, int damage = BASIC_DMG, float range = 5, int wantedStat=_hp)
 	:m_cooldown(cooldown) , m_skillDmg(damage) , m_skillRange(range) , m_timeLeft(0)
 {
 	m_shape.setTexture(texture);

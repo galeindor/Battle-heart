@@ -11,7 +11,8 @@ HealthBar::HealthBar(sf::Vector2f pos)
 void HealthBar::updateHealthBar(int statVal)
 {
 	auto size = m_bar.getSize();
-	double newX = double(std::max(statVal, 0) * BAR_WIDTH / MAX_HEALTH);
+	statVal = std::min(statVal, int(size.x));
+	auto newX = double(std::max(statVal, 0) * BAR_WIDTH / MAX_HEALTH);
 	m_currHealth.setSize(sf::Vector2f(newX, size.y));
 }
 

@@ -27,8 +27,6 @@ public:
 	virtual bool checkIntersection() const = 0;
 	virtual void handleAnimation(sf::Vector2f movement, float deltaTime);
 
-	void useBaseAttack();
-	void useSkill(int index);
 	sf::Vector2f adjustLocation(sf::Vector2f location);
 
 	bool targetInRange() const;
@@ -58,15 +56,19 @@ public:
 	// Checks/validators
 	bool checkCollision(const sf::Vector2f& location);
 
-	// Combat mangement
-	void hitCharacter(int amount);
-	void healCharacter(int amount);
 
 protected:
+
+	void setBaseAttack(BaseAttack base) { m_baseAttack = std::make_unique<BaseAttack>(base); }
+	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }
 	vector<std::unique_ptr<Skill>>& getSkills() { return this->m_skills; }
+	virtual void initSkills(int index);
 
 private:
-	void initSkills(int index);
+
+	void useBaseAttack();
+	void useSkill(int index);
+
 	void initStats(const sf::Vector2f pos, int index);
 	std::unique_ptr<BaseAttack> m_baseAttack; // each character basic attack
 	vector<std::unique_ptr<Skill>> m_skills; // skills useable

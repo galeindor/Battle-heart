@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 GameObject::GameObject(const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime)
-	: m_isAttacking(false), m_dest(pos), m_isMoving(false), m_target(NULL),
+	: m_isAttacking(false), m_dest(pos), m_isMoving(false), m_target(nullptr),
 	  m_velocity(sf::Vector2f(0, 0)), m_mass(0.1f), m_maxForce(30), m_maxVelocity(100),
 	  m_hpBar(HealthBar(pos)), m_animation(Resources::instance().getTexture(index), imageCount, switchTime)
 {
@@ -20,20 +20,6 @@ GameObject::GameObject(const sf::Vector2f pos, const int index, sf::Vector2f ima
 bool GameObject::checkCollision(const sf::Vector2f& location)
 {
 	return this->m_sprite.getGlobalBounds().contains(location);
-}
-
-//=======================================================================================
-
-void GameObject::hitCharacter(int amount)
-{
-	this->m_stats[_hp]->handleStat(amount);
-}
-
-//=======================================================================================
-
-void GameObject::healCharacter(int amount)
-{
-	this->m_stats[_hp]->handleStat(-amount);
 }
 
 //=======================================================================================
@@ -57,6 +43,8 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 	{
 		this->m_isMoving = false;
 		this->m_row = _idle;
+		if (targetInRange())
+			useBaseAttack();
 	}
 
 	// Trim position values to window size and handle animation
@@ -74,12 +62,12 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 
 void GameObject::initSkills(int index)
 {
-	auto base = BaseAttack(2.f, BASIC_DMG, 50.f);
+	auto base = BaseAttack(2.f, BASIC_DMG, 50.f , _hp);
 	m_baseAttack = std::make_unique<BaseAttack>(base);
 
 	for (int i = 0; i < MAX_SKILL; i++)
 	{
-		auto skill = Skill(Resources::instance().getSkill(index, i), sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30), ATK_CD,BASIC_DMG,5.f);
+		auto skill = Skill(Resources::instance().getSkill(index, i), sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30), ATK_CD,BASIC_DMG, 5.f , _hp);
 		m_skills.push_back(std::make_unique<Skill>(skill));
 	}
 }
@@ -112,6 +100,8 @@ void GameObject::handleAnimation(sf::Vector2f movement, float deltaTime)
 	this->m_animation.update(this->m_row, deltaTime, this->m_faceRight);
 	this->m_sprite.setTextureRect(this->m_animation.getUVRect());
 }
+
+//=======================================================================================
 
 void GameObject::useBaseAttack()
 {
@@ -151,7 +141,7 @@ float distance(float f1, float f2)
 
 bool GameObject::targetInRange() const
 {
-	if (this->m_target)
+	if (m_target != nullptr)
 	{
 		auto tarPos = m_target->getPosition();
 		auto myPos = this->getPosition();

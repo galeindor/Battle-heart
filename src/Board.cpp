@@ -158,7 +158,8 @@ bool Board::handleSecondClick(sf::Vector2f location)
 			if (m_players[m_playerIndex]->setTarget(*enemy))
 			{
 				this->m_selected.setPosition(enemy->getPosition());
-				this->m_players[m_playerIndex]->setDestination(enemy->getPosition());
+				if(!m_players[m_playerIndex]->targetInRange())
+					this->m_players[m_playerIndex]->setDestination(enemy->getPosition());
 				return true;
 			}
 
@@ -246,7 +247,7 @@ void Board::initPlayers()
 {
 	m_players.push_back(std::make_shared < Cleric >(sf::Vector2f(200, 200)));
 	m_players.push_back(std::make_shared < Knight >(sf::Vector2f(300, 300)));
-	m_players.push_back(std::make_shared < Archer >(sf::Vector2f(300, 300)));
+	m_players.push_back(std::make_shared < Archer >(sf::Vector2f(400, 400)));
 }
 
 //==========================================================

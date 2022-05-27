@@ -12,6 +12,8 @@ public:
 	virtual bool setTarget(Player& obj) override;
 	virtual bool setTarget(Enemy& obj) override;
 
-private:
+protected:
+	virtual void initSkills(int index) override;
+
 
 };
