@@ -2,9 +2,11 @@
 
 #include <SFML/Graphics.hpp>
 
+
 const sf::Vector2f healthOffset(30, 100);
 const sf::Vector2f selectedOffset(45, 30);
 
+constexpr auto SPRITE_SIZE = 64;
 constexpr auto TILES_NUM = 11;
 constexpr auto SPACING = 75;
 constexpr auto WINDOW_WIDTH = 1400;
@@ -14,10 +16,9 @@ constexpr auto CUT_CORNERS = 50; // used to limit the player movement to not tou
 //constexpr auto NUM_OF_PICS = 4;
 constexpr auto NUM_OF_BG = 2;
 constexpr auto NUM_OF_PLAYERS = 3;
-
-
 constexpr auto MAX_SKILL = 2;
 constexpr auto BASIC_DMG = 1;
+constexpr auto DEFAULT_MVSPD = 100;
 constexpr auto MAX_HEALTH = 20;
 constexpr auto SKILL_RECT_SIZE= 80; // size of the rectangle where skills are shown
 
@@ -38,7 +39,7 @@ enum LoadTextures
 
 enum Stats
 {
-	_hp, MAX_STATS
+	_hp, _movementSpeed, _attackSpeed, NUM_OF_STATS
 };
 
 const std::string textures[NUM_OF_PICS] = { "cleric.png" , "knight.png", "archer.png" , "select.png", "enemy.png"};

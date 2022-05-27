@@ -1,5 +1,6 @@
 #include "GameObject.h"
 
+
 GameObject::GameObject(const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime)
 	: m_isAttacking(false), m_dest(pos), m_isMoving(false), m_target(nullptr),
 	  m_velocity(sf::Vector2f(0, 0)), m_mass(0.1f), m_maxForce(30), m_maxVelocity(100),
@@ -12,7 +13,7 @@ GameObject::GameObject(const sf::Vector2f pos, const int index, sf::Vector2f ima
 	m_sprite.setTexture(*Resources::instance().getTexture(index));
 	sf::IntRect size = m_sprite.getTextureRect();
 	this->m_sprite.setScale(1.5, 1.5);
-	m_sprite.setOrigin(64 / 2, 64);
+	m_sprite.setOrigin(SPRITE_SIZE/ 2, SPRITE_SIZE);
 }
 
 //=======================================================================================
@@ -53,9 +54,6 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->m_sprite.getPosition());
 
-
-	
-
 }
 
 //=======================================================================================
@@ -74,15 +72,19 @@ void GameObject::initSkills(int index)
 
 //=======================================================================================
 
-void GameObject::initStats(const sf::Vector2f pos, int index)
+void GameObject::initStats(const sf::Vector2f pos, const int index)
 {
-	for (int index = 0; index < MAX_STATS; index++)
+	for (int stat = 0; stat < NUM_OF_STATS; stat++)
 	{
-		switch (index)
+		switch (stat)
 		{
 		case Stats::_hp:
 			this->m_stats.push_back(std::make_unique<Stat>(MAX_HEALTH));
 			this->m_stats.push_back(std::make_unique<Stat>(m_baseAttack->getRange()));
+			break;
+		case Stats::_movementSpeed:
+			this->m_stats.push_back(std::make_unique<Stat>(DEFAULT_MVSPD));
+			break;
 		}
 	}
 }
@@ -131,9 +133,14 @@ sf::Vector2f GameObject::adjustLocation(sf::Vector2f location)
 	return newLoc;
 }
 
+
+
+
+
+//Arithmetic functions should be in a different class 
 //=======================================================================================
 float distance(float f1, float f2)
-{
+{ 
 	return std::abs(f1 - f2);
 }
 

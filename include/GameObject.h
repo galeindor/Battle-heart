@@ -69,7 +69,7 @@ private:
 	void useBaseAttack();
 	void useSkill(int index);
 
-	void initStats(const sf::Vector2f pos, int index);
+	void initStats(const sf::Vector2f pos, const int index);
 	std::unique_ptr<BaseAttack> m_baseAttack; // each character basic attack
 	vector<std::unique_ptr<Skill>> m_skills; // skills useable
 	vector<std::unique_ptr<Stat>> m_stats; // all of the character stats
@@ -92,7 +92,7 @@ private:
 	// For animation.
 	Animation m_animation;
 	unsigned int m_row;
-	float m_speed;
+	//float m_speed;
 	bool m_faceRight;
 	sf::Sprite m_newPosition;
 };
