@@ -8,5 +8,5 @@ public:
 	~Dummy() = default;
 
 private:
-	sf::Vector2f randEnemyPos() override;
+	virtual sf::Vector2f randEnemyPos() override;
 };

@@ -2,9 +2,7 @@
 
 Dummy::Dummy()
 	: Enemy(this->randEnemyPos(), _dummy)
-{
-	//this->getSprite().setScale(0.3, 0.3);
-}
+{}
 
 sf::Vector2f Dummy::randEnemyPos()
 {

@@ -7,15 +7,15 @@ Cleric::Cleric(const sf::Vector2f pos)
 
 //==========================================================
 
-bool Cleric::setTarget(Player& obj) // cleric can get an ally target
+bool Cleric::setTarget(std::shared_ptr<Player> obj) // cleric can get an ally target
 {
 	this->setAttacking(true);
-	setAsTarget((GameObject*)&obj); 
+	setAsTarget(obj); 
 	return true;
 }
 //==========================================================
 
-bool Cleric::setTarget(Enemy&) // cleric can't have enemy target
+bool Cleric::setTarget(std::shared_ptr<Enemy>) // cleric can't have enemy target
 {
 	return false;
 }

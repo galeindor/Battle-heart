@@ -2,7 +2,7 @@
 
 
 GameObject::GameObject(const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime)
-	: m_isAttacking(false), m_dest(pos), m_isMoving(false), m_target(nullptr),
+	: m_isAttacking(false), m_dest(pos), m_isMoving(false),
 	  m_velocity(sf::Vector2f(0, 0)), m_mass(0.1f), m_maxForce(30), m_maxVelocity(100),
 	  m_hpBar(HealthBar(pos)), m_animation(Resources::instance().getTexture(index), imageCount, switchTime)
 {
@@ -53,7 +53,6 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 	this->m_sprite.setPosition(this->adjustLocation(this->m_sprite.getPosition()));
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->m_sprite.getPosition());
-
 }
 
 //=======================================================================================
@@ -80,10 +79,17 @@ void GameObject::initStats(const sf::Vector2f pos, const int index)
 		{
 		case Stats::_hp:
 			this->m_stats.push_back(std::make_unique<Stat>(MAX_HEALTH));
-			this->m_stats.push_back(std::make_unique<Stat>(m_baseAttack->getRange()));
 			break;
+
 		case Stats::_movementSpeed:
 			this->m_stats.push_back(std::make_unique<Stat>(DEFAULT_MVSPD));
+			break;
+
+		case Stats::_attackSpeed:
+			break;
+
+		case Stats::_range:
+			this->m_stats.push_back(std::make_unique<Stat>(m_baseAttack->getRange()));
 			break;
 		}
 	}
@@ -133,17 +139,6 @@ sf::Vector2f GameObject::adjustLocation(sf::Vector2f location)
 	return newLoc;
 }
 
-
-
-
-
-//Arithmetic functions should be in a different class 
-//=======================================================================================
-float distance(float f1, float f2)
-{ 
-	return std::abs(f1 - f2);
-}
-
 //=======================================================================================
 
 bool GameObject::targetInRange() const
@@ -153,7 +148,7 @@ bool GameObject::targetInRange() const
 		auto tarPos = m_target->getPosition();
 		auto myPos = this->getPosition();
 		auto range = m_baseAttack->getRange();
-		return (distance(tarPos.x, myPos.x) <= range) && (distance(tarPos.y, myPos.y) <= range);
+		return (std::abs(tarPos.x - myPos.x) <= range) && (std::abs(tarPos.y - myPos.y) <= range);
 	}
 
 	return false;

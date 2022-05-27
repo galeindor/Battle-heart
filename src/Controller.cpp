@@ -4,14 +4,15 @@
 Controller::Controller()
 	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Heart")
 {
-	m_bg.setTexture(*Resources::instance().getBackground(0));
-	m_bg.setColor(sf::Color(255, 255, 255, 255));
+	this->m_bg.setTexture(*Resources::instance().getBackground(0));
+	this->m_bg.setColor(sf::Color(255, 255, 255, 255));
 }
 
 //=======================================================================================
 
 void Controller::run()
 {
+	this->m_menu.runMenu(this->m_window);
 	float deltaTime = 0.f;
 	auto inProgress = false;
 
