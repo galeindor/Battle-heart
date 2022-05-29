@@ -141,14 +141,16 @@ bool Board::handleFirstClick(sf::Vector2f location)
 
 bool Board::handleSecondClick(sf::Vector2f location)
 {
-
 	auto currPlayer = m_players[m_playerIndex];
+
 	if (currPlayer->checkSkillClick(location))
 		return false;
 
 	for (auto& player : m_players)
 		if (player->checkCollision(location))
-			if (currPlayer->setTarget(*player))
+			if (currPlayer->setTarget(player))
+
+			if (m_players[m_playerIndex]->setTarget(player))
 			{
 				this->m_selected.setPosition(player->getPosition());
 				//currPlayer->setDestination(player->getPosition());
@@ -157,7 +159,10 @@ bool Board::handleSecondClick(sf::Vector2f location)
 
 	for (auto& enemy : m_enemies)
 		if (enemy->checkCollision(location))
-			if (currPlayer->setTarget(*enemy))
+			if (currPlayer->setTarget(enemy))
+
+			if (m_players[m_playerIndex]->setTarget(enemy))
+
 			{
 				this->m_selected.setPosition(enemy->getPosition());
 				/*if(!currPlayer->targetInRange())
