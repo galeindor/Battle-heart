@@ -11,7 +11,7 @@ constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto HEIGHT_LIMIT = 200;
 constexpr auto CUT_CORNERS = 50; // used to limit the player movement to not touch corners
 constexpr auto BAR_WIDTH = 60;
-constexpr auto BASE_CD = 3.f; // regular attack cooldown
+
 
 
 // Buttons
@@ -19,6 +19,7 @@ enum MenuButtons
 {
 	_battle, _levels, _escape, NUM_OF_MBUTTONS
 };
+
 const std::string MENU_BUTTON_FONT = "titillium.otf";
 const std::vector<std::string> MENU_BUTTONS_STRINGS = { {"Battle"}, {"Levels"}, {"Exit"} };
 const sf::Vector2f MENU_BUTTONS_START = sf::Vector2f(436, 49);
@@ -34,6 +35,8 @@ enum ObjectAnimation
 constexpr auto MAX_HEALTH = 20;
 constexpr auto DEFAULT_MVSPD = 100;
 constexpr auto ATK_CD = 10.f; // regular attack cooldown
+constexpr auto BASE_CD = 3.f; // basic attack cooldown
+constexpr auto SHORT_RANGE = 75.f; // regular attack cooldown
 
 enum Stats
 {

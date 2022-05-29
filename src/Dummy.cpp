@@ -27,7 +27,7 @@ sf::Vector2f Dummy::randEnemyPos()
 
 void Dummy::initSkills(int index)
 {
-	auto base = BaseAttack(BASE_CD, 2, 50.f, _hp);
+	auto base = BaseAttack(BASE_CD, BASIC_DMG , SHORT_RANGE , _hp);
 	setBaseAttack(base);
 
 }

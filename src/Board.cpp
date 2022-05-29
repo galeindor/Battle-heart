@@ -92,28 +92,57 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 
 void Board::updateEnemyDest()
 {
-	float max = 0;
+	float min = INFINITY;
 	sf::Vector2f pos;
-	std::shared_ptr<Player> maxPlayer = NULL;
-
-	for (auto& player : m_players)
-		if (player->getStat(_hp)> max)
-		{
-			maxPlayer = player;
-			max = player->getStat(_hp);
-			pos = player->getPosition();
-		}
+	std::shared_ptr<Player> closePlayer = NULL;
 
 	for (auto& enemy : m_enemies)
 	{
+		float min = INFINITY;
+		auto enemyPos = enemy->getPosition();
+		for (auto& player : m_players)
+		{
+			auto playerPos = player->getPosition();
+
+			auto distance = std::sqrt(std::pow(playerPos.x - enemyPos.x, 2) +
+									  std::pow(playerPos.y - enemyPos.y, 2));
+			if (distance < min)
+			{
+				closePlayer = player;
+				min = distance;
+				pos = player->getPosition();
+			}
+		}
 		if (!enemy->getIsMoving())
 		{
 			enemy->setDestination(pos);
 
-			if(maxPlayer)
-				enemy->setTarget(maxPlayer);
+			if (closePlayer)
+				enemy->setTarget(closePlayer);
 		}
 	}
+
+	//for (auto& player : m_players)
+	//{
+	//	auto playerPos = player->getPosition();
+	//	if (player->getStat(_hp)> max)
+	//	{
+	//		maxPlayer = player;
+	//		max = player->getStat(_hp);
+	//		pos = player->getPosition();
+	//	}
+	//}
+
+	//for (auto& enemy : m_enemies)
+	//{
+	//	if (!enemy->getIsMoving())
+	//	{
+	//		enemy->setDestination(pos);
+
+	//		if(maxPlayer)
+	//			enemy->setTarget(maxPlayer);
+	//	}
+	//}
 }
 
 //==========================================================
@@ -153,7 +182,6 @@ bool Board::handleSecondClick(sf::Vector2f location)
 			if (m_players[m_playerIndex]->setTarget(player))
 			{
 				this->m_selected.setPosition(player->getPosition());
-				//currPlayer->setDestination(player->getPosition());
 				return true;
 			}
 
@@ -165,8 +193,6 @@ bool Board::handleSecondClick(sf::Vector2f location)
 
 			{
 				this->m_selected.setPosition(enemy->getPosition());
-				/*if(!currPlayer->targetInRange())
-					currPlayer->setDestination(enemy->getPosition());*/
 				return true;
 			}
 

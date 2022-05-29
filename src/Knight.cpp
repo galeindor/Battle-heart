@@ -10,7 +10,7 @@ Knight::Knight(const sf::Vector2f pos)
 
 void Knight::initSkills(int index)
 {
-	auto base = BaseAttack(BASE_CD, 2 , 5.f , _hp);
+	auto base = BaseAttack(BASE_CD, BASIC_DMG , SHORT_RANGE, _hp);
 	setBaseAttack(base);
 
 	int i = 0;
