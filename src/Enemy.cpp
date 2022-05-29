@@ -13,16 +13,16 @@ void Enemy::draw(sf::RenderWindow& window)
 
 //=======================================================================================
 
-bool Enemy::setTarget(Enemy&) // enemies can't target another enemy - only healer enemy might
+bool Enemy::setTarget(std::shared_ptr<Enemy>) // enemies can't target another enemy - only healer enemy might
 {
 	return false;
 }
 
 //=======================================================================================
 
-bool Enemy::setTarget(Player& obj) // all enemies can target only players
+bool Enemy::setTarget(std::shared_ptr<Player> obj) // all enemies can target only players
 {
-	setAsTarget((GameObject*)&obj);
+	setAsTarget(obj);
 	return true;
 }
 
@@ -39,11 +39,4 @@ bool Enemy::checkIntersection() const
 		return true;
 
 	return false;
-
-	/*
-	if (this->getTarget())
-		return this->getSprite().getGlobalBounds().intersects(this->getTarget()->getSprite().getGlobalBounds());
-
-	return false;
-	*/
 }

@@ -20,3 +20,8 @@ configure_file ("skills/swing.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/clericShield.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/barrage.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/apolloarrow.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
+# Fonts
+configure_file ("amatic.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("titillium.otf" ${CMAKE_BINARY_DIR} COPYONLY)
+

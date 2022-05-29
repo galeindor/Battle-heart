@@ -94,12 +94,12 @@ void Board::updateEnemyDest()
 {
 	float max = 0;
 	sf::Vector2f pos;
-	Player* maxPlayer = NULL;
+	std::shared_ptr<Player> maxPlayer = NULL;
 
 	for (auto& player : m_players)
 		if (player->getStat(_hp)> max)
 		{
-			maxPlayer = player.get();
+			maxPlayer = player;
 			max = player->getStat(_hp);
 			pos = player->getPosition();
 		}
@@ -111,7 +111,7 @@ void Board::updateEnemyDest()
 			enemy->setDestination(pos);
 
 			if(maxPlayer)
-				enemy->setTarget(*maxPlayer);
+				enemy->setTarget(maxPlayer);
 		}
 	}
 }
@@ -188,12 +188,15 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 
 void Board::sortObjects()
 {
-	std::sort(m_players.begin(), m_players.end(), [](auto obj1, auto obj2) { return obj1->getPosition().y < obj2->getPosition().y; });
+	std::sort(m_players.begin(), m_players.end(), 
+			  [](auto obj1, auto obj2) 
+				{ return obj1->getPosition().y < obj2->getPosition().y; });
 
-	std::sort(m_enemies.begin(), m_enemies.end(), [](auto obj1, auto obj2) { return obj1->getPosition().y < obj2->getPosition().y; });
+	std::sort(m_enemies.begin(), m_enemies.end(), 
+			  [](auto obj1, auto obj2) 
+				{ return obj1->getPosition().y < obj2->getPosition().y; });
 
 }
-
 //===================================================================================
 
 void Board::drawObjects(sf::RenderWindow& window)
@@ -206,28 +209,30 @@ void Board::drawObjects(sf::RenderWindow& window)
 		if (enemyIndex < this->m_enemies.size() && playerIndex < this->m_players.size())
 		{
 			if (this->m_players[playerIndex].get()->getPosition().y > this->m_enemies[enemyIndex].get()->getPosition().y)
-			{
-				this->m_enemies[enemyIndex]->draw(window);
-				enemyIndex++;
-			}
+				drawObject(false, enemyIndex, window);
+
 			else
-			{
-				this->m_players[playerIndex]->draw(window);
-				playerIndex++;
-			}
+				drawObject(true, playerIndex, window);
+
 		}
 		else if (enemyIndex < this->m_enemies.size())
-		{
-			this->m_enemies[enemyIndex]->draw(window);
-			enemyIndex++;
-		}
+			drawObject(false, enemyIndex, window);
+
 		else
-		{
-			this->m_players[playerIndex]->draw(window);
-			playerIndex++;
-		}
+			drawObject(true, playerIndex, window);
 	}
 }
+
+void Board::drawObject(bool player, int& index, sf::RenderWindow& window)
+{
+	if (player)
+		this->m_players[index]->draw(window);
+	else
+		this->m_enemies[index]->draw(window);
+
+	index++;
+}
+//==========================================================
 
 //==========================================================
 
@@ -247,9 +252,9 @@ bool Board::checkMoving() const
 
 void Board::initPlayers()
 {
-	m_players.push_back(std::make_shared < Cleric >(sf::Vector2f(200, 200)));
-	m_players.push_back(std::make_shared < Knight >(sf::Vector2f(300, 300)));
-	m_players.push_back(std::make_shared < Archer >(sf::Vector2f(400, 400)));
+	m_players.push_back(std::make_shared < Cleric >(sf::Vector2f(200,200 )));
+	m_players.push_back(std::make_shared < Knight >(sf::Vector2f(200,300 )));
+	m_players.push_back(std::make_shared < Archer >(sf::Vector2f(200,400 )));
 }
 
 //==========================================================

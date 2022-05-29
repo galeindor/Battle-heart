@@ -11,5 +11,5 @@ protected:
 	virtual void initSkills(int index) override;
 
 private:
-	sf::Vector2f randEnemyPos() override;
+	virtual sf::Vector2f randEnemyPos() override;
 };

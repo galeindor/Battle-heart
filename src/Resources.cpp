@@ -2,7 +2,7 @@
 
 Resources::Resources()
 {
-	loadTextures();
+	this->loadResources();
 }
 
 //=======================================================================================
@@ -19,7 +19,7 @@ Resources& Resources::instance()
 
 //======================================================================================
 
-void Resources::loadTextures()
+void Resources::loadResources()
 {
 	for (int i = 0; i < NUM_OF_PICS ; i++)
 		m_textures[i].loadFromFile(textures[i]);
@@ -32,6 +32,8 @@ void Resources::loadTextures()
 		{
 			m_skillTextures[i][j].loadFromFile(skillTextures[i][j]);
 		}
+
+	this->m_buttonsFont.loadFromFile(MENU_BUTTON_FONT);
 }
 
 //=======================================================================================

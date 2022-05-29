@@ -34,16 +34,16 @@ bool Player::checkSkillClick(const sf::Vector2f& location)
 
 //==========================================================
 
-bool Player::setTarget(Enemy& obj)
+bool Player::setTarget(std::shared_ptr<Enemy> obj)
 {
-	setAsTarget((GameObject*)&obj);
+	setAsTarget(obj);
 	this->setAttacking(true);
 	return true;
 }
 
 //==========================================================
 
-bool Player::setTarget(Player&)
+bool Player::setTarget(std::shared_ptr<Player>)
 {
 	return false;
 }

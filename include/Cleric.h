@@ -9,8 +9,8 @@ public:
 	Cleric(const sf::Vector2f pos);
 	~Cleric() = default;
 
-	virtual bool setTarget(Player& obj) override;
-	virtual bool setTarget(Enemy& obj) override;
+	virtual bool setTarget(std::shared_ptr<Player> obj) override;
+	virtual bool setTarget(std::shared_ptr<Enemy> obj) override;
 
 protected:
 	virtual void initSkills(int index) override;

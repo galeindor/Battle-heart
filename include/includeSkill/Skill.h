@@ -20,13 +20,9 @@ public:
 	void handleClick();
 	void draw(sf::RenderWindow& window);
 	void update();
-
-protected:
-
 	int getDmg() const { return m_skillDmg; }
 	float getCD() const { return m_cooldown; }
 	float getTimeLeft() const { return m_timeLeft; }
-
 	void setTimeLeft(float val) { m_timeLeft = val; }
 
 private:
