@@ -8,6 +8,7 @@ public:
 	Knight(const sf::Vector2f pos);
 	~Knight() = default;
 
-private:
+protected:
+	virtual void initSkills(int index) override;
 
 };

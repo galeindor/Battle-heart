@@ -23,6 +23,8 @@ constexpr auto SKILL_RECT_SIZE= 80; // size of the rectangle where skills are sh
 
 constexpr auto BAR_WIDTH = 60;
 constexpr auto ATK_CD = 10.f; // regular attack cooldown
+constexpr auto BASE_CD = 3.f; // regular attack cooldown
+
 
 const int ENEMY_POS = -1;
 

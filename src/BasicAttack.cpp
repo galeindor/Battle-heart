@@ -16,6 +16,7 @@ int BaseAttack::castSkill(Stat stat)
 		setTimeLeft(getCD());
 		return copy.getStat();
 	}
+	return 0;
 }
 
 //==========================================================

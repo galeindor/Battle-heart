@@ -6,7 +6,6 @@ class BaseAttack : public Skill
 {
 public:
 	BaseAttack(float cooldown, int damage, float range, int wantedStat);
-	~BaseAttack() = default;
 
 	virtual int castSkill(Stat stat) override;
 

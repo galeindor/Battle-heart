@@ -60,18 +60,18 @@ public:
 protected:
 
 	void setBaseAttack(BaseAttack base) { m_baseAttack = std::make_unique<BaseAttack>(base); }
-	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }
-	vector<std::unique_ptr<Skill>>& getSkills() { return this->m_skills; }
-	virtual void initSkills(int index);
+	void addSkill(std::shared_ptr<Skill> skill) { m_skills.push_back(skill); }
+	vector<std::shared_ptr<Skill>>& getSkills() { return this->m_skills; }
+	virtual void initSkills(int index) = 0;
+	void initStats();
 
 private:
 
 	void useBaseAttack();
 	void useSkill(int index);
 
-	void initStats(const sf::Vector2f pos, int index);
 	std::unique_ptr<BaseAttack> m_baseAttack; // each character basic attack
-	vector<std::unique_ptr<Skill>> m_skills; // skills useable
+	vector<std::shared_ptr<Skill>> m_skills; // skills useable
 	vector<std::unique_ptr<Stat>> m_stats; // all of the character stats
 	HealthBar m_hpBar;
 	sf::Sprite m_sprite;

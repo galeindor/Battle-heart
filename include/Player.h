@@ -16,10 +16,16 @@ public:
 
 	//setters
 	void setSelected(bool state) { this->m_selected = state; }
+
 	//handling skills
 	bool checkSkillClick(const sf::Vector2f& loc);
+
 	//void handleSkill();
+
+protected:
+	virtual void initSkills(int index) = 0;
 
 private:
 	bool m_selected;
+
 };

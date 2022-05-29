@@ -14,4 +14,6 @@
                                               "Archer.cpp"
                                               "Dummy.cpp"
                                               "Skill.cpp"
-                                              "BasicAttack.cpp")
+                                              "BasicAttack.cpp"
+                                              "ClericSkill.cpp"
+                                              "Heal.cpp")

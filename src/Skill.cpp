@@ -2,13 +2,13 @@
 #include "includeSkill/Skill.h"
 
 Skill::Skill(float cooldown, int damage, float range, int wantedStat)
-	:m_cooldown(cooldown), m_skillDmg(damage), m_skillRange(range) , m_wantedStat(wantedStat)
+	:m_cooldown(cooldown), m_skillDmg(damage), m_skillRange(range) , m_wantedStat(wantedStat) , m_timeLeft(0)
 {}
 
 //==========================================================
 
 Skill::Skill(sf::Texture* texture , const sf::Vector2f& pos ,float cooldown, int damage = BASIC_DMG, float range = 5, int wantedStat=_hp)
-	:m_cooldown(cooldown) , m_skillDmg(damage) , m_skillRange(range) , m_timeLeft(0)
+	:m_cooldown(cooldown) , m_skillDmg(damage) , m_skillRange(range) , m_timeLeft(0) , m_wantedStat(wantedStat)
 {
 	m_shape.setTexture(texture);
 	m_shape.setPosition(pos);
@@ -18,6 +18,17 @@ Skill::Skill(sf::Texture* texture , const sf::Vector2f& pos ,float cooldown, int
 	m_cooldownScale.setSize({ SKILL_RECT_SIZE , 0 });
 	m_cooldownScale.setPosition(pos);
 
+}
+
+int Skill::castSkill(Stat stat)
+{
+	auto copy = stat;
+	if (getTimeLeft() <= 0.f)
+	{
+		copy.handleStat(getDmg());
+		setTimeLeft(getCD());
+		return copy.getStat();
+	}
 }
 
 //==========================================================

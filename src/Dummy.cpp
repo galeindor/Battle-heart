@@ -1,10 +1,13 @@
 #include "Dummy.h"
 
 Dummy::Dummy()
-	: Enemy(this->randEnemyPos(), _dummy)
+	:Enemy(this->randEnemyPos(), _dummy)
 {
-	//this->getSprite().setScale(0.3, 0.3);
+	initSkills(_dummy);
+	initStats();
 }
+
+//==========================================================
 
 sf::Vector2f Dummy::randEnemyPos()
 {
@@ -18,4 +21,13 @@ sf::Vector2f Dummy::randEnemyPos()
 
 	pos.y = (rand() % (WINDOW_HEIGHT - HEIGHT_LIMIT)) + HEIGHT_LIMIT;
 	return pos;
+}
+
+//==========================================================
+
+void Dummy::initSkills(int index)
+{
+	auto base = BaseAttack(BASE_CD, 2, 50.f, _hp);
+	setBaseAttack(base);
+
 }

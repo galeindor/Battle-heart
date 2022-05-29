@@ -15,5 +15,4 @@ public:
 protected:
 	virtual void initSkills(int index) override;
 
-
 };

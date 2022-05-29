@@ -8,6 +8,7 @@ public:
 	Archer(const sf::Vector2f pos);
 	~Archer() = default;
 
-private:
+protected:
+	virtual void initSkills(int index) override;
 
 };

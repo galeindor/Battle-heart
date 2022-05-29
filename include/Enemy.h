@@ -13,6 +13,9 @@ public:
 	virtual bool setTarget(Player& obj) override;
 	virtual bool checkIntersection() const override;
 
+protected:
+	virtual void initSkills(int index) = 0;
+
 private:
 	virtual sf::Vector2f randEnemyPos() = 0;
 	sf::Vector2f m_prevPosition;

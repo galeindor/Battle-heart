@@ -92,7 +92,7 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 
 void Board::updateEnemyDest()
 {
-	int max = 0;
+	float max = 0;
 	sf::Vector2f pos;
 	Player* maxPlayer = NULL;
 
@@ -141,30 +141,32 @@ bool Board::handleFirstClick(sf::Vector2f location)
 
 bool Board::handleSecondClick(sf::Vector2f location)
 {
-	if (m_players[m_playerIndex]->checkSkillClick(location))
+
+	auto currPlayer = m_players[m_playerIndex];
+	if (currPlayer->checkSkillClick(location))
 		return false;
 
 	for (auto& player : m_players)
 		if (player->checkCollision(location))
-			if (m_players[m_playerIndex]->setTarget(*player))
+			if (currPlayer->setTarget(*player))
 			{
 				this->m_selected.setPosition(player->getPosition());
-				this->m_players[m_playerIndex]->setDestination(player->getPosition());
+				//currPlayer->setDestination(player->getPosition());
 				return true;
 			}
 
 	for (auto& enemy : m_enemies)
 		if (enemy->checkCollision(location))
-			if (m_players[m_playerIndex]->setTarget(*enemy))
+			if (currPlayer->setTarget(*enemy))
 			{
 				this->m_selected.setPosition(enemy->getPosition());
-				if(!m_players[m_playerIndex]->targetInRange())
-					this->m_players[m_playerIndex]->setDestination(enemy->getPosition());
+				/*if(!currPlayer->targetInRange())
+					currPlayer->setDestination(enemy->getPosition());*/
 				return true;
 			}
 
-	this->m_players[m_playerIndex]->setAsTarget(nullptr);
-	this->m_players[m_playerIndex]->setDestination(adjustLocation(location));
+	currPlayer->setAsTarget(nullptr);
+	currPlayer->setDestination(adjustLocation(location));
 	this->m_selected.setPosition(adjustLocation(location));
 
 	return true;

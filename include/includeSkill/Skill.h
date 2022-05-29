@@ -10,8 +10,8 @@ class Skill
 public:
 	Skill(float cooldown, int damage, float range , int wantedStat);
 	Skill(sf::Texture* texture, const sf::Vector2f& pos, float cooldown , int damage , float range, int wantedStat);
-	~Skill() = default;
-	virtual int castSkill(Stat stat) { return 1; };
+	virtual ~Skill() = default;
+	virtual int castSkill(Stat stat)=0;
 
 	int getWantedStat() const { return  m_wantedStat; }
 
@@ -28,6 +28,7 @@ protected:
 	float getTimeLeft() const { return m_timeLeft; }
 
 	void setTimeLeft(float val) { m_timeLeft = val; }
+
 private:
 
 	// skill functionality part 

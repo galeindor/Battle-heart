@@ -5,8 +5,6 @@ GameObject::GameObject(const sf::Vector2f pos, const int index, sf::Vector2f ima
 	  m_velocity(sf::Vector2f(0, 0)), m_mass(0.1f), m_maxForce(30), m_maxVelocity(100),
 	  m_hpBar(HealthBar(pos)), m_animation(Resources::instance().getTexture(index), imageCount, switchTime)
 {
-	this->initSkills(index);
-	this->initStats(pos, index);
 
 	m_sprite.setPosition(pos);
 	m_sprite.setTexture(*Resources::instance().getTexture(index));
@@ -30,7 +28,7 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 	this->m_velocity = this->m_velocity + acceleration * deltaTime;
 	this->m_velocity = this->m_steering->Truncate(this->m_velocity, this->m_maxVelocity);
 
-	if (this->getTarget())
+	if (this->getTarget() && !this->targetInRange() )
 		this->setDestination(this->getTarget()->getPosition());
 
 	if (!this->checkIntersection())
@@ -43,6 +41,7 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 	{
 		this->m_isMoving = false;
 		this->m_row = _idle;
+
 		if (targetInRange())
 			useBaseAttack();
 	}
@@ -53,28 +52,22 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->m_sprite.getPosition());
 
+	this->m_baseAttack->update();
+
+	for (auto skill : m_skills)
+	{
+		skill->update();
+	}
 
 	
 
 }
 
-//=======================================================================================
-
-void GameObject::initSkills(int index)
-{
-	auto base = BaseAttack(2.f, BASIC_DMG, 50.f , _hp);
-	m_baseAttack = std::make_unique<BaseAttack>(base);
-
-	for (int i = 0; i < MAX_SKILL; i++)
-	{
-		auto skill = Skill(Resources::instance().getSkill(index, i), sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30), ATK_CD,BASIC_DMG, 5.f , _hp);
-		m_skills.push_back(std::make_unique<Skill>(skill));
-	}
-}
+//======================================================================================
 
 //=======================================================================================
 
-void GameObject::initStats(const sf::Vector2f pos, int index)
+void GameObject::initStats()
 {
 	for (int index = 0; index < MAX_STATS; index++)
 	{
@@ -106,7 +99,12 @@ void GameObject::handleAnimation(sf::Vector2f movement, float deltaTime)
 void GameObject::useBaseAttack()
 {
 	auto index = m_baseAttack->getWantedStat();
-	m_target->setStat(index, m_baseAttack->castSkill(m_target->getStat(index)));
+	auto dmg = m_baseAttack->castSkill(m_target->getStat(index));
+	if (dmg != 0)
+	{
+		m_target->setStat(index, dmg);
+	}
+		m_row = _basicAtt;
 }
 
 //=======================================================================================
@@ -114,7 +112,10 @@ void GameObject::useBaseAttack()
 void GameObject::useSkill(int skillIndex)
 {
 	auto index = m_baseAttack->getWantedStat();
-	m_target->setStat(index, m_skills[skillIndex]->castSkill(m_target->getStat(index)));
+	auto dmg = m_skills[skillIndex]->castSkill(m_target->getStat(index));
+	if (dmg != 0)
+		m_row = _basicAtt;
+	m_target->setStat(index, dmg);
 }
 
 //=======================================================================================
@@ -141,7 +142,7 @@ float distance(float f1, float f2)
 
 bool GameObject::targetInRange() const
 {
-	if (m_target != nullptr)
+	if (this->getTarget())
 	{
 		auto tarPos = m_target->getPosition();
 		auto myPos = this->getPosition();
