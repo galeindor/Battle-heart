@@ -22,12 +22,15 @@ void Player::draw(sf::RenderWindow& window)
 
 bool Player::checkSkillClick(const sf::Vector2f& location)
 {
-	for (auto& skill : this->getSkills()) // check for presses on a skill
-		if (skill->checkClick(location))
+	auto skills = getSkills();
+	for (size_t i = 0; i < skills.size(); i++)
+	{
+		if (skills[i]->checkClick(location))
 		{
-			skill->handleClick();
+			this->useSkill(i);
 			return true;
 		}
+	}
 
 	return false;
 }

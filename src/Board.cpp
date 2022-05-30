@@ -122,27 +122,6 @@ void Board::updateEnemyDest()
 		}
 	}
 
-	//for (auto& player : m_players)
-	//{
-	//	auto playerPos = player->getPosition();
-	//	if (player->getStat(_hp)> max)
-	//	{
-	//		maxPlayer = player;
-	//		max = player->getStat(_hp);
-	//		pos = player->getPosition();
-	//	}
-	//}
-
-	//for (auto& enemy : m_enemies)
-	//{
-	//	if (!enemy->getIsMoving())
-	//	{
-	//		enemy->setDestination(pos);
-
-	//		if(maxPlayer)
-	//			enemy->setTarget(maxPlayer);
-	//	}
-	//}
 }
 
 //==========================================================

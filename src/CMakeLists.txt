@@ -17,4 +17,5 @@
                                               "Skill.cpp"
                                               "BasicAttack.cpp"
                                               "ClericSkill.cpp"
-                                              "Heal.cpp")
+                                              "Heal.cpp"
+                                              "ShieldBuff.cpp")

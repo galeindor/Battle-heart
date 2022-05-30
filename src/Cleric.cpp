@@ -32,8 +32,6 @@ void Cleric::initSkills(int index)
 
 	int i = 0;
 
-	
-	//auto skill = Skill(Resources::instance().getSkill(index, i++), sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30), ATK_CD, BASIC_DMG, 5.f, _hp);
-
-	//addSkill()
+	addSkill(std::make_shared<Heal>(Resources::instance().getSkill(index, i++), sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30), ATK_CD , -10 , base.getRange(), _hp));
+	addSkill(std::make_shared<Heal>(Resources::instance().getSkill(index, i++), sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30), ATK_CD, 15 , base.getRange(), _hp));
 }

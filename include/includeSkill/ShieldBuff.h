@@ -5,9 +5,8 @@
 class ShieldBuff : public ClericSkill
 {
 public:
-	ShieldBuff();
-	~ShieldBuff();
+	using ClericSkill::ClericSkill;
 
 private:
-
+	virtual int castSkill(Stat stat) override;
 };

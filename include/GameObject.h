@@ -62,10 +62,10 @@ protected:
 	vector<std::shared_ptr<Skill>>& getSkills() { return this->m_skills; }
 	virtual void initSkills(int index) = 0;
 	void initStats();
+	void useSkill(int index);
 
 private:
 	void useBaseAttack();
-	void useSkill(int index);
 
 	std::unique_ptr<BaseAttack> m_baseAttack; // each character basic attack
 	vector<std::shared_ptr<Skill>> m_skills; // skills useable
