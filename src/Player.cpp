@@ -11,10 +11,11 @@ void Player::draw(sf::RenderWindow& window)
 {
 	if (m_selected)
 	{
-		this->getHpBar().draw(window);
+		showHpBar();
 		for (auto& skill : this->getSkills())
 			skill->draw(window); // draw all skills
 	}
+	getHpBar().draw(window);
 	window.draw(this->getSprite());
 }
 

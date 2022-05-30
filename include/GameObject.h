@@ -7,6 +7,7 @@
 #include "SteeringInterface.h"
 #include "Stat.h"
 #include "Animation.h"
+
 class Enemy;
 class Player;
 class SteeringInterface;
@@ -28,7 +29,7 @@ public:
 
 	// Management
 	sf::Vector2f adjustLocation(sf::Vector2f location);
-
+	void showHpBar() { m_hpBar.show(); }
 
 	// Getters
 	int getStat(int index)			const		{ return this->m_stats[index]->getStat(); }
@@ -50,7 +51,7 @@ public:
 	void setAsTarget(std::shared_ptr<GameObject> obj) { this->m_target = obj; }
 	void setAttacking(bool isAttacking) { this->m_isAttacking = isAttacking; }
 	void setMoving(bool movement) { this->m_isMoving = movement; }
-	void setStat(int index, int newVal) { this->m_stats[index]->setStat(newVal); }
+	void setStat(int index, int newVal);
 
 	// Checks/validators
 	bool checkCollision(const sf::Vector2f& location);
@@ -89,4 +90,5 @@ private:
 	Animation m_animation;
 	unsigned int m_row;
 	bool m_faceRight;
+
 };

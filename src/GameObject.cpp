@@ -60,8 +60,6 @@ void GameObject::update(sf::Vector2f steerForce, float deltaTime)
 		skill->update();
 	}
 
-	
-
 }
 
 //=======================================================================================
@@ -155,4 +153,13 @@ bool GameObject::targetInRange() const
 	}
 
 	return false;
+}
+
+//=======================================================================================
+void GameObject::setStat(int index, int newVal)
+{ 
+	if (index == _hp && getTarget())
+		m_target->showHpBar();
+		
+	this->m_stats[index]->setStat(newVal); 
 }

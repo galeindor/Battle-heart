@@ -10,6 +10,7 @@ HealthBar::HealthBar(sf::Vector2f pos)
 
 void HealthBar::updateHealthBar(int statVal)
 {
+	m_showTime -= m_clock.restart().asSeconds();
 	auto size = m_bar.getSize();
 	statVal = std::min(statVal * BAR_WIDTH / MAX_HEALTH , int(size.x));
 	auto newX = std::max(statVal, 0);
@@ -48,8 +49,11 @@ void HealthBar::initCurrHp(const sf::Vector2f pos)
 
 void HealthBar::draw(sf::RenderWindow& window)
 {
-	window.draw(m_bar);
-	window.draw(m_currHealth);
+	if (m_showTime >= 0)
+	{
+		window.draw(m_bar);
+		window.draw(m_currHealth);
+	}
 }
 
 //=====================================================================
@@ -59,4 +63,5 @@ void HealthBar::setPosition(const sf::Vector2f pos)
 	m_bar.setPosition(pos);
 	m_currHealth.setPosition(pos);
 }
+
 
