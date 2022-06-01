@@ -1,9 +1,10 @@
 #pragma once
+#include "macros.h"
 
 class SkillDomain
 {
 public:
-	SkillDomain();
+	SkillDomain() = default;
 	~SkillDomain() = default;
-private:
 };
+

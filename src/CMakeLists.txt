@@ -18,6 +18,7 @@
                                               "Skill.cpp"
                                               "NewSkill.cpp"
                                               "SkillDomain.cpp"
+                                              "SingleTarget.cpp"
                                               "BasicAttack.cpp"
                                               "ClericSkill.cpp"
                                               "Heal.cpp"
