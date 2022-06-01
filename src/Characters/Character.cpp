@@ -1,4 +1,4 @@
-#include "Character.h"
+#include "includeCharacter/Character.h"
 
 
 Character::Character(const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime)
