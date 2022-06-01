@@ -11,7 +11,7 @@ public:
 	Skill(float cooldown, int damage, float range , int wantedStat);
 	Skill(sf::Texture* texture, const sf::Vector2f& pos, float cooldown , int damage , float range, int wantedStat);
 	virtual ~Skill() = default;
-	virtual int castSkill(Stat stat)=0;
+	virtual int castSkill(Stat stat) = 0;
 
 	int getWantedStat() const { return  m_wantedStat; }
 
