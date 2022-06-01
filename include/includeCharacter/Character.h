@@ -2,7 +2,7 @@
 
 #include "includeSkill/Skill.h"
 #include "includeSkill/BasicAttack.h"
-#include "NewSkill.h"
+#include "includeSkill/NewSkill.h"
 #include "HealthBar.h"
 #include "Stat.h"
 #include "Object.h"

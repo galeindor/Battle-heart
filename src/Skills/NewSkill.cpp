@@ -1,4 +1,4 @@
-#include "NewSkill.h"
+#include "includeSkill/NewSkill.h"
 
 NewSkill::NewSkill(float cooldown, const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime)
 	: Object(pos, index, imageCount, switchTime), m_cooldown(cooldown), m_timeLeft(0)
