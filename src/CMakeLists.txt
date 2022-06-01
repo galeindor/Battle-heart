@@ -15,11 +15,11 @@
                                               "Characters/Enemy.cpp"
                                               "Characters/Character.cpp"
                                               "Characters/Player.cpp"
-                                              "Skill.cpp"
-                                              "NewSkill.cpp"
+                                              "Skills/Skill.cpp"
+                                              "Skills/NewSkill.cpp"
                                               "SkillDomain.cpp"
-                                              "SingleTarget.cpp"
-                                              "BasicAttack.cpp"
-                                              "ClericSkill.cpp"
-                                              "Heal.cpp"
-                                              "ShieldBuff.cpp")
+                                              "Skills/BasicAttack.cpp"
+                                              "Skills/Heal.cpp"
+                                              "Skills/ShieldBuff.cpp"
+                                              "Skills/ClericSkill.cpp"
+                                              )
