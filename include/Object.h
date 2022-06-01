@@ -27,18 +27,21 @@ public:
 	SteeringInterface* behaviour()	const { return this->m_steering; }
 	sf::Vector2f	getDest()		const { return this->m_dest; }
 	bool getIsMoving()				const { return this->m_isMoving; }
-	float getRange() const { return m_range; }
+	float getRange()				const { return this->m_range; }
+	float getMass()					const { return this->m_mass; }
 
 	// Setters
 	void setDestination(sf::Vector2f dest) { this->m_dest = adjustLocation(dest); }
 	void setRow(ObjectAnimation index) { this->m_row = int(index); }
 	void setMoving(bool movement) { this->m_isMoving = movement; }
+	void setVelocity(sf::Vector2f velocity) { this->m_velocity = velocity; }
+	void setPosition(sf::Vector2f pos) { this->m_sprite.setPosition(pos); }
 
 	// Checks/validators
 	bool checkCollision(const sf::Vector2f& location);
+	sf::Vector2f adjustLocation(sf::Vector2f location);
 
 private:
-	sf::Vector2f adjustLocation(sf::Vector2f location);
 	
 	// General
 	sf::Sprite m_sprite;
