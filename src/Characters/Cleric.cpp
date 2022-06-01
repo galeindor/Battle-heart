@@ -1,5 +1,5 @@
 
-#include "Cleric.h"
+#include "includeCharacter/Cleric.h"
 
 Cleric::Cleric(const sf::Vector2f pos)
 	:Player(pos , _cleric)

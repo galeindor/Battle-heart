@@ -1,4 +1,4 @@
-#include "Dummy.h"
+#include "includeCharacter/Dummy.h"
 
 Dummy::Dummy()
 	:Enemy(this->randEnemyPos(), _dummy)
