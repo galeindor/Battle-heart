@@ -10,7 +10,6 @@
 #include <list>
 #include <memory>
 #include <queue>
-#include <SFML/Graphics.hpp>
 #include <algorithm>
 #include <stdlib.h> 
 #include <time.h> 

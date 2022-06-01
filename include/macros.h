@@ -5,13 +5,13 @@
 // General ----------------------------------
 const sf::Vector2f healthOffset(30, 100);
 const sf::Vector2f selectedOffset(45, 30);
+const sf::Vector2f DEFAULT_VEC(0, 0);
 constexpr auto SPRITE_SIZE = 64;
 constexpr auto WINDOW_WIDTH = 1400;
 constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto HEIGHT_LIMIT = 200;
 constexpr auto CUT_CORNERS = 50; // used to limit the player movement to not touch corners
 constexpr auto BAR_WIDTH = 60;
-
 
 
 // Buttons

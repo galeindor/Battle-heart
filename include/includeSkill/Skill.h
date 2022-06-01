@@ -3,7 +3,7 @@
 #include "Resources.h"
 #include "Stat.h"
 
-class GameObject;
+class Character;
 
 class Skill
 {

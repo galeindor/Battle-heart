@@ -1,8 +1,10 @@
 #include "Enemy.h"
 
 Enemy::Enemy(sf::Vector2f pos, const int index)
-	: GameObject(pos, index, sf::Vector2f(9, 5), 0.3f)
-{}
+	: Character(pos, index, sf::Vector2f(9, 5), 0.3f)
+{
+	this->initSkills(index);
+}
 
 //=======================================================================================
 void Enemy::draw(sf::RenderWindow& window)
@@ -41,3 +43,6 @@ bool Enemy::checkIntersection() const
 
 	return false;
 }
+
+void Enemy::initSkills(const int index)
+{}

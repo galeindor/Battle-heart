@@ -41,28 +41,29 @@ sf::Vector2f SteeringInterface::Truncate(const sf::Vector2f& vec, float max)
 	return truncated;
 }
 
-sf::Vector2f SteeringInterface::Flee(GameObject* object, sf::Vector2f target)
+sf::Vector2f SteeringInterface::Flee(sf::Vector2f object, sf::Vector2f velocity, float maxVelocity, float maxForce, sf::Vector2f target)
 {
-	sf::Vector2f DesiredVelocity = object->getPosition() - target;
+	sf::Vector2f DesiredVelocity = object - target;
 	DesiredVelocity = Normalize(DesiredVelocity);
-	DesiredVelocity *= object->getMaxVelocity();
-	sf::Vector2f SteeringForce = (DesiredVelocity - object->getVelocity());
-	SteeringForce /= object->getMaxVelocity();
-	return SteeringForce * object->getMaxForce();
+	DesiredVelocity *= maxVelocity;
+	sf::Vector2f SteeringForce = (DesiredVelocity - velocity);
+	SteeringForce /= maxVelocity;
+	return SteeringForce * maxForce;
 }
 
-sf::Vector2f SteeringInterface::Arrive(GameObject* object, sf::Vector2f target, float r) {
-	sf::Vector2f desiredV = target - object->getPosition();
-	sf::Vector2f steeringForce = desiredV - object->getVelocity();
+sf::Vector2f SteeringInterface::Arrive(sf::Vector2f object, sf::Vector2f velocity, float maxVelocity, float maxForce, sf::Vector2f target, float r) 
+{
+	sf::Vector2f desiredV = target - object;
+	sf::Vector2f steeringForce = desiredV - velocity;
 	float factor;
-	sf::Vector2f dist = target - object->getPosition();
+	sf::Vector2f dist = target - object;
 
 	if (length(dist) >= r) {
 		//draw_circle(TheApp::Instance()->getRenderer(), target.x, target.y, r, 0, 0, 255, 1);
 		desiredV = Normalize(desiredV);
-		desiredV *= object->getMaxVelocity();
-		steeringForce /= object->getMaxVelocity();
-		steeringForce *= object->getMaxForce();
+		desiredV *= maxVelocity;
+		steeringForce /= maxVelocity;
+		steeringForce *= maxForce;
 	}
 	else {
 		factor = length(dist) / r;
@@ -73,23 +74,23 @@ sf::Vector2f SteeringInterface::Arrive(GameObject* object, sf::Vector2f target, 
 	return steeringForce;
 }
 
-sf::Vector2f SteeringInterface::Pursue(GameObject* object, sf::Vector2f target)
+sf::Vector2f SteeringInterface::Pursue(sf::Vector2f object, sf::Vector2f velocity, float maxVelocity, float maxForce, sf::Vector2f target)
 {
-	sf::Vector2f desiredV = target - object->getPosition();
+	sf::Vector2f desiredV = target - object;
 	desiredV = Normalize(desiredV);
-	desiredV *= object->getMaxVelocity();
-	sf::Vector2f steeringForce = desiredV - object->getVelocity();
-	steeringForce /= object->getMaxVelocity();
-	steeringForce *= object->getMaxForce();
+	desiredV *= maxVelocity;
+	sf::Vector2f steeringForce = desiredV - velocity;
+	steeringForce /= maxVelocity;
+	steeringForce *= maxForce;
 
 	return steeringForce;
 }
 
-sf::Vector2f SteeringInterface::CollisionAvoidance(GameObject* object, sf::Vector2f target, std::vector<sf::Vector2f> obstacles, float MAX_AVOID_FORCE)
+sf::Vector2f SteeringInterface::CollisionAvoidance(sf::Vector2f object, sf::Vector2f velocity, float maxVelocity, float maxForce, sf::Vector2f target, std::vector<sf::Vector2f> obstacles, float MAX_AVOID_FORCE)
 {
-	float v = length(object->getVelocity()) / object->getMaxVelocity();
-	sf::Vector2f ahead = object->getPosition() + object->getVelocity() * v;
-	sf::Vector2f halfahead = object->getPosition() + object->getVelocity() * 0.5f * v;
+	float v = length(velocity) / maxVelocity;
+	sf::Vector2f ahead = object + velocity * v;
+	sf::Vector2f halfahead = object + velocity * 0.5f * v;
 	std::vector <sf::Vector2f> distances, subdistances, avoidForce;
 
 	for (int i = 0; i < obstacles.size(); i++) {
@@ -116,38 +117,38 @@ sf::Vector2f SteeringInterface::CollisionAvoidance(GameObject* object, sf::Vecto
 
 	for (int i = 0; i < obstacles.size(); i++) {
 
-		if (length(distances[i]) <= 50 || length(subdistances[i]) <= 50 || distance(object->getPosition(), obstacles[i]) <= 50) {//50 = radius of sphere
+		if (length(distances[i]) <= 50 || length(subdistances[i]) <= 50 || distance(object, obstacles[i]) <= 50) {//50 = radius of sphere
 
 
 			//draw_circle(TheApp::Instance()->getRenderer(), 50, 50, 10, 255, 255, 255, 255);
-			//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), object->getPosition().x, object->getPosition().y, avoidForce[i].x, avoidForce[i].y);
-			sf::Vector2f desiredV = target - object->getPosition();
+			//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), object.x, object.y, avoidForce[i].x, avoidForce[i].y);
+			sf::Vector2f desiredV = target - object;
 			desiredV = Normalize(desiredV);
-			desiredV *= object->getMaxVelocity();
-			sf::Vector2f steeringForce = desiredV - object->getVelocity();
-			steeringForce /= object->getMaxVelocity();
-			steeringForce *= object->getMaxForce();
+			desiredV *= maxVelocity;
+			sf::Vector2f steeringForce = desiredV - velocity;
+			steeringForce /= maxVelocity;
+			steeringForce *= maxForce;
 			distances.clear();
 			subdistances.clear();
 
 			//draw_circle(TheApp::Instance()->getRenderer(), 50, 50, 10, 255, 255, 255, 255);
 
-			//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), object->getPosition().x, object->getPosition().y, ahead.x, ahead.y);
+			//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), object.x, object.y, ahead.x, ahead.y);
 
 
 			return steeringForce + avoidForce[i];
 		}
 		else {
 
-			sf::Vector2f desiredV = target - object->getPosition();
+			sf::Vector2f desiredV = target - object;
 			desiredV = Normalize(desiredV);
-			desiredV *= object->getMaxVelocity();
-			sf::Vector2f steeringForce = desiredV - object->getVelocity();
-			steeringForce /= object->getMaxVelocity();
-			steeringForce *= object->getMaxForce();
+			desiredV *= maxVelocity;
+			sf::Vector2f steeringForce = desiredV - velocity;
+			steeringForce /= maxVelocity;
+			steeringForce *= maxForce;
 
 			//draw_circle(TheApp::Instance()->getRenderer(), 50, 50, 10, 255, 255, 255, 255);
-			//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), object->getPosition().x, object->getPosition().y, ahead.x, ahead.y);
+			//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), object.x, object.y, ahead.x, ahead.y);
 			return steeringForce;
 		}
 	}

@@ -70,7 +70,7 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 	for (auto& player : m_players)
 	{
 		sf::Vector2f steerForce;
-		steerForce = player->behaviour()->Arrive(player.get(), player->getDest(), 10);
+		steerForce = player->behaviour()->Arrive(player->getPosition(), player->getVelocity(), player->getMaxVelocity(), player->getMaxForce() , player->getDest(), 10);
 		player->update(steerForce, deltaTime);
 	}
 
@@ -81,7 +81,7 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 		else
 			t = enemy->behaviour()->length(firstEnemyDist) / enemy->behaviour()->length(enemy->getTarget()->getVelocity());
 
-		sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(enemy.get(), enemy->getTarget()->getPosition(), createObstaclesVec(), 10);
+		sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(enemy->getPosition(), enemy->getVelocity(), enemy->getMaxVelocity(), enemy->getMaxForce(), enemy->getTarget()->getPosition(), createObstaclesVec(), 10);
 		Enemy* enemyPtr = enemy.get();
 		this->seperation(enemyPtr, steerForce, deltaTime);
 		enemy->update(steerForce, deltaTime);
@@ -92,7 +92,6 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 
 void Board::updateEnemyDest()
 {
-	float min = INFINITY;
 	sf::Vector2f pos;
 	std::shared_ptr<Player> closePlayer = NULL;
 

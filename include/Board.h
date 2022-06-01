@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Resources.h"
-
 #include "Cleric.h"
 #include "Knight.h"
 #include "Archer.h"

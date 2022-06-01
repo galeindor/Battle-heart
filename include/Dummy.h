@@ -7,9 +7,6 @@ public:
 	Dummy();
 	~Dummy() = default;
 
-protected:
-	virtual void initSkills(int index) override;
-
 private:
 	virtual sf::Vector2f randEnemyPos() override;
 };

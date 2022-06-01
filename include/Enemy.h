@@ -1,8 +1,8 @@
 #pragma once
-#include "GameObject.h"
+#include "Character.h"
 #include "Player.h"
 
-class Enemy : public GameObject
+class Enemy : public Character
 {
 public:
 	Enemy(sf::Vector2f pos, const int index);
@@ -13,9 +13,7 @@ public:
 	virtual bool setTarget(std::shared_ptr<Player> obj) override;
 	virtual bool checkIntersection() const override;
 
-protected:
-	virtual void initSkills(int index) = 0;
-
 private:
+	void initSkills(const int index);
 	virtual sf::Vector2f randEnemyPos() = 0;
 };
