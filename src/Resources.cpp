@@ -29,9 +29,10 @@ void Resources::loadResources()
 
 	for (int i = 0; i < NUM_OF_PLAYERS; i++)
 		for (int j = 0; j < MAX_SKILL; j++)
-		{
 			m_skillTextures[i][j].loadFromFile(skillTextures[i][j]);
-		}
+
+	for (int i = 0; i < NUM_OF_EFFECTS; i++)
+		m_effectsTextures[i].loadFromFile(effectsTextures[i]);
 
 	this->m_buttonsFont.loadFromFile(MENU_BUTTON_FONT);
 }

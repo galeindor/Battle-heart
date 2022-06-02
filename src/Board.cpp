@@ -168,7 +168,6 @@ bool Board::handleSecondClick(sf::Vector2f location)
 			if (currPlayer->setTarget(enemy))
 
 			if (m_players[m_playerIndex]->setTarget(enemy))
-
 			{
 				this->m_selected.setPosition(enemy->getPosition());
 				return true;
@@ -219,10 +218,8 @@ void Board::drawObjects(sf::RenderWindow& window)
 		{
 			if (this->m_players[playerIndex].get()->getPosition().y > this->m_enemies[enemyIndex].get()->getPosition().y)
 				drawObject(false, enemyIndex, window);
-
 			else
 				drawObject(true, playerIndex, window);
-
 		}
 		else if (enemyIndex < this->m_enemies.size())
 			drawObject(false, enemyIndex, window);

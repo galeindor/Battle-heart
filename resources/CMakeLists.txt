@@ -25,3 +25,5 @@ configure_file ("skills/apolloarrow.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("amatic.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("titillium.otf" ${CMAKE_BINARY_DIR} COPYONLY)
 
+# Effects
+configure_file ("healEffect.png" ${CMAKE_BINARY_DIR} COPYONLY)

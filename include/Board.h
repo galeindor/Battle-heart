@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Resources.h"
-#include "includeCharacter/Cleric.h"
-#include "includeCharacter/Knight.h"
-#include "includeCharacter/Archer.h"
-#include "includeCharacter/Dummy.h"
+#include "Characters/Cleric.h"
+#include "Characters/Knight.h"
+#include "Characters/Archer.h"
+#include "Characters/Dummy.h"
 
 using namespace std;
 using std::shared_ptr;

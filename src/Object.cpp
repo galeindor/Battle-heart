@@ -2,14 +2,10 @@
 
 Object::Object(const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime)
 	: m_animation(Resources::instance().getTexture(index), imageCount, switchTime), 
-	  m_isMoving(false), m_steering(new SteeringInterface), m_row(0), m_faceRight(true), 
-	  m_velocity(DEFAULT_VEC), m_dest(pos)
+	  m_isMoving(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC), m_dest(pos)
 {
-	this->m_sprite.setPosition(pos);
-	m_sprite.setTexture(*Resources::instance().getTexture(index));
-	sf::IntRect size = m_sprite.getTextureRect();
-	this->m_sprite.setScale(1.5, 1.5);
-	m_sprite.setOrigin(SPRITE_SIZE / 2, SPRITE_SIZE);
+	this->initSprite(pos, index);
+	this->m_target = nullptr;
 
 	// for now
 	m_mass = 0.1f;
@@ -24,11 +20,11 @@ void Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 {
 	// If facing right.
 	if (movement.x > 0.0f || this->getPosition().x < this->getDest().x)
-		this->m_faceRight = true;
+		this->m_animation.setFaceRight(true);
 	else if (movement.x < 0.0f || this->getPosition().x > this->getDest().x)
-		this->m_faceRight = false;
+		this->m_animation.setFaceRight(false);
 
-	this->m_animation.update(this->m_row, deltaTime, this->m_faceRight);
+	this->m_animation.update(deltaTime);
 	this->m_sprite.setTextureRect(this->m_animation.getUVRect());
 }
 
@@ -50,6 +46,17 @@ sf::Vector2f Object::adjustLocation(sf::Vector2f location)
 	newLoc.y = std::max(newLoc.y, float(HEIGHT_LIMIT));
 
 	return newLoc;
+}
+
+//=======================================================================================
+
+void Object::initSprite(const sf::Vector2f pos, const int index)
+{
+	this->m_sprite.setPosition(pos);
+	this->m_sprite.setTexture(*Resources::instance().getTexture(index));
+	sf::IntRect size = m_sprite.getTextureRect();
+	this->m_sprite.setScale(1.5, 1.5);
+	this->m_sprite.setOrigin(SPRITE_SIZE / 2, SPRITE_SIZE);
 }
 
 //=======================================================================================

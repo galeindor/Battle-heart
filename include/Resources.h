@@ -29,6 +29,7 @@ public:
 	sf::Texture* getBackground(int i) { return &m_bgTextures[i]; }
 	sf::Font* getButtonsFont() { return &m_buttonsFont; };
 	sf::Texture* getTexture(int i) { return &m_textures[i]; }
+	sf::Texture* getEffectTexture(int i) { return &m_effectsTextures[i]; }
 	sf::Texture* getSkill(int i, int j) { return &m_skillTextures[i][j]; }
 	void playSound(int index);
 	void setVolume(int volume);
@@ -41,6 +42,7 @@ private:
 	Resources(const Resources&) = default;
 
 	sf::Texture m_textures[NUM_OF_PICS];
+	sf::Texture m_effectsTextures[NUM_OF_EFFECTS];
 	sf::Texture m_skillTextures[NUM_OF_PLAYERS][MAX_SKILL];
 	sf::Texture m_bgTextures[NUM_OF_BG];
 	sf::Font m_buttonsFont;

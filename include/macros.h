@@ -26,7 +26,7 @@ const sf::Vector2f MENU_BUTTONS_START = sf::Vector2f(436, 49);
 const int MENU_BUTTONS_OFFSET = 110, MENU_BUTTONS_GAP = 20;
 
 // Animations ----------------------------------
-enum ObjectAnimation
+enum CharacterAnimation
 {
 	_walk, _basicAtt, _idle, _cast, _death
 };
@@ -50,6 +50,11 @@ enum LoadTextures
 };
 const std::string textures[NUM_OF_PICS] = { "cleric.png" , "knight.png", "archer.png" , "select.png", "enemy.png"};
 
+enum effectsTextures
+{
+	_heal, NUM_OF_EFFECTS
+};
+const std::string effectsTextures[NUM_OF_EFFECTS] = { "healEffect.png" };
 // Skills ----------------------------------
 constexpr auto NUM_OF_PLAYERS = 3;
 constexpr auto MAX_SKILL = 2;
