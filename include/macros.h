@@ -68,3 +68,16 @@ enum Backgrounds
 };
 const std::string bg_textures[NUM_OF_BG] = { "plain.png", "menuBG.png" };
 
+
+// Movement and Steering ------------------------
+
+enum Locations
+{
+	_target , _object , _velocity , _obstacles
+};
+
+enum Values
+{
+	_maxVelocity, _maxForce
+};
+

@@ -8,6 +8,7 @@
                                               "Stat.cpp"
                                               "Resources.cpp"
                                               "Board.cpp"
+                                              "SingleTarget.cpp"
                                               "Characters/Cleric.cpp"  
                                               "Characters/Knight.cpp"
                                               "Characters/Archer.cpp"
