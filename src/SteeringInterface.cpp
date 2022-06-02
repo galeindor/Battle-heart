@@ -101,8 +101,6 @@ sf::Vector2f SteeringInterface::CollisionAvoidance(sf::Vector2f object, sf::Vect
 		af = ahead - obstacles[i];
 		af = Normalize(af) * MAX_AVOID_FORCE;
 		avoidForce.push_back(af);
-
-
 	}
 	// Distance and sub distance. ////
 	for (int i = 0; i < avoidForce.size(); i++) {

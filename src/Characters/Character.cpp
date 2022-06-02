@@ -6,6 +6,7 @@ Character::Character(const sf::Vector2f pos, const int index, sf::Vector2f image
 {
 	this->initBasic(index);
 	this->initStats(index);
+	this->m_target = nullptr;
 }
 
 
@@ -13,13 +14,32 @@ Character::Character(const sf::Vector2f pos, const int index, sf::Vector2f image
 
 void Character::update(sf::Vector2f steerForce, float deltaTime)
 {
+	sf::Vector2f acceleration = steerForce / this->getMass();
+	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
+	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
+
 	if (this->getTarget() && !this->targetInRange())
 		this->setDestination(this->getTarget()->getPosition());
 
-	Object::update(steerForce, deltaTime);
+	if (!this->checkIntersection())
+	{
+		this->setMoving(true);
+		this->setPosition(this->getPosition() + this->getVelocity() * deltaTime);
+		this->setRow(_walk);
+	}
+	else
+	{
+		this->setMoving(false);
+		this->setRow(_idle);
+
+		if (targetInRange())
+			this->useBaseAttack();
+	}
 
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
-	this->m_hpBar.setPosition(this->getSprite().getPosition());
+	this->m_hpBar.setPosition(this->getPosition());
+	// Trim position values to window size and handle animation
+	Object::update(steerForce, deltaTime);
 
 	this->m_baseAttack->update();
 	//for (auto& skill : this->m_skills)
@@ -109,3 +129,5 @@ void Character::setStat(int index, int newVal)
 		
 	this->m_stats[index]->setStat(newVal); 
 }
+
+//=======================================================================================

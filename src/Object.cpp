@@ -13,8 +13,8 @@ Object::Object(const sf::Vector2f pos, const int index, sf::Vector2f imageCount,
 
 	// for now
 	m_mass = 0.1f;
-	m_maxForce = 1;
-	m_maxVelocity = 80;
+	m_maxForce = 50;
+	m_maxVelocity = 100;
 	m_range = SHORT_RANGE;
 }
 
@@ -23,43 +23,19 @@ Object::Object(const sf::Vector2f pos, const int index, sf::Vector2f imageCount,
 void Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 {
 	// If facing right.
-	if (movement.x > 0.0f)
+	if (movement.x > 0.0f || this->getPosition().x < this->getDest().x)
 		this->m_faceRight = true;
-	else if (movement.x < 0.0f)
+	else if (movement.x < 0.0f || this->getPosition().x > this->getDest().x)
 		this->m_faceRight = false;
 
 	this->m_animation.update(this->m_row, deltaTime, this->m_faceRight);
 	this->m_sprite.setTextureRect(this->m_animation.getUVRect());
 }
 
-//=======================================================================================
-
 void Object::update(sf::Vector2f steerForce, const float deltaTime)
 {
-	sf::Vector2f acceleration = steerForce / this->m_mass;
-	this->m_velocity = this->m_velocity + acceleration * deltaTime;
-	this->m_velocity = this->m_steering->Truncate(this->m_velocity, this->m_maxVelocity);
-
-
-	if (!this->checkIntersection())
-	{
-		this->m_isMoving = true;
-		this->getSprite().move(this->m_velocity * deltaTime);
-		this->m_row = _walk;
-	}
-	else
-	{
-		this->m_isMoving = false;
-		this->m_row = _idle;
-
-		//if (targetInRange())
-		{ }
-			//useBaseAttack();
-	}
-
-	// Trim position values to window size and handle animation
 	this->handleAnimation(this->m_velocity * deltaTime, deltaTime);
-	this->getSprite().setPosition(this->adjustLocation(this->getSprite().getPosition()));
+	this->setPosition(this->adjustLocation(this->getPosition()));
 }
 
 //=======================================================================================
