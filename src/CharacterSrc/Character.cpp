@@ -1,8 +1,8 @@
 #include "Characters/Character.h"
 
 
-Character::Character(const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime)
-	: m_isAttacking(false), m_hpBar(HealthBar(pos)), Object(pos, index, imageCount, switchTime)
+Character::Character(const sf::Vector2f pos, const int index, AnimationParams animParams )
+	: m_isAttacking(false), m_hpBar(HealthBar(pos)), Object(pos, index, animParams)
 {
 	this->initBasic(index);
 	this->initStats(index);
@@ -13,14 +13,10 @@ Character::Character(const sf::Vector2f pos, const int index, sf::Vector2f image
 
 void Character::update(sf::Vector2f steerForce, float deltaTime)
 {
+
 	sf::Vector2f acceleration = steerForce / this->getMass();
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
 	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
-
-	if (this->getTarget() && !this->targetInRange())
-	{
-		this->setDestination(this->getTarget()->getPosition());
-	}
 
 	if (!this->checkIntersection())
 	{
@@ -43,6 +39,8 @@ void Character::update(sf::Vector2f steerForce, float deltaTime)
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->getPosition());
 	// Trim position values to window size and handle animation
+	if(this->getTarget())
+		setDestination(this->getTarget()->getPosition());
 	Object::update(steerForce, deltaTime);
 
 	this->m_baseAttack->update();
@@ -99,25 +97,17 @@ bool Character::targetInRange()
 		auto tarPos = this->getTarget()->getPosition();
 		auto myPos = this->getPosition();
 		auto range = this->getRange();
+		if (tarPos.x > myPos.x)
+			this->setFaceRight(true);
+		else
+			this->setFaceRight(false);
 		return (std::abs(tarPos.x - myPos.x) <= range) && (std::abs(tarPos.y - myPos.y) <= range);
 	}
 
 	return false;
 }
 
-void Character::updateFaceRight()
-{
-	 if (this->getTarget())
-	 {
-		auto tarPos = this->getTarget()->getPosition();
-		auto charPos = this->getPosition();
-		if (tarPos.x > charPos.x)
-			this->setFaceRight(true);
-		else
-			this->setFaceRight(false);
 
-	 }
-}
 
 //=======================================================================================
 

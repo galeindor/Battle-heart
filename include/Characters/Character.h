@@ -14,7 +14,7 @@ class Character : public Object
 {
 public:
 	// C-tor/D-tor
-	Character(const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime);
+	Character(const sf::Vector2f pos, const int index, AnimationParams animParams);
 	virtual ~Character() = default;
 
 	// Virtuals
@@ -27,7 +27,7 @@ public:
 	// Management
 	void showHpBar() { m_hpBar.show(); }
 	bool targetInRange() ;
-	void updateFaceRight();
+
 	// Getters
 	int getStat(int index)			const		{ return this->m_stats[index]->getStat(); }
 	bool getIsAttacking()			const		{ return this->m_isAttacking; }

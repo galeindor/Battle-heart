@@ -1,7 +1,7 @@
 #include "Characters/Enemy.h"
 
 Enemy::Enemy(sf::Vector2f pos, const int index)
-	: Character(pos, index, sf::Vector2f(9, 5), 0.3f)
+	: Character(pos, index, characterParams)
 {
 	this->initSkills(index);
 }

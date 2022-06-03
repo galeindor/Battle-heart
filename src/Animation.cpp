@@ -1,12 +1,12 @@
 #include "Animation.h"
 
 // Constructor.
-Animation::Animation(sf::Texture* texture, sf::Vector2f imageCount, float switchTime)
-	: m_imageCount(imageCount), m_switchTime(switchTime), m_totalTime(0.0f), m_row(0), m_faceRight(true)
+Animation::Animation(sf::Texture* texture, AnimationParams animParms)
+	: m_imageCount(animParms._imageCount), m_switchTime(animParms._switchTime), m_totalTime(0.0f), m_row(0), m_faceRight(true)
 {
 	this->m_currentImage.x = 0;
-	this->uvRect.width = texture->getSize().x / float(imageCount.x);
-	this->uvRect.height = texture->getSize().y / float(imageCount.y);
+	this->uvRect.width = texture->getSize().x / float(animParms._imageCount.x);
+	this->uvRect.height = texture->getSize().y / float(animParms._imageCount.y);
 }
 
 // Updates the animation.

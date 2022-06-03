@@ -1,11 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+#include "macros.h"
 // Animation class is in charge of the graphic animations in the game.
 class Animation
 {
 public:
-	Animation(sf::Texture* texture, sf::Vector2f imageCount, float switchTime); // C-tor.
+	Animation(sf::Texture* texture, AnimationParams animParams); // C-tor.
 	~Animation() = default; // D-tor.
 
 	// Animation management.

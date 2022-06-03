@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+class Stat;
 
 // General ----------------------------------
 const sf::Vector2f healthOffset(30, 100);
@@ -28,8 +29,17 @@ const int MENU_BUTTONS_OFFSET = 110, MENU_BUTTONS_GAP = 20;
 // Animations ----------------------------------
 enum CharacterAnimation
 {
-	_walk, _basicAtt, _idle, _cast, _death
+	_walk, _basicAtt, _idle, _cast, _death,
 };
+
+struct AnimationParams {
+	sf::Vector2f _imageCount;
+	float _switchTime;
+};
+
+const AnimationParams characterParams = { sf::Vector2f(9,5), 0.3f };
+const AnimationParams projectileParams = { sf::Vector2f(9, 1), 0.3f };
+const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
 // Stats ----------------------------------
 constexpr auto MAX_HEALTH = 20;
@@ -81,8 +91,24 @@ enum Locations
 	_target , _object , _velocity , _obstacles
 };
 
-enum Values
+enum Steering
 {
 	_maxVelocity, _maxForce
 };
 
+// Structs
+struct Target {
+	sf::Vector2f _location;
+	std::vector<Stat>* _stats;
+};
+
+struct Physics {
+	float m_mass;
+	float m_maxForce;
+	float m_maxVelocity;
+	float m_range;
+};
+
+const std::vector<Physics> playersPhysics = {	{		},
+												{	},
+												{	} };

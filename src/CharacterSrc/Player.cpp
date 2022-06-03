@@ -2,9 +2,9 @@
 #include "Characters/Player.h"
 
 Player::Player(const sf::Vector2f loc , int index)
-	: Character(loc, index, sf::Vector2f(9, 5), 0.3f) , m_selected(false)
+	: Character(loc, index, characterParams), m_selected(false)
 {
-	this->initSkills(index);
+	//this->initSkills(index);
 }
 
 //===========================================================

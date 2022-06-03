@@ -1,11 +1,11 @@
 #include "Skills/Projectile.h"
 
-Projectile::Projectile(float cooldown, const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime)
-	: Object(pos, index, imageCount, switchTime), m_cooldown(cooldown), m_timeLeft(0)
+Projectile::Projectile(float cooldown, const sf::Vector2f pos, const int index)
+	: Object(pos, index, projectileParams), m_cooldown(cooldown), m_timeLeft(0)
 {}
 
-Projectile::Projectile(sf::Texture* texture, float cooldown, const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime)
-	: Object(pos, index, imageCount, switchTime), m_cooldown(cooldown), m_timeLeft(0)
+Projectile::Projectile(sf::Texture* texture, float cooldown, const sf::Vector2f pos, const int index)
+	: Object(pos, index, projectileParams), m_cooldown(cooldown), m_timeLeft(0)
 {
 	m_shape.setTexture(texture);
 	m_shape.setPosition(pos);
@@ -15,4 +15,3 @@ Projectile::Projectile(sf::Texture* texture, float cooldown, const sf::Vector2f 
 	m_cooldownScale.setSize({ SKILL_RECT_SIZE , 0 });
 	m_cooldownScale.setPosition(pos);
 }
-

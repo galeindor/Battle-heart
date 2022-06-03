@@ -9,7 +9,7 @@ class Character;
 class Object
 {
 public:
-	Object(const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime);
+	Object(const sf::Vector2f pos, const int index, AnimationParams animParams);
 	virtual ~Object() = default;
 
 	// Management
@@ -33,6 +33,7 @@ public:
 	float getMass()					const { return this->m_mass; }
 	Character* getTarget()			const { return this->m_target.get(); }
 	bool getFaceRight()				const { return this->m_animation.getFaceRight(); }
+	
 	//check
 	void setFaceRight(bool faceRight) { this->m_animation.setFaceRight(faceRight); }
 	// Setters

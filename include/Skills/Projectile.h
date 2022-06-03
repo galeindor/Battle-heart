@@ -1,13 +1,14 @@
 #pragma once
 #include "Object.h"
-#include "Domain.h"
+#include "Domains/Domain.h"
+
 class Character;
 
 class Projectile : public Object
 {
 public:
-	Projectile(sf::Texture* texture, float cooldown, const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime);
-	Projectile(float cooldown, const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime);
+	Projectile(sf::Texture* texture, float cooldown, const sf::Vector2f pos, const int index);
+	Projectile(float cooldown, const sf::Vector2f pos, const int index);
 	~Projectile() = default;
 
 private:

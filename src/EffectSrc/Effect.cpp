@@ -1,7 +1,7 @@
 #include "Effects/Effect.h"
 
-Effect::Effect(sf::Vector2f imageCount, float switchTime, const int index)
-	: m_animation(Resources::instance().getEffectTexture(index), imageCount, switchTime),
+Effect::Effect(const int index)
+	: m_animation(Resources::instance().getEffectTexture(index), effectParams),
 	  m_cooldown(2.f), m_time(0.f), m_draw(false)
 {
 	this->initSprite(index);
@@ -23,7 +23,7 @@ void Effect::update(const sf::Vector2f pos, const float deltaTime, bool faceRigh
 	}
 }
 
-void Effect::affect()
+void Effect::affect(std::vector<Target> targets)
 {
 	this->m_time = this->m_cooldown;
 	this->m_draw = true;

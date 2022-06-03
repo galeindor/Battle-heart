@@ -20,9 +20,3 @@ bool Cleric::setTarget(std::shared_ptr<Enemy>) // cleric can't have enemy target
 	return false;
 }
 
-void Cleric::initSkills(const int index)
-{
-	auto base = BaseAttack(BASE_CD, -5, LONG_RANGE, _hp);
-	setBaseAttack(base);
-
-}

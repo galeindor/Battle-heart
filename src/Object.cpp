@@ -1,7 +1,7 @@
 #include "Object.h"
 
-Object::Object(const sf::Vector2f pos, const int index, sf::Vector2f imageCount, float switchTime)
-	: m_animation(Resources::instance().getTexture(index), imageCount, switchTime), 
+Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams)
+	: m_animation(Resources::instance().getTexture(index), animParams), 
 	  m_isMoving(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC), m_dest(pos)
 {
 	this->initSprite(pos, index);
@@ -19,6 +19,7 @@ Object::Object(const sf::Vector2f pos, const int index, sf::Vector2f imageCount,
 void Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 {
 	// If facing right.
+	
 	if (movement.x > 0.0f || this->getPosition().x < this->getDest().x)
 		this->m_animation.setFaceRight(true);
 	else if (movement.x < 0.0f || this->getPosition().x > this->getDest().x)
@@ -32,6 +33,10 @@ void Object::update(sf::Vector2f steerForce, const float deltaTime)
 {
 	this->handleAnimation(this->m_velocity * deltaTime, deltaTime);
 	this->setPosition(this->adjustLocation(this->getPosition()));
+	if (this->getPosition().x < this->getDest().x)
+		this->m_animation.setFaceRight(true);
+	else if (this->getPosition().x > this->getDest().x)
+		this->m_animation.setFaceRight(false);
 }
 
 //=======================================================================================
@@ -60,6 +65,8 @@ void Object::initSprite(const sf::Vector2f pos, const int index)
 }
 
 //=======================================================================================
+
+
 
 bool Object::checkCollision(const sf::Vector2f& location)
 {

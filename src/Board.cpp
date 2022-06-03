@@ -82,8 +82,8 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 			t = enemy->behaviour()->length(firstEnemyDist) / enemy->behaviour()->length(enemy->getTarget()->getVelocity());
 
 		sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(enemy->getPosition(), enemy->getVelocity(), enemy->getMaxVelocity(), enemy->getMaxForce(), enemy->getTarget()->getPosition(), createObstaclesVec(), 100);
-		Enemy* enemyPtr = enemy.get();
-		this->seperation(enemyPtr, steerForce, deltaTime);
+		//Enemy* enemyPtr = enemy.get();
+		this->seperation(enemy.get(), steerForce, deltaTime);
 		enemy->update(steerForce, deltaTime);
 	}
 }
