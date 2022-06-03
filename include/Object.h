@@ -33,14 +33,15 @@ public:
 	float getMass()					const { return this->m_mass; }
 	Character* getTarget()			const { return this->m_target.get(); }
 	bool getFaceRight()				const { return this->m_animation.getFaceRight(); }
-
+	//check
+	void setFaceRight(bool faceRight) { this->m_animation.setFaceRight(faceRight); }
 	// Setters
 	void setDestination(sf::Vector2f dest) { this->m_dest = adjustLocation(dest); }
 	void setMoving(bool movement) { this->m_isMoving = movement; }
 	void setVelocity(sf::Vector2f velocity) { this->m_velocity = velocity; }
 	void setPosition(sf::Vector2f pos) { this->m_sprite.setPosition(pos); }
 	void setAsTarget(std::shared_ptr<Character> obj) { this->m_target = obj; }
-	void setAnimation(CharacterAnimation index) { this->m_animation.setRow(int(index)); }
+	void setAnimation(int index) { this->m_animation.setRow(int(index)); }
 
 	// Checks/validators
 	bool checkCollision(const sf::Vector2f& location);

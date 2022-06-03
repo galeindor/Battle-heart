@@ -12,4 +12,7 @@ public:
 
 	virtual bool setTarget(std::shared_ptr<Player> obj) override;
 	virtual bool setTarget(std::shared_ptr<Enemy> obj) override;
+protected:
+	virtual void initSkills(const int index) override;
+
 };

@@ -20,8 +20,10 @@ public:
 	bool checkSkillClick(const sf::Vector2f& loc);
 
 	//void handleSkill();
+protected:
+	virtual void initSkills(const int index) = 0;
+
 
 private:
-	void initSkills(const int index);
 	bool m_selected;
 };

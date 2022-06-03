@@ -26,8 +26,8 @@ public:
 
 	// Management
 	void showHpBar() { m_hpBar.show(); }
-	bool targetInRange() const;
-
+	bool targetInRange() ;
+	void updateFaceRight();
 	// Getters
 	int getStat(int index)			const		{ return this->m_stats[index]->getStat(); }
 	bool getIsAttacking()			const		{ return this->m_isAttacking; }

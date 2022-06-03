@@ -42,11 +42,6 @@ bool Player::checkSkillClick(const sf::Vector2f& location)
 	return false;
 }
 
-void Player::initSkills(const int index)
-{
-	//for(int i = 0; i < MAX_SKILL; i++)
-
-}
 
 //==========================================================
 

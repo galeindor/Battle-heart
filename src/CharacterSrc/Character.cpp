@@ -18,7 +18,9 @@ void Character::update(sf::Vector2f steerForce, float deltaTime)
 	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
 
 	if (this->getTarget() && !this->targetInRange())
+	{
 		this->setDestination(this->getTarget()->getPosition());
+	}
 
 	if (!this->checkIntersection())
 	{
@@ -90,7 +92,7 @@ void Character::initStats(const int index)
 
 //=======================================================================================
 
-bool Character::targetInRange() const
+bool Character::targetInRange() 
 {
 	if (this->getTarget())
 	{
@@ -103,12 +105,27 @@ bool Character::targetInRange() const
 	return false;
 }
 
+void Character::updateFaceRight()
+{
+	 if (this->getTarget())
+	 {
+		auto tarPos = this->getTarget()->getPosition();
+		auto charPos = this->getPosition();
+		if (tarPos.x > charPos.x)
+			this->setFaceRight(true);
+		else
+			this->setFaceRight(false);
+
+	 }
+}
+
 //=======================================================================================
 
 void Character::useBaseAttack()
 {
 	auto index = m_baseAttack->getWantedStat();
 	auto dmg = m_baseAttack->castSkill(this->getTarget()->getStat(index));
+
 	if (dmg != 0)
 	{
 		this->getTarget()->setStat(index, dmg);
