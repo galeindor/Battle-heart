@@ -4,7 +4,7 @@
 Player::Player(const sf::Vector2f loc , int index)
 	: Character(loc, index, characterParams), m_selected(false)
 {
-	//this->initSkills(index);
+	this->initSkills(index);
 }
 
 //===========================================================
@@ -42,6 +42,13 @@ bool Player::checkSkillClick(const sf::Vector2f& location)
 	return false;
 }
 
+void Player::initSkills(const int index)
+{
+	this->addSkill(Skill1(Resources::instance().getSkill(index, 0),
+						  sf::Vector2f(0 * (SKILL_RECT_SIZE + 20) + 30, 30),
+						  ATK_CD, _heal, singleTarget, onPlayer));
+}
+
 
 //==========================================================
 
@@ -63,7 +70,9 @@ bool Player::setTarget(std::shared_ptr<Player>)
 
 bool Player::checkIntersection() const
 {
-	const auto epsilon = 10.f;
+	auto epsilon = 10.f;
+	if (this->getTarget())
+		epsilon += this->getRange();
 	return (std::abs(this->getSprite().getPosition().x - this->getDest().x) < epsilon || std::abs(this->getSprite().getPosition().y - this->getDest().y) < epsilon);
 }
 

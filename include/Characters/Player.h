@@ -19,10 +19,7 @@ public:
 	//handling skills
 	bool checkSkillClick(const sf::Vector2f& loc);
 
-	//void handleSkill();
-
-
-
 private:
+	void initSkills(const int index);
 	bool m_selected;
 };

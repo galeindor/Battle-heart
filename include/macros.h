@@ -14,6 +14,8 @@ constexpr auto HEIGHT_LIMIT = 200;
 constexpr auto CUT_CORNERS = 50; // used to limit the player movement to not touch corners
 constexpr auto BAR_WIDTH = 60;
 constexpr auto LONG_RANGE = 2000;
+constexpr auto singleTarget = true;
+constexpr auto onPlayer = true;
 
 // Buttons
 enum MenuButtons
@@ -42,7 +44,7 @@ const AnimationParams projectileParams = { sf::Vector2f(9, 1), 0.3f };
 const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
 // Stats ----------------------------------
-constexpr auto MAX_HEALTH = 20;
+constexpr auto MAX_HEALTH = 100;
 constexpr auto DEFAULT_MVSPD = 100;
 constexpr auto ATK_CD = 10.f; // regular attack cooldown
 constexpr auto BASE_CD = 3.f; // basic attack cooldown
@@ -50,17 +52,25 @@ constexpr auto SHORT_RANGE = 75.f; // regular attack cooldown
 
 enum Stats
 {
-	_hp, _movementSpeed, _attackSpeed, _range, NUM_OF_STATS
+	_hp, _attackSpeed, _dmg, _range, NUM_OF_STATS
+};
+
+const std::vector<std::vector<float>> playersBasicStats =
+{
+	/* cleric */ { 70.f, 3.f, 5.f, 40.f },
+	/* knight */ { 120.f, 4.f, 10.f, 20.f },
+	/* archer */ { 90.f, 2.f, 7.f, 200.f },
+	/* dummy  */ { 80.f, 4.f, 5.f, 20.f }
 };
 
 // Textures ----------------------------------
-enum LoadTextures
+enum ObjectEnums
 {
-	_cleric, _knight, _archer, _dummy, _select, NUM_OF_PICS
+	_cleric, _knight, _archer, _dummy, _select, NUM_OF_OBJECTS
 };
-const std::string textures[NUM_OF_PICS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png" };
+const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png" };
 
-enum effectsTextures
+enum Effects
 {
 	_heal, NUM_OF_EFFECTS
 };
@@ -71,10 +81,10 @@ constexpr auto MAX_SKILL = 2;
 constexpr auto BASIC_DMG = 1;
 constexpr auto SKILL_RECT_SIZE = 80; // size of the rectangle where skills are shown (?)
 
-const std::string skillTextures[NUM_OF_PLAYERS][MAX_SKILL] = {  { "heal.png"	, "clericShield.png"} ,
+const std::string skillTextures[NUM_OF_PLAYERS][MAX_SKILL] = { { "heal.png"	, "clericShield.png"} ,
 																{ "shield.png"	, "swing.png"		} ,
 																{ "barrage.png" , "apolloarrow.png"	}
-															 };
+};
 
 // Backgrounds ----------------------------------
 enum Backgrounds
@@ -88,37 +98,21 @@ const std::string bg_textures[NUM_OF_BG] = { "plain.png", "menuBG.png" };
 
 enum Locations
 {
-	_target , _object , _velocity , _obstacles
+	_target, _object, _velocity, _obstacles
 };
 
-enum Steering
+enum Physics
 {
-	_maxVelocity, _maxForce
+	_maxVelocity, _maxForce, _mass,
 };
 
-// Structs
+//Physics
+const std::vector<std::vector<float>> objectsPhysics = { { 0.1f, 50.f, 90.f },
+														  { 0.3f, 35.f, 80.f },
+														  { 0.2f, 40.f, 100.f },
+														  { 0.1f, 45.f, 70.f } };
+
 struct Target {
 	sf::Vector2f _location;
-	std::vector<Stat>* _stats;
-};
-
-struct Physics {
-	float m_mass;
-	float m_maxForce;
-	float m_maxVelocity;
-	float m_range;
-};
-
-const std::vector<Physics> playersPhysics = {	{		},
-												{	},
-												{	} };
-
-//_cleric, _knight, _archer, _select, _dummy, NUM_OF_PICS
-
-const std::vector<std::vector<float>> playersBasicStats = 
-{
-/* cleric */ {BASIC_DMG*(-2),	LONG_RANGE	},
-/* knight */ {BASIC_DMG		,	SHORT_RANGE	},
-/* archer */ {BASIC_DMG		,	LONG_RANGE	},
-/* dummy  */ {BASIC_DMG		,	SHORT_RANGE }
+	std::vector<Stat*> _stats;
 };

@@ -1,7 +1,7 @@
 #include "Skills/Skill1.h"
-Skill1::Skill1(std::vector<Target> domain, sf::Texture* texture, const sf::Vector2f pos, 
-			   float cooldown, int value, const int effectIndex)
-	:	m_cooldown(cooldown), m_skillVal(value), m_timeLeft(0),
+Skill1::Skill1(sf::Texture* texture, const sf::Vector2f pos, float cooldown, 
+			   const int effectIndex, bool singleTarget, bool onPlayer)
+	:	m_cooldown(cooldown), m_timeLeft(0), m_singleTarget(singleTarget), m_onPlayer(onPlayer),
 		m_effect(new Effect(effectIndex))
 {
 	this->initRect(texture, pos);

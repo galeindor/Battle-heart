@@ -40,7 +40,7 @@ void Character::update(sf::Vector2f steerForce, float deltaTime)
 	this->m_hpBar.setPosition(this->getPosition());
 	// Trim position values to window size and handle animation
 
-	if(getTarget() &&!targetInRange())
+	if(getTarget())
 		setDestination(this->getTarget()->getPosition());
 	Object::update(steerForce, deltaTime);
 
@@ -68,26 +68,7 @@ void Character::initBasic(const int index)
 void Character::initStats(const int index)
 {
 	for (int stat = 0; stat < NUM_OF_STATS; stat++)
-	{
-		switch (stat)
-		{
-		case Stats::_hp:
-			this->m_stats.push_back(std::make_unique<Stat>(MAX_HEALTH));
-			break;
-
-		case Stats::_movementSpeed:
-			this->m_stats.push_back(std::make_unique<Stat>(DEFAULT_MVSPD));
-			break;
-
-		case Stats::_attackSpeed:
-			break;
-
-		case Stats::_range:
-			this->m_stats.push_back(std::make_unique<Stat>(m_baseAttack->getRange()));
-			setRange(m_baseAttack->getRange());
-			break;
-		}
-	}
+		this->m_stats.push_back(std::make_unique<Stat>(playersBasicStats[index][stat]));
 }
 
 //=======================================================================================
@@ -99,10 +80,6 @@ bool Character::targetInRange()
 		auto tarPos = this->getTarget()->getPosition();
 		auto myPos = this->getPosition();
 		auto range = this->m_baseAttack->getRange();
-		if (tarPos.x > myPos.x)
-			this->setFaceRight(true);
-		else
-			this->setFaceRight(false);
 		return (std::abs(tarPos.x - myPos.x) <= range) && (std::abs(tarPos.y - myPos.y) <= range);
 	}
 

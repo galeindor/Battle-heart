@@ -6,7 +6,7 @@
 #include "HealthBar.h"
 #include "Stat.h"
 #include "Object.h"
-
+#include "Skills/Skill1.h"
 class Enemy;
 class Player;
 
@@ -42,7 +42,7 @@ public:
 
 protected:
 	void setBaseAttack(BaseAttack base) { m_baseAttack = std::make_unique<BaseAttack>(base); }
-	//void addSkill(std::unique_ptr<Skill> skill) { m_skills.push_back(skill); }
+	void addSkill(Skill1 skill) { m_skills.push_back(std::make_unique<Skill1>(skill)); }
 	//vector<std::unique_ptr<Projectile>>& getSkills() { return this->m_skills; }
 	void useSkill(int index);
 
@@ -52,7 +52,7 @@ private:
 	void initBasic(const int index);
 
 	std::unique_ptr<BaseAttack> m_baseAttack; // each character basic attack
-	//vector<std::unique_ptr<Projectile>> m_skills; // skills useable
+	vector<std::unique_ptr<Skill1>> m_skills; // skills useable
 	vector<std::unique_ptr<Stat>> m_stats; // all of the character stats
 	HealthBar m_hpBar;
 	bool m_isAttacking;
