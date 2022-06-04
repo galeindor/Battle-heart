@@ -11,7 +11,7 @@ Object::Object(const sf::Vector2f pos, const int index, AnimationParams animPara
 	m_mass = 0.1f;
 	m_maxForce = 50;
 	m_maxVelocity = 100;
-	m_range = SHORT_RANGE;
+	//m_range = SHORT_RANGE;
 }
 
 //=======================================================================================

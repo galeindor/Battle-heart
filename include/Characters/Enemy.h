@@ -14,6 +14,5 @@ public:
 	virtual bool checkIntersection() const override;
 
 private:
-	void initSkills(const int index);
 	virtual sf::Vector2f randEnemyPos() = 0;
 };

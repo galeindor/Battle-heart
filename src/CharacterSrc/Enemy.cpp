@@ -3,7 +3,6 @@
 Enemy::Enemy(sf::Vector2f pos, const int index)
 	: Character(pos, index, characterParams)
 {
-	this->initSkills(index);
 }
 
 //=======================================================================================
@@ -43,6 +42,3 @@ bool Enemy::checkIntersection() const
 
 	return false;
 }
-
-void Enemy::initSkills(const int index)
-{}

@@ -39,7 +39,8 @@ void Character::update(sf::Vector2f steerForce, float deltaTime)
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->getPosition());
 	// Trim position values to window size and handle animation
-	if(this->getTarget())
+
+	if(getTarget() &&!targetInRange())
 		setDestination(this->getTarget()->getPosition());
 	Object::update(steerForce, deltaTime);
 
@@ -58,7 +59,7 @@ void Character::update(sf::Vector2f steerForce, float deltaTime)
 
 void Character::initBasic(const int index)
 {
-	auto base = BaseAttack(BASE_CD, BASIC_DMG, SHORT_RANGE, _hp);
+	auto base = BaseAttack(BASE_CD, playersBasicStats[index][0] , playersBasicStats[index][1], _hp);
 	setBaseAttack(base);
 }
 
@@ -83,6 +84,7 @@ void Character::initStats(const int index)
 
 		case Stats::_range:
 			this->m_stats.push_back(std::make_unique<Stat>(m_baseAttack->getRange()));
+			setRange(m_baseAttack->getRange());
 			break;
 		}
 	}
@@ -96,7 +98,7 @@ bool Character::targetInRange()
 	{
 		auto tarPos = this->getTarget()->getPosition();
 		auto myPos = this->getPosition();
-		auto range = this->getRange();
+		auto range = this->m_baseAttack->getRange();
 		if (tarPos.x > myPos.x)
 			this->setFaceRight(true);
 		else

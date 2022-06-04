@@ -48,6 +48,10 @@ public:
 	bool checkCollision(const sf::Vector2f& location);
 	sf::Vector2f adjustLocation(sf::Vector2f location);
 
+protected:
+
+	void setRange(float val) { m_range = val; }
+
 private:
 	void initSprite(const sf::Vector2f pos, const int index);
 

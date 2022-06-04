@@ -56,9 +56,9 @@ enum Stats
 // Textures ----------------------------------
 enum LoadTextures
 {
-	_cleric, _knight, _archer, _select, _dummy, NUM_OF_PICS
+	_cleric, _knight, _archer, _dummy, _select, NUM_OF_PICS
 };
-const std::string textures[NUM_OF_PICS] = { "cleric.png" , "knight.png", "archer.png" , "select.png", "enemy.png"};
+const std::string textures[NUM_OF_PICS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png" };
 
 enum effectsTextures
 {
@@ -112,3 +112,13 @@ struct Physics {
 const std::vector<Physics> playersPhysics = {	{		},
 												{	},
 												{	} };
+
+//_cleric, _knight, _archer, _select, _dummy, NUM_OF_PICS
+
+const std::vector<std::vector<float>> playersBasicStats = 
+{
+/* cleric */ {BASIC_DMG*(-2),	LONG_RANGE	},
+/* knight */ {BASIC_DMG		,	SHORT_RANGE	},
+/* archer */ {BASIC_DMG		,	LONG_RANGE	},
+/* dummy  */ {BASIC_DMG		,	SHORT_RANGE }
+};
