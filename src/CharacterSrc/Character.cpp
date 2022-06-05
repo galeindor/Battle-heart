@@ -1,22 +1,24 @@
 #include "Characters/Character.h"
-
+#include "Characters/Player.h"
+#include "Characters/Enemy.h"
 
 Character::Character(const sf::Vector2f pos, const int index, AnimationParams animParams )
 	: m_isAttacking(false), m_hpBar(HealthBar(pos)), Object(pos, index, animParams)
 {
-	this->initBasic(index);
 	this->initStats(index);
-
 }
-
 
 //=======================================================================================
 
-void Character::update(sf::Vector2f steerForce, float deltaTime)
+void Character::update(sf::Vector2f steerForce, float deltaTime,
+					   vector<std::shared_ptr<Player>> m_players, 
+					   vector<std::shared_ptr<Enemy>> m_enemies)
 {
 	sf::Vector2f acceleration = steerForce / this->getMass();
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
 	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
+
+	this->updateSkills(deltaTime, m_players, m_enemies);
 	if(this->getTarget())
 		this->setDestination(this->getTarget()->getPosition());
 
@@ -32,8 +34,8 @@ void Character::update(sf::Vector2f steerForce, float deltaTime)
 
 		if (targetInRange())
 		{
+			this->m_skills[_basic]->useSkill(this->m_stats);
 			this->useBaseAttack();
-			this->m_baseAttack->affectWithBasic();
 		}
 		else
 			this->setAnimation(_idle);
@@ -44,24 +46,30 @@ void Character::update(sf::Vector2f steerForce, float deltaTime)
 	// Trim position values to window size and handle animation
 
 	Object::update(steerForce, deltaTime);
-
-	this->m_baseAttack->update();
-
-	if(targetInRange())
-		this->m_baseAttack->updateBasic(this->getPosition(), deltaTime, this->getFaceRight());
-	else
-		this->m_baseAttack->updateBasic(DEFAULT_VEC, deltaTime, this->getFaceRight());
-
-	//for (auto& skill : this->m_skills)
-		//skill->update();
 }
 
 //=======================================================================================
 
-void Character::initBasic(const int index)
+void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Player>> players, vector<std::shared_ptr<Enemy>> enemies)
 {
-	auto base = BaseAttack(playersBasicStats[index][_attackSpeed], playersBasicStats[index][_dmg] , playersBasicStats[index][_range], _hp);
-	setBaseAttack(base);
+	std::vector<Target> m_targets;
+	for (auto& skill : this->m_skills)
+	{
+		if (skill->getSingleTarget() && this->getTarget())
+		{
+			Target target = { this->getTarget()->getPosition(), this->getTarget()->getStats() };
+			m_targets.push_back(target);
+		}
+		else if (!skill->getSingleTarget())
+		{
+			if(skill->getOnPlayer())
+				m_targets = this->createTargetVec(players);
+			else
+				m_targets = this->createTargetVec(enemies);
+		}
+
+		skill->updateSkill(deltaTime, m_targets);
+	}
 }
 
 //=======================================================================================
@@ -69,7 +77,7 @@ void Character::initBasic(const int index)
 void Character::initStats(const int index)
 {
 	for (int stat = 0; stat < NUM_OF_STATS; stat++)
-		this->m_stats.push_back(std::make_unique<Stat>(playersBasicStats[index][stat]));
+		this->m_stats.push_back(std::make_shared<Stat>(playersBasicStats[index][stat]));
 }
 
 //=======================================================================================
@@ -89,19 +97,10 @@ bool Character::targetInRange()
 	return false;
 }
 
-
-
 //=======================================================================================
 
 void Character::useBaseAttack()
 {
-	auto index = m_baseAttack->getWantedStat();
-	auto dmg = m_baseAttack->castSkill(this->getTarget()->getStat(index));
-
-	if (dmg != 0)
-	{
-		this->getTarget()->setStat(index, dmg);
-	}
 	this->setAnimation(_basicAtt);
 }
 
@@ -109,13 +108,7 @@ void Character::useBaseAttack()
 
 void Character::useSkill(int skillIndex)
 {
-	auto index = m_baseAttack->getWantedStat();
 
-	//auto dmg = m_skills[skillIndex]->castSkill(this->getTarget()->getStat(index));
-	//if (dmg != 0)
-		//this->setRow(_basicAtt);
-
-	//this->getTarget()->setStat(index, dmg);
 }
 
 //=======================================================================================
@@ -129,3 +122,17 @@ void Character::setStat(int index, int newVal)
 }
 
 //=======================================================================================
+
+template<class Type>
+std::vector<Target> Character::createTargetVec(Type type)
+{
+	std::vector<Target> temp;
+	auto copy = type;
+	for (auto obj : copy)
+	{
+		Target target = { obj.get()->getPosition(), obj.get()->getStats() };
+		temp.push_back(target);
+	}
+
+	return temp;
+}

@@ -1,12 +1,11 @@
 #pragma once
 
-#include "Skills/Skill.h"
-#include "Skills/BasicAttack.h"
 #include "Skills/Projectile.h"
 #include "HealthBar.h"
 #include "Stat.h"
 #include "Object.h"
 #include "Skills/Skill1.h"
+
 class Enemy;
 class Player;
 
@@ -22,7 +21,8 @@ public:
 	virtual bool setTarget(std::shared_ptr<Enemy> obj) = 0;
 	virtual bool setTarget(std::shared_ptr<Player> obj) = 0;
 	virtual bool checkIntersection() const = 0;
-	virtual void update(sf::Vector2f steerForce, const float deltaTime);
+	virtual void update(sf::Vector2f steerForce, const float deltaTime, 
+						vector<std::shared_ptr<Player>> m_players, vector<std::shared_ptr<Enemy>> m_enemies);
 
 	// Management
 	void showHpBar() { m_hpBar.show(); }
@@ -37,23 +37,26 @@ public:
 	void setAttacking(bool isAttacking) { this->m_isAttacking = isAttacking; }
 	void setStat(int index, int newVal);
 
-	// Temp (or not)
-	void drawEffect(sf::RenderWindow& window) { this->m_baseAttack->drawEffect(window); }
+	template <class Type>
+	std::vector<Target> createTargetVec(Type type);
 
 protected:
-	void setBaseAttack(BaseAttack base) { m_baseAttack = std::make_unique<BaseAttack>(base); }
 	void addSkill(Skill1 skill) { m_skills.push_back(std::make_unique<Skill1>(skill)); }
 	//vector<std::unique_ptr<Projectile>>& getSkills() { return this->m_skills; }
 	void useSkill(int index);
+	// ############# CHECK LATER ##############
+	vector<std::shared_ptr<Stat>>& getStats() { return this->m_stats; }
 
 private:
 	void useBaseAttack();
 	void initStats(const int index);
-	void initBasic(const int index);
 
-	std::unique_ptr<BaseAttack> m_baseAttack; // each character basic attack
+	void updateSkills(const float deltaTime, 
+					  vector<std::shared_ptr<Player>> players,
+					  vector<std::shared_ptr<Enemy>> enemies);
+
 	vector<std::unique_ptr<Skill1>> m_skills; // skills useable
-	vector<std::unique_ptr<Stat>> m_stats; // all of the character stats
+	vector<std::shared_ptr<Stat>> m_stats; // all of the character stats
 	HealthBar m_hpBar;
 	bool m_isAttacking;
 };

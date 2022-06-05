@@ -60,7 +60,7 @@ const std::vector<std::vector<float>> playersBasicStats =
 	/* cleric */ { 70.f, 3.f, 6.f, 200.f },
 	/* knight */ { 120.f, 4.f, 7.f, 40.f },
 	/* archer */ { 90.f, 2.f, 5.f, 600.f },
-	/* dummy  */ { 80.f, 4.f, 4.f, 40.f }
+	/* dummy  */ { 80.f, 4.f, -4.f, 40.f }
 };
 
 // Textures ----------------------------------
@@ -80,6 +80,11 @@ constexpr auto NUM_OF_PLAYERS = 3;
 constexpr auto MAX_SKILL = 2;
 constexpr auto BASIC_DMG = 1;
 constexpr auto SKILL_RECT_SIZE = 80; // size of the rectangle where skills are shown (?)
+
+enum Skills
+{
+	_basic, _skill1, _skill2, _passive, NUM_OF_SKILLS
+};
 
 const std::string skillTextures[NUM_OF_PLAYERS][MAX_SKILL] = { { "heal.png"	, "clericShield.png"} ,
 																{ "shield.png"	, "swing.png"		} ,
@@ -114,5 +119,5 @@ const std::vector<std::vector<float>> objectsPhysics = { { 0.1f, 50.f, 90.f },
 
 struct Target {
 	sf::Vector2f _location;
-	std::vector<Stat*> _stats;
+	std::vector<std::shared_ptr<Stat>> _stats;
 };

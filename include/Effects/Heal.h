@@ -4,8 +4,9 @@
 class Heal : public Effect
 {
 public:
-	Heal(sf::Vector2f imageCount, float switchTime);
+	Heal(AnimationParams animParams);
 	~Heal() = default;
-private:
 
+	virtual void affect(vector<std::shared_ptr<Stat>> myStats, 
+						std::vector<Target> targets) override;
 };

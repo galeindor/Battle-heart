@@ -3,6 +3,7 @@
 Enemy::Enemy(sf::Vector2f pos, const int index)
 	: Character(pos, index, characterParams)
 {
+	this->initSkills(index);
 }
 
 //=======================================================================================
@@ -47,4 +48,11 @@ bool Enemy::checkIntersection() const
 	//	return true;
 
 	//return false;
+}
+
+void Enemy::initSkills(const int index)
+{
+	this->addSkill(Skill1(Resources::instance().getSkill(index, 0),
+		sf::Vector2f(0 * (SKILL_RECT_SIZE + 20) + 30, 30),
+		BASE_CD, _heal, singleTarget, onPlayer));
 }

@@ -23,11 +23,13 @@ void Effect::update(const sf::Vector2f pos, const float deltaTime, bool faceRigh
 	}
 }
 
+/*
 void Effect::affect(std::vector<Target> targets)
 {
 	this->m_time = this->m_cooldown;
 	this->m_draw = true;
 }
+*/
 
 void Effect::draw(sf::RenderWindow& window)
 {

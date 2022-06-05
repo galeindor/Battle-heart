@@ -3,7 +3,6 @@
 #include "Resources.h"
 #include "Stat.h"
 
-
 class Effect
 {
 public:
@@ -11,8 +10,10 @@ public:
 	~Effect() = default;
 
 	void update(const sf::Vector2f pos, const float deltaTime, bool faceRight);
-	void affect(std::vector<Target>  targets);
 	void draw(sf::RenderWindow& window);
+
+	virtual void affect(vector<std::shared_ptr<Stat>> myStats,
+						std::vector<Target> targets) = 0;
 
 	enum Effects
 	{

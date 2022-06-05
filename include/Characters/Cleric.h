@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Resources.h"
-#include "Skills/ShieldBuff.h"
 #include "Player.h"
 
 class Cleric : public Player

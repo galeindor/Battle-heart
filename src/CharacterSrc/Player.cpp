@@ -21,7 +21,6 @@ void Player::draw(sf::RenderWindow& window)
 	}
 	getHpBar().draw(window);
 	window.draw(this->getSprite());
-	this->drawEffect(window);
 }
 
 //==========================================================
@@ -46,7 +45,8 @@ void Player::initSkills(const int index)
 {
 	this->addSkill(Skill1(Resources::instance().getSkill(index, 0),
 						  sf::Vector2f(0 * (SKILL_RECT_SIZE + 20) + 30, 30),
-						  ATK_CD, _heal, singleTarget, onPlayer));
+						  playersBasicStats[index][_attackSpeed], _heal, 
+						  singleTarget, onPlayer));
 }
 
 
@@ -71,7 +71,11 @@ bool Player::setTarget(std::shared_ptr<Player>)
 bool Player::checkIntersection() const
 {
 	auto norm = sqrt(pow((this->getPosition().x - this->getDest().x), 2) + pow((this->getPosition().y - this->getDest().y), 2));
-	return (norm <= this->getStat(_range));
+	if (this->getTarget())
+		return (norm <= this->getStat(_range));
+
+	auto epsilon = 10.f;
+	return norm <= epsilon;
 }
 
 //==========================================================

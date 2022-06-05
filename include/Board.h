@@ -45,7 +45,7 @@ private:
 };
 
 template <class Type>
-Type Board::sortObjects(Type vector)
+inline Type Board::sortObjects(Type vector)
 {
 	auto copy = vector;
 	std::sort(copy.begin(), copy.end(),
