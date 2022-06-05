@@ -7,7 +7,6 @@ class Stat;
 const sf::Vector2f healthOffset(30, 100);
 const sf::Vector2f selectedOffset(45, 30);
 const sf::Vector2f DEFAULT_VEC(0, 0);
-constexpr auto NONE_SELECTED = -1;
 constexpr auto SPRITE_SIZE = 64;
 constexpr auto WINDOW_WIDTH = 1400;
 constexpr auto WINDOW_HEIGHT = 800;
@@ -58,10 +57,10 @@ enum Stats
 
 const std::vector<std::vector<float>> playersBasicStats =
 {
-	/* cleric */ { 70.f, 3.f, 5.f, 40.f },
-	/* knight */ { 120.f, 4.f, 10.f, 20.f },
-	/* archer */ { 90.f, 2.f, 7.f, 200.f },
-	/* dummy  */ { 80.f, 4.f, 5.f, 20.f }
+	/* cleric */ { 70.f, 3.f, 6.f, 200.f },
+	/* knight */ { 120.f, 4.f, 7.f, 40.f },
+	/* archer */ { 90.f, 2.f, 5.f, 600.f },
+	/* dummy  */ { 80.f, 4.f, 4.f, 40.f }
 };
 
 // Textures ----------------------------------
@@ -99,7 +98,7 @@ const std::string bg_textures[NUM_OF_BG] = { "plain.png", "menuBG.png" };
 
 enum Locations
 {
-	_object, _velocity, _target, _obstacles
+	_target, _object, _velocity, _obstacles
 };
 
 enum Physics
@@ -116,9 +115,4 @@ const std::vector<std::vector<float>> objectsPhysics = { { 0.1f, 50.f, 90.f },
 struct Target {
 	sf::Vector2f _location;
 	std::vector<Stat*> _stats;
-};
-
-enum class Intersection
-{
-	selectAgain
 };

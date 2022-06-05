@@ -70,10 +70,8 @@ bool Player::setTarget(std::shared_ptr<Player>)
 
 bool Player::checkIntersection() const
 {
-	auto epsilon = 10.f;
-	if (this->getTarget())
-		epsilon += this->getRange();
-	return (std::abs(this->getSprite().getPosition().x - this->getDest().x) < epsilon || std::abs(this->getSprite().getPosition().y - this->getDest().y) < epsilon);
+	auto norm = sqrt(pow((this->getPosition().x - this->getDest().x), 2) + pow((this->getPosition().y - this->getDest().y), 2));
+	return (norm <= this->getStat(_range));
 }
 
 //==========================================================

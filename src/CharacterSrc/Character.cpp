@@ -6,6 +6,7 @@ Character::Character(const sf::Vector2f pos, const int index, AnimationParams an
 {
 	this->initBasic(index);
 	this->initStats(index);
+
 }
 
 
@@ -16,6 +17,8 @@ void Character::update(sf::Vector2f steerForce, float deltaTime)
 	sf::Vector2f acceleration = steerForce / this->getMass();
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
 	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
+	if(this->getTarget())
+		this->setDestination(this->getTarget()->getPosition());
 
 	if (!this->checkIntersection())
 	{
@@ -26,21 +29,20 @@ void Character::update(sf::Vector2f steerForce, float deltaTime)
 	else
 	{
 		this->setMoving(false);
-		this->setAnimation(_idle);
 
 		if (targetInRange())
 		{
 			this->useBaseAttack();
 			this->m_baseAttack->affectWithBasic();
 		}
+		else
+			this->setAnimation(_idle);
 	}
 
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->getPosition());
 	// Trim position values to window size and handle animation
 
-	if(getTarget())
-		setDestination(this->getTarget()->getPosition());
 	Object::update(steerForce, deltaTime);
 
 	this->m_baseAttack->update();
@@ -58,7 +60,7 @@ void Character::update(sf::Vector2f steerForce, float deltaTime)
 
 void Character::initBasic(const int index)
 {
-	auto base = BaseAttack(BASE_CD, playersBasicStats[index][0] , playersBasicStats[index][1], _hp);
+	auto base = BaseAttack(playersBasicStats[index][_attackSpeed], playersBasicStats[index][_dmg] , playersBasicStats[index][_range], _hp);
 	setBaseAttack(base);
 }
 
@@ -78,8 +80,10 @@ bool Character::targetInRange()
 	{
 		auto tarPos = this->getTarget()->getPosition();
 		auto myPos = this->getPosition();
-		auto range = this->m_baseAttack->getRange();
-		return (std::abs(tarPos.x - myPos.x) <= range) && (std::abs(tarPos.y - myPos.y) <= range);
+		auto range = this->getStat(_range);
+		auto norm = sqrt(pow(myPos.x - tarPos.x, 2) + pow(myPos.y - tarPos.y, 2));
+		return (norm <= range);
+		//return (std::abs(tarPos.x - myPos.x) <= range) && (std::abs(tarPos.y - myPos.y) <= range);
 	}
 
 	return false;
@@ -106,6 +110,7 @@ void Character::useBaseAttack()
 void Character::useSkill(int skillIndex)
 {
 	auto index = m_baseAttack->getWantedStat();
+
 	//auto dmg = m_skills[skillIndex]->castSkill(this->getTarget()->getStat(index));
 	//if (dmg != 0)
 		//this->setRow(_basicAtt);
@@ -117,11 +122,10 @@ void Character::useSkill(int skillIndex)
 
 void Character::setStat(int index, int newVal)
 { 
-	if (index == _hp && getTarget())
-		this->getTarget()->showHpBar();
+	if (index == _hp)
+		this->showHpBar();
 		
 	this->m_stats[index]->setStat(newVal); 
 }
-
 
 //=======================================================================================
