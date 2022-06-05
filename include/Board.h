@@ -23,7 +23,10 @@ public:
 	void updateBoard(float deltaTime, bool charSelected);
 	void updateEnemyDest();
 	void drawBoard(sf::RenderWindow& window, bool charSelected);
-	void sortObjects();
+
+	template <class Type>
+	Type sortObjects(Type vector);
+
 	void drawObjects(sf::RenderWindow& window);
 	void drawObject(bool player, int& index, sf::RenderWindow& window);
 	sf::Vector2f adjustLocation(sf::Vector2f location);
@@ -36,7 +39,19 @@ private:
 
 	unsigned int m_playerIndex;
 	sf::Sprite m_selected;
+	sf::Sprite m_currPlayerCircle;
 	void initPlayers();
 	void initEnemies();
 	void initSelected();
 };
+
+
+template <class Type>
+Type Board::sortObjects(Type vector)
+{
+	auto copy = vector;
+	std::sort(copy.begin(), copy.end(),
+		[](auto obj1, auto obj2)
+		{ return obj1->getPosition().y < obj2->getPosition().y; });
+	return copy;
+}

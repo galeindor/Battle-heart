@@ -29,6 +29,8 @@ void Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 	this->m_sprite.setTextureRect(this->m_animation.getUVRect());
 }
 
+//=======================================================================================
+
 void Object::update(sf::Vector2f steerForce, const float deltaTime)
 {
 	this->handleAnimation(this->m_velocity * deltaTime, deltaTime);

@@ -7,6 +7,7 @@ class Stat;
 const sf::Vector2f healthOffset(30, 100);
 const sf::Vector2f selectedOffset(45, 30);
 const sf::Vector2f DEFAULT_VEC(0, 0);
+constexpr auto NONE_SELECTED = -1;
 constexpr auto SPRITE_SIZE = 64;
 constexpr auto WINDOW_WIDTH = 1400;
 constexpr auto WINDOW_HEIGHT = 800;
@@ -98,7 +99,7 @@ const std::string bg_textures[NUM_OF_BG] = { "plain.png", "menuBG.png" };
 
 enum Locations
 {
-	_target, _object, _velocity, _obstacles
+	_object, _velocity, _target, _obstacles
 };
 
 enum Physics
@@ -115,4 +116,9 @@ const std::vector<std::vector<float>> objectsPhysics = { { 0.1f, 50.f, 90.f },
 struct Target {
 	sf::Vector2f _location;
 	std::vector<Stat*> _stats;
+};
+
+enum class Intersection
+{
+	selectAgain
 };

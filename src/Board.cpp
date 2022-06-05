@@ -62,15 +62,19 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 	this->updateEnemyDest(); // Targets the player with highest max HP.
 
 	float t;
-	sf::Vector2f firstEnemyDist = this->m_enemies.begin()->get()->getTarget()->getPosition() - this->m_enemies.begin()->get()->getPosition();
+	sf::Vector2f firstEnemyDist = this->m_enemies[0]->getTarget()->getPosition() - this->m_enemies[0]->getPosition();
 
 	if (charSelected)
-		m_selected.setPosition(m_players[this->m_playerIndex]->getPosition());
+		m_selected.setPosition(m_players[m_playerIndex]->getPosition());
 
+	std::vector<sf::Vector2f> locations;
+	std::vector<float> values;
 	for (auto& player : m_players)
 	{
 		sf::Vector2f steerForce;
-		steerForce = player->behaviour()->Arrive(player->getPosition(), player->getVelocity(), player->getMaxVelocity(), player->getMaxForce() , player->getDest(), 10);
+		locations = { player->getPosition() , player->getVelocity() , player->getDest() };
+		values = { player->getMaxVelocity() , player->getMaxForce() };
+		steerForce = player->behaviour()->Arrive(locations , values , 10);
 		player->update(steerForce, deltaTime);
 	}
 
@@ -81,8 +85,10 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 		else
 			t = enemy->behaviour()->length(firstEnemyDist) / enemy->behaviour()->length(enemy->getTarget()->getVelocity());
 
-		sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(enemy->getPosition(), enemy->getVelocity(), enemy->getMaxVelocity(), enemy->getMaxForce(), enemy->getTarget()->getPosition(), createObstaclesVec(), 100);
-		//Enemy* enemyPtr = enemy.get();
+		locations = { enemy->getPosition() , enemy->getVelocity() , enemy->getDest() , enemy->getTarget()->getPosition() };
+		values = { enemy->getMaxVelocity() , enemy->getMaxForce() };
+
+		sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(locations , createObstaclesVec(), values, 100);
 		this->seperation(enemy.get(), steerForce, deltaTime);
 		enemy->update(steerForce, deltaTime);
 	}
@@ -128,7 +134,7 @@ void Board::updateEnemyDest()
 bool Board::handleFirstClick(sf::Vector2f location)
 {
 	if (m_players[m_playerIndex]->checkSkillClick(location))
-		return false;;
+		return false;
 
 	for (int index = 0; index < m_players.size(); index++)
 	{
@@ -148,32 +154,29 @@ bool Board::handleFirstClick(sf::Vector2f location)
 
 bool Board::handleSecondClick(sf::Vector2f location)
 {
+
 	auto currPlayer = m_players[m_playerIndex];
 
 	if (currPlayer->checkSkillClick(location))
 		return false;
 
 	for (auto& player : m_players)
-		if (player->checkCollision(location))
-			if (currPlayer->setTarget(player))
-			{
-
-				this->m_selected.setPosition(player->getPosition());
-				return true;
-			}
+		if (player->checkCollision(location) && currPlayer->setTarget(player))
+		{
+			this->m_selected.setPosition(player->getPosition());
+			return true;
+		}
 
 	for (auto& enemy : m_enemies)
-		if (enemy->checkCollision(location))
-			if (currPlayer->setTarget(enemy))
-			{
-				this->m_selected.setPosition(enemy->getPosition());
-				return true;
-			}
+		if (enemy->checkCollision(location) && currPlayer->setTarget(enemy))
+		{
+			this->m_selected.setPosition(enemy->getPosition());
+			return true;
+		}
 
 	currPlayer->setAsTarget(nullptr);
 	currPlayer->setDestination(adjustLocation(location));
 	this->m_selected.setPosition(adjustLocation(location));
-
 	return true;
 }
 
@@ -191,40 +194,47 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 
 //===================================================================================
 
-void Board::sortObjects()
-{
-	std::sort(m_players.begin(), m_players.end(), 
-			  [](auto obj1, auto obj2) 
-				{ return obj1->getPosition().y < obj2->getPosition().y; });
 
-	std::sort(m_enemies.begin(), m_enemies.end(), 
-			  [](auto obj1, auto obj2) 
-				{ return obj1->getPosition().y < obj2->getPosition().y; });
 
-}
 //===================================================================================
 
 void Board::drawObjects(sf::RenderWindow& window)
 {
-	this->sortObjects();
+	auto playersCopy = this->sortObjects(m_players);
+	auto enemiesCopy = this->sortObjects(m_enemies);
+	/*
+	auto playersCopy = m_players;
+	auto enemiesCopy = m_enemies;
+
+	std::sort(playersCopy.begin(), playersCopy.end(),
+		[](auto obj1, auto obj2)
+		{ return obj1->getPosition().y < obj2->getPosition().y; });
+
+	std::sort(enemiesCopy.begin(), enemiesCopy.end(),
+		[](auto obj1, auto obj2)
+		{ return obj1->getPosition().y < obj2->getPosition().y; });
+
+	*/
 	int enemyIndex = 0, playerIndex = 0;
 
-	while(enemyIndex < this->m_enemies.size() || playerIndex < this->m_players.size())
+	while(enemyIndex < enemiesCopy.size() || playerIndex < playersCopy.size())
 	{
-		if (enemyIndex < this->m_enemies.size() && playerIndex < this->m_players.size())
+		if (enemyIndex < enemiesCopy.size() && playerIndex < playersCopy.size())
 		{
-			if (this->m_players[playerIndex].get()->getPosition().y > this->m_enemies[enemyIndex].get()->getPosition().y)
-				drawObject(false, enemyIndex, window);
+			if (playersCopy[playerIndex]->getPosition().y > enemiesCopy[enemyIndex]->getPosition().y)
+				enemiesCopy[enemyIndex++]->draw(window);
 			else
-				drawObject(true, playerIndex, window);
+				playersCopy[playerIndex++]->draw(window);
 		}
 		else if (enemyIndex < this->m_enemies.size())
-			drawObject(false, enemyIndex, window);
+			enemiesCopy[enemyIndex++]->draw(window);
 
 		else
-			drawObject(true, playerIndex, window);
+			playersCopy[playerIndex++]->draw(window);
 	}
 }
+
+//===================================================================================
 
 void Board::drawObject(bool player, int& index, sf::RenderWindow& window)
 {
@@ -235,15 +245,6 @@ void Board::drawObject(bool player, int& index, sf::RenderWindow& window)
 
 	index++;
 }
-//==========================================================
-
-//==========================================================
-
-bool Board::checkIntersection(sf::Sprite obj,sf::Sprite secObj)
-{
-	return obj.getGlobalBounds().intersects(secObj.getGlobalBounds());
-}
-
 //==========================================================
 
 bool Board::checkMoving() const
@@ -274,8 +275,10 @@ void Board::initEnemies()
 void Board::initSelected()
 {
 	m_selected.setTexture(*Resources::instance().getTexture(_select));
+	m_currPlayerCircle.setTexture(*m_selected.getTexture());
 	auto origin = m_selected.getOrigin();
 	m_selected.setOrigin(origin + selectedOffset);
+	m_currPlayerCircle.setOrigin(origin + selectedOffset);
 }
 
 //==========================================================

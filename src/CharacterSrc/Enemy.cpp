@@ -6,6 +6,7 @@ Enemy::Enemy(sf::Vector2f pos, const int index)
 }
 
 //=======================================================================================
+
 void Enemy::draw(sf::RenderWindow& window)
 {
 	showHpBar();

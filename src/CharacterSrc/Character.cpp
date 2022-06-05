@@ -13,7 +13,6 @@ Character::Character(const sf::Vector2f pos, const int index, AnimationParams an
 
 void Character::update(sf::Vector2f steerForce, float deltaTime)
 {
-
 	sf::Vector2f acceleration = steerForce / this->getMass();
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
 	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
