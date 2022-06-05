@@ -21,4 +21,5 @@
                                               "SkillSrc/Projectile.cpp"
                                               "EffectSrc/Effect.cpp"
                                               "EffectSrc/Heal.cpp"
+                                              "EffectSrc/Damage.cpp"
                                               )

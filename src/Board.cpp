@@ -67,6 +67,8 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 
 	if (charSelected)
 		m_selected.setPosition(m_players[this->m_playerIndex]->getPosition());
+	else if (m_players[this->m_playerIndex]->getTarget())
+		this->m_selected.setPosition(m_players[this->m_playerIndex]->getTarget()->getPosition());
 
 	for (auto& player : m_players)
 	{
@@ -155,19 +157,12 @@ bool Board::handleSecondClick(sf::Vector2f location)
 	for (auto& player : m_players)
 		if (player->checkCollision(location))
 			if (currPlayer->setTarget(player))
-			{
-
-				this->m_selected.setPosition(player->getPosition());
 				return true;
-			}
 
 	for (auto& enemy : m_enemies)
 		if (enemy->checkCollision(location))
 			if (currPlayer->setTarget(enemy))
-			{
-				this->m_selected.setPosition(enemy->getPosition());
 				return true;
-			}
 
 	currPlayer->setAsTarget(nullptr);
 	currPlayer->setDestination(adjustLocation(location));
