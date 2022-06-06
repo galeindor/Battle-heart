@@ -52,7 +52,7 @@ bool Enemy::checkIntersection() const
 
 void Enemy::initSkills(const int index)
 {
-	this->addSkill(Skill1(Resources::instance().getSkill(index, 0),
+	this->addSkill(Skill(Resources::instance().getSkill(index, 0),
 		sf::Vector2f(0 * (SKILL_RECT_SIZE + 20) + 30, 30),
-		BASE_CD, _heal, singleTarget, onPlayer));
+		BASE_CD, _heal, singleTarget, onPlayer, isActive));
 }

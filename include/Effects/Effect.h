@@ -2,6 +2,7 @@
 #include "Animation.h"
 #include "Resources.h"
 #include "Stat.h"
+#include "Timer.h"
 
 class Effect
 {
@@ -22,10 +23,8 @@ public:
 
 private:
 	void initSprite(const int index);
-	float m_time;
-	float m_cooldown;
+	Timer m_timer;
 	bool m_draw;
-	sf::Clock m_clock;
 	Animation m_animation;
 	sf::Sprite m_sprite;
 	sf::Vector2f m_position;

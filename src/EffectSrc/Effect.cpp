@@ -2,7 +2,7 @@
 
 Effect::Effect(const int index)
 	: m_animation(Resources::instance().getEffectTexture(index), effectParams),
-	  m_cooldown(2.f), m_time(0.f), m_draw(false)
+	  m_timer(Timer(EFFECT_COOLDOWN)), m_draw(false)
 {
 	this->initSprite(index);
 }
@@ -10,11 +10,11 @@ Effect::Effect(const int index)
 void Effect::update(const sf::Vector2f pos, const float deltaTime, bool faceRight)
 {
 	// Checks if the animation is over
-	if (this->m_time < 0.f)
+	if (this->m_timer.isTimeUp())
 		this->m_draw = false;
 	else
 	{
-		this->m_time -= this->m_clock.restart().asSeconds();
+		this->m_timer.updateTimer(deltaTime);
 		// Updates animation
 		this->m_sprite.setPosition(sf::Vector2f(pos.x, pos.y + 50));
 		this->m_animation.setFaceRight(faceRight);

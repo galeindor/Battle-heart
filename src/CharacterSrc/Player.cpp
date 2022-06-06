@@ -43,10 +43,10 @@ bool Player::checkSkillClick(const sf::Vector2f& location)
 
 void Player::initSkills(const int index)
 {
-	this->addSkill(Skill1(Resources::instance().getSkill(index, 0),
+	this->addSkill(Skill(Resources::instance().getSkill(index, 0),
 						  sf::Vector2f(0 * (SKILL_RECT_SIZE + 20) + 30, 30),
 						  playersBasicStats[index][_attackSpeed], _heal, 
-						  singleTarget, onPlayer));
+						  singleTarget, onPlayer, isActive));
 }
 
 

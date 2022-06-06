@@ -1,7 +1,7 @@
 #include "Effects/Damage.h"
 
 Damage::Damage(AnimationParams animParams)
-	: Effect(_dmg)
+	: Effect(_damage)
 {}
 
 void Damage::affect(vector<std::shared_ptr<Stat>> myStats, std::vector<Target> targets)

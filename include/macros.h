@@ -16,6 +16,7 @@ constexpr auto BAR_WIDTH = 60;
 constexpr auto LONG_RANGE = 2000;
 constexpr auto singleTarget = true;
 constexpr auto onPlayer = true;
+constexpr auto isActive = true;
 
 // Buttons
 enum MenuButtons
@@ -72,9 +73,10 @@ const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "arc
 
 enum Effects
 {
-	_heal, NUM_OF_EFFECTS
+	_heal, _damage, NUM_OF_EFFECTS
 };
 const std::string effectsTextures[NUM_OF_EFFECTS] = { "healEffect.png" };
+constexpr auto EFFECT_COOLDOWN = 2.f;
 // Skills ----------------------------------
 constexpr auto NUM_OF_PLAYERS = 3;
 constexpr auto MAX_SKILL = 2;
@@ -83,7 +85,7 @@ constexpr auto SKILL_RECT_SIZE = 80; // size of the rectangle where skills are s
 
 enum Skills
 {
-	_basic, _skill1, _skill2, _passive, NUM_OF_SKILLS
+	_basic, _Skill, _skill2, _passive, NUM_OF_SKILLS
 };
 
 const std::string skillTextures[NUM_OF_PLAYERS][MAX_SKILL] = { { "heal.png"	, "clericShield.png"} ,

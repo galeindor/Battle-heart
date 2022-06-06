@@ -4,7 +4,7 @@
 #include "HealthBar.h"
 #include "Stat.h"
 #include "Object.h"
-#include "Skills/Skill1.h"
+#include "Skills/Skill.h"
 
 class Enemy;
 class Player;
@@ -41,7 +41,7 @@ public:
 	std::vector<Target> createTargetVec(Type type);
 
 protected:
-	void addSkill(Skill1 skill) { m_skills.push_back(std::make_unique<Skill1>(skill)); }
+	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }
 	//vector<std::unique_ptr<Projectile>>& getSkills() { return this->m_skills; }
 	void useSkill(int index);
 	// ############# CHECK LATER ##############
@@ -55,7 +55,7 @@ private:
 					  vector<std::shared_ptr<Player>> players,
 					  vector<std::shared_ptr<Enemy>> enemies);
 
-	vector<std::unique_ptr<Skill1>> m_skills; // skills useable
+	vector<std::unique_ptr<Skill>> m_skills; // skills useable
 	vector<std::shared_ptr<Stat>> m_stats; // all of the character stats
 	HealthBar m_hpBar;
 	bool m_isAttacking;
