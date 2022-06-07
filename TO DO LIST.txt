@@ -1,13 +1,39 @@
-ANIMATION
-1. add animations - add class and each gameObject need to handle his animation
-2. skills - create castSkill and find where to use it
-3. sync the health bar to current hp - DONE
-4. no more dancing enemies for god's sake
-5. too much 'handleCollision' 'handleIntersection' , organize the collision types
-6. Characters showing by Y value - DONE
+*** = Not important.
++- = Medium important.
+!!! = Very important.
 
-ART 
-1. think about skill animations 
-2. create the list of needed sounds for osher
-3. edit the sprite sheets for each player to be only the ones needed
-4. make enemy sprite sheet
+Yet to be taken:
+-(!!!) Add progress in the game such as unlocking newcharacters or stats increasing as the level increases.
+-(+-) Create the list of needed sounds for Osher (partially done).
+-(***) Edit the sprite sheets for objects.
+
+Nadav:
+-(!!!) Think of a way to replace all the switch in the program.
+
+Ely:
+-(+-) Add levels loader to menu.
+-(***) Add more stats like defense (complicated), attack, attack speed.
+-(+-) Add unmmovable objects (obstacles).
+
+Gal:
+-(***) Split updateBoard (too crowded).
+-(!!!) Remove target struct and replace with
+       shared_ptr of Character.
+-(!!!) Class projectile (visuals of skills).
+
+Stuff to figure out:
+-(!!!) Think of a generic way to add new levels.
+-(+-) Think of how to balance the progress in the game.
+-(***) Make sure the enemies don't spawn on each other.
+
+List for Osher:
+- Background music for menu.
+- Background music for different levels (like 3 levels).
+- Click sounds - click on buttons, click on characters.
+- Hover buttons sound.
+- Skills sounds (Gal).
+- Collision sound.
+- Human roar sound (warrior shouting)
+
+Bugs:
+- Enemies ignore closest target on spawn.

@@ -27,3 +27,6 @@ configure_file ("titillium.otf" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Effects
 configure_file ("healEffect.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
+# Levels file
+configure_file ("Levels.txt" ${CMAKE_BINARY_DIR} COPYONLY)

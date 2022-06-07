@@ -4,6 +4,7 @@
 class Stat;
 
 // General ----------------------------------
+const std::string LevelsFileName = "Levels.txt";
 const sf::Vector2f healthOffset(30, 100);
 const sf::Vector2f selectedOffset(45, 30);
 const sf::Vector2f DEFAULT_VEC(0, 0);
@@ -18,7 +19,9 @@ constexpr auto singleTarget = true;
 constexpr auto onPlayer = true;
 constexpr auto isActive = true;
 constexpr auto NONE_SELECTED = -1;
-
+constexpr auto PLAYER_DETECTED = -2;
+constexpr auto NEW_LEVEL_DETECTED = -3;
+constexpr auto NEW_WAVE = '!';
 // Buttons
 enum MenuButtons
 {
@@ -62,7 +65,7 @@ const std::vector<std::vector<float>> playersBasicStats =
 	/* cleric */ { 70.f, 2.f, 6.f, 200.f , 10.f},
 	/* knight */ { 120.f, 3.f, 7.f, 40.f , 20.f},
 	/* archer */ { 90.f, 2.f, -40.f, 600.f , 13.f},
-	/* dummy  */ { 80.f, 4.f, -5.f, 40.f , 15.f}
+	/* dummy  */ { 80.f, 4.f, -50.f, 40.f , 15.f}
 };
 
 // Textures ----------------------------------
@@ -123,4 +126,10 @@ const std::vector<std::vector<float>> objectsPhysics = { { 0.1f, 50.f, 90.f },
 struct Target {
 	sf::Vector2f _location;
 	std::vector<std::shared_ptr<Stat>> _stats;
+};
+
+struct LevelInfo
+{
+	bool m_lvlPlayers[NUM_OF_PLAYERS];
+	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
 };
