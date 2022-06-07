@@ -64,7 +64,7 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 
 	float t;
 	sf::Vector2f firstEnemyDist = { 0,0 };
-	if(m_enemies.begin()->get()->getTarget())
+	if(!m_enemies.empty() && m_enemies.begin()->get()->getTarget())
 		firstEnemyDist = this->m_enemies.begin()->get()->getTarget()->getPosition() - this->m_enemies.begin()->get()->getPosition();
 
 	if(m_currPlayer)
@@ -110,7 +110,7 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 		if (!enemy->isAlive())
 		{
 			deleteObject(enemy);
-			if (!enemy->handleDeath())
+			if (enemy->handleDeath())
 			{
 				m_enemies.erase(m_enemies.begin() + j);
 
