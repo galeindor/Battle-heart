@@ -7,6 +7,6 @@ public:
 	Damage(AnimationParams animParams);
 	~Damage() = default;
 
-	virtual void affect(vector<std::shared_ptr<Stat>> myStats,
+	virtual void affect(float baseValue, vector<std::shared_ptr<Stat>> myStats,
 						std::vector<Target> targets) override;
 };

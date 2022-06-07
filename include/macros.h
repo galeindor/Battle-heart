@@ -17,6 +17,7 @@ constexpr auto LONG_RANGE = 2000;
 constexpr auto singleTarget = true;
 constexpr auto onPlayer = true;
 constexpr auto isActive = true;
+constexpr auto NONE_SELECTED = -1;
 
 // Buttons
 enum MenuButtons
@@ -53,15 +54,15 @@ constexpr auto SHORT_RANGE = 75.f; // regular attack cooldown
 
 enum Stats
 {
-	_hp, _attackSpeed, _dmg, _range, NUM_OF_STATS
+	_hp, _attackSpeed, _dmg, _range, _defence, NUM_OF_STATS
 };
 
 const std::vector<std::vector<float>> playersBasicStats =
 {
-	/* cleric */ { 70.f, 3.f, 6.f, 200.f },
-	/* knight */ { 120.f, 4.f, 7.f, 40.f },
-	/* archer */ { 90.f, 2.f, 5.f, 600.f },
-	/* dummy  */ { 80.f, 4.f, -4.f, 40.f }
+	/* cleric */ { 70.f, 2.f, 6.f, 200.f , 10.f},
+	/* knight */ { 120.f, 3.f, 7.f, 40.f , 20.f},
+	/* archer */ { 90.f, 2.f, 5.f, 600.f , 13.f},
+	/* dummy  */ { 80.f, 4.f, -30.f, 40.f , 15.f}
 };
 
 // Textures ----------------------------------
@@ -73,7 +74,7 @@ const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "arc
 
 enum Effects
 {
-	_heal, _damage, NUM_OF_EFFECTS
+	_heal, _damage, _defend, NUM_OF_EFFECTS
 };
 const std::string effectsTextures[NUM_OF_EFFECTS] = { "healEffect.png" };
 constexpr auto EFFECT_COOLDOWN = 2.f;

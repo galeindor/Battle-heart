@@ -4,11 +4,12 @@ Damage::Damage(AnimationParams animParams)
 	: Effect(_damage)
 {}
 
-void Damage::affect(vector<std::shared_ptr<Stat>> myStats, std::vector<Target> targets)
+void Damage::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, std::vector<Target> targets)
 {
 	for (auto& target : targets)
 	{
 		auto currHP = target._stats[_hp]->getStat();
-		target._stats[_hp]->setStat(currHP - myStats[_dmg]->getStat());
+		auto dmgByDefence = (myStats[_dmg]->getStat() + baseValue) * (myStats[_defend]->getStat() / 100);
+		target._stats[_hp]->setStat(currHP - dmgByDefence);
 	}
 }

@@ -1,7 +1,7 @@
 #include "Board.h"
 
 Board::Board()
-	: m_playerIndex(0)
+	:m_currPlayer(nullptr)
 {
 	this->initPlayers();
 	this->initEnemies();
@@ -63,30 +63,70 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 	this->updateEnemyDest(); // Targets the player with highest max HP.
 
 	float t;
-	sf::Vector2f firstEnemyDist = this->m_enemies.begin()->get()->getTarget()->getPosition() - this->m_enemies.begin()->get()->getPosition();
+	sf::Vector2f firstEnemyDist = { 0,0 };
+	if(m_enemies.begin()->get()->getTarget())
+		firstEnemyDist = this->m_enemies.begin()->get()->getTarget()->getPosition() - this->m_enemies.begin()->get()->getPosition();
 
-	if (charSelected)
-		m_selected.setPosition(m_players[this->m_playerIndex]->getPosition());
-	else if (m_players[this->m_playerIndex]->getTarget())
-		this->m_selected.setPosition(m_players[this->m_playerIndex]->getTarget()->getPosition());
-
-	for (auto& player : m_players)
+	if(m_currPlayer)
 	{
-		sf::Vector2f steerForce;
-		steerForce = player->behaviour()->Arrive(player->getPosition(), player->getVelocity(), player->getMaxVelocity(), player->getMaxForce() , player->getDest(), 10);
-		player->update(steerForce, deltaTime, this->m_players, this->m_enemies);
+		if (charSelected)
+			m_selected.setPosition(m_currPlayer->getPosition());
+		else if (m_currPlayer->getTarget())
+			m_selected.setPosition(m_currPlayer->getTarget()->getPosition());
 	}
 
-	for (auto& enemy : m_enemies)
+	for (int i = 0; i < m_players.size(); i++)
 	{
-		if (enemy->behaviour()->length(enemy->getTarget()->getVelocity()) == 0.f)
-			t = 2;
-		else
-			t = enemy->behaviour()->length(firstEnemyDist) / enemy->behaviour()->length(enemy->getTarget()->getVelocity());
+		auto player = m_players[i];
+		if (!player->isAlive())
+		{
+			deleteObject(player);
+			
+			if(m_currPlayer == player)
+				m_currPlayer = nullptr;
 
-		sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(enemy->getPosition(), enemy->getVelocity(), enemy->getMaxVelocity(), enemy->getMaxForce(), 
-					enemy->getTarget()->getPosition(), createObstaclesVec(), 100);
-		this->seperation(enemy.get(), steerForce, deltaTime);
+			this->updateEnemyDest(); // Targets the player with highest max HP.
+
+			if (player->handleDeath())
+			{
+				m_players.erase(m_players.begin() + i);
+				i--;
+			}
+
+			
+		}
+		else
+		{
+			sf::Vector2f steerForce;
+			steerForce = player->behaviour()->Arrive(player->getPosition(), player->getVelocity(), player->getMaxVelocity(), player->getMaxForce() , player->getDest(), 10);
+			player->update(steerForce, deltaTime, this->m_players, this->m_enemies);
+		}
+	}
+;
+	for (int j = 0; j < m_enemies.size(); j++)
+	{
+		auto enemy = m_enemies[j];
+		if (!enemy->isAlive())
+		{
+			deleteObject(enemy);
+			if (!enemy->handleDeath())
+			{
+				m_enemies.erase(m_enemies.begin() + j);
+				j--;
+			}
+		}
+		else if( enemy->getTarget())
+		{
+			if (enemy->behaviour()->length(enemy->getTarget()->getVelocity()) == 0.f)
+				t = 2;
+			else
+				t = enemy->behaviour()->length(firstEnemyDist) / enemy->behaviour()->length(enemy->getTarget()->getVelocity());
+
+			sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(enemy->getPosition(), enemy->getVelocity(), enemy->getMaxVelocity(), enemy->getMaxForce(),
+				enemy->getTarget()->getPosition(), createObstaclesVec(), 100);
+			this->seperation(enemy.get(), steerForce, deltaTime);
+		}
+		
 	}
 }
 
@@ -94,7 +134,7 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 
 void Board::updateEnemyDest()
 {
-	sf::Vector2f pos;
+	sf::Vector2f pos = { -1,-1 };
 	std::shared_ptr<Player> closePlayer = NULL;
 
 	for (auto& enemy : m_enemies)
@@ -114,7 +154,7 @@ void Board::updateEnemyDest()
 				pos = player->getPosition();
 			}
 		}
-		if (!enemy->getIsMoving())
+		if (!enemy->getIsMoving() && pos.x >= 0)
 		{
 			enemy->setDestination(pos);
 
@@ -129,16 +169,17 @@ void Board::updateEnemyDest()
 
 bool Board::handleFirstClick(sf::Vector2f location)
 {
-	if (m_players[m_playerIndex]->checkSkillClick(location))
-		return false;;
+	if (m_currPlayer && m_currPlayer->checkSkillClick(location))
+		return false;
 
-	for (int index = 0; index < m_players.size(); index++)
+	for (auto& player : m_players)
 	{
-		if (m_players[index]->checkCollision(location))
+		if (player->checkCollision(location))
 		{
-			m_players[m_playerIndex]->setSelected(false);
-			m_players[index]->setSelected(true);
-			this->m_playerIndex = index;
+			if(m_currPlayer)
+				m_currPlayer->setSelected(false);
+			player->setSelected(true);
+			m_currPlayer = player;
 			return true;
 		}
 	}
@@ -147,29 +188,31 @@ bool Board::handleFirstClick(sf::Vector2f location)
 }
 
 //==========================================================
+
 bool Board::handleSecondClick(sf::Vector2f location)
 {
-	auto currPlayer = m_players[m_playerIndex];
+	if (!m_currPlayer)
+		return true;
 
-	if (currPlayer->checkSkillClick(location))
+	if (m_currPlayer->checkSkillClick(location))
 		return false;
 
 	for (auto& player : m_players)
 		if (player->checkCollision(location))
-			if (currPlayer->setTarget(player))
+			if (m_currPlayer->setTarget(player))
 				return true;
 
 	for (auto& enemy : m_enemies)
 		if (enemy->checkCollision(location))
-			if (currPlayer->setTarget(enemy))
+			if (m_currPlayer->setTarget(enemy))
 				return true;
 
-	currPlayer->setAsTarget(nullptr);
-	currPlayer->setDestination(adjustLocation(location));
+	m_currPlayer->setAsTarget(nullptr);
+	m_currPlayer->setDestination(adjustLocation(location));
 	this->m_selected.setPosition(adjustLocation(location));
-
 	return true;
 }
+
 //===================================================================================
 void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 {
@@ -230,7 +273,7 @@ bool Board::checkIntersection(sf::Sprite obj,sf::Sprite secObj)
 
 bool Board::checkMoving() const
 {
-	return this->m_players[this->m_playerIndex]->getIsMoving();
+	return (m_currPlayer) && (m_currPlayer->getIsMoving());
 }
 
 //==========================================================
@@ -272,4 +315,22 @@ sf::Vector2f Board::adjustLocation(sf::Vector2f location)
 	newLoc.y = std::max(newLoc.y, float(HEIGHT_LIMIT));
 
 	return newLoc;
+}
+
+//==========================================================
+
+void Board::deleteObject(std::shared_ptr<Character> obj)
+{
+	for (auto& enemy : m_enemies)
+	{
+		if (enemy->getTarget() == obj.get())
+			enemy->setAsTarget(nullptr);
+	}
+
+	for (auto& player : m_players)
+	{
+		if (player->getTarget() == obj.get())
+			player->setAsTarget(nullptr);
+	}
+
 }

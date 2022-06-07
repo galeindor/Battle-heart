@@ -2,6 +2,7 @@
 #include "Effects/Effect.h"
 #include "Effects/Heal.h"
 #include "Effects/Damage.h"
+#include "Effects/Defend.h"
 #include "Timer.h"
 
 class Skill
@@ -12,7 +13,7 @@ public:
 	~Skill() = default;
 
 	// Management
-	void updateSkill(const float deltaTime, std::vector<Target> targets);
+	void updateSkill(float deltaTime, std::vector<Target> targets);
 	void useSkill(std::vector<std::shared_ptr<Stat>> myStats);
 	void setTargets(std::vector<Target> targets) { this->m_targets = targets; }
 
@@ -29,6 +30,7 @@ private:
 	bool m_isActive;
 	Timer m_timer;
 	std::vector<Target> m_targets = {};
+	float m_baseValue;
 
 	// Visuals
 	sf::RectangleShape m_rect;

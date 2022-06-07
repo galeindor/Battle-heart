@@ -14,7 +14,6 @@ void Controller::run()
 {
 	this->m_menu.runMenu(this->m_window);
 	float deltaTime = 0.f;
-	auto inProgress = false;
 
 	while (m_window.isOpen())
 	{
@@ -35,7 +34,6 @@ void Controller::run()
 
 				if (event.mouseButton.button == sf::Mouse::Button::Left)
 				{
-					inProgress = true;
 					handleMouseClick(location);
 				}
 				break;
@@ -43,7 +41,6 @@ void Controller::run()
 
 		}
 		this->update(deltaTime);
-		inProgress = false;
 	}
 }
 

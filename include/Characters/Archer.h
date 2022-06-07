@@ -8,4 +8,6 @@ public:
 	Archer(const sf::Vector2f pos);
 	~Archer() = default;
 
+protected:
+
 };

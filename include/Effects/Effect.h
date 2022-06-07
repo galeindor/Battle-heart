@@ -13,7 +13,7 @@ public:
 	void update(const sf::Vector2f pos, const float deltaTime, bool faceRight);
 	void draw(sf::RenderWindow& window);
 
-	virtual void affect(vector<std::shared_ptr<Stat>> myStats,
+	virtual void affect(float baseValue, vector<std::shared_ptr<Stat>> myStats,
 						std::vector<Target> targets) = 0;
 
 	enum Effects

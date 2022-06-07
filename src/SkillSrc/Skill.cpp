@@ -4,12 +4,15 @@ Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 			   const int effectIndex, bool singleTarget, bool onPlayer, bool isActive)
 	:	m_timer(Timer(cooldown)), m_singleTarget(singleTarget), m_onPlayer(onPlayer), m_isActive(isActive)
 {
+	m_baseValue = 0;
 	this->initRect(texture, pos);
 	this->initCooldown(pos);
 	this->initEffect(effectIndex);
 }
 
-void Skill::updateSkill(const float deltaTime, std::vector<Target> targets)
+//============================================================================
+
+void Skill::updateSkill(float deltaTime, std::vector<Target> targets)
 {
 	if (!this->m_timer.isTimeUp())
 	{
@@ -23,14 +26,18 @@ void Skill::updateSkill(const float deltaTime, std::vector<Target> targets)
 		this->m_effect->update(target._location, deltaTime, true);
 }
 
+//============================================================================
+
 void Skill::useSkill(std::vector<std::shared_ptr<Stat>> myStats)
 {
 	if (this->m_timer.isTimeUp())
 	{
 		this->m_timer.setTimer();
-		this->m_effect->affect(myStats, this->m_targets);
+		this->m_effect->affect(m_baseValue,myStats, this->m_targets);
 	}
 }
+
+//============================================================================
 
 void Skill::initEffect(const int effectIndex)
 {
@@ -40,14 +47,19 @@ void Skill::initEffect(const int effectIndex)
 		this->m_effect = new Heal(effectParams);
 		break;
 
-	case _dmg:
+	case _damage:
 		this->m_effect = new Damage(effectParams);
 		break;
 
+	case _defend:
+		this->m_effect = new Defend(effectParams);
+		break;
 	default:
 		break;
 	}
 }
+
+//============================================================================
 
 void Skill::initRect(sf::Texture* texture, const sf::Vector2f pos)
 {
@@ -55,6 +67,8 @@ void Skill::initRect(sf::Texture* texture, const sf::Vector2f pos)
 	m_rect.setPosition(pos);
 	m_rect.setSize({ SKILL_RECT_SIZE , SKILL_RECT_SIZE });
 }
+
+//============================================================================
 
 void Skill::initCooldown(const sf::Vector2f pos)
 {

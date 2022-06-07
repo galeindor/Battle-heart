@@ -3,9 +3,10 @@
 #include "Characters/Enemy.h"
 
 Character::Character(const sf::Vector2f pos, const int index, AnimationParams animParams )
-	: m_isAttacking(false), m_hpBar(HealthBar(pos)), Object(pos, index, animParams)
+	: m_isAttacking(false), Object(pos, index, animParams)
 {
 	this->initStats(index);
+	m_hpBar= HealthBar(pos, m_stats[_hp]->getStat());
 }
 
 //=======================================================================================
@@ -14,13 +15,32 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 					   vector<std::shared_ptr<Player>> m_players, 
 					   vector<std::shared_ptr<Enemy>> m_enemies)
 {
+	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
+	this->m_hpBar.setPosition(this->getPosition());
+	Object::update(steerForce, deltaTime);
+
+	if (!this->isAlive())
+	{
+		handleDeath();
+		return;
+	}
+
+
+
 	sf::Vector2f acceleration = steerForce / this->getMass();
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
 	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
 
 	this->updateSkills(deltaTime, m_players, m_enemies);
-	if(this->getTarget())
-		this->setDestination(this->getTarget()->getPosition());
+
+	auto target = this->getTarget();
+	if (target)
+	{
+		if (target->isAlive())
+			this->setDestination(this->getTarget()->getPosition());
+		else
+			this->setAsTarget(nullptr);
+	}
 
 	if (!this->checkIntersection())
 	{
@@ -41,11 +61,10 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 			this->setAnimation(_idle);
 	}
 
-	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
-	this->m_hpBar.setPosition(this->getPosition());
+
 	// Trim position values to window size and handle animation
 
-	Object::update(steerForce, deltaTime);
+
 }
 
 //=======================================================================================
@@ -135,4 +154,15 @@ std::vector<Target> Character::createTargetVec(Type type)
 	}
 
 	return temp;
+}
+
+//=======================================================================================
+
+bool Character::handleDeath()
+{
+	static auto timer = Timer(1.8f);
+	this->setAnimation(_death);
+	this->handleAnimation({ 0,0 }, timer.updateTimer());
+	
+	return timer.isTimeUp();
 }

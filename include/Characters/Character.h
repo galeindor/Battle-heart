@@ -26,10 +26,12 @@ public:
 
 	// Management
 	void showHpBar() { m_hpBar.show(); }
+	bool handleDeath();
 	bool targetInRange() ;
 
 	// Getters
 	int getStat(int index)			const		{ return this->m_stats[index]->getStat(); }
+	bool isAlive()								{ return this->m_stats[_hp]->getStat() > 0; } // return if the character is alive
 	bool getIsAttacking()			const		{ return this->m_isAttacking; }
 	HealthBar		getHpBar()		const		{ return this->m_hpBar; }
 
@@ -48,12 +50,14 @@ protected:
 	vector<std::shared_ptr<Stat>>& getStats() { return this->m_stats; }
 
 private:
+
 	void useBaseAttack();
 	void initStats(const int index);
 
 	void updateSkills(const float deltaTime, 
 					  vector<std::shared_ptr<Player>> players,
 					  vector<std::shared_ptr<Enemy>> enemies);
+
 
 	vector<std::unique_ptr<Skill>> m_skills; // skills useable
 	vector<std::shared_ptr<Stat>> m_stats; // all of the character stats

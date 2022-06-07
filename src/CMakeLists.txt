@@ -20,4 +20,5 @@
                                               "EffectSrc/Effect.cpp"
                                               "EffectSrc/Heal.cpp"
                                               "EffectSrc/Damage.cpp"
+                                              "EffectSrc/Defend.cpp"
                                               )

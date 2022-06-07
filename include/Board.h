@@ -27,6 +27,8 @@ public:
 	template <class Type>
 	Type sortObjects(Type vector);
 	
+	void deleteObject(std::shared_ptr<Character> obj);
+
 	void drawObjects(sf::RenderWindow& window);
 	void drawObject(bool player, int& index, sf::RenderWindow& window);
 	sf::Vector2f adjustLocation(sf::Vector2f location);
@@ -37,7 +39,7 @@ private:
 	vector<shared_ptr<Player>> m_players;
 	vector<shared_ptr<Enemy>> m_enemies;
 
-	unsigned int m_playerIndex;
+	std::shared_ptr<Player> m_currPlayer;
 	sf::Sprite m_selected;
 	void initPlayers();
 	void initEnemies();

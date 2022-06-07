@@ -41,6 +41,8 @@ bool Player::checkSkillClick(const sf::Vector2f& location)
 	return false;
 }
 
+//==========================================================
+
 void Player::initSkills(const int index)
 {
 	this->addSkill(Skill(Resources::instance().getSkill(index, 0),

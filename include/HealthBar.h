@@ -5,7 +5,8 @@
 class HealthBar
 {
 public:
-	HealthBar(sf::Vector2f pos);
+	HealthBar() :m_showTime(3) {}
+	HealthBar(sf::Vector2f pos, int maxValue);
 	~HealthBar() = default;
 	void updateHealthBar(int statVal);
 	void draw(sf::RenderWindow& window);
@@ -17,7 +18,7 @@ private:
 	void initCurrHp(const sf::Vector2f pos);
 	sf::RectangleShape m_bar;
 	sf::RectangleShape m_currHealth;
-
+	int m_max;
 	// show Hp for a few seconds
 	sf::Clock m_clock;
 	float m_showTime;

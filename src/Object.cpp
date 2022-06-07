@@ -66,8 +66,6 @@ void Object::initSprite(const sf::Vector2f pos, const int index)
 
 //=======================================================================================
 
-
-
 bool Object::checkCollision(const sf::Vector2f& location)
 {
 	return this->m_sprite.getGlobalBounds().contains(location);

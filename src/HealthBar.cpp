@@ -1,6 +1,7 @@
 #include "HealthBar.h"
 
-HealthBar::HealthBar(sf::Vector2f pos)
+HealthBar::HealthBar(sf::Vector2f pos , int maxValue)
+	:m_max(maxValue)
 {
 	this->initCurrHp(pos);
 	this->initHealthBar(pos);
@@ -12,7 +13,7 @@ void HealthBar::updateHealthBar(int statVal)
 {
 	m_showTime -= m_clock.restart().asSeconds();
 	auto size = m_bar.getSize();
-	statVal = std::min(statVal * BAR_WIDTH / MAX_HEALTH , int(size.x));
+	statVal = std::min(statVal * BAR_WIDTH / m_max, int(size.x));
 	auto newX = std::max(statVal, 0);
 	m_currHealth.setSize(sf::Vector2f(newX, size.y));
 }

@@ -7,6 +7,7 @@ class Knight : public Player
 public:
 	Knight(const sf::Vector2f pos);
 	~Knight() = default;
+
 protected:
 
 };

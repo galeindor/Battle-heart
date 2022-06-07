@@ -7,6 +7,8 @@ Effect::Effect(const int index)
 	this->initSprite(index);
 }
 
+//============================================================================
+
 void Effect::update(const sf::Vector2f pos, const float deltaTime, bool faceRight)
 {
 	// Checks if the animation is over
@@ -22,7 +24,7 @@ void Effect::update(const sf::Vector2f pos, const float deltaTime, bool faceRigh
 		this->m_sprite.setTextureRect(this->m_animation.getUVRect());
 	}
 }
-
+//============================================================================
 /*
 void Effect::affect(std::vector<Target> targets)
 {
@@ -31,11 +33,15 @@ void Effect::affect(std::vector<Target> targets)
 }
 */
 
+//============================================================================
+
 void Effect::draw(sf::RenderWindow& window)
 {
 	if(this->m_draw)
 		window.draw(this->m_sprite);
 }
+
+//============================================================================
 
 void Effect::initSprite(const int index)
 {
