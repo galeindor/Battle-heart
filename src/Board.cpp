@@ -85,11 +85,12 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 			if(m_currPlayer == player)
 				m_currPlayer = nullptr;
 
-			this->updateEnemyDest(); // Targets the player with highest max HP.
 
 			if (player->handleDeath())
 			{
 				m_players.erase(m_players.begin() + i);
+				this->updateEnemyDest(); // Targets the player with highest max HP.
+				player.reset();
 				i--;
 			}
 
@@ -102,7 +103,7 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 			player->update(steerForce, deltaTime, this->m_players, this->m_enemies);
 		}
 	}
-;
+
 	for (int j = 0; j < m_enemies.size(); j++)
 	{
 		auto enemy = m_enemies[j];
@@ -112,10 +113,12 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 			if (!enemy->handleDeath())
 			{
 				m_enemies.erase(m_enemies.begin() + j);
+
+				enemy.reset();
 				j--;
 			}
 		}
-		else if( enemy->getTarget())
+		else if(enemy->getTarget())
 		{
 			if (enemy->behaviour()->length(enemy->getTarget()->getVelocity()) == 0.f)
 				t = 2;
@@ -213,7 +216,7 @@ bool Board::handleSecondClick(sf::Vector2f location)
 	return true;
 }
 
-//===================================================================================
+//==========================================================
 void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 {
 	bool draw = checkMoving();
@@ -224,7 +227,7 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 	this->drawObjects(window);
 }
 
-//===================================================================================
+//==========================================================
 
 void Board::drawObjects(sf::RenderWindow& window)
 {
@@ -249,6 +252,7 @@ void Board::drawObjects(sf::RenderWindow& window)
 			playersCopy[playerIndex++]->draw(window);
 	}
 }
+
 //==========================================================
 
 void Board::drawObject(bool player, int& index, sf::RenderWindow& window)
@@ -324,7 +328,10 @@ void Board::deleteObject(std::shared_ptr<Character> obj)
 	for (auto& enemy : m_enemies)
 	{
 		if (enemy->getTarget() == obj.get())
+		{
 			enemy->setAsTarget(nullptr);
+			enemy->setMoving(false);
+		}
 	}
 
 	for (auto& player : m_players)
