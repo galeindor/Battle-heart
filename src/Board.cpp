@@ -91,7 +91,6 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 			else if (player->handleDeath())
 			{
 				m_players.erase(m_players.begin() + i);
-				this->updateEnemyDest(); // Targets the player with highest max HP.
 				player.reset();
 				i--;
 			}
@@ -147,6 +146,9 @@ void Board::updateEnemyDest()
 		auto enemyPos = enemy->getPosition();
 		for (auto& player : m_players)
 		{
+			if (!player->isAlive())
+				continue;
+
 			auto playerPos = player->getPosition();
 
 			float distance = std::sqrt(std::pow(playerPos.x - enemyPos.x, 2) +
