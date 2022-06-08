@@ -5,7 +5,6 @@
 #include "Stat.h"
 #include "Object.h"
 #include "Skills/Skill.h"
-
 class Enemy;
 class Player;
 
@@ -51,6 +50,7 @@ protected:
 	// ############# CHECK LATER ##############
 	vector<std::shared_ptr<Stat>>& getStats() { return this->m_stats; }
 
+	
 private:
 
 	void useBaseAttack();

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <unordered_map>
 class Stat;
 
 // General ----------------------------------
@@ -142,3 +143,13 @@ enum Projectiles
 };
 
 const std::string proj_textures[NUM_OF_PROJ] = { "healProj.png"};
+
+// Maps
+
+static std::unordered_map<std::string, int> charactersMap =
+{ std::make_pair("Cleric",_cleric),
+  std::make_pair("Knight", _knight),
+  std::make_pair("Archer", _archer),
+  std::make_pair("Dummy" , _dummy),
+  std::make_pair("Level", NEW_LEVEL_DETECTED)
+};

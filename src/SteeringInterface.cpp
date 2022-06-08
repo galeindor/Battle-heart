@@ -56,8 +56,8 @@ sf::Vector2f SteeringInterface::Arrive(sf::Vector2f object, sf::Vector2f velocit
 	float factor;
 	sf::Vector2f dist = desiredV;
 
-	if (length(dist) >= r) {
-		//draw_circle(TheApp::Instance()->getRenderer(), target.x, target.y, r, 0, 0, 255, 1);
+	if (length(dist) >= r) 
+	{
 		desiredV = Normalize(desiredV);
 		desiredV *= maxVelocity;
 		steeringForce /= maxVelocity;
@@ -65,7 +65,6 @@ sf::Vector2f SteeringInterface::Arrive(sf::Vector2f object, sf::Vector2f velocit
 	}
 	else {
 		factor = length(dist) / r;
-		//draw_circle(TheApp::Instance()->getRenderer(), target.x, target.y, r, 0, 255, 0, 1);
 		desiredV *= factor;
 	}
 
@@ -102,22 +101,10 @@ sf::Vector2f SteeringInterface::CollisionAvoidance(sf::Vector2f object, sf::Vect
 		af = Normalize(af) * MAX_AVOID_FORCE;
 		avoidForce.push_back(af);
 	}
-	// Distance and sub distance. ////
-	//for (int i = 0; i < avoidForce.size(); i++) {
-
-		//draw_circle(TheApp::Instance()->getRenderer(), avoidForce[i].Length(), 50, 10, 255, 255, 255, 255);
-		//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 100, 20 * i + 20, distances[i].Length(), 20 * i + 20);
-		//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 100, 20 * i + 20, avoidForce[i].Length(), 20 * i + 20);
-	//}
-
-
 	for (int i = 0; i < obstacles.size(); i++) {
 
-		if (length(distances[i]) <= 50 || length(subdistances[i]) <= 50 || distance(object, obstacles[i]) <= 50) {//50 = radius of sphere
-
-
-			//draw_circle(TheApp::Instance()->getRenderer(), 50, 50, 10, 255, 255, 255, 255);
-			//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), object.x, object.y, avoidForce[i].x, avoidForce[i].y);
+		if (length(distances[i]) <= 50 || length(subdistances[i]) <= 50 || distance(object, obstacles[i]) <= 50) 
+		{
 			sf::Vector2f desiredV = target - object;
 			desiredV = Normalize(desiredV);
 			desiredV *= maxVelocity;
@@ -126,15 +113,10 @@ sf::Vector2f SteeringInterface::CollisionAvoidance(sf::Vector2f object, sf::Vect
 			steeringForce *= maxForce;
 			distances.clear();
 			subdistances.clear();
-
-			//draw_circle(TheApp::Instance()->getRenderer(), 50, 50, 10, 255, 255, 255, 255);
-
-			//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), object.x, object.y, ahead.x, ahead.y);
-
-
 			return steeringForce + avoidForce[i];
 		}
-		else {
+		else 
+		{
 
 			sf::Vector2f desiredV = target - object;
 			desiredV = Normalize(desiredV);
@@ -142,9 +124,6 @@ sf::Vector2f SteeringInterface::CollisionAvoidance(sf::Vector2f object, sf::Vect
 			sf::Vector2f steeringForce = desiredV - velocity;
 			steeringForce /= maxVelocity;
 			steeringForce *= maxForce;
-
-			//draw_circle(TheApp::Instance()->getRenderer(), 50, 50, 10, 255, 255, 255, 255);
-			//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), object.x, object.y, ahead.x, ahead.y);
 			return steeringForce;
 		}
 	}
@@ -173,16 +152,16 @@ sf::Vector2f SteeringInterface::Arrive(std::vector<sf::Vector2f> vectors, std::v
 	float factor;
 	auto dist = desiredV;
 
-	if (length(dist) >= r) {
-		//draw_circle(TheApp::Instance()->getRenderer(), target.x, target.y, r, 0, 0, 255, 1);
+	if (length(dist) >= r) 
+	{
 		desiredV = Normalize(desiredV);
 		desiredV *= values[_maxVelocity];
 		steeringForce /= values[_maxVelocity];
 		steeringForce *= values[_maxForce];
 	}
-	else {
+	else
+	{
 		factor = length(dist) / r;
-		//draw_circle(TheApp::Instance()->getRenderer(), target.x, target.y, r, 0, 255, 0, 1);
 		desiredV *= factor;
 	}
 
@@ -197,7 +176,6 @@ sf::Vector2f SteeringInterface::Pursue(std::vector<sf::Vector2f> vectors, std::v
 	sf::Vector2f steeringForce = desiredV - vectors[_velocity];
 	steeringForce /= values[_maxVelocity];
 	steeringForce *= values[_maxForce];
-
 	return steeringForce;
 }
 
@@ -219,26 +197,14 @@ sf::Vector2f SteeringInterface::CollisionAvoidance(std::vector<sf::Vector2f> vec
 		af = ahead - obstacles[i];
 		af = Normalize(af) * MAX_AVOID_FORCE;
 		avoidForce.push_back(af);
-
-
 	}
-	// Distance and sub distance. ////
-	for (int i = 0; i < avoidForce.size(); i++) {
-
-		;
-		//draw_circle(TheApp::Instance()->getRenderer(), avoidForce[i].Length(), 50, 10, 255, 255, 255, 255);
-		//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 100, 20 * i + 20, distances[i].Length(), 20 * i + 20);
-		//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 100, 20 * i + 20, avoidForce[i].Length(), 20 * i + 20);
-	}
-
 
 	for (int i = 0; i < obstacles.size(); i++) {
 
-		if (length(distances[i]) <= 50 || length(subdistances[i]) <= 50 || distance(vectors[_object], obstacles[i]) <= 50) {//50 = radius of sphere
+		if (length(distances[i]) <= 50 || length(subdistances[i]) <= 50 || distance(vectors[_object], obstacles[i]) <= 50)
+		{//50 = radius of sphere
 
 
-			//draw_circle(TheApp::Instance()->getRenderer(), 50, 50, 10, 255, 255, 255, 255);
-			//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), object.x, object.y, avoidForce[i].x, avoidForce[i].y);
 			sf::Vector2f desiredV = vectors[_target] - vectors[_object];
 			desiredV = Normalize(desiredV);
 			desiredV *= values[_maxVelocity];
@@ -247,15 +213,10 @@ sf::Vector2f SteeringInterface::CollisionAvoidance(std::vector<sf::Vector2f> vec
 			steeringForce *= values[_maxForce];
 			distances.clear();
 			subdistances.clear();
-
-			//draw_circle(TheApp::Instance()->getRenderer(), 50, 50, 10, 255, 255, 255, 255);
-
-			//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), object.x, object.y, ahead.x, ahead.y);
-
-
 			return steeringForce + avoidForce[i];
 		}
-		else {
+		else 
+		{
 
 			sf::Vector2f desiredV = vectors[_target] - vectors[_object];
 			desiredV = Normalize(desiredV);
@@ -263,9 +224,6 @@ sf::Vector2f SteeringInterface::CollisionAvoidance(std::vector<sf::Vector2f> vec
 			sf::Vector2f steeringForce = desiredV - vectors[_velocity];
 			steeringForce /= values[_maxVelocity];
 			steeringForce *= values[_maxForce];
-
-			//draw_circle(TheApp::Instance()->getRenderer(), 50, 50, 10, 255, 255, 255, 255);
-			//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), object.x, object.y, ahead.x, ahead.y);
 			return steeringForce;
 		}
 	}
