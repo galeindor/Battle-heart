@@ -6,7 +6,7 @@ Heal::Heal(AnimationParams animParams)
 	: Effect(_heal)
 {}
 
-void Heal::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, std::vector<Character*> targets)
+void Heal::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, vector < shared_ptr<Character>> targets)
 {
 	for (auto& target : targets)
 	{

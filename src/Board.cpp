@@ -58,6 +58,7 @@ void Board::seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime)
 
 //==========================================================
 // Need to split this.
+
 void Board::updateBoard(float deltaTime, bool charSelected)
 {
 	this->updateEnemyDest(); // Targets the player with highest max HP.

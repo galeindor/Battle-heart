@@ -6,7 +6,7 @@ Defend::Defend(AnimationParams animParams)
 	: Effect(_defend)
 {}
 
-void Defend::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, std::vector<Character*> targets)
+void Defend::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, vector <shared_ptr<Character>> targets)
 {
 	for (auto& target : targets)
 	{

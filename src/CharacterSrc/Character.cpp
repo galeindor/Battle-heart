@@ -60,13 +60,12 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 
 void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Player>> players, vector<std::shared_ptr<Enemy>> enemies)
 {
-	vector < Character* > m_targets;
+	vector<shared_ptr<Character>> m_targets;
 	for (auto& skill : this->m_skills)
 	{
-
 		if (skill->getSingleTarget() && this->getTarget())
 		{
-			m_targets.push_back(this->getTarget());
+			m_targets.push_back(locateInVector(players,enemies,this->getTarget()));
 		}
 		else if (!skill->getSingleTarget())
 		{
@@ -129,6 +128,8 @@ void Character::setStat(int index, int newVal)
 	this->m_stats[index]->setStat(newVal); 
 }
 
+//=======================================================================================
+
 void Character::setDying()
 {
 	this->setAnimation(_death);
@@ -139,15 +140,30 @@ void Character::setDying()
 //=======================================================================================
 
 template<class Type>
-vector < Character* > Character::createTargetVec(Type vec)
+vector<shared_ptr<Character>> Character::createTargetVec(Type vec)
 {
-	vector < Character* > temp;
+	vector<shared_ptr<Character>> temp;
 	for (auto obj : vec)
 	{
-		temp.push_back(obj.get());
+		temp.push_back(obj);
 	}
 
 	return temp;
+}
+
+shared_ptr<Character> Character::locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies, Character* obj)
+{
+	for (auto player : players)
+	{
+		if (player.get() == obj)
+			return player;
+	}
+
+	for (auto enemy : enemies)
+	{
+		if (enemy.get() == obj)
+			return enemy;
+	}
 }
 
 //=======================================================================================

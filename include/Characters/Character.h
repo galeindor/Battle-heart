@@ -41,7 +41,9 @@ public:
 	void setDying();
 
 	template <class Type>
-	vector < Character* > createTargetVec(Type type);
+	vector<shared_ptr<Character>> createTargetVec(Type type);
+
+	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies , Character* obj);
 
 protected:
 	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }

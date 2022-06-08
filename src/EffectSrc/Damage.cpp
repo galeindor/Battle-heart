@@ -6,7 +6,7 @@ Damage::Damage(AnimationParams animParams)
 	: Effect(_damage)
 {}
 
-void Damage::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, vector < Character*> targets)
+void Damage::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, vector <shared_ptr<Character>> targets)
 {
 	for (auto& target : targets)
 	{

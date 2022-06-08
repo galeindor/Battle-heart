@@ -14,7 +14,7 @@ Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 
 //============================================================================
 
-void Skill::updateSkill(float deltaTime, vector<Character*> targets)
+void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targets)
 {
 	if (!this->m_timer.isTimeUp())
 	{
@@ -90,4 +90,15 @@ void Skill::initCooldown(const sf::Vector2f pos)
 	m_cooldownScale.setFillColor(sf::Color(0, 0, 0, 200));
 	m_cooldownScale.setSize({ SKILL_RECT_SIZE , 0 });
 	m_cooldownScale.setPosition(pos);
+}
+
+//=============================================================================
+
+void Skill::draw(sf::RenderWindow& window)
+{
+	for (auto& proj : m_projs)
+	{
+		proj.draw(window);
+	}
+		
 }

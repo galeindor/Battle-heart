@@ -17,14 +17,16 @@ public:
 	~Skill() = default;
 
 	// Management
-	void updateSkill(float deltaTime, vector < Character* > targets);
+	void updateSkill(float deltaTime, vector<shared_ptr<Character>> targets);
 	void useSkill(sf::Vector2f myLoc, vector<shared_ptr<Stat>> myStats);
-	void setTargets(vector < Character* > targets) { this->m_targets = targets; }
+	void setTargets(vector<shared_ptr<Character>> targets) { this->m_targets = targets; }
 
 	// Getters
 	bool getOnPlayer() const { return this->m_onPlayer; }
 	bool getSingleTarget() const { return this->m_singleTarget; }
 	bool getIsActive() const { return this->m_isActive; }
+
+	void draw(sf::RenderWindow& window);
 
 private:
 
@@ -36,7 +38,7 @@ private:
 	bool m_isActive;
 	Timer m_timer;
 	//std::vector<Target> m_targets = {};
-	vector < Character* > m_targets;
+	vector<shared_ptr<Character>> m_targets;
 	vector<Projectile> m_projs;
 	float m_baseValue;
 
