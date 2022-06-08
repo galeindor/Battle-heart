@@ -8,6 +8,7 @@
                                               "Stat.cpp"
                                               "Resources.cpp"
                                               "Board.cpp"
+                                              "Impact.cpp"
                                               "CharacterSrc/Cleric.cpp"  
                                               "CharacterSrc/Knight.cpp"
                                               "CharacterSrc/Archer.cpp"

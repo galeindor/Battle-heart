@@ -19,7 +19,16 @@ void Skill::updateSkill(float deltaTime, std::vector<Target> targets)
 		this->setTargets(targets);
 		this->m_timer.updateTimer(deltaTime);
 
-		//this->m_effect->update()
+		for (auto i=0; i< m_projs.size() ; i++)
+		{
+			m_projs[i].update({ 0,0 }, deltaTime);
+			if (m_projs[i].checkIntersection())
+			{
+				//impact here
+				m_projs.erase(m_projs.begin() + i);
+			}
+
+		}
 	}
 
 	for (auto& target : this->m_targets)

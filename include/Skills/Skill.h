@@ -4,6 +4,7 @@
 #include "Effects/Damage.h"
 #include "Effects/Defend.h"
 #include "Timer.h"
+#include "Skills/Projectile.h"
 
 class Skill
 {
@@ -30,6 +31,7 @@ private:
 	bool m_isActive;
 	Timer m_timer;
 	std::vector<Target> m_targets = {};
+	std::vector<Projectile> m_projs;
 	float m_baseValue;
 
 	// Visuals

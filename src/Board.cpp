@@ -337,7 +337,10 @@ void Board::deleteObject(std::shared_ptr<Character> obj)
 	for (auto& player : m_players)
 	{
 		if (player->getTarget() == obj.get())
+		{
 			player->setAsTarget(nullptr);
+			player->setDestination(player->getPosition());
+		}
 	}
 
 }

@@ -1,6 +1,7 @@
 #include "Object.h"
 
 Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams)
+
 	: m_animation(Resources::instance().getTexture(index), animParams), 
 	  m_isMoving(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC), m_dest(pos)
 {
@@ -19,7 +20,6 @@ Object::Object(const sf::Vector2f pos, const int index, AnimationParams animPara
 void Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 {
 	// If facing right.
-	
 	if (movement.x > 0.0f || this->getPosition().x < this->getDest().x)
 		this->m_animation.setFaceRight(true);
 	else if (movement.x < 0.0f || this->getPosition().x > this->getDest().x)
@@ -29,13 +29,17 @@ void Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 	this->m_sprite.setTextureRect(this->m_animation.getUVRect());
 }
 
+//=======================================================================================
+
 void Object::update(sf::Vector2f steerForce, const float deltaTime)
 {
-	this->handleAnimation(this->m_velocity * deltaTime, deltaTime);
+	handleAnimation( m_velocity * deltaTime, deltaTime);
 	this->setPosition(this->adjustLocation(this->getPosition()));
-	if (this->getPosition().x < this->getDest().x)
+
+	if (this->getPosition().x < this->m_dest.x)
 		this->m_animation.setFaceRight(true);
-	else if (this->getPosition().x > this->getDest().x)
+
+	else if (this->getPosition().x > this->m_dest.x)
 		this->m_animation.setFaceRight(false);
 }
 

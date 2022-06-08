@@ -42,7 +42,7 @@ struct AnimationParams {
 };
 
 const AnimationParams characterParams = { sf::Vector2f(9,5), 0.3f };
-const AnimationParams projectileParams = { sf::Vector2f(9, 1), 0.3f };
+const AnimationParams projectileParams = { sf::Vector2f(7, 1), 0.3f };
 const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
 // Stats ----------------------------------
@@ -60,8 +60,8 @@ enum Stats
 const std::vector<std::vector<float>> playersBasicStats =
 {
 	/* cleric */ { 70.f, 2.f, 6.f, 200.f , 10.f},
-	/* knight */ { 120.f, 3.f, 7.f, 40.f , 20.f},
-	/* archer */ { 90.f, 2.f, -40.f, 600.f , 13.f},
+	/* knight */ { 120.f, 3.f, -7.f, 40.f , 20.f},
+	/* archer */ { 90.f, 2.f, -6.f, 600.f , 13.f},
 	/* dummy  */ { 80.f, 4.f, -5.f, 40.f , 15.f}
 };
 
@@ -111,7 +111,7 @@ enum Locations
 
 enum Physics
 {
-	_maxVelocity, _maxForce, _mass,
+	_maxVelocity, _maxForce, _mass
 };
 
 //Physics
@@ -124,3 +124,13 @@ struct Target {
 	sf::Vector2f _location;
 	std::vector<std::shared_ptr<Stat>> _stats;
 };
+
+
+// Projectiles
+
+enum Projectiles
+{
+	_healBall , NUM_OF_PROJ
+};
+
+const std::string proj_textures[NUM_OF_PROJ] = { "healProj.png"};

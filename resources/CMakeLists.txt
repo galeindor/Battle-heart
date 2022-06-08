@@ -27,3 +27,6 @@ configure_file ("titillium.otf" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Effects
 configure_file ("healEffect.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
+# Projectiles
+configure_file ("healProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
