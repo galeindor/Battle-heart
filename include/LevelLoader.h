@@ -9,13 +9,14 @@ public:
 	~LevelLoader() = default;
 
 	std::ifstream openFile(const string fileName);
-	LevelInfo getLevel(const int levelNum) { return this->m_levels[levelNum]; };
+	LevelInfo getLevel(const int levelNum) const { return this->m_levels[levelNum]; }
+	bool getGameEnded(const int currLv) const { return currLv >= this->m_levels.size(); }
 private:
 	std::vector<LevelInfo> m_levels = {};
 
 	unsigned int m_numOfLevels;
 	HashTable<string, int> m_table;
 	void readFromFile(const string fileName);
-
-	int readFullNum(std::ifstream& word, char c);
+	std::vector<sf::Vector2i> readWave(std::ifstream& file);
+	int readFullNum(std::ifstream& file, char c);
 };

@@ -1,10 +1,11 @@
 #include "Board.h"
 
-Board::Board(const LevelInfo currLevelInfo)
-	:m_currPlayer(nullptr)
+Board::Board(const LevelInfo& currLevelInfo)
+	:	m_currPlayer(nullptr), m_currLvl(0), m_currWave(0),
+		m_enemyWaves(currLevelInfo.m_enemyWaves)
 {
-	this->initPlayers();
-	this->initEnemies();
+	this->initPlayers(currLevelInfo.m_lvlPlayers);
+	this->initEnemies(currLevelInfo.m_enemyWaves[this->m_currWave]);
 	this->initSelected();
 }
 
@@ -59,10 +60,10 @@ void Board::seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime)
 //==========================================================
 // Need to split this.
 
-void Board::updateBoard(float deltaTime, bool charSelected)
+bool Board::updateBoard(float deltaTime, bool charSelected)
 {
 	this->updateEnemyDest(); // Targets the player with highest max HP.
-
+	
 	float t;
 	sf::Vector2f firstEnemyDist = { 0,0 };
 	if (!m_enemies.empty() && m_enemies.begin()->get()->getTarget())
@@ -131,6 +132,16 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 			this->seperation(enemy.get(), steerForce, deltaTime);
 		}
 
+	}
+
+	if (m_enemies.empty())
+	{
+		this->m_currWave++;
+		if (this->m_currWave >= this->m_enemyWaves.size())
+			return true;
+
+		this->initEnemies(this->m_enemyWaves[this->m_currWave]);
+		return false;
 	}
 }
 
@@ -284,20 +295,77 @@ bool Board::checkMoving() const
 
 //==========================================================
 
-void Board::initPlayers()
+HashTable<int, Player*> Board::getPlayersTable()
 {
-	m_players.push_back(std::make_shared < Cleric >(sf::Vector2f(200,200 )));
-	m_players.push_back(std::make_shared < Knight >(sf::Vector2f(200,300 )));
-	m_players.push_back(std::make_shared < Archer >(sf::Vector2f(200,400 )));
+	std::unordered_map<int, Player*> playersMap = {
+		std::make_pair(_cleric, new Cleric(startPositions[_cleric])),
+		std::make_pair(_knight, new Knight(startPositions[_knight])),
+		std::make_pair(_archer, new Archer(startPositions[_archer]))
+	};
+	return playersMap;
 }
 
 //==========================================================
 
-void Board::initEnemies()
+HashTable<int, Enemy*> Board::getEnemiesTable()
+{
+	std::unordered_map<int, Enemy*> enemiesMap = {
+		std::make_pair(_dummy, new Dummy())
+	};
+	return enemiesMap;
+}
+
+//==========================================================
+
+void Board::initPlayers(const bool lvlPlayers[NUM_OF_PLAYERS])
+{
+	for (int i = 0; i < NUM_OF_PLAYERS; i++)
+		if (lvlPlayers[i])
+			this->createChar(i);
+}
+
+//==========================================================
+
+void Board::initEnemies(const std::vector<sf::Vector2i> enemyWave)
 {	
 	srand(time(NULL));
-	for (int i = 0; i < 3; i++) // for now , will be changed soon 
-		this->m_enemies.push_back(std::make_shared <Dummy>());
+	for (auto& detail : enemyWave) // for now , will be changed soon 
+	{
+		for (int i = 0; i < detail.y; i++)
+		{
+			/*
+			auto it = this->m_enemiesTable.getVal(detail.x);
+			auto take = *it;
+			auto ptr = std::make_shared<Enemy>(take);
+			this->m_enemies.push_back(ptr);
+			*/
+			this->createChar(detail.x);
+		}
+	}
+}
+
+//==========================================================
+
+void Board::createChar(const unsigned int index)
+{
+	switch (index)
+	{
+	case _cleric:
+		m_players.push_back(std::make_shared < Cleric >(sf::Vector2f(200, 200)));
+		break;
+	case _knight:
+		m_players.push_back(std::make_shared < Knight >(sf::Vector2f(200, 300)));
+		break;
+	case _archer:
+		m_players.push_back(std::make_shared < Archer >(sf::Vector2f(200, 400)));
+		break;
+	case _dummy:
+		this->m_enemies.push_back(std::make_shared<Dummy>());
+		break;
+
+	default:
+		break;
+	}
 }
 
 //==========================================================

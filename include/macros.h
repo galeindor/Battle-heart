@@ -22,7 +22,7 @@ constexpr auto isActive = true;
 constexpr auto NONE_SELECTED = -1;
 constexpr auto PLAYER_DETECTED = -2;
 constexpr auto NEW_LEVEL_DETECTED = -3;
-constexpr auto NEW_WAVE = '!';
+constexpr auto WAVE = '!';
 // Buttons
 enum MenuButtons
 {
@@ -64,7 +64,7 @@ enum Stats
 const std::vector<std::vector<float>> playersBasicStats =
 {
 	/* cleric */ { 70.f, 2.f, 6.f, 200.f , 10.f},
-	/* knight */ { 120.f, 3.f, -7.f, 40.f , 20.f},
+	/* knight */ { 120.f, 3.f, -40.f, 40.f , 20.f},
 	/* archer */ { 90.f, 2.f, -6.f, 600.f , 13.f},
 	/* dummy  */ { 80.f, 4.f, -5.f, 40.f , 15.f}
 };
@@ -146,10 +146,17 @@ const std::string proj_textures[NUM_OF_PROJ] = { "healProj.png"};
 
 // Maps
 
-static std::unordered_map<std::string, int> charactersMap =
+static std::unordered_map<std::string, int> levelsMap =
 { std::make_pair("Cleric",_cleric),
   std::make_pair("Knight", _knight),
   std::make_pair("Archer", _archer),
   std::make_pair("Dummy" , _dummy),
   std::make_pair("Level", NEW_LEVEL_DETECTED)
 };
+
+const std::vector<sf::Vector2f> startPositions = {
+	{ 200, 200 },
+	{ 250, 250 },
+	{ 300, 300 }
+};
+

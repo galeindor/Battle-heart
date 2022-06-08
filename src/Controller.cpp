@@ -50,7 +50,25 @@ void Controller::run()
 
 void Controller::update(float deltaTime)
 {
-	this->m_board.updateBoard(deltaTime, this->m_charSelected);
+	if (this->m_board.updateBoard(deltaTime, this->m_charSelected))
+		if (!this->winLevel())
+			this->winGame();
+}
+
+//=======================================================================================
+
+bool Controller::winLevel()
+{
+	this->m_currLvl++;
+	if (this->m_levelLoader.getGameEnded(this->m_currLvl))
+		return false;
+	
+	this->m_board = Board(this->m_levelLoader.getLevel(this->m_currLvl));
+}
+
+void Controller::winGame()
+{
+	exit(EXIT_SUCCESS);
 }
 
 //=======================================================================================

@@ -5,7 +5,7 @@
 class Enemy : public Character
 {
 public:
-	Enemy(sf::Vector2f pos, const int index);
+	Enemy(const int index);
 
 	// Virtuals
 	virtual void draw(sf::RenderWindow& window) override;
@@ -15,5 +15,5 @@ public:
 
 private:
 	void initSkills(const int index);
-	virtual sf::Vector2f randEnemyPos() = 0;
+	sf::Vector2f randEnemyPos();
 };

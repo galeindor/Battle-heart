@@ -51,7 +51,6 @@ void Player::initSkills(const int index)
 						  singleTarget, onPlayer, isActive));
 }
 
-
 //==========================================================
 
 bool Player::setTarget(std::shared_ptr<Enemy> obj)

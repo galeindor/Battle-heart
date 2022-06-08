@@ -1,7 +1,7 @@
 #include "LevelLoader.h"
 
 LevelLoader::LevelLoader(const string fileName)
-    : m_table(HashTable(charactersMap))
+    : m_table(HashTable(levelsMap))
 {
 	this->readFromFile(fileName);
 }
@@ -23,8 +23,8 @@ void LevelLoader::readFromFile(const string fileName)
     char c;
     string word;
     struct LevelInfo currLvlInfo = {};
-    std::vector<sf::Vector2i> currWave;
     unsigned int currLevel = 0;
+    bool readingWave = false;
 
     while (file.get(c)) // While there's something to read in the file.
     {
@@ -46,10 +46,6 @@ void LevelLoader::readFromFile(const string fileName)
                 }
                 currLevel++;
             }
-            // If enemies.
-            else
-                currWave.push_back(feedback);
-
             word.clear();
         }
         // If player.
@@ -59,15 +55,36 @@ void LevelLoader::readFromFile(const string fileName)
             word.clear();
         }
         // If new wave of enemies.
-        else if (c == NEW_WAVE)
-        {
-            currLvlInfo.m_enemyWaves.push_back(currWave);
-            currWave.clear();
-        }
+        else if (c == WAVE)
+            currLvlInfo.m_enemyWaves.push_back(this->readWave(file));
     }
+
     this->m_levels.push_back(currLvlInfo);
     // Might come in use, or not.
     this->m_numOfLevels = currLevel;
+}
+
+std::vector<sf::Vector2i> LevelLoader::readWave(std::ifstream& file)
+{
+    char c = ' ';
+    string word = "";
+    sf::Vector2i feedback(0, 0);
+    std::vector<sf::Vector2i> wave;
+
+    while (c != WAVE)
+    {
+        if (isalpha(c))
+            word += c;
+        else if (isdigit(c))
+        {
+            wave.push_back({ this->m_table.getVal(word), this->readFullNum(file, c) });
+            word.clear();
+        }
+
+        file.get(c);
+    }
+
+    return wave;
 }
 
 

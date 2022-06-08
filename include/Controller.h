@@ -8,7 +8,8 @@ public:
 	Controller();
 	void run();
 	void update(float deltaTime);
-
+	bool winLevel();
+	void winGame();
 private:
 	void drawGame();
 	void handleMouseClick(sf::Vector2f location);
