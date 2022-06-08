@@ -225,6 +225,7 @@ sf::Vector2f SteeringInterface::CollisionAvoidance(std::vector<sf::Vector2f> vec
 	// Distance and sub distance. ////
 	for (int i = 0; i < avoidForce.size(); i++) {
 
+		;
 		//draw_circle(TheApp::Instance()->getRenderer(), avoidForce[i].Length(), 50, 10, 255, 255, 255, 255);
 		//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 100, 20 * i + 20, distances[i].Length(), 20 * i + 20);
 		//SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 100, 20 * i + 20, avoidForce[i].Length(), 20 * i + 20);

@@ -133,8 +133,6 @@ struct LevelInfo
 	bool m_lvlPlayers[NUM_OF_PLAYERS];
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
 };
-};
-
 
 // Projectiles
 
