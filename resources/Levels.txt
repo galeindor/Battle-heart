@@ -1,0 +1,15 @@
+Level 1
+Cleric
+Knight
+!Dummy 3
+!Dummy 4
+!Dummy 5
+
+Level 2
+Cleric
+Knight
+Archer
+!Dummy 5
+!Dummy 6
+!Dummy 7
+!Dummy 10

@@ -3,10 +3,11 @@
 #include "Characters/Enemy.h"
 
 Character::Character(const sf::Vector2f pos, const int index, AnimationParams animParams )
-	: m_isAttacking(false), Object(pos, index, animParams)
+	: m_isAttacking(false), Object(pos, index, animParams), 
+	  m_deathTimer(9.f), m_isDying(false)
 {
 	this->initStats(index);
-	m_hpBar= HealthBar(pos, m_stats[_hp]->getStat());
+	m_hpBar = HealthBar(pos, m_stats[_hp]->getStat());
 }
 
 //=======================================================================================
@@ -17,20 +18,13 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 {
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->getPosition());
-	Object::update(steerForce, deltaTime);
-
-	if (!this->isAlive())
-	{
-		handleDeath();
-		return;
-	}
-
-
+	Object::update(steerForce, deltaTime);		
 
 	sf::Vector2f acceleration = steerForce / this->getMass();
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
 	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
 
+	// Skills update
 	this->updateSkills(deltaTime, m_players, m_enemies);
 
 	auto target = this->getTarget();
@@ -60,11 +54,6 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 		else
 			this->setAnimation(_idle);
 	}
-
-
-	// Trim position values to window size and handle animation
-
-
 }
 
 //=======================================================================================
@@ -140,6 +129,13 @@ void Character::setStat(int index, int newVal)
 	this->m_stats[index]->setStat(newVal); 
 }
 
+void Character::setDying()
+{
+	this->setAnimation(_death);
+	this->m_isDying = true;
+	this->m_deathTimer.setTimer();
+}
+
 //=======================================================================================
 
 template<class Type>
@@ -160,9 +156,6 @@ std::vector<Target> Character::createTargetVec(Type type)
 
 bool Character::handleDeath()
 {
-	static auto timer = Timer(1.8f);
-	this->setAnimation(_death);
-	this->handleAnimation({ 0,0 }, timer.updateTimer());
-	
-	return timer.isTimeUp();
+	this->m_deathTimer.updateTimer();
+	return this->m_deathTimer.isTimeUp();
 }

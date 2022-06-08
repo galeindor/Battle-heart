@@ -5,8 +5,10 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "macros.h"
-
+#include <iostream>
+#include <fstream>
 #include <vector>
+#include <string>
 #include <list>
 #include <memory>
 #include <queue>
@@ -16,6 +18,7 @@
 
 using std::vector;
 using std::list;
+using std::string;
 
 // ==========================================================
 

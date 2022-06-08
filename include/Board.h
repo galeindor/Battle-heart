@@ -12,7 +12,7 @@ using std::shared_ptr;
 class Board 
 {
 public:
-	Board();
+	Board(const LevelInfo currLevelInfo);
 	bool handleFirstClick(sf::Vector2f location);
 	bool handleSecondClick(sf::Vector2f location);
 	bool checkIntersection(sf::Sprite obj, sf::Sprite secObj); //for collisions..
@@ -32,8 +32,6 @@ public:
 	void drawObjects(sf::RenderWindow& window);
 	void drawObject(bool player, int& index, sf::RenderWindow& window);
 	sf::Vector2f adjustLocation(sf::Vector2f location);
-	/*void nextLevel();
-	void resetBoard();*/
 
 private:
 	vector<shared_ptr<Player>> m_players;
@@ -41,6 +39,7 @@ private:
 
 	std::shared_ptr<Player> m_currPlayer;
 	sf::Sprite m_selected;
+
 	void initPlayers();
 	void initEnemies();
 	void initSelected();

@@ -1,6 +1,6 @@
 #include "Board.h"
 
-Board::Board()
+Board::Board(const LevelInfo currLevelInfo)
 	:m_currPlayer(nullptr)
 {
 	this->initPlayers();
@@ -57,17 +57,17 @@ void Board::seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime)
 }
 
 //==========================================================
-
+// Need to split this.
 void Board::updateBoard(float deltaTime, bool charSelected)
 {
 	this->updateEnemyDest(); // Targets the player with highest max HP.
 
 	float t;
 	sf::Vector2f firstEnemyDist = { 0,0 };
-	if(!m_enemies.empty() && m_enemies.begin()->get()->getTarget())
+	if (!m_enemies.empty() && m_enemies.begin()->get()->getTarget())
 		firstEnemyDist = this->m_enemies.begin()->get()->getTarget()->getPosition() - this->m_enemies.begin()->get()->getPosition();
 
-	if(m_currPlayer)
+	if (m_currPlayer)
 	{
 		if (charSelected)
 			m_selected.setPosition(m_currPlayer->getPosition());
@@ -81,25 +81,24 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 		if (!player->isAlive())
 		{
 			deleteObject(player);
-			
-			if(m_currPlayer == player)
+			player->handleAnimation({ 0, 0 }, deltaTime);
+
+			if (m_currPlayer == player)
 				m_currPlayer = nullptr;
 
-
-			if (player->handleDeath())
+			if (!player->getIsDying())
+				player->setDying();
+			else if (player->handleDeath())
 			{
 				m_players.erase(m_players.begin() + i);
-				this->updateEnemyDest(); // Targets the player with highest max HP.
 				player.reset();
 				i--;
 			}
-
-			
 		}
 		else
 		{
 			sf::Vector2f steerForce;
-			steerForce = player->behaviour()->Arrive(player->getPosition(), player->getVelocity(), player->getMaxVelocity(), player->getMaxForce() , player->getDest(), 10);
+			steerForce = player->behaviour()->Arrive(player->getPosition(), player->getVelocity(), player->getMaxVelocity(), player->getMaxForce(), player->getDest(), 10);
 			player->update(steerForce, deltaTime, this->m_players, this->m_enemies);
 		}
 	}
@@ -110,15 +109,16 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 		if (!enemy->isAlive())
 		{
 			deleteObject(enemy);
-			if (enemy->handleDeath())
+			if (!enemy->getIsDying())
+				enemy->setDying();
+			else if (enemy->handleDeath())
 			{
 				m_enemies.erase(m_enemies.begin() + j);
-
 				enemy.reset();
 				j--;
 			}
 		}
-		else if(enemy->getTarget())
+		else if (enemy->getTarget())
 		{
 			if (enemy->behaviour()->length(enemy->getTarget()->getVelocity()) == 0.f)
 				t = 2;
@@ -126,10 +126,10 @@ void Board::updateBoard(float deltaTime, bool charSelected)
 				t = enemy->behaviour()->length(firstEnemyDist) / enemy->behaviour()->length(enemy->getTarget()->getVelocity());
 
 			sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(enemy->getPosition(), enemy->getVelocity(), enemy->getMaxVelocity(), enemy->getMaxForce(),
-				enemy->getTarget()->getPosition(), createObstaclesVec(), 100);
+			enemy->getTarget()->getPosition(), createObstaclesVec(), 100);
 			this->seperation(enemy.get(), steerForce, deltaTime);
 		}
-		
+
 	}
 }
 
@@ -146,6 +146,9 @@ void Board::updateEnemyDest()
 		auto enemyPos = enemy->getPosition();
 		for (auto& player : m_players)
 		{
+			if (!player->isAlive())
+				continue;
+
 			auto playerPos = player->getPosition();
 
 			float distance = std::sqrt(std::pow(playerPos.x - enemyPos.x, 2) +
@@ -165,7 +168,6 @@ void Board::updateEnemyDest()
 				enemy->setTarget(closePlayer);
 		}
 	}
-
 }
 
 //==========================================================
@@ -264,7 +266,6 @@ void Board::drawObject(bool player, int& index, sf::RenderWindow& window)
 
 	index++;
 }
-//==========================================================
 
 //==========================================================
 
@@ -342,5 +343,4 @@ void Board::deleteObject(std::shared_ptr<Character> obj)
 			player->setDestination(player->getPosition());
 		}
 	}
-
 }

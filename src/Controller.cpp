@@ -2,7 +2,9 @@
 #include "Controller.h"
 
 Controller::Controller()
-	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Heart")
+	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Heart"),
+	  m_levelLoader(LevelLoader(LevelsFileName)),
+	  m_currLvl(0), m_board(Board(m_levelLoader.getLevel(0)))
 {
 	this->m_bg.setTexture(*Resources::instance().getBackground(0));
 	this->m_bg.setColor(sf::Color(255, 255, 255, 255));
