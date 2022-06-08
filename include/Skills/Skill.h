@@ -6,17 +6,20 @@
 #include "Timer.h"
 #include "Skills/Projectile.h"
 
+using std::shared_ptr;
+using std::vector;
+
 class Skill
 {
 public:
 	Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
-		  const int effectIndex, bool singleTarget, bool onPlayer, bool isActive);
+		const int effectIndex, bool singleTarget, bool onPlayer, bool isActive);
 	~Skill() = default;
 
 	// Management
-	void updateSkill(float deltaTime, std::vector<Target> targets);
-	void useSkill(std::vector<std::shared_ptr<Stat>> myStats);
-	void setTargets(std::vector<Target> targets) { this->m_targets = targets; }
+	void updateSkill(float deltaTime, vector < Character* > targets);
+	void useSkill(vector<shared_ptr<Stat>> myStats);
+	void setTargets(vector < Character* > targets) { this->m_targets = targets; }
 
 	// Getters
 	bool getOnPlayer() const { return this->m_onPlayer; }
@@ -30,8 +33,9 @@ private:
 	bool m_onPlayer;
 	bool m_isActive;
 	Timer m_timer;
-	std::vector<Target> m_targets = {};
-	std::vector<Projectile> m_projs;
+	//std::vector<Target> m_targets = {};
+	vector < Character* > m_targets;
+	vector<Projectile> m_projs;
 	float m_baseValue;
 
 	// Visuals

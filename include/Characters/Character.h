@@ -41,7 +41,7 @@ public:
 	void setDying();
 
 	template <class Type>
-	std::vector<Target> createTargetVec(Type type);
+	vector < Character* > createTargetVec(Type type);
 
 protected:
 	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }

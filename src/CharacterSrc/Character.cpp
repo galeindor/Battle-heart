@@ -60,22 +60,22 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 
 void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Player>> players, vector<std::shared_ptr<Enemy>> enemies)
 {
-	std::vector<Target> m_targets;
+	vector < Character* > m_targets;
 	for (auto& skill : this->m_skills)
 	{
 		if (skill->getSingleTarget() && this->getTarget())
 		{
-			Target target = { this->getTarget()->getPosition(), this->getTarget()->getStats() };
-			m_targets.push_back(target);
+			m_targets.push_back(this->getTarget());
 		}
 		else if (!skill->getSingleTarget())
 		{
-			if(skill->getOnPlayer())
+			if (skill->getOnPlayer())
 				m_targets = this->createTargetVec(players);
 			else
 				m_targets = this->createTargetVec(enemies);
 		}
 
+		
 		skill->updateSkill(deltaTime, m_targets);
 	}
 }
@@ -139,14 +139,12 @@ void Character::setDying()
 //=======================================================================================
 
 template<class Type>
-std::vector<Target> Character::createTargetVec(Type type)
+vector < Character* > Character::createTargetVec(Type vec)
 {
-	std::vector<Target> temp;
-	auto copy = type;
-	for (auto obj : copy)
+	vector < Character* > temp;
+	for (auto obj : vec)
 	{
-		Target target = { obj.get()->getPosition(), obj.get()->getStats() };
-		temp.push_back(target);
+		temp.push_back(obj.get());
 	}
 
 	return temp;

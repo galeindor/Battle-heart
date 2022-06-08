@@ -5,6 +5,8 @@ Effect::Effect(const int index)
 	  m_timer(Timer(EFFECT_COOLDOWN)), m_draw(false)
 {
 	this->initSprite(index);
+	auto origin = m_sprite.getOrigin();
+	m_sprite.setOrigin(origin.x, origin.y - 50);
 }
 
 //============================================================================
@@ -18,7 +20,7 @@ void Effect::update(const sf::Vector2f pos, const float deltaTime, bool faceRigh
 	{
 		this->m_timer.updateTimer(deltaTime);
 		// Updates animation
-		this->m_sprite.setPosition(sf::Vector2f(pos.x, pos.y + 50));
+		this->m_sprite.setPosition(pos);
 		this->m_animation.setFaceRight(faceRight);
 		this->m_animation.update(deltaTime);
 		this->m_sprite.setTextureRect(this->m_animation.getUVRect());

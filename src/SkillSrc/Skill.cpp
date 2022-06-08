@@ -1,8 +1,10 @@
 #include "Skills/Skill.h"
 
-Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown, 
-			   const int effectIndex, bool singleTarget, bool onPlayer, bool isActive)
-	:	m_timer(Timer(cooldown)), m_singleTarget(singleTarget), m_onPlayer(onPlayer), m_isActive(isActive)
+#include "Characters/Character.h"
+
+Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
+	const int effectIndex, bool singleTarget, bool onPlayer, bool isActive)
+	: m_timer(Timer(cooldown)), m_singleTarget(singleTarget), m_onPlayer(onPlayer), m_isActive(isActive)
 {
 	m_baseValue = 0;
 	this->initRect(texture, pos);
@@ -12,14 +14,14 @@ Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 
 //============================================================================
 
-void Skill::updateSkill(float deltaTime, std::vector<Target> targets)
+void Skill::updateSkill(float deltaTime, vector<Character*> targets)
 {
 	if (!this->m_timer.isTimeUp())
 	{
 		this->setTargets(targets);
 		this->m_timer.updateTimer(deltaTime);
 
-		for (auto i=0; i< m_projs.size() ; i++)
+		for (auto i = 0; i < m_projs.size(); i++)
 		{
 			m_projs[i].update({ 0,0 }, deltaTime);
 			if (m_projs[i].checkIntersection())
@@ -31,8 +33,8 @@ void Skill::updateSkill(float deltaTime, std::vector<Target> targets)
 		}
 	}
 
-	for (auto& target : this->m_targets)
-		this->m_effect->update(target._location, deltaTime, true);
+	for (auto& target : m_targets)
+		this->m_effect->update(target->getPosition(), deltaTime, true);
 }
 
 //============================================================================
@@ -42,7 +44,7 @@ void Skill::useSkill(std::vector<std::shared_ptr<Stat>> myStats)
 	if (this->m_timer.isTimeUp())
 	{
 		this->m_timer.setTimer();
-		this->m_effect->affect(m_baseValue,myStats, this->m_targets);
+		this->m_effect->affect(m_baseValue, myStats, this->m_targets);
 	}
 }
 
