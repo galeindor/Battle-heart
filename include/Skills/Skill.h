@@ -18,7 +18,7 @@ public:
 
 	// Management
 	void updateSkill(float deltaTime, vector < Character* > targets);
-	void useSkill(vector<shared_ptr<Stat>> myStats);
+	void useSkill(sf::Vector2f myLoc, vector<shared_ptr<Stat>> myStats);
 	void setTargets(vector < Character* > targets) { this->m_targets = targets; }
 
 	// Getters
@@ -27,6 +27,8 @@ public:
 	bool getIsActive() const { return this->m_isActive; }
 
 private:
+
+	Projectiles m_projType;
 	// Settings of the skill
 	Effect* m_effect;
 	bool m_singleTarget;

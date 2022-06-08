@@ -49,7 +49,7 @@ public:
 	sf::Vector2f adjustLocation(sf::Vector2f location);
 
 protected:
-
+	virtual Animation initAnimation(const int index, AnimationParams animParams);
 	void setRange(float val) { m_range = val; }
 
 private:

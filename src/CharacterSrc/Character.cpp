@@ -48,7 +48,7 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 
 		if (targetInRange())
 		{
-			this->m_skills[_basic]->useSkill(this->m_stats);
+			this->m_skills[_basic]->useSkill(this->getPosition(),this->m_stats);
 			this->useBaseAttack();
 		}
 		else
@@ -63,6 +63,7 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 	vector < Character* > m_targets;
 	for (auto& skill : this->m_skills)
 	{
+
 		if (skill->getSingleTarget() && this->getTarget())
 		{
 			m_targets.push_back(this->getTarget());
@@ -74,7 +75,6 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 			else
 				m_targets = this->createTargetVec(enemies);
 		}
-
 		
 		skill->updateSkill(deltaTime, m_targets);
 	}

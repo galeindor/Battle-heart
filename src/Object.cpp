@@ -2,7 +2,7 @@
 
 Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams)
 
-	: m_animation(Resources::instance().getTexture(index), animParams), 
+	: m_animation(initAnimation(index , animParams)),
 	  m_isMoving(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC), m_dest(pos)
 {
 	this->initSprite(pos, index);
@@ -76,3 +76,8 @@ bool Object::checkCollision(const sf::Vector2f& location)
 }
 
 //=======================================================================================
+
+Animation Object::initAnimation(const int index, AnimationParams animParams)
+{
+	return Animation(Resources::instance().getTexture(index), animParams);
+}

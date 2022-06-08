@@ -1,9 +1,13 @@
 
 #include "Skills/Projectile.h"
+#include "Characters/Character.h"
 
-Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest, const int index)
-	: Object(pos, index, projectileParams)
+Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest, const int index , Character* target)
+	:Object(pos, index, projectileParams)
 {
+
+	//setAsTarget();
+
 	setDestination(dest);
 }
 

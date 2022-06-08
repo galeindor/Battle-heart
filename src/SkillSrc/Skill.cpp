@@ -39,11 +39,15 @@ void Skill::updateSkill(float deltaTime, vector<Character*> targets)
 
 //============================================================================
 
-void Skill::useSkill(std::vector<std::shared_ptr<Stat>> myStats)
+void Skill::useSkill(sf::Vector2f myLoc ,  std::vector<std::shared_ptr<Stat>> myStats)
 {
 	if (this->m_timer.isTimeUp())
 	{
 		this->m_timer.setTimer();
+		for (auto target : m_targets)
+		{
+			auto projectile = Projectile(myLoc,target->getPosition(), _healBall, target);
+		}
 		this->m_effect->affect(m_baseValue, myStats, this->m_targets);
 	}
 }
