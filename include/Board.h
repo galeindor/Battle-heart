@@ -23,11 +23,16 @@ public:
 	bool updateBoard(float deltaTime, bool charSelected);
 	void updateEnemyDest();
 	void drawBoard(sf::RenderWindow& window, bool charSelected);
+	void updatePlayersDeath(std::shared_ptr<Player> character, float deltaTime,int& index);
+	void updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime, int& index);
+
+	void playerBehavior(std::shared_ptr<Player> character,float deltaTime);
+	void enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vector2f pos);
 
 	template <class Type>
 	Type sortObjects(Type vector);
-	
 	void deleteObject(std::shared_ptr<Character> obj);
+
 	void drawObjects(sf::RenderWindow& window);
 	void drawObject(bool player, int& index, sf::RenderWindow& window);
 	sf::Vector2f adjustLocation(sf::Vector2f location);

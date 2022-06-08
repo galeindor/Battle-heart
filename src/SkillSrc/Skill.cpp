@@ -29,7 +29,6 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 				//impact here
 				m_projs.erase(m_projs.begin() + i);
 			}
-
 		}
 	}
 
@@ -56,6 +55,7 @@ void Skill::useSkill(sf::Vector2f myLoc ,  std::vector<std::shared_ptr<Stat>> my
 
 void Skill::initEffect(const int effectIndex)
 {
+
 	switch (effectIndex)
 	{
 	case _heal:
@@ -96,6 +96,7 @@ void Skill::initCooldown(const sf::Vector2f pos)
 
 void Skill::draw(sf::RenderWindow& window)
 {
+
 	for (auto& proj : m_projs)
 	{
 		proj.draw(window);
