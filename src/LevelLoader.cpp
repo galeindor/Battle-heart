@@ -1,6 +1,7 @@
 #include "LevelLoader.h"
 
 LevelLoader::LevelLoader(const string fileName)
+    : m_table(HashTable(charactersMap))
 {
 	this->readFromFile(fileName);
 }
@@ -32,7 +33,7 @@ void LevelLoader::readFromFile(const string fileName)
         // If a number appears after the word then it's enemies or a new level.
         else if (isdigit(c))
         {
-            sf::Vector2i feedback = { this->handleEnemyOrLevel(word),
+            sf::Vector2i feedback = { this->m_table.getVal(word),
                                       this->readFullNum(file, c) };
 
             // If new level.
@@ -54,7 +55,7 @@ void LevelLoader::readFromFile(const string fileName)
         // If player.
         else if (c == '\n')
         {
-            currLvlInfo.m_lvlPlayers[this->handlePlayer(word)] = true;
+            currLvlInfo.m_lvlPlayers[this->m_table.getVal(word)] = true;
             word.clear();
         }
         // If new wave of enemies.
@@ -69,27 +70,6 @@ void LevelLoader::readFromFile(const string fileName)
     this->m_numOfLevels = currLevel;
 }
 
-int LevelLoader::handlePlayer(const string word)
-{
-    // Maybe find a better way than lots of ifs.
-    if (word == "Cleric")
-        return _cleric;
-    if (word == "Knight")
-        return _knight;
-    if (word == "Archer")
-        return _archer;
-
-    return 0;
-}
-
-int LevelLoader::handleEnemyOrLevel(const string word)
-{
-    // Maybe find a better way than lots of ifs.
-    if (word == "Level")
-        return NEW_LEVEL_DETECTED;
-    if (word == "Dummy")
-        return _dummy;
-}
 
 int LevelLoader::readFullNum(std::ifstream& file, char c)
 {

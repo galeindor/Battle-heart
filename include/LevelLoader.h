@@ -1,5 +1,6 @@
 #pragma once
 #include "Resources.h"
+#include "HashTable.h"
 
 class LevelLoader
 {
@@ -11,10 +12,10 @@ public:
 	LevelInfo getLevel(const int levelNum) { return this->m_levels[levelNum]; };
 private:
 	std::vector<LevelInfo> m_levels = {};
-	unsigned int m_numOfLevels;
 
+	unsigned int m_numOfLevels;
+	HashTable<string, int> m_table;
 	void readFromFile(const string fileName);
-	int handlePlayer(const string word);
-	int handleEnemyOrLevel(const string word);
+
 	int readFullNum(std::ifstream& word, char c);
 };
