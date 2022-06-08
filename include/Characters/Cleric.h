@@ -11,6 +11,9 @@ public:
 
 	virtual bool setTarget(std::shared_ptr<Player> obj) override;
 	virtual bool setTarget(std::shared_ptr<Enemy> obj) override;
+	virtual shared_ptr<Player> getType() {
+		return make_shared<Cleric>(startPositions[_cleric]);
+	}
 
 protected:
 };

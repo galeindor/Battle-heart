@@ -3,26 +3,21 @@
 !!! = Very important.
 
 Yet to be taken:
--(!!!) Add progress in the game such as unlocking newcharacters or stats increasing as the level increases.
+-(!!!) Add progress in the game such as unlocking new characters or stats increasing as the level increases.
 -(+-) Create the list of needed sounds for Osher (partially done).
 -(***) Edit the sprite sheets for objects.
 
 Nadav:
--(!!!) Think of a way to replace all the switch in the program.
 
 Ely:
 -(+-) Add levels loader to menu.
--(***) Add more stats like defense (complicated), attack, attack speed.
 -(+-) Add unmmovable objects (obstacles).
 
 Gal:
 -(***) Split updateBoard (too crowded).
--(!!!) Remove target struct and replace with
-       shared_ptr of Character.
 -(!!!) Class projectile (visuals of skills).
 
 Stuff to figure out:
--(!!!) Think of a generic way to add new levels.
 -(+-) Think of how to balance the progress in the game.
 -(***) Make sure the enemies don't spawn on each other.
 

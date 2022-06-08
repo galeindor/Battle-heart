@@ -100,6 +100,11 @@ bool Board::updateBoard(float deltaTime, bool charSelected)
 
 	}
 
+	if (m_players.empty())
+	{
+		// Lost level, do something.
+	}
+
 	if (m_enemies.empty())
 	{
 		this->m_currWave++;
@@ -109,6 +114,8 @@ bool Board::updateBoard(float deltaTime, bool charSelected)
 		this->initEnemies(this->m_enemyWaves[this->m_currWave]);
 		return false;
 	}
+
+	return false;
 }
 
 //==========================================================
@@ -197,6 +204,7 @@ bool Board::handleSecondClick(sf::Vector2f location)
 }
 
 //==========================================================
+
 void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 {
 	bool draw = checkMoving();
@@ -207,6 +215,8 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 	this->drawObjects(window);
 
 }
+
+//==========================================================
 
 void Board::updatePlayersDeath(std::shared_ptr<Player> character, float deltaTime, int& index)
 {
@@ -225,6 +235,8 @@ void Board::updatePlayersDeath(std::shared_ptr<Player> character, float deltaTim
 	}
 }
 
+//==========================================================
+
 void Board::updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime, int& index)
 {
 	character->handleAnimation({ 0, 0 }, deltaTime);
@@ -238,12 +250,17 @@ void Board::updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime,
 		index--;
 	}
 }
+
+//==========================================================
+
 void Board::playerBehavior(std::shared_ptr<Player> character,float deltaTime)
 {
-		sf::Vector2f steerForce;
-		steerForce = character->behaviour()->Arrive(character->getPosition(), character->getVelocity(), character->getMaxVelocity(), character->getMaxForce(), character->getDest(), 10);
-		character->update(steerForce, deltaTime, this->m_players, this->m_enemies);
+	sf::Vector2f steerForce;
+	steerForce = character->behaviour()->Arrive(character->getPosition(), character->getVelocity(), character->getMaxVelocity(), character->getMaxForce(), character->getDest(), 10);
+	character->update(steerForce, deltaTime, this->m_players, this->m_enemies);
 }
+
+//==========================================================
 
 void Board::enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vector2f pos)
 {
@@ -256,7 +273,6 @@ void Board::enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vec
 		enemy->getTarget()->getPosition(), createObstaclesVec(), 100);
 	this->seperation(enemy.get(), steerForce, deltaTime);
 }
-
 
 
 ////==========================================================
@@ -297,12 +313,6 @@ void Board::drawObject(bool player, int& index, sf::RenderWindow& window)
 	index++;
 }
 
-//==========================================================
-
-bool Board::checkIntersection(sf::Sprite obj,sf::Sprite secObj)
-{
-	return obj.getGlobalBounds().intersects(secObj.getGlobalBounds());
-}
 
 //==========================================================
 
@@ -313,23 +323,24 @@ bool Board::checkMoving() const
 
 //==========================================================
 
-HashTable<int, Player*> Board::getPlayersTable()
+HashTable<int, shared_ptr<Player>> Board::getPlayersTable()
 {
-	std::unordered_map<int, Player*> playersMap = {
-		std::make_pair(_cleric, new Cleric(startPositions[_cleric])),
-		std::make_pair(_knight, new Knight(startPositions[_knight])),
-		std::make_pair(_archer, new Archer(startPositions[_archer]))
+	std::unordered_map<int, shared_ptr<Player>> playersMap = {
+		std::make_pair(_cleric, Cleric(startPositions[_cleric]).getType()),
+		std::make_pair(_knight, Knight(startPositions[_cleric]).getType()),
+		std::make_pair(_archer, Archer(startPositions[_cleric]).getType())
 	};
 	return playersMap;
 }
 
 //==========================================================
 
-HashTable<int, Enemy*> Board::getEnemiesTable()
+HashTable<int, shared_ptr<Enemy>> Board::getEnemiesTable()
 {
-	std::unordered_map<int, Enemy*> enemiesMap = {
-		std::make_pair(_dummy, new Dummy())
+	std::unordered_map<int, shared_ptr<Enemy>> enemiesMap = {
+		std::make_pair(_dummy, Dummy().getType())
 	};
+
 	return enemiesMap;
 }
 
@@ -339,7 +350,10 @@ void Board::initPlayers(const bool lvlPlayers[NUM_OF_PLAYERS])
 {
 	for (int i = 0; i < NUM_OF_PLAYERS; i++)
 		if (lvlPlayers[i])
-			this->createChar(i);
+		{
+			auto it = this->getPlayersTable().getVal(i);
+			this->m_players.push_back(it);
+		}
 }
 
 //==========================================================
@@ -351,38 +365,9 @@ void Board::initEnemies(const std::vector<sf::Vector2i> enemyWave)
 	{
 		for (int i = 0; i < detail.y; i++)
 		{
-			/*
-			auto it = this->m_enemiesTable.getVal(detail.x);
-			auto take = *it;
-			auto ptr = std::make_shared<Enemy>(take);
-			this->m_enemies.push_back(ptr);
-			*/
-			this->createChar(detail.x);
+			auto it = this->getEnemiesTable().getVal(detail.x);
+			this->m_enemies.push_back(it);
 		}
-	}
-}
-
-//==========================================================
-
-void Board::createChar(const unsigned int index)
-{
-	switch (index)
-	{
-	case _cleric:
-		m_players.push_back(std::make_shared < Cleric >(sf::Vector2f(200, 200)));
-		break;
-	case _knight:
-		m_players.push_back(std::make_shared < Knight >(sf::Vector2f(200, 300)));
-		break;
-	case _archer:
-		m_players.push_back(std::make_shared < Archer >(sf::Vector2f(200, 400)));
-		break;
-	case _dummy:
-		this->m_enemies.push_back(std::make_shared<Dummy>());
-		break;
-
-	default:
-		break;
 	}
 }
 

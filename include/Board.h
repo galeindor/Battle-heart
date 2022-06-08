@@ -15,14 +15,12 @@ public:
 	Board(const LevelInfo& currLevelInfo);
 	bool handleFirstClick(sf::Vector2f location);
 	bool handleSecondClick(sf::Vector2f location);
-	bool checkIntersection(sf::Sprite obj, sf::Sprite secObj); //for collisions..
 	bool checkMoving() const;
 
 	vector<sf::Vector2f> createObstaclesVec();
 	void seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime);
 	bool updateBoard(float deltaTime, bool charSelected);
 	void updateEnemyDest();
-	void drawBoard(sf::RenderWindow& window, bool charSelected);
 	void updatePlayersDeath(std::shared_ptr<Player> character, float deltaTime,int& index);
 	void updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime, int& index);
 
@@ -31,8 +29,8 @@ public:
 
 	template <class Type>
 	Type sortObjects(Type vector);
-	void deleteObject(std::shared_ptr<Character> obj);
 
+	void drawBoard(sf::RenderWindow& window, bool charSelected);
 	void drawObjects(sf::RenderWindow& window);
 	void drawObject(bool player, int& index, sf::RenderWindow& window);
 	sf::Vector2f adjustLocation(sf::Vector2f location);
@@ -44,16 +42,15 @@ private:
 	int m_currLvl;
 	int m_currWave;
 	std::shared_ptr<Player> m_currPlayer;
-	sf::Sprite m_selected;
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
+	sf::Sprite m_selected;
 
 	// Funcs
-	HashTable<int, Player*> getPlayersTable();
-	HashTable<int, Enemy*> getEnemiesTable();
+	HashTable<int, shared_ptr<Player>> getPlayersTable();
+	HashTable<int, shared_ptr<Enemy>> getEnemiesTable();
 
 	void initPlayers(const bool lvlPlayers[NUM_OF_PLAYERS]);
 	void initEnemies(const std::vector<sf::Vector2i> enemyWave);
-	void createChar(const unsigned int index);
 	void initSelected();
 };
 

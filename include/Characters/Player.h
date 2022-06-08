@@ -13,6 +13,7 @@ public:
 	virtual bool setTarget(std::shared_ptr<Enemy> obj) override;
 	virtual bool setTarget(std::shared_ptr<Player> obj) override;
 	virtual bool checkIntersection() const override;
+	virtual shared_ptr<Player> getType() = 0;
 	void setSelected(bool state) { this->m_selected = state; }
 
 	//handling skills

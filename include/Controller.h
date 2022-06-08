@@ -27,5 +27,3 @@ private:
 	bool m_charSelected = false;
 	unsigned int m_currLvl;
 };
-
-

@@ -9,7 +9,14 @@ Level 2
 Cleric
 Knight
 Archer
+!Dummy 4 !
+!Dummy 4 !
+!Dummy 4 !
+!Dummy 4 !
+
+Level 3
+Knight
+Archer
+Cleric
 !Dummy 5 !
-!Dummy 6 !
-!Dummy 7 !
-!Dummy 10 !
+!Dummy 5 !

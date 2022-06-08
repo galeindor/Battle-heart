@@ -64,7 +64,7 @@ enum Stats
 const std::vector<std::vector<float>> playersBasicStats =
 {
 	/* cleric */ { 70.f, 2.f, 6.f, 200.f , 10.f},
-	/* knight */ { 120.f, 3.f, -40.f, 40.f , 20.f},
+	/* knight */ { 120.f, 3.f, -80.f, 40.f , 20.f},
 	/* archer */ { 90.f, 2.f, -6.f, 600.f , 13.f},
 	/* dummy  */ { 80.f, 4.f, -5.f, 40.f , 15.f}
 };
@@ -124,11 +124,6 @@ const std::vector<std::vector<float>> objectsPhysics = { { 0.1f, 50.f, 90.f },
 														  { 0.2f, 40.f, 100.f },
 														  { 0.1f, 45.f, 70.f } };
 
-struct Target {
-	sf::Vector2f _location;
-	std::vector<std::shared_ptr<Stat>> _stats;
-};
-
 struct LevelInfo
 {
 	bool m_lvlPlayers[NUM_OF_PLAYERS];
@@ -146,12 +141,12 @@ const std::string proj_textures[NUM_OF_PROJ] = { "healProj.png"};
 
 // Maps
 
-static std::unordered_map<std::string, int> levelsMap =
-{ std::make_pair("Cleric",_cleric),
-  std::make_pair("Knight", _knight),
-  std::make_pair("Archer", _archer),
-  std::make_pair("Dummy" , _dummy),
-  std::make_pair("Level", NEW_LEVEL_DETECTED)
+static std::unordered_map<std::string, int> levelsMap = { 
+	std::make_pair("Cleric",_cleric),
+	std::make_pair("Knight", _knight),
+	std::make_pair("Archer", _archer),
+	std::make_pair("Dummy" , _dummy),
+	std::make_pair("Level", NEW_LEVEL_DETECTED)
 };
 
 const std::vector<sf::Vector2f> startPositions = {
