@@ -38,6 +38,7 @@ void Resources::loadResources()
 	//	m_projTextures[i].loadFromFile(proj_textures[i]);
 
 	this->m_buttonsFont.loadFromFile(MENU_BUTTON_FONT);
+
 }
 
 //=======================================================================================

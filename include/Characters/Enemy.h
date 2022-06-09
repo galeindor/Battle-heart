@@ -15,6 +15,6 @@ public:
 	virtual shared_ptr<Enemy> getType() = 0;
 
 private:
-	void initSkills(const int index);
+
 	sf::Vector2f randEnemyPos();
 };

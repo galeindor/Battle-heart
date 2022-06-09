@@ -10,6 +10,7 @@ Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 	this->initRect(texture, pos);
 	this->initCooldown(pos);
 	this->initEffect(effectIndex);
+	
 }
 
 //============================================================================
@@ -98,9 +99,9 @@ void Skill::initCooldown(const sf::Vector2f pos)
 
 void Skill::draw(sf::RenderWindow& window)
 {
+	//window.draw(this->m_rect);
 	for (auto& proj : m_projs)
 	{
 		proj.draw(window);
-	}
-		
+	}		
 }

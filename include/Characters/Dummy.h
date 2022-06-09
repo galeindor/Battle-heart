@@ -9,4 +9,6 @@ public:
 	virtual shared_ptr<Enemy> getType() {
 		return make_shared<Dummy>();
 	}
+
+	virtual void initSkills(const int index) override;
 };

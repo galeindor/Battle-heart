@@ -5,7 +5,7 @@
 #include "Effects/Defend.h"
 #include "Timer.h"
 #include "Skills/Projectile.h"
-
+#include "HashTable.h"
 using std::shared_ptr;
 using std::vector;
 
@@ -44,7 +44,7 @@ private:
 	// Visuals
 	sf::RectangleShape m_rect;
 	sf::RectangleShape m_cooldownScale;
-
+	
 	// Initiation functions
 	void initEffect(const int effectIndex);
 	void initRect(sf::Texture* texture, const sf::Vector2f pos);

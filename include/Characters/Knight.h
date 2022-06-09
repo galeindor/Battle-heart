@@ -10,6 +10,8 @@ public:
 	virtual shared_ptr<Player> getType() {
 		return make_shared<Knight>(startPositions[_knight]);
 	}
+
+	virtual void initSkills(const int index) override;
 protected:
 
 };

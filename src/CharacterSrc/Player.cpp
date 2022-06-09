@@ -4,7 +4,7 @@
 Player::Player(const sf::Vector2f loc , int index)
 	: Character(loc, index, characterParams), m_selected(false)
 {
-	this->initSkills(index);
+	
 }
 
 //===========================================================
@@ -43,14 +43,6 @@ bool Player::checkSkillClick(const sf::Vector2f& location)
 }
 
 //==========================================================
-
-void Player::initSkills(const int index)
-{
-	this->addSkill(Skill(Resources::instance().getSkill(index, 0),
-						  sf::Vector2f(0 * (SKILL_RECT_SIZE + 20) + 30, 30),
-						  playersBasicStats[index][_attackSpeed], _heal, 
-						  singleTarget, onPlayer, isActive));
-}
 
 //==========================================================
 
