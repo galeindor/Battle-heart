@@ -26,9 +26,11 @@ public:
 	bool getSingleTarget() const { return this->m_singleTarget; }
 	bool getIsActive() const { return this->m_isActive; }
 
-	void draw(sf::RenderWindow& window);
-
+	void draw(sf::RenderWindow& window, bool);
+	bool handleClick(const sf::Vector2f& loc);
 private:
+
+	void updateVisual();
 
 	// Settings of the skill
 	Effect* m_effect;

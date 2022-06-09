@@ -190,12 +190,25 @@ bool Character::handleDeath()
 
 //========================================================================================
 
-void Character::drawSkills(sf::RenderWindow& window)
+void Character::drawSkills(sf::RenderWindow& window , bool selected)
 {
 	for (auto& skill : m_skills)
 	{
-		skill->draw(window);
+		skill->draw(window,selected);
 	}
 }
 
 //========================================================================================
+
+bool Character::checkSkillClick(const sf::Vector2f& location)
+{
+	for (auto& skill : m_skills)
+	{
+		if (skill->handleClick(location))
+		{
+			skill->useSkill(this->getPosition(), this->m_stats);
+			return true;
+		}
+	}
+	return false;
+}

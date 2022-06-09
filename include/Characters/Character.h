@@ -16,14 +16,12 @@ public:
 	virtual ~Character() = default;
 
 	// Virtuals
-	void drawSkills(sf::RenderWindow& window);
 	virtual void draw(sf::RenderWindow& window) = 0;
 	virtual bool setTarget(std::shared_ptr<Enemy> obj) = 0;
 	virtual bool setTarget(std::shared_ptr<Player> obj) = 0;
 	virtual bool checkIntersection() const = 0;
 	virtual void update(sf::Vector2f steerForce, const float deltaTime, 
 						vector<std::shared_ptr<Player>> m_players, vector<std::shared_ptr<Enemy>> m_enemies);
-	virtual void initSkills(const int index) = 0;
 	// Management
 	void showHpBar() { m_hpBar.show(); }
 	bool handleDeath();
@@ -44,6 +42,14 @@ public:
 	vector<shared_ptr<Character>> createTargetVec(Type type);
 
 	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies , Character* obj);
+
+
+	// skill managment
+	virtual void initSkills(const int index) = 0;
+	bool checkSkillClick(const sf::Vector2f& location);
+	void drawSkills(sf::RenderWindow& window, bool selected);
+
+
 
 protected:
 	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }

@@ -97,11 +97,39 @@ void Skill::initCooldown(const sf::Vector2f pos)
 
 //=============================================================================
 
-void Skill::draw(sf::RenderWindow& window)
+void Skill::draw(sf::RenderWindow& window , bool selected)
 {
-	//window.draw(this->m_rect);
+	if (selected)
+	{
+		updateVisual();
+		window.draw(m_rect);
+		window.draw(m_cooldownScale);
+	}
+
 	for (auto& proj : m_projs)
 	{
 		proj.draw(window);
 	}		
+}
+
+//==========================================================
+
+void Skill::updateVisual()
+{
+	m_timer.updateTimer();
+	auto timeLeft = m_timer.getTimeLeft();
+	timeLeft = std::max(timeLeft, 0.f);
+	auto cd = m_timer.getCooldown();
+	auto percent = (timeLeft / cd);
+
+	m_cooldownScale.setSize({ SKILL_RECT_SIZE , SKILL_RECT_SIZE * percent });
+}
+
+//==========================================================
+
+bool Skill::handleClick(const sf::Vector2f& pos)
+{
+	auto timeLeft = m_timer.getTimeLeft();
+	timeLeft = std::max(timeLeft, 0.f);
+	return (timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
 }

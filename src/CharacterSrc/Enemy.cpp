@@ -12,7 +12,7 @@ Enemy::Enemy(const int index)
 void Enemy::draw(sf::RenderWindow& window)
 {
 	showHpBar();
-	drawSkills(window);
+	drawSkills(window,false);
 	this->getHpBar().draw(window);
 	window.draw(this->getSprite());
 }

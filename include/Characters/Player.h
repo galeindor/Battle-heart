@@ -17,7 +17,7 @@ public:
 	virtual shared_ptr<Player> getType() = 0;
 
 	//handling skills
-	bool checkSkillClick(const sf::Vector2f& loc);
+	//bool checkSkillClick(const sf::Vector2f& loc);
 	void setSelected(bool state) { this->m_selected = state; }
 
 private:

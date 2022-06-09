@@ -12,35 +12,14 @@ Player::Player(const sf::Vector2f loc , int index)
 void Player::draw(sf::RenderWindow& window)
 {
 	if (m_selected)
-	{
 		showHpBar();
-		/*
-		for (auto& skill : this->getSkills())
-			skill->draw(window); // draw all skills
-			*/
-	}
-	drawSkills(window);
+
+	drawSkills(window,m_selected);
 	getHpBar().draw(window);
 	window.draw(this->getSprite());
 }
 
 //==========================================================
-
-bool Player::checkSkillClick(const sf::Vector2f& location)
-{
-	/*
-	auto skills = getSkills();
-	for (size_t i = 0; i < skills.size(); i++)
-	{
-		if (skills[i]->checkClick(location))
-		{
-			this->useSkill(i);
-			return true;
-		}
-	}
-	*/
-	return false;
-}
 
 //==========================================================
 
