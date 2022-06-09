@@ -13,7 +13,7 @@ public:
 	virtual ~Object() = default;
 
 	// Management
-	void handleAnimation(sf::Vector2f movement, float deltaTime);
+	bool handleAnimation(sf::Vector2f movement, float deltaTime);
 	void update(const float deltaTime);
 
 	// Virtuals

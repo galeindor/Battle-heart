@@ -18,8 +18,11 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 {
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->getPosition());
-	Object::update(deltaTime);		
+	
+	if (!isAlive())
+		return;
 
+	Object::update(deltaTime);		
 	sf::Vector2f acceleration = steerForce / this->getMass();
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
 	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
@@ -166,6 +169,8 @@ shared_ptr<Character> Character::locateInVector(vector<shared_ptr<Player>> playe
 		if (enemy.get() == obj)
 			return enemy;
 	}
+
+	return nullptr; 
 }
 
 //=======================================================================================

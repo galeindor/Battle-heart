@@ -9,7 +9,7 @@ public:
 	~Animation() = default; // D-tor.
 
 	// Animation management.
-	void update(float deltaTime);
+	bool update(float deltaTime);
 	sf::IntRect& getUVRect() { return this->uvRect; }
 
 	// Setters
