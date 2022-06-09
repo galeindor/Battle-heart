@@ -42,7 +42,7 @@ public:
 	void setVelocity(sf::Vector2f velocity) { this->m_velocity = velocity; }
 	void setPosition(sf::Vector2f pos) { this->m_sprite.setPosition(pos); }
 	void setAsTarget(std::shared_ptr<Character> obj) { this->m_target = obj; }
-	void setAnimation(int index) { this->m_animation.setRow(int(index)); }
+	void setAnimation(int index) { this->m_animation.setRow(index); }
 
 	// Checks/validators
 	bool checkCollision(const sf::Vector2f& location);

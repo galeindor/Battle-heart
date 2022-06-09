@@ -18,11 +18,11 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 {
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->getPosition());
+	Object::update(deltaTime);	
 	
 	if (!isAlive())
 		return;
 
-	Object::update(deltaTime);		
 	sf::Vector2f acceleration = steerForce / this->getMass();
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
 	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
@@ -51,12 +51,19 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 
 		if (targetInRange())
 		{
-			this->m_skills[_basic]->useSkill(this->getPosition(),this->m_stats);
 			this->useBaseAttack();
+			if (handleAnimation(this->getVelocity() * deltaTime, deltaTime))
+			{
+				this->m_skills[_basic]->useSkill(this->getPosition(), this->m_stats);
+				return;
+			}
 		}
 		else
 			this->setAnimation(_idle);
 	}
+	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
+	this->m_hpBar.setPosition(this->getPosition());
+	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
 }
 
 //=======================================================================================

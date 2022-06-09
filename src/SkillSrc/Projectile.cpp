@@ -6,7 +6,7 @@ Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest, const in
 	:Object(pos, index, projectileParams)
 {
 	setAsTarget(target);
-
+	
 	setDestination(dest);
 
 	this->setVelocity({0.5,0.5});
@@ -31,6 +31,8 @@ void Projectile::draw(sf::RenderWindow& window)
 void Projectile::updateProjectile(sf::Vector2f steerForce, float deltaTime)
 {
 	Object::update(deltaTime);
+	setAnimation(0);
+	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
 	this->setDestination(this->getTarget()->getPosition());
 	/*
 	sf::Vector2f acceleration = steerForce / this->getMass();
@@ -40,5 +42,5 @@ void Projectile::updateProjectile(sf::Vector2f steerForce, float deltaTime)
 	*/
 	auto dir = this->getPosition() - this->getDest();
 	auto speed = 0.1f;
-	this->setPosition(this->getPosition() + dir*deltaTime* speed );
+	this->setPosition(this->getPosition());
 }

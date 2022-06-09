@@ -36,7 +36,7 @@ bool Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 
 void Object::update(const float deltaTime)
 {
-	handleAnimation( m_velocity * deltaTime, deltaTime);
+	//handleAnimation( m_velocity * deltaTime, deltaTime);
 	this->setPosition(this->adjustLocation(this->getPosition()));
 
 	if (this->getPosition().x < this->m_dest.x)
