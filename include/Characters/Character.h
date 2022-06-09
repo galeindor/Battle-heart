@@ -16,6 +16,7 @@ public:
 	virtual ~Character() = default;
 
 	// Virtuals
+	void drawSkills(sf::RenderWindow& window);
 	virtual void draw(sf::RenderWindow& window) = 0;
 	virtual bool setTarget(std::shared_ptr<Enemy> obj) = 0;
 	virtual bool setTarget(std::shared_ptr<Player> obj) = 0;

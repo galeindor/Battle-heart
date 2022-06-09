@@ -21,7 +21,7 @@ Resources& Resources::instance()
 
 void Resources::loadResources()
 {
-	for (int i = 0; i < NUM_OF_OBJECTS ; i++)
+	for (int i = 0; i < NUM_OF_PROJ; i++)
 		m_textures[i].loadFromFile(textures[i]);
 
 	for (int i = 0; i < NUM_OF_BG ; i++)
@@ -34,8 +34,8 @@ void Resources::loadResources()
 	for (int i = 0; i < NUM_OF_EFFECTS; i++)
 		m_effectsTextures[i].loadFromFile(effectsTextures[i]);
 
-	for (int i = 0; i < NUM_OF_PROJ; i++)
-		m_projTextures[i].loadFromFile(proj_textures[i]);
+	//for (int i = 0; i < NUM_OF_PROJ; i++)
+	//	m_projTextures[i].loadFromFile(proj_textures[i]);
 
 	this->m_buttonsFont.loadFromFile(MENU_BUTTON_FONT);
 }

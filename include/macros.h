@@ -46,7 +46,7 @@ struct AnimationParams {
 };
 
 const AnimationParams characterParams = { sf::Vector2f(9,5), 0.3f };
-const AnimationParams projectileParams = { sf::Vector2f(7, 1), 0.3f };
+const AnimationParams projectileParams = { sf::Vector2f(1, 7), 0.3f };
 const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
 // Stats ----------------------------------
@@ -134,7 +134,7 @@ struct LevelInfo
 
 enum Projectiles
 {
-	_healBall , NUM_OF_PROJ
+	_healBall = NUM_OF_OBJECTS , NUM_OF_PROJ
 };
 
 const std::string proj_textures[NUM_OF_PROJ] = { "healProj.png"};

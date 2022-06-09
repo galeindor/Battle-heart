@@ -2,7 +2,7 @@
 
 Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams)
 
-	: m_animation(initAnimation(index , animParams)),
+	: m_animation(Resources::instance().getTexture(index), animParams),
 	  m_isMoving(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC), m_dest(pos)
 {
 	this->initSprite(pos, index);
@@ -12,6 +12,7 @@ Object::Object(const sf::Vector2f pos, const int index, AnimationParams animPara
 	m_mass = 0.1f;
 	m_maxForce = 50;
 	m_maxVelocity = 100;
+	m_velocity = { 5,5 };
 	//m_range = SHORT_RANGE;
 }
 
@@ -31,7 +32,7 @@ void Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 
 //=======================================================================================
 
-void Object::update(sf::Vector2f steerForce, const float deltaTime)
+void Object::update(const float deltaTime)
 {
 	handleAnimation( m_velocity * deltaTime, deltaTime);
 	this->setPosition(this->adjustLocation(this->getPosition()));
@@ -77,7 +78,7 @@ bool Object::checkCollision(const sf::Vector2f& location)
 
 //=======================================================================================
 
-Animation Object::initAnimation(const int index, AnimationParams animParams)
+void Object::initProjectileAnimation(const int index, AnimationParams animParams)
 {
-	return Animation(Resources::instance().getTexture(index), animParams);
+	m_animation = Animation(Resources::instance().getProjectile(index), animParams);
 }

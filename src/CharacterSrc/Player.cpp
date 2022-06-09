@@ -19,6 +19,7 @@ void Player::draw(sf::RenderWindow& window)
 			skill->draw(window); // draw all skills
 			*/
 	}
+	drawSkills(window);
 	getHpBar().draw(window);
 	window.draw(this->getSprite());
 }

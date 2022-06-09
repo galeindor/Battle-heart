@@ -23,7 +23,8 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 
 		for (auto i = 0; i < m_projs.size(); i++)
 		{
-			m_projs[i].update({ 0,0 }, deltaTime);
+			m_projs[i].behaviour()->Pursue(m_projs[i].getPosition(), m_projs[i].getVelocity(), m_projs[i].getMaxVelocity(), m_projs[i].getMaxForce(), m_projs[i].getDest());
+			m_projs[i].updateProjectile(m_projs[i].getVelocity(),deltaTime);
 			if (m_projs[i].checkIntersection())
 			{
 				//impact here
@@ -46,6 +47,7 @@ void Skill::useSkill(sf::Vector2f myLoc ,  std::vector<std::shared_ptr<Stat>> my
 		for (auto target : m_targets)
 		{
 			auto projectile = Projectile(myLoc,target->getPosition(), _healBall, target);
+			m_projs.push_back(projectile);
 		}
 		this->m_effect->affect(m_baseValue, myStats, this->m_targets);
 	}
@@ -96,7 +98,6 @@ void Skill::initCooldown(const sf::Vector2f pos)
 
 void Skill::draw(sf::RenderWindow& window)
 {
-
 	for (auto& proj : m_projs)
 	{
 		proj.draw(window);

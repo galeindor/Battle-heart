@@ -18,7 +18,7 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 {
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->getPosition());
-	Object::update(steerForce, deltaTime);		
+	Object::update(deltaTime);		
 
 	sf::Vector2f acceleration = steerForce / this->getMass();
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
@@ -151,6 +151,8 @@ vector<shared_ptr<Character>> Character::createTargetVec(Type vec)
 	return temp;
 }
 
+//=======================================================================================
+
 shared_ptr<Character> Character::locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies, Character* obj)
 {
 	for (auto player : players)
@@ -173,3 +175,15 @@ bool Character::handleDeath()
 	this->m_deathTimer.updateTimer();
 	return this->m_deathTimer.isTimeUp();
 }
+
+//========================================================================================
+
+void Character::drawSkills(sf::RenderWindow& window)
+{
+	for (auto& skill : m_skills)
+	{
+		skill->draw(window);
+	}
+}
+
+//========================================================================================

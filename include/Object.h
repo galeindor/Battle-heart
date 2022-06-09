@@ -14,7 +14,7 @@ public:
 
 	// Management
 	void handleAnimation(sf::Vector2f movement, float deltaTime);
-	void update(sf::Vector2f steerForce, const float deltaTime);
+	void update(const float deltaTime);
 
 	// Virtuals
 	virtual bool checkIntersection() const = 0;
@@ -49,7 +49,7 @@ public:
 	sf::Vector2f adjustLocation(sf::Vector2f location);
 
 protected:
-	virtual Animation initAnimation(const int index, AnimationParams animParams);
+	void initProjectileAnimation(const int index, AnimationParams animParams) ;
 	void setRange(float val) { m_range = val; }
 
 private:
