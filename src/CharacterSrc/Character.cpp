@@ -84,7 +84,7 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 void Character::initStats(const int index)
 {
 	for (int stat = 0; stat < NUM_OF_STATS; stat++)
-		this->m_stats.push_back(std::make_shared<Stat>(playersBasicStats[index][stat]));
+		this->m_stats.push_back(std::make_shared<Stat>(charactersStats[index][stat]));
 }
 
 //=======================================================================================

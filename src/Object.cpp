@@ -1,7 +1,6 @@
 #include "Object.h"
 
 Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams)
-
 	: m_animation(initAnimation(index , animParams)),
 	  m_isMoving(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC), m_dest(pos)
 {
@@ -12,7 +11,6 @@ Object::Object(const sf::Vector2f pos, const int index, AnimationParams animPara
 	m_mass = 0.1f;
 	m_maxForce = 50;
 	m_maxVelocity = 100;
-	//m_range = SHORT_RANGE;
 }
 
 //=======================================================================================

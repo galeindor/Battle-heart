@@ -29,7 +29,6 @@ public:
 	void draw(sf::RenderWindow& window);
 
 private:
-
 	Projectiles m_projType;
 	// Settings of the skill
 	Effect* m_effect;

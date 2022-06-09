@@ -25,7 +25,7 @@ void Resources::loadResources()
 		m_textures[i].loadFromFile(textures[i]);
 
 	for (int i = 0; i < NUM_OF_BG ; i++)
-		m_bgTextures[i].loadFromFile(bg_textures[i]);
+		m_bgTextures[i].loadFromFile(bgTextures[i]);
 
 	for (int i = 0; i < NUM_OF_PLAYERS; i++)
 		for (int j = 0; j < MAX_SKILL; j++)
@@ -35,7 +35,10 @@ void Resources::loadResources()
 		m_effectsTextures[i].loadFromFile(effectsTextures[i]);
 
 	for (int i = 0; i < NUM_OF_PROJ; i++)
-		m_projTextures[i].loadFromFile(proj_textures[i]);
+		m_projTextures[i].loadFromFile(projTexts[i]);
+
+	for (int i = 0; i < NUM_OF_MENU_TEXTS; i++)
+		m_menuTextures[i].loadFromFile(menuTexts[i]);
 
 	this->m_buttonsFont.loadFromFile(MENU_BUTTON_FONT);
 }

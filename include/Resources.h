@@ -22,7 +22,6 @@ using std::string;
 
 // ==========================================================
 
-
 class Resources
 {
 public:
@@ -34,7 +33,8 @@ public:
 	sf::Texture* getProjectile(int i) { return &m_projTextures[i]; }
 	sf::Texture* getTexture(int i) { return &m_textures[i]; }
 	sf::Texture* getEffectTexture(int i) { return &m_effectsTextures[i]; }
-	sf::Texture* getSkill(int i, int j) { return &m_skillTextures[i][j]; }
+	sf::Texture* getMenuTexture(int i) { return &m_menuTextures[i]; }
+	sf::Texture* getSkillText(int i, int j) { return &m_skillTextures[i][j]; }
 	void playSound(int index);
 	void setVolume(int volume);
 	void setPopOutScreen(sf::RectangleShape& rect, sf::Text& text);
@@ -50,6 +50,7 @@ private:
 	sf::Texture m_skillTextures[NUM_OF_PLAYERS][MAX_SKILL];
 	sf::Texture m_bgTextures[NUM_OF_BG];
 	sf::Texture m_projTextures[NUM_OF_PROJ];
+	sf::Texture m_menuTextures[NUM_OF_MENU_TEXTS];
 	sf::Font m_buttonsFont;
 	void loadResources();
 };

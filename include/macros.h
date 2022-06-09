@@ -23,7 +23,8 @@ constexpr auto NONE_SELECTED = -1;
 constexpr auto PLAYER_DETECTED = -2;
 constexpr auto NEW_LEVEL_DETECTED = -3;
 constexpr auto WAVE = '!';
-// Buttons
+
+// Buttons ----------------------------------
 enum MenuButtons
 {
 	_battle, _levels, _escape, NUM_OF_MBUTTONS
@@ -61,7 +62,7 @@ enum Stats
 	_hp, _attackSpeed, _dmg, _range, _defence, NUM_OF_STATS
 };
 
-const std::vector<std::vector<float>> playersBasicStats =
+const std::vector<std::vector<float>> charactersStats =
 {
 	/* cleric */ { 70.f, 2.f, 6.f, 200.f , 10.f},
 	/* knight */ { 120.f, 3.f, -80.f, 40.f , 20.f},
@@ -101,11 +102,25 @@ const std::string skillTextures[NUM_OF_PLAYERS][MAX_SKILL] = { { "heal.png"	, "c
 // Backgrounds ----------------------------------
 enum Backgrounds
 {
-	_menu, _firstLevel, NUM_OF_BG
+	_levelSelect, _menu, _firstLevel, NUM_OF_BG
 };
-const std::string bg_textures[NUM_OF_BG] = { "plain.png", "menuBG.png" };
 
+const std::string bgTextures[NUM_OF_BG] = { "levelSelectBG.png", "menuBG.png", "plain.png" };
 
+// Menu -----------------------------------------
+enum MenuTextures
+{
+	_currLvlIcon, _lvlCompleted, _lvlLocked, _levelSelection, startButton, startButtonHL, NUM_OF_MENU_TEXTS
+};
+
+const std::string menuTexts[NUM_OF_MENU_TEXTS] = { 
+	"currentLevelIcon.png", 
+	"levelCompleted.png",
+	"locked.png",
+	"levelSelection.png",
+	"startButton.png",
+	"startButtonHL.png"
+};
 // Movement and Steering ------------------------
 
 enum Locations
@@ -137,7 +152,7 @@ enum Projectiles
 	_healBall , NUM_OF_PROJ
 };
 
-const std::string proj_textures[NUM_OF_PROJ] = { "healProj.png"};
+const std::string projTexts[NUM_OF_PROJ] = { "healProj.png"};
 
 // Maps
 

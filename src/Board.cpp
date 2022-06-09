@@ -313,7 +313,6 @@ void Board::drawObject(bool player, int& index, sf::RenderWindow& window)
 	index++;
 }
 
-
 //==========================================================
 
 bool Board::checkMoving() const

@@ -15,7 +15,7 @@ void Player::draw(sf::RenderWindow& window)
 	{
 		showHpBar();
 		/*
-		for (auto& skill : this->getSkills())
+		for (auto& skill : this->getSkillTexts())
 			skill->draw(window); // draw all skills
 			*/
 	}
@@ -28,7 +28,7 @@ void Player::draw(sf::RenderWindow& window)
 bool Player::checkSkillClick(const sf::Vector2f& location)
 {
 	/*
-	auto skills = getSkills();
+	auto skills = getSkillTexts();
 	for (size_t i = 0; i < skills.size(); i++)
 	{
 		if (skills[i]->checkClick(location))
@@ -45,9 +45,9 @@ bool Player::checkSkillClick(const sf::Vector2f& location)
 
 void Player::initSkills(const int index)
 {
-	this->addSkill(Skill(Resources::instance().getSkill(index, 0),
+	this->addSkill(Skill(Resources::instance().getSkillText(index, 0),
 						  sf::Vector2f(0 * (SKILL_RECT_SIZE + 20) + 30, 30),
-						  playersBasicStats[index][_attackSpeed], _heal, 
+						  charactersStats[index][_attackSpeed], _heal, 
 						  singleTarget, onPlayer, isActive));
 }
 

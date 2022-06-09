@@ -1,7 +1,9 @@
 #pragma once
 #include "Board.h"
-#include "Menu.h"
+#include "Menu/Menu.h"
 #include "LevelLoader.h"
+#include "Menu/LevelSelect.h"
+
 class Controller
 {
 public:
@@ -13,11 +15,12 @@ public:
 private:
 	void drawGame();
 	void handleMouseClick(sf::Vector2f location);
-
+	
+	static int currentScreen;
 	LevelLoader m_levelLoader;
 	Board m_board;
 	Menu m_menu;
-	
+
 	// SFML
 	sf::RenderWindow m_window;
 	sf::Sprite m_bg; // move to utility

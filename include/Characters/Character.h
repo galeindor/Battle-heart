@@ -5,6 +5,7 @@
 #include "Stat.h"
 #include "Object.h"
 #include "Skills/Skill.h"
+#include "HashTable.h"
 class Enemy;
 class Player;
 
@@ -41,7 +42,6 @@ public:
 
 	template <class Type>
 	vector<shared_ptr<Character>> createTargetVec(Type type);
-
 	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies , Character* obj);
 
 protected:
@@ -50,9 +50,7 @@ protected:
 	// ############# CHECK LATER ##############
 	vector<std::shared_ptr<Stat>>& getStats() { return this->m_stats; }
 
-	
 private:
-
 	void useBaseAttack();
 	void initStats(const int index);
 	void updateSkills(const float deltaTime, 
