@@ -30,7 +30,6 @@ public:
 
 private:
 
-	Projectiles m_projType;
 	// Settings of the skill
 	Effect* m_effect;
 	bool m_singleTarget;

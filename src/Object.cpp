@@ -77,8 +77,3 @@ bool Object::checkCollision(const sf::Vector2f& location)
 }
 
 //=======================================================================================
-
-void Object::initProjectileAnimation(const int index, AnimationParams animParams)
-{
-	m_animation = Animation(Resources::instance().getProjectile(index), animParams);
-}

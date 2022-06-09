@@ -21,7 +21,7 @@ Resources& Resources::instance()
 
 void Resources::loadResources()
 {
-	for (int i = 0; i < NUM_OF_PROJ; i++)
+	for (int i = 0; i < NUM_OF_OBJECTS; i++)
 		m_textures[i].loadFromFile(textures[i]);
 
 	for (int i = 0; i < NUM_OF_BG ; i++)
