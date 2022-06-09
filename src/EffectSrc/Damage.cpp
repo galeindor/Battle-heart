@@ -11,7 +11,7 @@ void Damage::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, vect
 	for (auto& target : targets)
 	{
 		auto currHP = target->getStat(_hp);
-		auto dmgByDefence = (myStats[_dmg]->getStat() + baseValue) * (myStats[_defend]->getStat() / 100);
+		auto dmgByDefence = (myStats[_dmg]->getStat() + baseValue) * ((float(myStats[_defend]->getStat()) / 100));
 		target->setStat(_hp,currHP - dmgByDefence);
 	}
 }

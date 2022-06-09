@@ -10,8 +10,9 @@ Animation::Animation(sf::Texture* texture, AnimationParams animParms)
 }
 
 // Updates the animation.
-void Animation::update(float deltaTime)
+bool Animation::update(float deltaTime)
 {
+	auto eor = false; // end of row check
 	this->m_currentImage.y = this->m_row;
 	this->m_totalTime += deltaTime;
 
@@ -21,7 +22,10 @@ void Animation::update(float deltaTime)
 		this->m_currentImage.x++;
 
 		if (this->m_currentImage.x >= this->m_imageCount.x)
+		{
 			this->m_currentImage.x = 0;
+			eor = true;
+		}
 	}
 
 	this->uvRect.top = this->m_currentImage.y * this->uvRect.height;
@@ -36,4 +40,6 @@ void Animation::update(float deltaTime)
 		this->uvRect.left = (m_currentImage.x + 1) * abs(this->uvRect.width);
 		this->uvRect.width = -abs(this->uvRect.width);
 	}
+
+	return eor;
 }

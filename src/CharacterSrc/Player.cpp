@@ -4,7 +4,7 @@
 Player::Player(const sf::Vector2f loc , int index)
 	: Character(loc, index, characterParams), m_selected(false)
 {
-	this->initSkills(index);
+	
 }
 
 //===========================================================
@@ -12,44 +12,16 @@ Player::Player(const sf::Vector2f loc , int index)
 void Player::draw(sf::RenderWindow& window)
 {
 	if (m_selected)
-	{
 		showHpBar();
-		/*
-		for (auto& skill : this->getSkillTexts())
-			skill->draw(window); // draw all skills
-			*/
-	}
+
+	drawSkills(window,m_selected);
 	getHpBar().draw(window);
 	window.draw(this->getSprite());
 }
 
 //==========================================================
 
-bool Player::checkSkillClick(const sf::Vector2f& location)
-{
-	/*
-	auto skills = getSkillTexts();
-	for (size_t i = 0; i < skills.size(); i++)
-	{
-		if (skills[i]->checkClick(location))
-		{
-			this->useSkill(i);
-			return true;
-		}
-	}
-	*/
-	return false;
-}
-
 //==========================================================
-
-void Player::initSkills(const int index)
-{
-	this->addSkill(Skill(Resources::instance().getSkillText(index, 0),
-						  sf::Vector2f(0 * (SKILL_RECT_SIZE + 20) + 30, 30),
-						  charactersStats[index][_attackSpeed], _heal, 
-						  singleTarget, onPlayer, isActive));
-}
 
 //==========================================================
 

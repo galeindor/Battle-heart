@@ -10,6 +10,7 @@ Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 	this->initRect(texture, pos);
 	this->initCooldown(pos);
 	this->initEffect(effectIndex);
+	
 }
 
 //============================================================================
@@ -23,7 +24,8 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 
 		for (auto i = 0; i < m_projs.size(); i++)
 		{
-			m_projs[i].update({ 0,0 }, deltaTime);
+			m_projs[i].behaviour()->Pursue(m_projs[i].getPosition(), m_projs[i].getVelocity(), m_projs[i].getMaxVelocity(), m_projs[i].getMaxForce(), m_projs[i].getDest());
+			m_projs[i].updateProjectile(m_projs[i].getVelocity(),deltaTime);
 			if (m_projs[i].checkIntersection())
 			{
 				//impact here
@@ -46,6 +48,7 @@ void Skill::useSkill(sf::Vector2f myLoc ,  std::vector<std::shared_ptr<Stat>> my
 		for (auto target : m_targets)
 		{
 			auto projectile = Projectile(myLoc,target->getPosition(), _healBall, target);
+			m_projs.push_back(projectile);
 		}
 		this->m_effect->affect(m_baseValue, myStats, this->m_targets);
 	}
@@ -94,12 +97,39 @@ void Skill::initCooldown(const sf::Vector2f pos)
 
 //=============================================================================
 
-void Skill::draw(sf::RenderWindow& window)
+void Skill::draw(sf::RenderWindow& window , bool selected)
 {
+	if (selected)
+	{
+		updateVisual();
+		window.draw(m_rect);
+		window.draw(m_cooldownScale);
+	}
 
 	for (auto& proj : m_projs)
 	{
 		proj.draw(window);
-	}
-		
+	}		
+}
+
+//==========================================================
+
+void Skill::updateVisual()
+{
+	m_timer.updateTimer();
+	auto timeLeft = m_timer.getTimeLeft();
+	timeLeft = std::max(timeLeft, 0.f);
+	auto cd = m_timer.getCooldown();
+	auto percent = (timeLeft / cd);
+
+	m_cooldownScale.setSize({ SKILL_RECT_SIZE , SKILL_RECT_SIZE * percent });
+}
+
+//==========================================================
+
+bool Skill::handleClick(const sf::Vector2f& pos)
+{
+	auto timeLeft = m_timer.getTimeLeft();
+	timeLeft = std::max(timeLeft, 0.f);
+	return (timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
 }

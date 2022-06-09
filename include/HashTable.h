@@ -2,7 +2,9 @@
 
 #include <unordered_map>
 
- template <typename T, typename U> class HashTable {
+ template <typename T, typename U> 
+ class HashTable 
+ {
  public:
 	 HashTable(std::unordered_map<T,U> map);
 	~HashTable() = default;

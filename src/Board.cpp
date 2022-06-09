@@ -82,7 +82,6 @@ bool Board::updateBoard(float deltaTime, bool charSelected)
 		auto player = m_players[i];
 		if (!player->isAlive())
 			this->updatePlayersDeath(player, deltaTime, i);
-			//this->updatePlayersDeath(player, deltaTime, i);
 		else
 			this->playerBehavior(player, deltaTime);
 		
@@ -145,7 +144,8 @@ void Board::updateEnemyDest()
 				pos = player->getPosition();
 			}
 		}
-		if (!enemy->getIsMoving() && pos.x >= 0)
+		//if (!enemy->getIsMoving() && pos.x >= 0) removed condition in order to allow target swap
+		if(pos.x >= 0)
 		{
 			enemy->setDestination(pos);
 
@@ -220,14 +220,15 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 
 void Board::updatePlayersDeath(std::shared_ptr<Player> character, float deltaTime, int& index)
 {
-	character->handleAnimation({ 0, 0 }, deltaTime);
 
 	if (m_currPlayer == character)
 		m_currPlayer = nullptr;
 
+	this->playerBehavior(character, deltaTime);
+
 	if (!character->getIsDying())
 		character->setDying();
-	else if (character->handleDeath())
+	else if (character->handleAnimation({ 0,0 },deltaTime))
 	{
 		m_players.erase(m_players.begin() + index);
 		character.reset();

@@ -11,9 +11,12 @@ public:
 		this->m_timeLeft -= delta;
 		return delta;
 	}
-	void updateTimer(const float deltaTime) { m_timeLeft -= deltaTime; }
-	void setTimer() { this->m_timeLeft = this->m_cooldown; }
-	bool isTimeUp() const { return this->m_timeLeft <= 0; }
+
+	float	getCooldown() const { return m_cooldown; }
+	void	updateTimer(const float deltaTime) { m_timeLeft -= deltaTime; }
+	void	setTimer() { this->m_timeLeft = this->m_cooldown; }
+	bool	isTimeUp() const { return this->m_timeLeft <= 0; }
+	float	getTimeLeft() const { return m_timeLeft; }
 
 private:
 	float m_cooldown;

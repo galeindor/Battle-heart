@@ -1,7 +1,8 @@
 #include "Object.h"
 
 Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams)
-	: m_animation(initAnimation(index , animParams)),
+
+	: m_animation(Resources::instance().getTexture(index), animParams),
 	  m_isMoving(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC), m_dest(pos)
 {
 	this->initSprite(pos, index);
@@ -15,7 +16,7 @@ Object::Object(const sf::Vector2f pos, const int index, AnimationParams animPara
 
 //=======================================================================================
 
-void Object::handleAnimation(sf::Vector2f movement, float deltaTime)
+bool Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 {
 	// If facing right.
 	if (movement.x > 0.0f || this->getPosition().x < this->getDest().x)
@@ -23,15 +24,17 @@ void Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 	else if (movement.x < 0.0f || this->getPosition().x > this->getDest().x)
 		this->m_animation.setFaceRight(false);
 
-	this->m_animation.update(deltaTime);
+	auto res = this->m_animation.update(deltaTime);
 	this->m_sprite.setTextureRect(this->m_animation.getUVRect());
+
+	return res;
 }
 
 //=======================================================================================
 
-void Object::update(sf::Vector2f steerForce, const float deltaTime)
+void Object::update(const float deltaTime)
 {
-	handleAnimation( m_velocity * deltaTime, deltaTime);
+	//handleAnimation( m_velocity * deltaTime, deltaTime);
 	this->setPosition(this->adjustLocation(this->getPosition()));
 
 	if (this->getPosition().x < this->m_dest.x)
@@ -74,8 +77,3 @@ bool Object::checkCollision(const sf::Vector2f& location)
 }
 
 //=======================================================================================
-
-Animation Object::initAnimation(const int index, AnimationParams animParams)
-{
-	return Animation(Resources::instance().getTexture(index), animParams);
-}
