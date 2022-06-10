@@ -14,7 +14,7 @@ class Skill
 {
 public:
 	Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
-		const int effectIndex, bool singleTarget, bool onPlayer, bool isActive);
+		const int effectIndex, bool singleTarget, bool onPlayer, bool isActive , float factor);
 	~Skill() = default;
 
 	// Management
@@ -44,6 +44,7 @@ private:
 	vector<shared_ptr<Character>> m_targets;
 	vector<Projectile1> m_projs;
 	float m_baseValue;
+	float m_factor;
 
 	// Visuals
 	sf::RectangleShape m_rect;

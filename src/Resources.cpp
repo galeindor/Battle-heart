@@ -28,7 +28,7 @@ void Resources::loadResources()
 		m_bgTextures[i].loadFromFile(bgTextures[i]);
 
 	for (int i = 0; i < NUM_OF_PLAYERS; i++)
-		for (int j = 0; j < MAX_SKILL; j++)
+		for (int j = 0; j < NUM_OF_SKILLS; j++)
 			m_skillTextures[i][j].loadFromFile(skillTextures[i][j]);
 
 	for (int i = 0; i < NUM_OF_EFFECTS; i++)

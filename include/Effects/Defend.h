@@ -7,5 +7,5 @@ public:
 	Defend(AnimationParams animParams);
 
 	virtual void affect(float baseValue, vector<std::shared_ptr<Stat>> myStats,
-						vector<shared_ptr<Character>> targets) override;
+						vector<shared_ptr<Character>> targets, float factor) override;
 };

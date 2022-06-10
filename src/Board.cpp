@@ -240,11 +240,10 @@ void Board::updatePlayersDeath(std::shared_ptr<Player> character, float deltaTim
 
 void Board::updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime, int& index)
 {
-	character->handleAnimation({ 0, 0 }, deltaTime);
 
 	if (!character->getIsDying())
 		character->setDying();
-	else if (character->handleDeath())
+	else if (character->handleAnimation({ 0, 0 }, deltaTime))
 	{
 		m_enemies.erase(m_enemies.begin() + index);
 		character.reset();

@@ -48,7 +48,7 @@ private:
 
 	sf::Texture m_textures[NUM_OF_OBJECTS];
 	sf::Texture m_effectsTextures[NUM_OF_EFFECTS];
-	sf::Texture m_skillTextures[NUM_OF_PLAYERS][MAX_SKILL];
+	sf::Texture m_skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS];
 	sf::Texture m_bgTextures[NUM_OF_BG];
 	sf::Texture m_projTextures[NUM_OF_PROJ];
 	//sf::Texture m_projTextures[NUM_OF_PROJ];

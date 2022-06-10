@@ -79,12 +79,13 @@ const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "arc
 
 enum Effects
 {
-	_heal, _damage, _defend, NUM_OF_EFFECTS
+	_heal, _damage, _defend, _drainLife, NUM_OF_EFFECTS
 };
 const std::string effectsTextures[NUM_OF_EFFECTS] = { "healEffect.png" };
 constexpr auto EFFECT_COOLDOWN = 2.f;
 // Skills ----------------------------------
 constexpr auto NUM_OF_PLAYERS = 3;
+constexpr auto NUM_OF_CHARS = 4;
 constexpr auto MAX_SKILL = 2;
 constexpr auto BASIC_DMG = 1;
 constexpr auto SKILL_RECT_SIZE = 80; // size of the rectangle where skills are shown (?)
@@ -94,9 +95,22 @@ enum Skills
 	_basic, _Skill, _skill2, _passive, NUM_OF_SKILLS
 };
 
-const std::string skillTextures[NUM_OF_PLAYERS][MAX_SKILL] = { { "heal.png"	, "clericShield.png"} ,
-																{ "shield.png"	, "swing.png"		} ,
-																{ "barrage.png" , "apolloarrow.png"	} ,
+const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = { {1.75f, 20.f, 30.f , 100.f} ,
+															{1.1f ,30.f,  30.f, 100.f } ,
+															{1.7f, 20.f , 30.f , 100.f} ,
+															{1.5f}
+
+};
+
+const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {	{1.f, 1.2f, 1.75f , 1.f} ,
+															{1.f ,1.5f, 1.3f, 1.f } ,
+															{1.f, 1.5f , 1.f , 1.f} ,
+															{1.f}
+};
+
+const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
+																	{"knightBasic.png", "shield.png","swing.png" , ""} ,
+																	{"archerBasic.png", "aimedshot.png" , "barrage.png" , ""} ,
 																
 };
 

@@ -123,6 +123,17 @@ void Character::useBaseAttack()
 
 //=======================================================================================
 
+void Character::createSkill(int charIndex, int& skillIndex, int effectIndex, bool single, bool onPlayer, bool active)
+{
+	this->addSkill(Skill(Resources::instance().getSkill(charIndex, skillIndex),
+		sf::Vector2f(skillIndex * (SKILL_RECT_SIZE + 20) + 30, 30),
+		skillCooldowns[charIndex][skillIndex], effectIndex,
+		single, onPlayer, active, skillFactors[charIndex][skillIndex]));
+
+	skillIndex++;
+}
+//=======================================================================================
+
 void Character::useSkill(int skillIndex)
 {
 
@@ -180,14 +191,7 @@ shared_ptr<Character> Character::locateInVector(vector<shared_ptr<Player>> playe
 	return nullptr; 
 }
 
-//=======================================================================================
-
-bool Character::handleDeath()
-{
-	this->m_deathTimer.updateTimer();
-	return this->m_deathTimer.isTimeUp();
-}
-
+//========================================================================================
 //========================================================================================
 
 void Character::drawSkills(sf::RenderWindow& window , bool selected)

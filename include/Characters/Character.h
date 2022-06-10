@@ -25,7 +25,6 @@ public:
 						vector<std::shared_ptr<Player>> m_players, vector<std::shared_ptr<Enemy>> m_enemies);
 	// Management
 	void showHpBar() { m_hpBar.show(); }
-	bool handleDeath();
 	bool targetInRange() ;
 
 	// Getters
@@ -52,6 +51,9 @@ public:
 
 
 protected:
+	
+	void createSkill(int CharIndex, int& skillIndex, int effectIndex,
+					 bool single, bool onPlayer, bool active);
 	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }
 	void useSkill(int index);
 	// ############# CHECK LATER ##############
