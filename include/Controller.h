@@ -1,32 +1,29 @@
 #pragma once
-#include "Board.h"
-#include "Menu/Menu.h"
 #include "LevelLoader.h"
-#include "Menu/LevelSelect.h"
+#include "ScreenManager/Screen.h"
 
 class Controller
 {
 public:
 	Controller();
 	void run();
-	void update(float deltaTime);
-	bool winLevel();
-	void winGame();
+
+	void setCurrentScreen(ScreenState state) { this->m_currentScreen = state; }
+	void setChangeScreen(bool change) { this->m_changeScreen = change; }
+
+	bool getGameWon(int level) const { return this->m_levelLoader.getGameEnded(level); }
+	LevelInfo getLevelInfo(int level) const { return this->m_levelLoader.getLevel(level); }
+	unsigned int getNumOfLevels() const { return this->m_levelLoader.getMaxLevel(); }
 private:
-	void drawGame();
-	void handleMouseClick(sf::Vector2f location);
-	
-	static int currentScreen;
+	void initScreens();
+	void swapScreen();
+	std::vector<std::unique_ptr<Screen>> m_screens;
+	ScreenState m_currentScreen = ScreenState::MENU;
+	bool m_changeScreen = false;
+
 	LevelLoader m_levelLoader;
-	Board m_board;
-	Menu m_menu;
 
 	// SFML
 	sf::RenderWindow m_window;
-	sf::Sprite m_bg; // move to utility
 	sf::Clock m_clock;
-
-	// Management 
-	bool m_charSelected = false;
-	unsigned int m_currLvl;
 };

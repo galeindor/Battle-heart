@@ -6,7 +6,7 @@ Tasks:
 -(!!!) Skills hashing.
 -(+-) Add levels loader to menu.
 -(+-) Add unmmovable objects (obstacles). (Maybe.)
--(!!!) Class projectile (visuals of skills).
+-(+-) Add orientation to projectiles.
 -(!!!) Think of how to improve class Board.
 -(+-) Think of how to add and balance the progress in the game.
 -(***) Make sure the characters don't spawn on each other.
