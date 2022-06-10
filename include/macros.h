@@ -48,7 +48,7 @@ struct AnimationParams {
 };
 
 const AnimationParams characterParams = { sf::Vector2f(9,5), 0.3f };
-const AnimationParams projectileParams = { sf::Vector2f(8, 1), 0.3f };
+const AnimationParams projectileParams = { sf::Vector2f(22, 1), 0.3f };
 const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
 // Stats ----------------------------------
@@ -97,12 +97,12 @@ constexpr auto SKILL_RECT_SIZE = 80; // size of the rectangle where skills are s
 
 enum Skills
 {
-	_basic, _Skill, _skill2, _passive, NUM_OF_SKILLS
+	_basic, _skill1, _skill2, _passive, NUM_OF_SKILLS
 };
 
 const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = { {1.75f, 20.f, 30.f , 100.f} ,
 															{1.1f ,30.f,  30.f, 100.f } ,
-															{1.7f, 20.f , 30.f , 100.f} ,
+															{30.7f, 5.f , 5.f , 100.f} ,
 															{1.5f}
 
 };

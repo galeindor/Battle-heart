@@ -16,44 +16,41 @@ Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 
 //============================================================================
 
-void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targets)
+void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targets, std::vector<std::shared_ptr<Stat>> myStats)
 {
 	if (!this->m_timer.isTimeUp())
 	{
 		this->setTargets(targets);
 		this->m_timer.updateTimer(deltaTime);
 
-		for (int i = 0; i < m_projs.size();)
+		for (int i = 0; i < m_projs.size();i++)
 		{
-			this->m_projs[i].updateProjectile(deltaTime);
-			if (this->m_projs[i].handleAnimation({ 1,1 }, deltaTime))
+			this->m_projs[i].updateProjectile({ 1,1 },deltaTime);
+			if (m_projs[i].checkIntersection())
 			{
-				this->m_projs[i] = this->m_projs.back();
-				this->m_projs.pop_back();
+				this->m_effect->affect(m_baseValue, myStats, m_projs[i].getTarget(), m_factor);
+				m_projs.erase(m_projs.begin()+i);
 			}
-			else i++;
 		}
 	}
-
 	for (auto& target : m_targets)
 		this->m_effect->update(target->getPosition(), deltaTime, true);
 }
 
 //============================================================================
 
-void Skill::useSkill(sf::Vector2f myLoc ,  std::vector<std::shared_ptr<Stat>> myStats)
+void Skill::useSkill(sf::Vector2f myLoc)
 {
 	if (this->m_timer.isTimeUp())
 	{
 		this->m_timer.setTimer();
-		for (auto target : m_targets)
+		for (auto& target : m_targets)
 		{
 			auto direction = target->getPosition() - myLoc;
 			direction = norm(direction);
 			auto projectile = Projectile(myLoc, target->getPosition(), this->m_projType, target);
 			m_projs.push_back(projectile);
 		}
-		this->m_effect->affect(m_baseValue, myStats, this->m_targets , m_factor);
 	}
 }
 
@@ -74,7 +71,6 @@ sf::Vector2f Skill::norm(sf::Vector2f vec)
 
 void Skill::initEffect(const int effectIndex)
 {
-
 	switch (effectIndex)
 	{
 	case _heal:
@@ -87,6 +83,9 @@ void Skill::initEffect(const int effectIndex)
 
 	case _defend:
 		this->m_effect = new Defend(effectParams);
+		break;
+	case _drainLife:
+		this->m_effect = new LifeDrain(effectParams);
 		break;
 	default:
 		break;
@@ -146,5 +145,5 @@ bool Skill::handleClick(const sf::Vector2f& pos)
 {
 	auto timeLeft = m_timer.getTimeLeft();
 	timeLeft = std::max(timeLeft, 0.f);
-	return m_isActive &&(timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
+	return m_isActive && (timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
 }

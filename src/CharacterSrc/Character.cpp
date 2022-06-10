@@ -33,7 +33,10 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 		if (target->isAlive())
 			this->setDestination(this->getTarget()->getPosition());
 		else
+		{
 			this->setAsTarget(nullptr);
+			this->setDestination(this->getPosition());
+		}
 	}
 
 	if (!this->checkIntersection())
@@ -52,7 +55,7 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 			if (!handleAnimation(this->getVelocity() * deltaTime, deltaTime))
 			{
 				this->m_skills[_basic]->handleClick({ 0, 0 });
-				this->m_skills[_basic]->useSkill(this->getPosition(), this->m_stats);
+				this->m_skills[_basic]->useSkill(this->getPosition());
 			}
 		}
 		else
@@ -72,6 +75,7 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Player>> players, vector<std::shared_ptr<Enemy>> enemies)
 {
 	vector<shared_ptr<Character>> m_targets;
+
 	for (auto& skill : this->m_skills)
 	{
 		if (skill->getSingleTarget() && this->getTarget())
@@ -85,7 +89,7 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 			else
 				m_targets = this->createTargetVec(enemies);
 		}
-		skill->updateSkill(deltaTime, m_targets);
+		skill->updateSkill(deltaTime, m_targets, this->m_stats);
 	}
 }
 
@@ -123,7 +127,7 @@ void Character::useBaseAttack()
 
 //=======================================================================================
 
-void Character::createSkill(int charIndex, int& skillIndex, int effectIndex, bool single, bool onPlayer, bool active)
+void Character::createSkill(int charIndex, int skillIndex, int effectIndex, bool single, bool onPlayer, bool active)
 {
 	this->addSkill(Skill(Resources::instance().getSkillText(charIndex, skillIndex),
 		sf::Vector2f(skillIndex * (SKILL_RECT_SIZE + 20) + 30, 30),
@@ -210,7 +214,7 @@ bool Character::checkSkillClick(const sf::Vector2f& location)
 	{
 		if (skill->handleClick(location))
 		{
-			skill->useSkill(this->getPosition(), this->m_stats);
+			skill->useSkill(this->getPosition());
 			return true;
 		}
 	}

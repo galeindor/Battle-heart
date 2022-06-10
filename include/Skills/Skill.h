@@ -3,6 +3,7 @@
 #include "Effects/Heal.h"
 #include "Effects/Damage.h"
 #include "Effects/Defend.h"
+#include "Effects/LifeDrain.h"
 #include "Timer.h"
 #include "Skills/Projectile.h"
 #include "HashTable.h"
@@ -17,8 +18,8 @@ public:
 	~Skill() = default;
 
 	// Management
-	void updateSkill(float deltaTime, vector<shared_ptr<Character>> targets);
-	void useSkill(sf::Vector2f myLoc, vector<shared_ptr<Stat>> myStats);
+	void updateSkill(float deltaTime, vector<shared_ptr<Character>> targets, vector<shared_ptr<Stat>> myStats);
+	void useSkill(sf::Vector2f myLoc);
 	void setTargets(vector<shared_ptr<Character>> targets) { this->m_targets = targets; }
 	sf::Vector2f norm(sf::Vector2f vec);
 

@@ -7,6 +7,7 @@ Board::Board(const LevelInfo& currLevelInfo)
 	this->initPlayers(currLevelInfo.m_lvlPlayers);
 	this->initEnemies(currLevelInfo.m_enemyWaves[this->m_currWave]);
 	this->initSelected();
+	this->updateBoard(1.f, false);
 }
 
 //==========================================================

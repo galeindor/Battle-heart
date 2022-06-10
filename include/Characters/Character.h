@@ -40,6 +40,7 @@ public:
 
 	template <class Type>
 	vector<shared_ptr<Character>> createTargetVec(Type type);
+
 	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies , Character* obj);
 
 
@@ -48,11 +49,9 @@ public:
 	bool checkSkillClick(const sf::Vector2f& location);
 	void drawSkills(sf::RenderWindow& window, bool selected);
 
-
-
 protected:
 	
-	void createSkill(int CharIndex, int& skillIndex, int effectIndex,
+	void createSkill(int CharIndex, int skillIndex, int effectIndex,
 					 bool single, bool onPlayer, bool active);
 	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }
 	void useSkill(int index);
