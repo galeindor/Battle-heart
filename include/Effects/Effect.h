@@ -18,7 +18,7 @@ public:
 	void draw(sf::RenderWindow& window);
 
 	virtual void affect(float baseValue, vector<std::shared_ptr<Stat>> myStats,
-						vector < shared_ptr<Character>> targets) = 0;
+						vector < shared_ptr<Character>> targets, float factor) = 0;
 
 	enum Effects
 	{

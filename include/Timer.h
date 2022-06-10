@@ -3,7 +3,7 @@
 class Timer
 {
 public:
-	Timer(const float cooldown) : m_cooldown(cooldown), m_timeLeft(cooldown) {}
+	Timer(const float cooldown) : m_cooldown(cooldown), m_timeLeft(0) {}
 
 	float updateTimer()
 	{

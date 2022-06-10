@@ -3,14 +3,13 @@
 #include "Characters/Character.h"
 
 Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
-	const int effectIndex, bool singleTarget, bool onPlayer, bool isActive)
-	: m_timer(Timer(cooldown)), m_singleTarget(singleTarget), m_onPlayer(onPlayer), m_isActive(isActive)
+	const int effectIndex, bool singleTarget, bool onPlayer, bool isActive , float factor)
+	: m_timer(Timer(cooldown)), m_singleTarget(singleTarget),
+	m_onPlayer(onPlayer), m_isActive(isActive) , m_factor(factor)
 {
-	m_baseValue = 0;
 	this->initRect(texture, pos);
 	this->initCooldown(pos);
 	this->initEffect(effectIndex);
-	
 }
 
 //============================================================================
@@ -50,7 +49,7 @@ void Skill::useSkill(sf::Vector2f myLoc ,  std::vector<std::shared_ptr<Stat>> my
 			auto projectile = Projectile(myLoc,target->getPosition(), _healBall, target);
 			m_projs.push_back(projectile);
 		}
-		this->m_effect->affect(m_baseValue, myStats, this->m_targets);
+		this->m_effect->affect(m_baseValue, myStats, this->m_targets , m_factor);
 	}
 }
 
@@ -91,7 +90,8 @@ void Skill::initRect(sf::Texture* texture, const sf::Vector2f pos)
 void Skill::initCooldown(const sf::Vector2f pos)
 {
 	m_cooldownScale.setFillColor(sf::Color(0, 0, 0, 200));
-	m_cooldownScale.setSize({ SKILL_RECT_SIZE , 0 });
+	if (m_cooldownScale.getTexture())
+		m_cooldownScale.setSize({ SKILL_RECT_SIZE , 0 });
 	m_cooldownScale.setPosition(pos);
 }
 
@@ -131,5 +131,5 @@ bool Skill::handleClick(const sf::Vector2f& pos)
 {
 	auto timeLeft = m_timer.getTimeLeft();
 	timeLeft = std::max(timeLeft, 0.f);
-	return (timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
+	return m_isActive &&(timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
 }

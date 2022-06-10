@@ -25,6 +25,11 @@ configure_file ("skills/debilitate.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/intimidate.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/drainlife.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
+configure_file ("skills/clericBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("skills/archerBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("skills/knightBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("skills/witchBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
 
 
 # Fonts
