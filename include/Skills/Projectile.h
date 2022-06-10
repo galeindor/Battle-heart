@@ -11,6 +11,6 @@ public:
 	virtual bool checkIntersection() const override;
 
 	void draw(sf::RenderWindow& window);
-	void updateProjectile(sf::Vector2f steerForce, float deltaTime);
+	void updateProjectile(float deltaTime);
 };
 

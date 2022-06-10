@@ -25,8 +25,8 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 
 		for (int i = 0; i < m_projs.size();)
 		{
-			this->m_projs[i].update(deltaTime);
-			if (this->m_projs[i].handleAnimation({ 0, 0 }, deltaTime))
+			this->m_projs[i].updateProjectile(deltaTime);
+			if (this->m_projs[i].handleAnimation({ 1,1 }, deltaTime))
 			{
 				this->m_projs[i] = this->m_projs.back();
 				this->m_projs.pop_back();

@@ -47,7 +47,7 @@ struct AnimationParams {
 };
 
 const AnimationParams characterParams = { sf::Vector2f(9,5), 0.3f };
-const AnimationParams projectileParams = { sf::Vector2f(1, 7), 0.3f };
+const AnimationParams projectileParams = { sf::Vector2f(8, 1), 0.3f };
 const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
 // Stats ----------------------------------
@@ -73,14 +73,18 @@ const std::vector<std::vector<float>> charactersStats =
 // Textures ----------------------------------
 enum ObjectEnums
 {
-	_cleric, _knight, _archer, _dummy, _select, _healBall, NUM_OF_OBJECTS
+	_cleric, _knight, _archer, _dummy, _select, _healBall , NUM_OF_OBJECTS
 };
-const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png", "healEffect.png" };
+const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png", "healProj.png" };
+
+
 
 enum Effects
 {
 	_heal, _damage, _defend, _drainLife, NUM_OF_EFFECTS
 };
+
+
 const std::string effectsTextures[NUM_OF_EFFECTS] = { "healEffect.png" };
 constexpr auto EFFECT_COOLDOWN = 2.f;
 // Skills ----------------------------------
@@ -158,6 +162,8 @@ struct LevelInfo
 	bool m_lvlPlayers[NUM_OF_PLAYERS];
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
 };
+
+
 
 // Maps
 
