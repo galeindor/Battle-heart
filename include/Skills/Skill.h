@@ -3,6 +3,7 @@
 #include "Effects/Heal.h"
 #include "Effects/Damage.h"
 #include "Effects/Defend.h"
+#include "Effects/LifeDrain.h"
 #include "Timer.h"
 #include "Skills/Projectile.h"
 #include "HashTable.h"

@@ -21,7 +21,7 @@ void Controller::run()
 	{
 		drawGame();
 		deltaTime = this->m_clock.restart().asSeconds();
-
+		this->update(deltaTime);
 		for (auto event = sf::Event{}; m_window.pollEvent(event); )
 		{
  			switch (event.type)
@@ -42,7 +42,6 @@ void Controller::run()
 			}
 
 		}
-		this->update(deltaTime);
 	}
 }
 

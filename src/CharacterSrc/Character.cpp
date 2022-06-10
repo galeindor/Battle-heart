@@ -36,7 +36,10 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 		if (target->isAlive())
 			this->setDestination(this->getTarget()->getPosition());
 		else
+		{
 			this->setAsTarget(nullptr);
+			this->setDestination(this->getPosition());
+		}
 	}
 
 	if (!this->checkIntersection())
@@ -71,6 +74,7 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Player>> players, vector<std::shared_ptr<Enemy>> enemies)
 {
 	vector<shared_ptr<Character>> m_targets;
+
 	for (auto& skill : this->m_skills)
 	{
 		if (skill->getSingleTarget() && this->getTarget())
@@ -84,7 +88,6 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 			else
 				m_targets = this->createTargetVec(enemies);
 		}
-		
 		skill->updateSkill(deltaTime, m_targets);
 	}
 }
@@ -123,7 +126,7 @@ void Character::useBaseAttack()
 
 //=======================================================================================
 
-void Character::createSkill(int charIndex, int& skillIndex, int effectIndex, bool single, bool onPlayer, bool active)
+void Character::createSkill(int charIndex, int skillIndex, int effectIndex, bool single, bool onPlayer, bool active)
 {
 	this->addSkill(Skill(Resources::instance().getSkill(charIndex, skillIndex),
 		sf::Vector2f(skillIndex * (SKILL_RECT_SIZE + 20) + 30, 30),

@@ -44,7 +44,7 @@ void Skill::useSkill(sf::Vector2f myLoc ,  std::vector<std::shared_ptr<Stat>> my
 	if (this->m_timer.isTimeUp())
 	{
 		this->m_timer.setTimer();
-		for (auto target : m_targets)
+		for (auto& target : m_targets)
 		{
 			auto projectile = Projectile(myLoc,target->getPosition(), _healBall, target);
 			m_projs.push_back(projectile);
@@ -57,7 +57,6 @@ void Skill::useSkill(sf::Vector2f myLoc ,  std::vector<std::shared_ptr<Stat>> my
 
 void Skill::initEffect(const int effectIndex)
 {
-
 	switch (effectIndex)
 	{
 	case _heal:
@@ -70,6 +69,9 @@ void Skill::initEffect(const int effectIndex)
 
 	case _defend:
 		this->m_effect = new Defend(effectParams);
+		break;
+	case _drainLife:
+		this->m_effect = new LifeDrain(effectParams);
 		break;
 	default:
 		break;
@@ -131,5 +133,5 @@ bool Skill::handleClick(const sf::Vector2f& pos)
 {
 	auto timeLeft = m_timer.getTimeLeft();
 	timeLeft = std::max(timeLeft, 0.f);
-	return m_isActive &&(timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
+	return m_isActive && (timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
 }
