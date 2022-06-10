@@ -16,7 +16,7 @@ Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 
 //============================================================================
 
-void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targets)
+void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targets, std::vector<std::shared_ptr<Stat>> myStats)
 {
 	if (!this->m_timer.isTimeUp())
 	{
@@ -25,9 +25,10 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 
 		for (int i = 0; i < m_projs.size();i++)
 		{
-			this->m_projs[i].updateProjectile(deltaTime);
+			this->m_projs[i].updateProjectile({ 1,1 },deltaTime);
 			if (m_projs[i].checkIntersection())
 			{
+				this->m_effect->affect(m_baseValue, myStats, m_projs[i].getTarget(), m_factor);
 				m_projs.erase(m_projs.begin()+i);
 			}
 		}
@@ -38,7 +39,7 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 
 //============================================================================
 
-void Skill::useSkill(sf::Vector2f myLoc ,  std::vector<std::shared_ptr<Stat>> myStats)
+void Skill::useSkill(sf::Vector2f myLoc)
 {
 	if (this->m_timer.isTimeUp())
 	{
@@ -50,7 +51,6 @@ void Skill::useSkill(sf::Vector2f myLoc ,  std::vector<std::shared_ptr<Stat>> my
 			auto projectile = Projectile(myLoc, target->getPosition(), this->m_projType, target);
 			m_projs.push_back(projectile);
 		}
-		this->m_effect->affect(m_baseValue, myStats, this->m_targets , m_factor);
 	}
 }
 

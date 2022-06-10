@@ -40,6 +40,7 @@ public:
 
 	template <class Type>
 	vector<shared_ptr<Character>> createTargetVec(Type type);
+
 	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies , Character* obj);
 
 

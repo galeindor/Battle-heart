@@ -55,7 +55,7 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 			if (!handleAnimation(this->getVelocity() * deltaTime, deltaTime))
 			{
 				this->m_skills[_basic]->handleClick({ 0, 0 });
-				this->m_skills[_basic]->useSkill(this->getPosition(), this->m_stats);
+				this->m_skills[_basic]->useSkill(this->getPosition());
 			}
 		}
 		else
@@ -89,7 +89,7 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 			else
 				m_targets = this->createTargetVec(enemies);
 		}
-		skill->updateSkill(deltaTime, m_targets);
+		skill->updateSkill(deltaTime, m_targets, this->m_stats);
 	}
 }
 
@@ -214,7 +214,7 @@ bool Character::checkSkillClick(const sf::Vector2f& location)
 	{
 		if (skill->handleClick(location))
 		{
-			skill->useSkill(this->getPosition(), this->m_stats);
+			skill->useSkill(this->getPosition());
 			return true;
 		}
 	}

@@ -49,8 +49,9 @@ public:
 	sf::Vector2f adjustLocation(sf::Vector2f location);
 
 protected:
-	void setRange(float val) { m_range = val; }
-	void setScale(sf::Vector2f scale) { m_sprite.setScale(scale); }
+	void setRange(float val)				{ m_range = val; }
+	void setScale(sf::Vector2f scale)		{ m_sprite.setScale(scale); }
+	void setOrigin(sf::Vector2f origin)		{ m_sprite.setOrigin(origin); }
 private:
 	void initSprite(const sf::Vector2f pos, const int index);
 
