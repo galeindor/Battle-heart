@@ -20,6 +20,7 @@
                                               "CharacterSrc/Player.cpp"
                                               "SkillSrc/Skill.cpp"
                                               "SkillSrc/Projectile.cpp"
+                                              "Projectile1.cpp"
                                               "EffectSrc/Effect.cpp"
                                               "EffectSrc/Heal.cpp"
                                               "EffectSrc/Damage.cpp"

@@ -73,9 +73,9 @@ const std::vector<std::vector<float>> charactersStats =
 // Textures ----------------------------------
 enum ObjectEnums
 {
-	_cleric, _knight, _archer, _dummy, _select, _healBall, NUM_OF_OBJECTS
+	_cleric, _knight, _archer, _dummy, _select, NUM_OF_OBJECTS
 };
-const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png" , "healProj.png" };
+const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png" };
 
 enum Effects
 {
@@ -129,16 +129,16 @@ enum Locations
 	_target, _object, _velocity, _obstacles
 };
 
-enum Physics
-{
-	_maxVelocity, _maxForce, _mass
-};
-
-//Physics
+//Physics ####### NEED TO APPLY
 const std::vector<std::vector<float>> objectsPhysics = { { 0.1f, 50.f, 90.f },
 														  { 0.3f, 35.f, 80.f },
 														  { 0.2f, 40.f, 100.f },
 														  { 0.1f, 45.f, 70.f } };
+
+enum Physics
+{
+	_maxVelocity, _maxForce, _mass
+};
 
 struct LevelInfo
 {
@@ -147,15 +147,12 @@ struct LevelInfo
 };
 
 // Projectiles
-
-/*
 enum Projectiles
 {
-	_healBall = NUM_OF_OBJECTS , NUM_OF_PROJ
+	_healBall, NUM_OF_PROJ
 };
-*/
 
-//const std::string proj_textures[NUM_OF_PROJ] = { "healProj.png"};
+const std::string projTexts[NUM_OF_PROJ] = { "healProj.png"};
 
 // Maps
 

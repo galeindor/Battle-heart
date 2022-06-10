@@ -6,11 +6,11 @@ Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 	const int effectIndex, bool singleTarget, bool onPlayer, bool isActive)
 	: m_timer(Timer(cooldown)), m_singleTarget(singleTarget), m_onPlayer(onPlayer), m_isActive(isActive)
 {
+	this->m_projType = _healBall;
 	m_baseValue = 0;
 	this->initRect(texture, pos);
 	this->initCooldown(pos);
 	this->initEffect(effectIndex);
-	
 }
 
 //============================================================================
@@ -22,15 +22,14 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 		this->setTargets(targets);
 		this->m_timer.updateTimer(deltaTime);
 
-		for (auto i = 0; i < m_projs.size(); i++)
+		for (int i = 0; i < m_projs.size();)
 		{
-			m_projs[i].behaviour()->Pursue(m_projs[i].getPosition(), m_projs[i].getVelocity(), m_projs[i].getMaxVelocity(), m_projs[i].getMaxForce(), m_projs[i].getDest());
-			m_projs[i].updateProjectile(m_projs[i].getVelocity(),deltaTime);
-			if (m_projs[i].checkIntersection())
+			if (this->m_projs[i].update(deltaTime))
 			{
-				//impact here
-				m_projs.erase(m_projs.begin() + i);
+				this->m_projs[i] = this->m_projs.back();
+				this->m_projs.pop_back();
 			}
+			else i++;
 		}
 	}
 
@@ -47,11 +46,26 @@ void Skill::useSkill(sf::Vector2f myLoc ,  std::vector<std::shared_ptr<Stat>> my
 		this->m_timer.setTimer();
 		for (auto target : m_targets)
 		{
-			auto projectile = Projectile(myLoc,target->getPosition(), _healBall, target);
+			auto direction = target->getPosition() - myLoc;
+			direction = norm(direction);
+			auto projectile = Projectile1(myLoc, direction, 1.1f, this->m_projType, target);
 			m_projs.push_back(projectile);
 		}
 		this->m_effect->affect(m_baseValue, myStats, this->m_targets);
 	}
+}
+
+//============================================================================
+
+sf::Vector2f Skill::norm(sf::Vector2f vec)
+{
+	float l = std::sqrt(vec.x * vec.x + vec.y * vec.y);
+	if (l > 0.0f)
+		vec = sf::Vector2f(vec.x / l, vec.y / l);
+	else
+		vec = sf::Vector2f(0, 0);
+
+	return vec;
 }
 
 //============================================================================
@@ -97,7 +111,7 @@ void Skill::initCooldown(const sf::Vector2f pos)
 
 //=============================================================================
 
-void Skill::draw(sf::RenderWindow& window , bool selected)
+void Skill::draw(sf::RenderWindow& window, bool selected)
 {
 	if (selected)
 	{
@@ -107,9 +121,7 @@ void Skill::draw(sf::RenderWindow& window , bool selected)
 	}
 
 	for (auto& proj : m_projs)
-	{
 		proj.draw(window);
-	}		
 }
 
 //==========================================================
@@ -131,5 +143,9 @@ bool Skill::handleClick(const sf::Vector2f& pos)
 {
 	auto timeLeft = m_timer.getTimeLeft();
 	timeLeft = std::max(timeLeft, 0.f);
-	return (timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
+
+	if (this->m_isActive)
+		return (timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
+	else
+		return (timeLeft == 0.f);
 }

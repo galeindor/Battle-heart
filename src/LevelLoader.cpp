@@ -24,7 +24,6 @@ void LevelLoader::readFromFile(const string fileName)
     string word;
     struct LevelInfo currLvlInfo = {};
     unsigned int currLevel = 0;
-    bool readingWave = false;
 
     while (file.get(c)) // While there's something to read in the file.
     {

@@ -8,9 +8,9 @@ Dummy::Dummy()
 
 void Dummy::initSkills(const int index)
 {
-	this->addSkill(Skill(Resources::instance().getSkill(index, 0),
+	this->addSkill(Skill(Resources::instance().getSkillText(index, 0),
 		sf::Vector2f(0 * (SKILL_RECT_SIZE + 20) + 30, 30),
-		playersBasicStats[index][_attackSpeed], _damage,
-		singleTarget, onPlayer, isActive));
+		charactersStats[index][_attackSpeed], _damage,
+		singleTarget, onPlayer, false));
 }
 

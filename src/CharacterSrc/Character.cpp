@@ -27,9 +27,6 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
 	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
 
-	// Skills update
-	this->updateSkills(deltaTime, m_players, m_enemies);
-
 	auto target = this->getTarget();
 	if (target)
 	{
@@ -52,15 +49,19 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 		if (targetInRange())
 		{
 			this->useBaseAttack();
-			if (handleAnimation(this->getVelocity() * deltaTime, deltaTime))
+			if (!handleAnimation(this->getVelocity() * deltaTime, deltaTime))
 			{
+				this->m_skills[_basic]->handleClick({ 0, 0 });
 				this->m_skills[_basic]->useSkill(this->getPosition(), this->m_stats);
-				return;
 			}
 		}
 		else
 			this->setAnimation(_idle);
 	}
+
+	// Skills update
+	this->updateSkills(deltaTime, m_players, m_enemies);
+
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->getPosition());
 	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
@@ -75,7 +76,7 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 	{
 		if (skill->getSingleTarget() && this->getTarget())
 		{
-			m_targets.push_back(locateInVector(players,enemies,this->getTarget()));
+			m_targets.push_back(locateInVector(players, enemies, this->getTarget()));
 		}
 		else if (!skill->getSingleTarget())
 		{
@@ -84,7 +85,6 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 			else
 				m_targets = this->createTargetVec(enemies);
 		}
-		
 		skill->updateSkill(deltaTime, m_targets);
 	}
 }

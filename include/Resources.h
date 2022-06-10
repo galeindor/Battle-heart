@@ -35,6 +35,7 @@ public:
 	sf::Texture* getEffectTexture(int i) { return &m_effectsTextures[i]; }
 	sf::Texture* getMenuTexture(int i) { return &m_menuTextures[i]; }
 	sf::Texture* getSkillText(int i, int j) { return &m_skillTextures[i][j]; }
+	sf::Texture* getProjText(int i) { return &m_projTextures[i]; }
 	void playSound(int index);
 	void setVolume(int volume);
 	void setPopOutScreen(sf::RectangleShape& rect, sf::Text& text);
@@ -49,6 +50,7 @@ private:
 	sf::Texture m_effectsTextures[NUM_OF_EFFECTS];
 	sf::Texture m_skillTextures[NUM_OF_PLAYERS][MAX_SKILL];
 	sf::Texture m_bgTextures[NUM_OF_BG];
+	sf::Texture m_projTextures[NUM_OF_PROJ];
 	//sf::Texture m_projTextures[NUM_OF_PROJ];
 	sf::Texture m_menuTextures[NUM_OF_MENU_TEXTS];
 	sf::Font m_buttonsFont;
