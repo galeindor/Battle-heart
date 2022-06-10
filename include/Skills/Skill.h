@@ -33,7 +33,7 @@ private:
 
 	void updateVisual();
 
-	Projectiles m_projType;
+	int m_projType;
 	// Settings of the skill
 	Effect* m_effect;
 	bool m_singleTarget;
@@ -42,7 +42,7 @@ private:
 	Timer m_timer;
 	//std::vector<Target> m_targets = {};
 	vector<shared_ptr<Character>> m_targets;
-	vector<Projectile1> m_projs;
+	vector<Projectile> m_projs;
 	float m_baseValue;
 	float m_factor;
 

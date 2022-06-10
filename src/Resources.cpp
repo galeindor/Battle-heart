@@ -34,9 +34,6 @@ void Resources::loadResources()
 	for (int i = 0; i < NUM_OF_EFFECTS; i++)
 		m_effectsTextures[i].loadFromFile(effectsTextures[i]);
 
-	for (int i = 0; i < NUM_OF_PROJ; i++)
-		m_projTextures[i].loadFromFile(projTexts[i]);
-
 	for (int i = 0; i < NUM_OF_MENU_TEXTS; i++)
 		m_menuTextures[i].loadFromFile(menuTexts[i]);
 

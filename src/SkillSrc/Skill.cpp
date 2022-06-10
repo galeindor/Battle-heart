@@ -25,7 +25,10 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 
 		for (int i = 0; i < m_projs.size();)
 		{
-			if (this->m_projs[i].update(deltaTime))
+			//void Projectile::updateProjectile(sf::Vector2f steerForce, float deltaTime)
+
+			this->m_projs[i].updateProjectile(deltaTime);
+			if (this->m_projs[i].handleAnimation({ 1,1 }, deltaTime))
 			{
 				this->m_projs[i] = this->m_projs.back();
 				this->m_projs.pop_back();
@@ -49,7 +52,7 @@ void Skill::useSkill(sf::Vector2f myLoc ,  std::vector<std::shared_ptr<Stat>> my
 		{
 			auto direction = target->getPosition() - myLoc;
 			direction = norm(direction);
-			auto projectile = Projectile1(myLoc, direction, 1.1f, this->m_projType, target);
+			auto projectile = Projectile(myLoc, target->getPosition(), this->m_projType, target);
 			m_projs.push_back(projectile);
 		}
 		this->m_effect->affect(m_baseValue, myStats, this->m_targets , m_factor);
