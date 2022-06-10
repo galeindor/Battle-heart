@@ -50,7 +50,7 @@ public:
 
 protected:
 	void setRange(float val) { m_range = val; }
-
+	void setScale(sf::Vector2f scale) { m_sprite.setScale(scale); }
 private:
 	void initSprite(const sf::Vector2f pos, const int index);
 

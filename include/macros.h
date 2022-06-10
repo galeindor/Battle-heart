@@ -47,7 +47,7 @@ struct AnimationParams {
 };
 
 const AnimationParams characterParams = { sf::Vector2f(9,5), 0.3f };
-const AnimationParams projectileParams = { sf::Vector2f(8, 1), 0.3f };
+const AnimationParams projectileParams = { sf::Vector2f(22, 1), 0.3f };
 const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
 // Stats ----------------------------------

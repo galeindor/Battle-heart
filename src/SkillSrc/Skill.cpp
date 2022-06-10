@@ -23,18 +23,15 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 		this->setTargets(targets);
 		this->m_timer.updateTimer(deltaTime);
 
-		for (int i = 0; i < m_projs.size();)
+		for (int i = 0; i < m_projs.size();i++)
 		{
 			this->m_projs[i].updateProjectile(deltaTime);
-			if (this->m_projs[i].handleAnimation({ 1,1 }, deltaTime))
+			if (m_projs[i].checkIntersection())
 			{
-				this->m_projs[i] = this->m_projs.back();
-				this->m_projs.pop_back();
+				m_projs.erase(m_projs.begin()+i);
 			}
-			else i++;
 		}
 	}
-
 	for (auto& target : m_targets)
 		this->m_effect->update(target->getPosition(), deltaTime, true);
 }

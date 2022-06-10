@@ -5,7 +5,7 @@
 class HealthBar
 {
 public:
-	HealthBar() :m_showTime(3) {}
+	HealthBar() :m_showTime(3) , m_max(100){}
 	HealthBar(sf::Vector2f pos, int maxValue);
 	~HealthBar() = default;
 	void updateHealthBar(int statVal);
