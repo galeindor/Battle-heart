@@ -110,8 +110,7 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {	{1.f, 1.2f, 1.75f , 1.
 
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
 																	{"knightBasic.png", "shield.png","swing.png" , ""} ,
-																	{"archerBasic.png", "aimedshot.png" , "barrage.png" , ""} ,
-																
+																	{"archerBasic.png", "aimedshot.png" , "barrage.png" , ""} ,						
 };
 
 // Backgrounds ----------------------------------

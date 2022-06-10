@@ -125,7 +125,7 @@ void Character::useBaseAttack()
 
 void Character::createSkill(int charIndex, int& skillIndex, int effectIndex, bool single, bool onPlayer, bool active)
 {
-	this->addSkill(Skill(Resources::instance().getSkill(charIndex, skillIndex),
+	this->addSkill(Skill(Resources::instance().getSkillText(charIndex, skillIndex),
 		sf::Vector2f(skillIndex * (SKILL_RECT_SIZE + 20) + 30, 30),
 		skillCooldowns[charIndex][skillIndex], effectIndex,
 		single, onPlayer, active, skillFactors[charIndex][skillIndex]));

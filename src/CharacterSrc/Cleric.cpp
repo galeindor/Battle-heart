@@ -25,12 +25,12 @@ bool Cleric::setTarget(std::shared_ptr<Enemy>) // cleric can't have enemy target
 void Cleric::initSkills(const int index)
 {
 	int i = 0;
-	this->addSkill(Skill(Resources::instance().getSkill(index, i), // build basic skill
+	this->addSkill(Skill(Resources::instance().getSkillText(index, i), // build basic skill
 						sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30),
 						skillCooldowns[index][i], _heal,
 						singleTarget, onPlayer, !isActive, 1.f));
 	i++;
-	this->addSkill(Skill(Resources::instance().getSkill(index, i), // build multi heal skill
+	this->addSkill(Skill(Resources::instance().getSkillText(index, i), // build multi heal skill
 						sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30),
 						skillCooldowns[index][i], _heal,
 						!singleTarget, onPlayer, isActive , 1.75f));
