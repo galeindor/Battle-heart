@@ -27,9 +27,6 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
 	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
 
-	// Skills update
-	this->updateSkills(deltaTime, m_players, m_enemies);
-
 	auto target = this->getTarget();
 	if (target)
 	{
@@ -55,15 +52,19 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 		if (targetInRange())
 		{
 			this->useBaseAttack();
-			if (handleAnimation(this->getVelocity() * deltaTime, deltaTime))
+			if (!handleAnimation(this->getVelocity() * deltaTime, deltaTime))
 			{
+				this->m_skills[_basic]->handleClick({ 0, 0 });
 				this->m_skills[_basic]->useSkill(this->getPosition(), this->m_stats);
-				return;
 			}
 		}
 		else
 			this->setAnimation(_idle);
 	}
+
+	// Skills update
+	this->updateSkills(deltaTime, m_players, m_enemies);
+
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->getPosition());
 	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
@@ -79,7 +80,7 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 	{
 		if (skill->getSingleTarget() && this->getTarget())
 		{
-			m_targets.push_back(locateInVector(players,enemies,this->getTarget()));
+			m_targets.push_back(locateInVector(players, enemies, this->getTarget()));
 		}
 		else if (!skill->getSingleTarget())
 		{
@@ -97,7 +98,7 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 void Character::initStats(const int index)
 {
 	for (int stat = 0; stat < NUM_OF_STATS; stat++)
-		this->m_stats.push_back(std::make_shared<Stat>(playersBasicStats[index][stat]));
+		this->m_stats.push_back(std::make_shared<Stat>(charactersStats[index][stat]));
 }
 
 //=======================================================================================
@@ -128,7 +129,7 @@ void Character::useBaseAttack()
 
 void Character::createSkill(int charIndex, int skillIndex, int effectIndex, bool single, bool onPlayer, bool active)
 {
-	this->addSkill(Skill(Resources::instance().getSkill(charIndex, skillIndex),
+	this->addSkill(Skill(Resources::instance().getSkillText(charIndex, skillIndex),
 		sf::Vector2f(skillIndex * (SKILL_RECT_SIZE + 20) + 30, 30),
 		skillCooldowns[charIndex][skillIndex], effectIndex,
 		single, onPlayer, active, skillFactors[charIndex][skillIndex]));

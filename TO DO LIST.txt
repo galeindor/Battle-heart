@@ -2,24 +2,22 @@
 +- = Medium important.
 !!! = Very important.
 
-Yet to be taken:
+Tasks:
+-(!!!) Skills hashing.
+-(+-) Add levels loader to menu.
+-(+-) Add unmmovable objects (obstacles). (Maybe.)
+-(!!!) Class projectile (visuals of skills).
+-(!!!) Think of how to improve class Board.
+-(+-) Think of how to add and balance the progress in the game.
+-(***) Make sure the characters don't spawn on each other.
+-(+-) Add more of every class (effects, enemies, players, int).
+-(+-) Start constructing stuff like skills.
 -(!!!) Add progress in the game such as unlocking new characters or stats increasing as the level increases.
--(+-) Create the list of needed sounds for Osher (partially done).
 -(***) Edit the sprite sheets for objects.
 
-Nadav:
-
-Ely:
--(+-) Add levels loader to menu.
--(+-) Add unmmovable objects (obstacles).
-
-Gal:
--(***) Split updateBoard (too crowded).
--(!!!) Class projectile (visuals of skills).
-
-Stuff to figure out:
--(+-) Think of how to balance the progress in the game.
--(***) Make sure the enemies don't spawn on each other.
+Bugs:
+- Enemies ignore closest target on spawn.
+- Death process is bugged.
 
 List for Osher:
 - Background music for menu.
@@ -29,6 +27,3 @@ List for Osher:
 - Skills sounds (Gal).
 - Collision sound.
 - Human roar sound (warrior shouting)
-
-Bugs:
-- Enemies ignore closest target on spawn.

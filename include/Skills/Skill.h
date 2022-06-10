@@ -7,6 +7,7 @@
 #include "Timer.h"
 #include "Skills/Projectile.h"
 #include "HashTable.h"
+#include "Projectile1.h"
 using std::shared_ptr;
 using std::vector;
 
@@ -21,6 +22,7 @@ public:
 	void updateSkill(float deltaTime, vector<shared_ptr<Character>> targets);
 	void useSkill(sf::Vector2f myLoc, vector<shared_ptr<Stat>> myStats);
 	void setTargets(vector<shared_ptr<Character>> targets) { this->m_targets = targets; }
+	sf::Vector2f norm(sf::Vector2f vec);
 
 	// Getters
 	bool getOnPlayer() const { return this->m_onPlayer; }
@@ -33,6 +35,7 @@ private:
 
 	void updateVisual();
 
+	int m_projType;
 	// Settings of the skill
 	Effect* m_effect;
 	bool m_singleTarget;

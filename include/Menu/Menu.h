@@ -15,6 +15,7 @@ public:
 	void render(sf::RenderWindow& window); // Function to display the menu.
 	void handleClick(sf::Vector2f pos);
 	void hoverButtons(sf::Vector2f pos);
+
 private:
 	void initBG();
 	void initButtons();

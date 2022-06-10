@@ -11,7 +11,6 @@ configure_file ("enemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
 # Backgrounds and utility
 configure_file ("plain.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("select.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("menuBG.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Skills
 configure_file ("skills/heal.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -30,8 +29,6 @@ configure_file ("skills/archerBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/knightBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/witchBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
-
-
 # Fonts
 configure_file ("amatic.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("titillium.otf" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -44,3 +41,11 @@ configure_file ("healProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Levels file
 configure_file ("Levels.txt" ${CMAKE_BINARY_DIR} COPYONLY)
+
+# Menu
+configure_file ("MenuImages/menuBG.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("MenuImages/currentLevelIcon.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("MenuImages/levelSelection.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("MenuImages/levelCompleted.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("MenuImages/startButton.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("MenuImages/startButtonHL.png" ${CMAKE_BINARY_DIR} COPYONLY)

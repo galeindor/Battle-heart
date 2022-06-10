@@ -23,7 +23,8 @@ constexpr auto NONE_SELECTED = -1;
 constexpr auto PLAYER_DETECTED = -2;
 constexpr auto NEW_LEVEL_DETECTED = -3;
 constexpr auto WAVE = '!';
-// Buttons
+
+// Buttons ----------------------------------
 enum MenuButtons
 {
 	_battle, _levels, _escape, NUM_OF_MBUTTONS
@@ -46,7 +47,7 @@ struct AnimationParams {
 };
 
 const AnimationParams characterParams = { sf::Vector2f(9,5), 0.3f };
-const AnimationParams projectileParams = { sf::Vector2f(1, 7), 0.3f };
+const AnimationParams projectileParams = { sf::Vector2f(8, 1), 0.3f };
 const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
 // Stats ----------------------------------
@@ -61,7 +62,7 @@ enum Stats
 	_hp, _attackSpeed, _dmg, _range, _defence, NUM_OF_STATS
 };
 
-const std::vector<std::vector<float>> playersBasicStats =
+const std::vector<std::vector<float>> charactersStats =
 {
 	/* cleric */ { 70.f, 2.f, 6.f, 800.f , 10.f},
 	/* knight */ { 120.f, 3.f, 80.f, 40.f , 20.f},
@@ -72,14 +73,18 @@ const std::vector<std::vector<float>> playersBasicStats =
 // Textures ----------------------------------
 enum ObjectEnums
 {
-	_cleric, _knight, _archer, _dummy, _select, _healBall, NUM_OF_OBJECTS
+	_cleric, _knight, _archer, _dummy, _select, _healBall , NUM_OF_OBJECTS
 };
-const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png" , "healProj.png" };
+const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png", "healProj.png" };
+
+
 
 enum Effects
 {
 	_heal, _damage, _defend, _drainLife, NUM_OF_EFFECTS
 };
+
+
 const std::string effectsTextures[NUM_OF_EFFECTS] = { "healEffect.png" };
 constexpr auto EFFECT_COOLDOWN = 2.f;
 // Skills ----------------------------------
@@ -109,18 +114,31 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {	{1.f, 1.2f, 1.75f , 1.
 
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
 																	{"knightBasic.png", "shield.png","swing.png" , ""} ,
-																	{"archerBasic.png", "aimedshot.png" , "barrage.png" , ""} ,
-																
+																	{"archerBasic.png", "aimedshot.png" , "barrage.png" , ""} ,						
 };
 
 // Backgrounds ----------------------------------
 enum Backgrounds
 {
-	_menu, _firstLevel, NUM_OF_BG
+	_levelSelect, _menu, _firstLevel, NUM_OF_BG
 };
-const std::string bg_textures[NUM_OF_BG] = { "plain.png", "menuBG.png" };
 
+const std::string bgTextures[NUM_OF_BG] = { "levelSelectBG.png", "menuBG.png", "plain.png" };
 
+// Menu -----------------------------------------
+enum MenuTextures
+{
+	_currLvlIcon, _lvlCompleted, _lvlLocked, _levelSelection, startButton, startButtonHL, NUM_OF_MENU_TEXTS
+};
+
+const std::string menuTexts[NUM_OF_MENU_TEXTS] = { 
+	"currentLevelIcon.png", 
+	"levelCompleted.png",
+	"locked.png",
+	"levelSelection.png",
+	"startButton.png",
+	"startButtonHL.png"
+};
 // Movement and Steering ------------------------
 
 enum Locations
@@ -128,16 +146,16 @@ enum Locations
 	_target, _object, _velocity, _obstacles
 };
 
-enum Physics
-{
-	_maxVelocity, _maxForce, _mass
-};
-
-//Physics
+//Physics ####### NEED TO APPLY
 const std::vector<std::vector<float>> objectsPhysics = { { 0.1f, 50.f, 90.f },
 														  { 0.3f, 35.f, 80.f },
 														  { 0.2f, 40.f, 100.f },
 														  { 0.1f, 45.f, 70.f } };
+
+enum Physics
+{
+	_maxVelocity, _maxForce, _mass
+};
 
 struct LevelInfo
 {
@@ -145,16 +163,7 @@ struct LevelInfo
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
 };
 
-// Projectiles
 
-/*
-enum Projectiles
-{
-	_healBall = NUM_OF_OBJECTS , NUM_OF_PROJ
-};
-*/
-
-//const std::string proj_textures[NUM_OF_PROJ] = { "healProj.png"};
 
 // Maps
 

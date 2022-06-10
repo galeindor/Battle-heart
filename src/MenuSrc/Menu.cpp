@@ -1,4 +1,4 @@
-#include "Menu.h"
+#include "Menu/Menu.h"
 
 Menu::Menu()
 {
@@ -104,7 +104,7 @@ void Menu::hoverButtons(sf::Vector2f pos)
 
 void Menu::initBG()
 {
-	this->m_bg.setTexture(*Resources::instance().getBackground(1));
+	this->m_bg.setTexture(*Resources::instance().getBackground(_menu));
 	this->m_bg.setColor(sf::Color(255, 255, 255, 255));
 }
 

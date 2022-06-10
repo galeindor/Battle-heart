@@ -1,10 +1,7 @@
 #include "SteeringInterface.h"
 
 SteeringInterface::SteeringInterface()
-{
-
-}
-
+{}
 
 SteeringInterface::~SteeringInterface(){}
 
