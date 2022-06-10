@@ -7,7 +7,7 @@ class Projectile1
 {
 public:
 	Projectile1(const sf::Vector2f& pos, const sf::Vector2f direction, 
-				const float speed, Projectiles projType,
+				const float speed, int projType,
 				std::shared_ptr<Character> target);
 	~Projectile1() = default;
 
@@ -16,6 +16,7 @@ public:
 	void draw(sf::RenderWindow& window) { window.draw(this->m_sprite); }
 
 private:
+	void initSprite(int projType, const sf::Vector2f& pos);
 	Animation m_animation;
 	std::shared_ptr<Character> m_target;
 	sf::Sprite m_sprite;

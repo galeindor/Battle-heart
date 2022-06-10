@@ -22,6 +22,7 @@ public:
 	void useSkill(sf::Vector2f myLoc, vector<shared_ptr<Stat>> myStats);
 	void setTargets(vector<shared_ptr<Character>> targets) { this->m_targets = targets; }
 	sf::Vector2f norm(sf::Vector2f vec);
+
 	// Getters
 	bool getOnPlayer() const { return this->m_onPlayer; }
 	bool getSingleTarget() const { return this->m_singleTarget; }
@@ -33,7 +34,7 @@ private:
 
 	void updateVisual();
 
-	Projectiles m_projType;
+	int m_projType;
 	// Settings of the skill
 	Effect* m_effect;
 	bool m_singleTarget;
@@ -42,7 +43,7 @@ private:
 	Timer m_timer;
 	//std::vector<Target> m_targets = {};
 	vector<shared_ptr<Character>> m_targets;
-	vector<Projectile1> m_projs;
+	vector<Projectile> m_projs;
 	float m_baseValue;
 	float m_factor;
 

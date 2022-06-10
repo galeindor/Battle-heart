@@ -10,7 +10,7 @@ Tasks:
 -(!!!) Think of how to improve class Board.
 -(+-) Think of how to add and balance the progress in the game.
 -(***) Make sure the characters don't spawn on each other.
--(+-) Add more of every class (effects, enemies, players, projectiles).
+-(+-) Add more of every class (effects, enemies, players, int).
 -(+-) Start constructing stuff like skills.
 -(!!!) Add progress in the game such as unlocking new characters or stats increasing as the level increases.
 -(***) Edit the sprite sheets for objects.

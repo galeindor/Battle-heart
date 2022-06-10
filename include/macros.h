@@ -73,9 +73,9 @@ const std::vector<std::vector<float>> charactersStats =
 // Textures ----------------------------------
 enum ObjectEnums
 {
-	_cleric, _knight, _archer, _dummy, _select, NUM_OF_OBJECTS
+	_cleric, _knight, _archer, _dummy, _select, _healBall, NUM_OF_OBJECTS
 };
-const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png" };
+const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png", "healEffect.png" };
 
 enum Effects
 {
@@ -158,14 +158,6 @@ struct LevelInfo
 	bool m_lvlPlayers[NUM_OF_PLAYERS];
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
 };
-
-// Projectiles
-enum Projectiles
-{
-	_healBall, NUM_OF_PROJ
-};
-
-const std::string projTexts[NUM_OF_PROJ] = { "healProj.png"};
 
 // Maps
 
