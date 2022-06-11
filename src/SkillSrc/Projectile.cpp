@@ -47,6 +47,6 @@ void Projectile::updateProjectile(sf::Vector2f steerForce,float deltaTime)
 	*/
 	auto dir = this->getPosition() - this->getDest();
 	dir = -dir;
-	auto speed = 3.1f;
+	auto speed = 1.1f;
 	this->setPosition(this->getPosition()+ speed * dir * deltaTime);
 }

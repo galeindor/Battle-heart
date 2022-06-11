@@ -136,6 +136,7 @@ void Character::createSkill(int charIndex, int skillIndex, int effectIndex, bool
 
 	skillIndex++;
 }
+
 //=======================================================================================
 
 void Character::useSkill(int skillIndex)
