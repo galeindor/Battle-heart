@@ -1,8 +1,10 @@
 ﻿target_sources (${CMAKE_PROJECT_NAME} PRIVATE "main.cpp"
                                               "Controller.cpp"
                                               "LevelLoader.cpp"
-                                              "MenuSrc/Menu.cpp"
-                                              "MenuSrc/LevelSelect.cpp"
+                                              "ScreenSrc/Screen.cpp"
+                                              "ScreenSrc/Gameplay.cpp"
+                                              "ScreenSrc/Menu.cpp"
+                                              "ScreenSrc/LevelSelect.cpp"
                                               "Animation.cpp"
                                               "SteeringInterface.cpp"
                                               "Object.cpp"
@@ -24,5 +26,4 @@
                                               "EffectSrc/Heal.cpp"
                                               "EffectSrc/Damage.cpp"
                                               "EffectSrc/Defend.cpp"
-                                              "EffectSrc/LifeDrain.cpp"
-                                              )
+                                              "EffectSrc/LifeDrain.cpp")

@@ -10,6 +10,7 @@ const sf::Vector2f healthOffset(30, 100);
 const sf::Vector2f selectedOffset(45, 30);
 const sf::Vector2f DEFAULT_VEC(0, 0);
 constexpr auto SPRITE_SIZE = 64;
+constexpr auto MAX_LEVELS = 15;
 constexpr auto WINDOW_WIDTH = 1400;
 constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto HEIGHT_LIMIT = 200;

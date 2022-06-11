@@ -11,6 +11,7 @@ public:
 	std::ifstream openFile(const string fileName);
 	LevelInfo getLevel(const int levelNum) const { return this->m_levels[levelNum]; }
 	bool getGameEnded(const int currLv) const { return currLv >= this->m_levels.size(); }
+	unsigned int getMaxLevel() const { return this->m_numOfLevels; }
 private:
 	std::vector<LevelInfo> m_levels = {};
 

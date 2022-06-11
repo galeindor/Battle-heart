@@ -1,97 +1,51 @@
 
 #include "Controller.h"
-int Controller::currentScreen = 0;
+#include "ScreenManager/Gameplay.h"
+#include "ScreenManager/Menu.h"
 
 Controller::Controller()
 	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Heart"),
-	  m_levelLoader(LevelLoader(LevelsFileName)),
-	  m_currLvl(0), m_board(Board(m_levelLoader.getLevel(0)))
+	  m_levelLoader(LevelLoader(LevelsFileName))
 {
-	this->m_bg.setTexture(*Resources::instance().getBackground(_firstLevel));
-	this->m_bg.setColor(sf::Color(255, 255, 255, 255));
+	this->initScreens();
+	m_screens[int(this->m_currentScreen)]->init();
 }
 
 //=======================================================================================
 
 void Controller::run()
 {
-	this->m_menu.runMenu(this->m_window);
 	float deltaTime = 0.f;
 
-	while (m_window.isOpen())
+	while (this->m_currentScreen != ScreenState::EXIT)
 	{
-		drawGame();
 		deltaTime = this->m_clock.restart().asSeconds();
-		this->update(deltaTime);
-		for (auto event = sf::Event{}; m_window.pollEvent(event); )
-		{
- 			switch (event.type)
-			{
-
-			case sf::Event::Closed:
-				m_window.close();
-				break;
-
-			case sf::Event::MouseButtonPressed:
-				auto location = m_window.mapPixelToCoords(
-					{ event.mouseButton.x, event.mouseButton.y });
-
-				if (event.mouseButton.button == sf::Mouse::Button::Left)
-					handleMouseClick(location);
-				break;
-			}
-
-		}
+		this->m_window.clear();
+		this->swapScreen();
+		this->m_screens[int(this->m_currentScreen)]->draw(this->m_window);
+		this->m_screens[int(this->m_currentScreen)]->run(this->m_window);
+		this->m_window.display();
+		this->m_screens[int(this->m_currentScreen)]->update(deltaTime);
 	}
 }
 
 //=======================================================================================
 
-void Controller::update(float deltaTime)
+void Controller::initScreens()
 {
-	if (this->m_board.updateBoard(deltaTime, this->m_charSelected))
-		if (!this->winLevel())
-			this->winGame();
+	this->m_screens.push_back(std::make_unique<Menu>(this));
+	this->m_screens.push_back(std::make_unique<Gameplay>(this));
 }
 
-//=======================================================================================
-
-bool Controller::winLevel()
+void Controller::swapScreen()
 {
-	this->m_currLvl++;
-	if (this->m_levelLoader.getGameEnded(this->m_currLvl))
-		return false;
-	
-	this->m_board = Board(this->m_levelLoader.getLevel(this->m_currLvl));
-}
+    if (this->m_changeScreen)
+    {
+        m_screens[int(this->m_currentScreen)]->init();
 
-//=======================================================================================
+        if (this->m_currentScreen == ScreenState::EXIT)
+            exit(EXIT_SUCCESS);
 
-void Controller::winGame()
-{
-	exit(EXIT_SUCCESS);
-}
-
-//=======================================================================================
-
-void Controller::handleMouseClick(sf::Vector2f location)
-{
-	if (!this->m_charSelected)
-		this->m_charSelected = this->m_board.handleFirstClick(location);
-
-	else // if a click made the player move - charSelected is no longer true
-		this->m_charSelected = !m_board.handleSecondClick(location);
-}
-
-
-//=======================================================================================
-
-void Controller::drawGame()
-{
-	m_window.clear(sf::Color::White);
-	m_window.draw(m_bg);
-
-	this->m_board.drawBoard(this->m_window, this->m_charSelected);
-
-	m_window.display();
+        this->m_changeScreen = false;
+    }
 }
