@@ -1,20 +1,14 @@
 Level 1
 Archer
-!Dummy 1 Dummy 1 !
-!Dummy 3 !
 !Dummy 3 !
 
 Level 2
 Knight
 Archer
 !Dummy 4 !
-!Dummy 4 !
-!Dummy 4 !
-!Dummy 4 !
 
 Level 3
 Knight
 Archer
 Cleric
-!Dummy 5 !
 !Dummy 5 !

@@ -8,8 +8,22 @@ class Stat;
 const std::string LevelsFileName = "Levels.txt";
 const sf::Vector2f healthOffset(30, 100);
 const sf::Vector2f selectedOffset(45, 30);
+const sf::Vector2f lsLevelsOffset(162, 120);
+const sf::Vector2f lsLevelsStartPos(304, 159);
+const sf::Vector2f lvlSelOffset(-8, -8);
+const sf::Vector2f startButtonPos(1050, 600);
+const sf::Vector2f returnButtonPos(1020, 30);
+
+// Notice it's +50 jumps in the Y
+const sf::Vector2f continueButtonPos(615, 450);
+const sf::Vector2f restartButtonPos(615, 500);
+const sf::Vector2f exitButtonPos(615, 550);
+const sf::Vector2f pauseButtonPos(1200, 200);
+
+
 const sf::Vector2f DEFAULT_VEC(0, 0);
 constexpr auto SPRITE_SIZE = 64;
+constexpr auto LEVELS_CHART_COLS = 5;
 constexpr auto MAX_LEVELS = 15;
 constexpr auto WINDOW_WIDTH = 1400;
 constexpr auto WINDOW_HEIGHT = 800;
@@ -26,11 +40,63 @@ constexpr auto WAVE = '!';
 // Buttons ----------------------------------
 enum MenuButtons
 {
-	_battle, _levels, _escape, NUM_OF_MBUTTONS
+	_battle, _levels, _help, _escape, 
+	NUM_OF_MBUTTONS
 };
 
-const std::string MENU_BUTTON_FONT = "titillium.otf";
-const std::vector<std::string> MENU_BUTTONS_STRINGS = { {"Battle"}, {"Levels"}, {"Exit"} };
+enum GameButtons
+{
+	_pause, _continue, _restart, _exitButton, 
+	_pauseHL, _continueHL , _restartHL, _exitButtonHL, 
+	NUM_OF_GBUTTONS
+};
+
+const std::string gameButtonsTexts[NUM_OF_GBUTTONS] = {
+	"pauseButton.png",
+	"continueButton.png",
+	"restartButton.png",
+	"exitButton.png",
+	"pauseButtonHL.png",
+	"continueButtonHL.png",
+	"restartButtonHL.png",
+	"exitButtonHL.png"
+};
+
+constexpr auto _levelInProgress = 2;
+
+enum GameStates
+{
+	_winLevel, _loseLevel, _pauseLevel, 
+	NUM_OF_GAME_STATES
+};
+
+const std::string gameStateTexts[NUM_OF_GAME_STATES] = {
+	"Victory.png",
+	"Defeat.png",
+	"Pause.png"
+};
+
+enum LevelSelectTextures
+{
+	_currLvlIcon, _lvlCompleted, _levelSelection, _startButton, _startButtonHL, 
+	NUM_OF_LS_TEXTS
+};
+
+const std::string lvSelTexts[NUM_OF_LS_TEXTS] = {
+	"currentLevelIcon.png",
+	"levelCompleted.png",
+	"levelSelection.png",
+	"startButton.png",
+	"startButtonHL.png"
+};
+enum LevelSelectButtons
+{
+	_start, _return, 
+	NUM_OF_LSBUTTONS
+};
+
+const std::string MAIN_FONT = "POORICH.TTF";
+const std::vector<std::string> MENU_BUTTONS_STRINGS = { {"Battle"}, {"Levels"}, {"Help"}, {"Exit"} };
 const sf::Vector2f MENU_BUTTONS_START = sf::Vector2f(436, 49);
 const int MENU_BUTTONS_OFFSET = 110, MENU_BUTTONS_GAP = 20;
 
@@ -58,7 +124,8 @@ constexpr auto SHORT_RANGE = 75.f; // regular attack cooldown
 
 enum Stats
 {
-	_hp, _attackSpeed, _dmg, _range, _defence, NUM_OF_STATS
+	_hp, _attackSpeed, _dmg, _range, _defence, 
+	NUM_OF_STATS
 };
 
 const std::vector<std::vector<float>> charactersStats =
@@ -75,8 +142,6 @@ enum ObjectEnums
 	_cleric, _knight, _archer, _dummy, _select, _healBall , NUM_OF_OBJECTS
 };
 const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png", "healProj.png" };
-
-
 
 enum Effects
 {
@@ -124,20 +189,6 @@ enum Backgrounds
 
 const std::string bgTextures[NUM_OF_BG] = { "levelSelectBG.png", "menuBG.png", "plain.png" };
 
-// Menu -----------------------------------------
-enum MenuTextures
-{
-	_currLvlIcon, _lvlCompleted, _lvlLocked, _levelSelection, startButton, startButtonHL, NUM_OF_MENU_TEXTS
-};
-
-const std::string menuTexts[NUM_OF_MENU_TEXTS] = { 
-	"currentLevelIcon.png", 
-	"levelCompleted.png",
-	"locked.png",
-	"levelSelection.png",
-	"startButton.png",
-	"startButtonHL.png"
-};
 // Movement and Steering ------------------------
 
 enum Locations

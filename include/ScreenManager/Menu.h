@@ -5,7 +5,7 @@
 class Menu : public Screen
 {
 public:
-	Menu(Controller* controller);
+	using Screen::Screen;
 	~Menu() = default;
 
 	virtual void update(const float deltaTime) override;
@@ -13,12 +13,10 @@ public:
 	virtual void draw(sf::RenderWindow& window) override;
 
 protected:
+	virtual void initButtons() override;
 	virtual void handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window) override;
 	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 
 private:
-	void initButtons();
-
-	Controller* m_controller;
 	std::vector<sf::Text> m_buttons;
 };

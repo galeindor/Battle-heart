@@ -34,11 +34,16 @@ void Resources::loadResources()
 	for (int i = 0; i < NUM_OF_EFFECTS; i++)
 		m_effectsTextures[i].loadFromFile(effectsTextures[i]);
 
-	for (int i = 0; i < NUM_OF_MENU_TEXTS; i++)
-		m_menuTextures[i].loadFromFile(menuTexts[i]);
+	for (int i = 0; i < NUM_OF_LS_TEXTS; i++)
+		m_lsTextures[i].loadFromFile(lvSelTexts[i]);
 
-	this->m_buttonsFont.loadFromFile(MENU_BUTTON_FONT);
+	for (int i = 0; i < NUM_OF_GAME_STATES; i++)
+		m_gameStates[i].loadFromFile(gameStateTexts[i]);
 
+	for (int i = 0; i < NUM_OF_GBUTTONS; i++)
+		m_gameButtonsTextures[i].loadFromFile(gameButtonsTexts[i]);
+
+	this->m_font.loadFromFile(MAIN_FONT);
 }
 
 //=======================================================================================
