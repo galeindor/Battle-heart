@@ -136,6 +136,7 @@ void Character::createSkill(int charIndex, int skillIndex, int effectIndex, bool
 
 	skillIndex++;
 }
+
 //=======================================================================================
 
 void Character::useSkill(int skillIndex)
@@ -195,7 +196,6 @@ shared_ptr<Character> Character::locateInVector(vector<shared_ptr<Player>> playe
 	return nullptr; 
 }
 
-//========================================================================================
 //========================================================================================
 
 void Character::drawSkills(sf::RenderWindow& window , bool selected)

@@ -18,19 +18,16 @@ Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 
 void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targets, std::vector<std::shared_ptr<Stat>> myStats)
 {
-	if (!this->m_timer.isTimeUp())
-	{
-		this->setTargets(targets);
-		this->m_timer.updateTimer(deltaTime);
+	this->setTargets(targets);
+	this->m_timer.updateTimer(deltaTime);
 
-		for (int i = 0; i < m_projs.size();i++)
+	for (int i = 0; i < m_projs.size(); i++)
+	{
+		this->m_projs[i].updateProjectile({ 1,1 }, deltaTime);
+		if (m_projs[i].checkIntersection())
 		{
-			this->m_projs[i].updateProjectile({ 1,1 },deltaTime);
-			if (m_projs[i].checkIntersection())
-			{
-				this->m_effect->affect(m_baseValue, myStats, m_projs[i].getTarget(), m_factor);
-				m_projs.erase(m_projs.begin()+i);
-			}
+			this->m_effect->affect(m_baseValue, myStats, m_projs[i].getTarget(), m_factor);
+			m_projs.erase(m_projs.begin() + i);
 		}
 	}
 	for (auto& target : m_targets)
@@ -145,5 +142,5 @@ bool Skill::handleClick(const sf::Vector2f& pos)
 {
 	auto timeLeft = m_timer.getTimeLeft();
 	timeLeft = std::max(timeLeft, 0.f);
-	return m_isActive && (timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
+	return !m_targets.empty() && m_isActive && (timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
 }
