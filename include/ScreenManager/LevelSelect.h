@@ -1,25 +1,29 @@
 #pragma once
 #include "Resources.h"
+#include "Screen.h"
+#include "Controller.h"
 
-class LevelSelect
+class LevelSelect : public Screen
 {
 public:
-	LevelSelect();
+	using Screen::Screen;
 	~LevelSelect() = default;
-
-	void runLevelLoader(sf::RenderWindow & window);
-	void drawLevelLoader(sf::RenderWindow & window);
-	void drawButtons(sf::RenderWindow & window);
-	void pollEvents(sf::RenderWindow & window); // New events handler.
-	void render(sf::RenderWindow & window); // Function to display the menu.
-	void handleClick(sf::Vector2f pos);
-	void hoverButtons(sf::Vector2f pos);
 	
-private:
-	void initBG();
-	void initButtons();
+	virtual void update(const float deltaTime) override;
+	virtual void init() override;
+	virtual void draw(sf::RenderWindow& window) override;
+	void manageRowAndCol(int& row, int& col);
+protected:
+	virtual void initButtons() override;
+	virtual void handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window) override;
+	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 
-	bool m_running;
-	sf::Sprite m_bg;
-	std::vector<sf::Text> m_buttons;
+private:
+	bool m_levelHovered = false;
+	bool m_levelSelected = false;
+	sf::Sprite m_startButton;
+	sf::Sprite m_levelSelection;
+	sf::Sprite m_levelHover;
+	sf::Text m_returnButton;
+	std::vector<sf::Sprite> m_availableLevels;
 };

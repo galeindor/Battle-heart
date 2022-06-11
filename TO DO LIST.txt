@@ -3,21 +3,20 @@
 !!! = Very important.
 
 Tasks:
+-(!!!) Add a class for music and sounds (class Audio).
+-(!!!) Make some order in resources and macros.
+-(!!!) Make some order in gameplay and board.
 -(!!!) Skills hashing.
--(+-) Add levels loader to menu.
 -(+-) Add unmmovable objects (obstacles). (Maybe.)
 -(+-) Add orientation to projectiles.
--(!!!) Think of how to improve class Board.
 -(+-) Think of how to add and balance the progress in the game.
 -(***) Make sure the characters don't spawn on each other.
 -(+-) Add more of every class (effects, enemies, players, int).
 -(+-) Start constructing stuff like skills.
 -(!!!) Add progress in the game such as unlocking new characters or stats increasing as the level increases.
--(***) Edit the sprite sheets for objects.
 
 Bugs:
 - Enemies ignore closest target on spawn.
-- Death process is bugged.
 
 List for Osher:
 - Background music for menu.

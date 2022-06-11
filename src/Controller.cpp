@@ -2,6 +2,7 @@
 #include "Controller.h"
 #include "ScreenManager/Gameplay.h"
 #include "ScreenManager/Menu.h"
+#include "ScreenManager/LevelSelect.h"
 
 Controller::Controller()
 	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Heart"),
@@ -35,6 +36,7 @@ void Controller::initScreens()
 {
 	this->m_screens.push_back(std::make_unique<Menu>(this));
 	this->m_screens.push_back(std::make_unique<Gameplay>(this));
+	this->m_screens.push_back(std::make_unique<LevelSelect>(this));
 }
 
 void Controller::swapScreen()

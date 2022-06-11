@@ -1,7 +1,7 @@
 #include "Board.h"
 
 Board::Board(const LevelInfo& currLevelInfo)
-	:	m_currPlayer(nullptr), m_currLvl(0), m_currWave(0),
+	:	m_currPlayer(nullptr), m_currWave(0),
 		m_enemyWaves(currLevelInfo.m_enemyWaves)
 {
 	this->initPlayers(currLevelInfo.m_lvlPlayers);
@@ -61,7 +61,7 @@ void Board::seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime)
 //==========================================================
 // Need to split this.
 
-bool Board::updateBoard(float deltaTime, bool charSelected)
+int Board::updateBoard(float deltaTime, bool charSelected)
 {
 	this->updateEnemyDest(); // Targets the player with highest max HP.
 	
@@ -102,20 +102,20 @@ bool Board::updateBoard(float deltaTime, bool charSelected)
 
 	if (m_players.empty())
 	{
-		// Lost level, do something.
+		return _loseLevel;
 	}
 
 	if (m_enemies.empty()) // wave clear handler
 	{
 		this->m_currWave++;
 		if (this->m_currWave >= this->m_enemyWaves.size())
-			return true;
+			return _winLevel;
 
 		this->initEnemies(this->m_enemyWaves[this->m_currWave]);
-		return false;
+		return _levelInProgress;
 	}
 
-	return false;
+	return _levelInProgress;
 }
 
 //==========================================================

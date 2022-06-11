@@ -19,7 +19,7 @@ public:
 
 	vector<sf::Vector2f> createObstaclesVec();
 	void seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime);
-	bool updateBoard(float deltaTime, bool charSelected);
+	int updateBoard(float deltaTime, bool charSelected);
 	void updateEnemyDest();
 	void updatePlayersDeath(std::shared_ptr<Player> character, float deltaTime,int& index);
 	void updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime, int& index);
@@ -39,7 +39,7 @@ private:
 	// Members
 	vector<shared_ptr<Player>> m_players;
 	vector<shared_ptr<Enemy>> m_enemies;
-	int m_currLvl;
+	//int m_currLvl;
 	int m_currWave;
 	std::shared_ptr<Player> m_currPlayer;
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
