@@ -5,7 +5,6 @@ Archer
 !Dummy 3 !
 
 Level 2
-Cleric
 Knight
 Archer
 !Dummy 4 !

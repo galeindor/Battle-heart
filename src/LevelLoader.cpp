@@ -48,7 +48,7 @@ void LevelLoader::readFromFile(const string fileName)
             word.clear();
         }
         // If player.
-        else if (c == '\n')
+        else if (c == '\n' && word != "")
         {
             currLvlInfo.m_lvlPlayers[this->m_table.getVal(word)] = true;
             word.clear();
@@ -82,7 +82,7 @@ std::vector<sf::Vector2i> LevelLoader::readWave(std::ifstream& file)
 
         file.get(c);
     }
-
+    file.get(c);
     return wave;
 }
 

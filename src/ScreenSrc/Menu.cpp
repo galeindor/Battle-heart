@@ -2,9 +2,7 @@
 
 Menu::Menu(Controller* controller)
 	: m_controller(controller)
-{
-
-}
+{}
 
 void Menu::update(const float deltaTime)
 {
