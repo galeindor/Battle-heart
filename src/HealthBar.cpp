@@ -1,20 +1,33 @@
 #include "HealthBar.h"
 
 HealthBar::HealthBar(sf::Vector2f pos , int maxValue)
-	:m_max(maxValue)
+	:m_max(maxValue), m_hitTimer(1.8f) , m_showTimer(3.f)
 {
 	this->initCurrHp(pos);
+	this->initHitHp(pos);
 	this->initHealthBar(pos);
 }
 
 //====================================================================
 
-void HealthBar::updateHealthBar(int statVal)
+void HealthBar::updateHealthBar(float statVal)
 {
-	m_showTime -= m_clock.restart().asSeconds();
+	auto currSize = m_currHealth.getSize().x;
+	auto healthLost = statVal- currSize ;
+	//auto healthLost = currSize - statVal ;
 	auto size = m_bar.getSize();
-	statVal = std::min(statVal * BAR_WIDTH / m_max, int(size.x));
-	auto newX = std::max(statVal, 0);
+
+	if (healthLost > 0.f)
+	{
+		m_hitHealth.setSize(sf::Vector2f(currSize, size.y));
+		m_hitTimer.setTimer();
+	}
+
+	m_showTimer.updateTimer();
+	m_hitTimer.updateTimer();
+
+	statVal = std::min(statVal * BAR_WIDTH / m_max, size.x);
+	auto newX = std::max(statVal, 0.f);
 	m_currHealth.setSize(sf::Vector2f(newX, size.y));
 }
 
@@ -48,11 +61,28 @@ void HealthBar::initCurrHp(const sf::Vector2f pos)
 
 //====================================================================
 
+void HealthBar::initHitHp(const sf::Vector2f pos)
+{
+	auto size = sf::Vector2f(BAR_WIDTH, 10);
+	auto origin = m_bar.getOrigin();
+	m_hitHealth.setOrigin(origin + healthOffset);
+	m_hitHealth.setSize(size);
+	m_hitHealth.setPosition(pos);
+	m_hitHealth.setFillColor(sf::Color::Red);
+	m_hitHealth.setOutlineColor(sf::Color::Black);
+	m_hitHealth.setOutlineThickness(3);
+}
+
+
+//====================================================================
+
 void HealthBar::draw(sf::RenderWindow& window)
 {
-	if (m_showTime >= 0)
+	if (!m_showTimer.isTimeUp())
 	{
 		window.draw(m_bar);
+		if (!m_hitTimer.isTimeUp())
+			window.draw(m_hitHealth);
 		window.draw(m_currHealth);
 	}
 }
@@ -63,6 +93,7 @@ void HealthBar::setPosition(const sf::Vector2f pos)
 {
 	m_bar.setPosition(pos);
 	m_currHealth.setPosition(pos);
+	m_hitHealth.setPosition(pos);
 }
 
 

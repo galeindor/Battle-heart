@@ -16,7 +16,6 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 					   vector<std::shared_ptr<Player>> m_players, 
 					   vector<std::shared_ptr<Enemy>> m_enemies)
 {
-	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->getPosition());
 	Object::update(deltaTime);	
 	
@@ -64,7 +63,6 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 
 	// Skills update
 	this->updateSkills(deltaTime, m_players, m_enemies);
-
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
 	this->m_hpBar.setPosition(this->getPosition());
 	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
@@ -122,7 +120,7 @@ bool Character::targetInRange()
 
 void Character::useBaseAttack()
 {
-	this->setAnimation(_basicAtt);
+	this->setAnimation(_basic);
 }
 
 //=======================================================================================
