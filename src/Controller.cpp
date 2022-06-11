@@ -31,6 +31,7 @@ void Controller::run()
 			case sf::Event::Closed:
 				m_window.close();
 				break;
+
 			case sf::Event::MouseButtonPressed:
 				auto location = m_window.mapPixelToCoords(
 					{ event.mouseButton.x, event.mouseButton.y });
@@ -63,6 +64,8 @@ bool Controller::winLevel()
 	
 	this->m_board = Board(this->m_levelLoader.getLevel(this->m_currLvl));
 }
+
+//=======================================================================================
 
 void Controller::winGame()
 {

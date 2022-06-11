@@ -196,7 +196,6 @@ shared_ptr<Character> Character::locateInVector(vector<shared_ptr<Player>> playe
 }
 
 //========================================================================================
-//========================================================================================
 
 void Character::drawSkills(sf::RenderWindow& window , bool selected)
 {

@@ -105,7 +105,7 @@ bool Board::updateBoard(float deltaTime, bool charSelected)
 		// Lost level, do something.
 	}
 
-	if (m_enemies.empty())
+	if (m_enemies.empty()) // wave clear handler
 	{
 		this->m_currWave++;
 		if (this->m_currWave >= this->m_enemyWaves.size())

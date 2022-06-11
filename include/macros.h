@@ -19,8 +19,6 @@ constexpr auto LONG_RANGE = 2000;
 constexpr auto singleTarget = true;
 constexpr auto onPlayer = true;
 constexpr auto isActive = true;
-constexpr auto NONE_SELECTED = -1;
-constexpr auto PLAYER_DETECTED = -2;
 constexpr auto NEW_LEVEL_DETECTED = -3;
 constexpr auto WAVE = '!';
 
