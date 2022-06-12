@@ -30,7 +30,6 @@ constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto HEIGHT_LIMIT = 200;
 constexpr auto CUT_CORNERS = 50; // used to limit the player movement to not touch corners
 constexpr auto BAR_WIDTH = 60;
-constexpr auto LONG_RANGE = 2000;
 constexpr auto singleTarget = true;
 constexpr auto onPlayer = true;
 constexpr auto isActive = true;
@@ -100,10 +99,11 @@ const std::vector<std::string> MENU_BUTTONS_STRINGS = { {"Battle"}, {"Levels"}, 
 const sf::Vector2f MENU_BUTTONS_START = sf::Vector2f(436, 49);
 const int MENU_BUTTONS_OFFSET = 110, MENU_BUTTONS_GAP = 20;
 
+//	_walk, _basicAtt, _idle, _cast, _death,
 // Animations ----------------------------------
 enum CharacterAnimation
 {
-	_walk, _basicAtt, _idle, _cast, _death,
+	_idle, _specialAttack, _death, _attack, _walk , _hurt , SPRITE_ROWS 
 };
 
 struct AnimationParams {
@@ -111,16 +111,13 @@ struct AnimationParams {
 	float _switchTime;
 };
 
-const AnimationParams characterParams = { sf::Vector2f(9,5), 0.3f };
+const AnimationParams characterParams = { sf::Vector2f(14,6), 0.3f };
 const AnimationParams projectileParams = { sf::Vector2f(22, 1), 0.3f };
 const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
 // Stats ----------------------------------
 constexpr auto MAX_HEALTH = 100;
 constexpr auto DEFAULT_MVSPD = 100;
-constexpr auto ATK_CD = 10.f; // regular attack cooldown
-constexpr auto BASE_CD = 3.f; // basic attack cooldown
-constexpr auto SHORT_RANGE = 75.f; // regular attack cooldown
 
 enum Stats
 {
@@ -131,9 +128,9 @@ enum Stats
 const std::vector<std::vector<float>> charactersStats =
 {
 	/* cleric */ { 70.f, 2.f, 6.f, 800.f , 10.f},
-	/* knight */ { 120.f, 3.f, 80.f, 40.f , 20.f},
-	/* archer */ { 90.f, 2.f, 60.f, 600.f , 13.f},
-	/* dummy  */ { 80.f, 4.f, 30.f, 40.f , 15.f}
+	/* knight */ { 120.f, 3.f, 15.f, 40.f , 20.f},
+	/* archer */ { 90.f, 2.f, 20.f, 600.f , 13.f},
+	/* dummy  */ { 80.f, 4.f, 10.f, 40.f , 15.f}
 };
 
 // Textures ----------------------------------
@@ -141,7 +138,14 @@ enum ObjectEnums
 {
 	_cleric, _knight, _archer, _dummy, _select, _healBall , NUM_OF_OBJECTS
 };
-const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png", "healProj.png" };
+const std::string textures[NUM_OF_OBJECTS] = { "cleric1.png" , "knight1.png", "witch.png" ,"imp.png", "select.png", "healProj.png" };
+
+const std::vector<std::vector<int>> CharacterRowLengths = { {14,7,10,7,6,4} ,{12,8,8,5,6,4}, {14,7,10,7,6,4} , {0,6,4,0,6,3 } };
+
+const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
+
+const std::vector<std::vector<int>> ProjRowlengths = { {22} };
+
 
 enum Effects
 {
@@ -156,7 +160,7 @@ constexpr auto NUM_OF_PLAYERS = 3;
 constexpr auto NUM_OF_CHARS = 4;
 constexpr auto MAX_SKILL = 2;
 constexpr auto BASIC_DMG = 1;
-constexpr auto SKILL_RECT_SIZE = 80; // size of the rectangle where skills are shown (?)
+constexpr auto SKILL_RECT_SIZE = 80;
 
 enum Skills
 {
@@ -165,14 +169,14 @@ enum Skills
 
 const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = { {1.75f, 20.f, 30.f , 100.f} ,
 															{1.1f ,30.f,  30.f, 100.f } ,
-															{30.7f, 5.f , 5.f , 100.f} ,
+															{1.7f, 5.f , 5.f , 100.f} ,
 															{1.5f}
 
 };
 
 const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {	{1.f, 1.2f, 1.75f , 1.f} ,
 															{1.f ,1.5f, 1.3f, 1.f } ,
-															{1.f, 1.5f , 1.f , 1.f} ,
+															{1.f, 1.5f , 1.5f , 1.f} ,
 															{1.f}
 };
 

@@ -1,6 +1,15 @@
 ﻿#file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/resources)
 
 # Players
+
+configure_file ("CharacterImages/cleric1.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/witch.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/knight1.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/fireWarrior.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/imp.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
+
 configure_file ("cleric.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("knight.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("archer.png" ${CMAKE_BINARY_DIR} COPYONLY)

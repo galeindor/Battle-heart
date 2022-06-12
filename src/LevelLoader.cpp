@@ -90,7 +90,7 @@ std::vector<sf::Vector2i> LevelLoader::readWave(std::ifstream& file)
 int LevelLoader::readFullNum(std::ifstream& file, char c)
 {
     char timeLim[2] = { 0 };
-    int counter = 0;
+    auto counter = 0;
 
     while (isdigit(c))
     {

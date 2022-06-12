@@ -6,6 +6,7 @@
 #include "Characters/Archer.h"
 #include "Characters/Dummy.h"
 #include "HashTable.h"
+
 using namespace std;
 using std::shared_ptr;
 
@@ -30,6 +31,9 @@ public:
 	template <class Type>
 	Type sortObjects(Type vector);
 
+	template <typename Vec , typename deathFunc , typename behaviorFunc >
+	void deathHandler(Vec characters, deathFunc dfunc, behaviorFunc bfunc, float deltaTime);
+
 	void drawBoard(sf::RenderWindow& window, bool charSelected);
 	void drawObjects(sf::RenderWindow& window);
 	void drawObject(bool player, int& index, sf::RenderWindow& window);
@@ -39,7 +43,6 @@ private:
 	// Members
 	vector<shared_ptr<Player>> m_players;
 	vector<shared_ptr<Enemy>> m_enemies;
-	//int m_currLvl;
 	int m_currWave;
 	std::shared_ptr<Player> m_currPlayer;
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
@@ -62,4 +65,17 @@ inline Type Board::sortObjects(Type vector)
 		[](auto obj1, auto obj2)
 		{ return obj1->getPosition().y < obj2->getPosition().y; });
 	return copy;
+}
+
+template <typename Vec,typename deathFunc,typename behaviorFunc >
+inline void Board::deathHandler(Vec characters, deathFunc dfunc, behaviorFunc bfunc , float deltaTime)
+{
+	for (int i = 0; i < characters.size(); i++)
+	{
+		auto obj = characters[i];
+		if (!obj->isAlive())
+			dfunc(obj, deltaTime, i);
+		else
+			bfunc(obj, deltaTime);
+	}
 }

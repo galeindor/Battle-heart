@@ -2,12 +2,22 @@
 
 // Constructor.
 Animation::Animation(sf::Texture* texture, AnimationParams animParms)
-	: m_imageCount(animParms._imageCount), m_switchTime(animParms._switchTime), m_totalTime(0.0f), m_row(0), m_faceRight(true)
+	:m_imageCount(animParms._imageCount), m_switchTime(animParms._switchTime), m_totalTime(0.0f), m_row(0), m_faceRight(true)
 {
 	this->m_currentImage.x = 0;
 	this->uvRect.width = texture->getSize().x / float(animParms._imageCount.x);
 	this->uvRect.height = texture->getSize().y / float(animParms._imageCount.y);
+	for (size_t i = 0; i < m_imageCount.y; i++)
+		m_rowLens.push_back(m_imageCount.x);
+
 }
+
+Animation::Animation(sf::Texture* texture, AnimationParams animParms, std::vector<int> lengths)
+	:Animation(texture,animParms)
+{
+	m_rowLens=lengths;
+}
+
 
 // Updates the animation.
 bool Animation::update(float deltaTime)
@@ -21,7 +31,7 @@ bool Animation::update(float deltaTime)
 		this->m_totalTime -= this->m_switchTime;
 		this->m_currentImage.x++;
 
-		if (this->m_currentImage.x >= this->m_imageCount.x)
+		if (this->m_currentImage.x >= this->m_rowLens[m_currentImage.y])
 		{
 			this->m_currentImage.x = 0;
 			eor = true;

@@ -3,7 +3,7 @@
 #include "Characters/Character.h"
 
 Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest, const int index, std::shared_ptr<Character> target)
-	:Object(pos, index, projectileParams)
+	:Object(pos, index, projectileParams , ProjRowlengths[0])
 {
 	setAsTarget(target);
 	setScale({ 0.5,0.5 });
