@@ -6,6 +6,7 @@ Object::Object(const sf::Vector2f pos, const int index, AnimationParams animPara
 	  m_isMoving(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC), m_dest(pos)
 {
 	this->initSprite(pos, index);
+
 	this->m_target = nullptr;
 
 	// for now
