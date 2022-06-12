@@ -119,5 +119,4 @@ void LevelSelect::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindo
 			this->m_controller->setCurrLvl(index);
 			this->m_levelSelected = true;
 		}
-
 }
