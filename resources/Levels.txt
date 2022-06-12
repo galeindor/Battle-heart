@@ -1,4 +1,6 @@
 Level 1
+Cleric
+Knight
 Archer
 !Dummy 3 !
 
