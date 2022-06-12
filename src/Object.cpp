@@ -1,8 +1,8 @@
 #include "Object.h"
 
-Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams)
+Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams, std::vector<int> rowLens)
 
-	: m_animation(Resources::instance().getTexture(index), animParams),
+	: m_animation(Resources::instance().getTexture(index), animParams , rowLens),
 	  m_isMoving(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC), m_dest(pos)
 {
 	this->initSprite(pos, index);
@@ -65,8 +65,8 @@ void Object::initSprite(const sf::Vector2f pos, const int index)
 	this->m_sprite.setPosition(pos);
 	this->m_sprite.setTexture(*Resources::instance().getTexture(index));
 	sf::IntRect size = m_sprite.getTextureRect();
-	this->m_sprite.setScale(1.5, 1.5);
-	this->m_sprite.setOrigin(SPRITE_SIZE / 2, SPRITE_SIZE);
+	this->m_sprite.setScale(1.3, 1.3);
+	this->m_sprite.setOrigin(SPRITE_SIZE / 2, SPRITE_SIZE * 2);
 }
 
 //=======================================================================================

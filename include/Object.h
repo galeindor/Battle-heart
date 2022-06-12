@@ -9,7 +9,7 @@ class Character;
 class Object
 {
 public:
-	Object(const sf::Vector2f pos, const int index, AnimationParams animParams);
+	Object(const sf::Vector2f pos, const int index, AnimationParams animParams, std::vector<int> rowLens);
 	virtual ~Object() = default;
 
 	// Management

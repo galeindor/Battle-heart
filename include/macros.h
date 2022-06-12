@@ -30,7 +30,6 @@ constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto HEIGHT_LIMIT = 200;
 constexpr auto CUT_CORNERS = 50; // used to limit the player movement to not touch corners
 constexpr auto BAR_WIDTH = 60;
-constexpr auto LONG_RANGE = 2000;
 constexpr auto singleTarget = true;
 constexpr auto onPlayer = true;
 constexpr auto isActive = true;
@@ -100,12 +99,11 @@ const std::vector<std::string> MENU_BUTTONS_STRINGS = { {"Battle"}, {"Levels"}, 
 const sf::Vector2f MENU_BUTTONS_START = sf::Vector2f(436, 49);
 const int MENU_BUTTONS_OFFSET = 110, MENU_BUTTONS_GAP = 20;
 
-
-//	_idle, _specialAttack, _death, _attack, _walk , _hurt , SPRITE_ROWS 
+//	_walk, _basicAtt, _idle, _cast, _death,
 // Animations ----------------------------------
 enum CharacterAnimation
 {
-	_walk, _basicAtt, _idle, _cast, _death,
+	_idle, _specialAttack, _death, _attack, _walk , _hurt , SPRITE_ROWS 
 };
 
 struct AnimationParams {
@@ -113,7 +111,7 @@ struct AnimationParams {
 	float _switchTime;
 };
 
-const AnimationParams characterParams = { sf::Vector2f(9,5), 0.3f };
+const AnimationParams characterParams = { sf::Vector2f(14,6), 0.3f };
 const AnimationParams projectileParams = { sf::Vector2f(22, 1), 0.3f };
 const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
@@ -140,13 +138,13 @@ enum ObjectEnums
 {
 	_cleric, _knight, _archer, _dummy, _select, _healBall , NUM_OF_OBJECTS
 };
-const std::string textures[NUM_OF_OBJECTS] = { "cleric.png" , "knight.png", "archer.png" ,"enemy.png", "select.png", "healProj.png" };
+const std::string textures[NUM_OF_OBJECTS] = { "cleric1.png" , "knight1.png", "witch.png" ,"imp.png", "select.png", "healProj.png" };
 
-const std::vector<std::vector<int>> PlayerSSLengths = { {14,7,10,7,6,4} ,{12,8,8,5,6,4}, {14,7,10,7,6,4} , {6,5,4,4} };
+const std::vector<std::vector<int>> CharacterRowLengths = { {14,7,10,7,6,4} ,{12,8,8,5,6,4}, {14,7,10,7,6,4} , {0,6,4,0,6,3 } };
 
-const std::vector<std::vector<int>> EffectsSSLengths = { {1} };
+const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
 
-//const std::vector<std::vector<int>> EnemySSLengths = { };
+const std::vector<std::vector<int>> ProjRowlengths = { {22} };
 
 
 enum Effects

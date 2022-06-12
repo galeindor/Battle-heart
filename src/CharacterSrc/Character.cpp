@@ -3,7 +3,7 @@
 #include "Characters/Enemy.h"
 
 Character::Character(const sf::Vector2f pos, const int index, AnimationParams animParams )
-	: m_isAttacking(false), Object(pos, index, animParams), 
+	: m_isAttacking(false), Object(pos, index, animParams , CharacterRowLengths[index]), 
 	  m_deathTimer(9.f), m_isDying(false)
 {
 	this->initStats(index);
@@ -120,7 +120,7 @@ bool Character::targetInRange()
 
 void Character::useBaseAttack()
 {
-	this->setAnimation(_basic);
+	this->setAnimation(_specialAttack);
 }
 
 //=======================================================================================

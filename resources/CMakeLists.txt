@@ -2,10 +2,12 @@
 
 # Players
 
-configure_file ("mage1.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("mage2.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("knight1.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("goblin.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/cleric1.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/witch.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/knight1.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/fireWarrior.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/imp.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 
 configure_file ("cleric.png" ${CMAKE_BINARY_DIR} COPYONLY)

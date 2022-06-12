@@ -13,11 +13,12 @@ HealthBar::HealthBar(sf::Vector2f pos , int maxValue)
 void HealthBar::updateHealthBar(float statVal)
 {
 	auto currSize = m_currHealth.getSize().x;
-	auto healthLost = statVal- currSize ;
-	//auto healthLost = currSize - statVal ;
 	auto size = m_bar.getSize();
+	statVal = std::min(statVal * BAR_WIDTH / m_max, size.x);
+	//auto healthLost = statVal- currSize ;
+	auto healthLost = currSize - statVal ;
 
-	if (healthLost > 0.f)
+	if (healthLost > 0.f && m_hitTimer.isTimeUp() ) // lowered damage
 	{
 		m_hitHealth.setSize(sf::Vector2f(currSize, size.y));
 		m_hitTimer.setTimer();
@@ -26,7 +27,6 @@ void HealthBar::updateHealthBar(float statVal)
 	m_showTimer.updateTimer();
 	m_hitTimer.updateTimer();
 
-	statVal = std::min(statVal * BAR_WIDTH / m_max, size.x);
 	auto newX = std::max(statVal, 0.f);
 	m_currHealth.setSize(sf::Vector2f(newX, size.y));
 }
