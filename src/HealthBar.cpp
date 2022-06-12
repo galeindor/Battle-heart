@@ -10,8 +10,9 @@ HealthBar::HealthBar(sf::Vector2f pos , int maxValue)
 
 //====================================================================
 
-void HealthBar::updateHealthBar(float statVal)
+void HealthBar::updateHealthBar(float statVal, const sf::Vector2f& pos)
 {
+	this->setPosition(pos);
 	auto currSize = m_currHealth.getSize().x;
 	auto size = m_bar.getSize();
 	statVal = std::min(statVal * BAR_WIDTH / m_max, size.x);

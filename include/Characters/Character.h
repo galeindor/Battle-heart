@@ -43,7 +43,6 @@ public:
 
 	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies , Character* obj);
 
-
 	// skill managment
 	virtual void initSkills(const int index) = 0;
 	bool checkSkillClick(const sf::Vector2f& location);
@@ -61,9 +60,11 @@ protected:
 private:
 	void useBaseAttack();
 	void initStats(const int index);
+
 	void updateSkills(const float deltaTime, 
 					  vector<std::shared_ptr<Player>> players,
 					  vector<std::shared_ptr<Enemy>> enemies);
+	void updateMovement(float deltaTime);
 
 	Timer m_deathTimer;
 	vector<std::unique_ptr<Skill>> m_skills; // skills useable

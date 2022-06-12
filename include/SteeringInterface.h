@@ -16,7 +16,6 @@ public:
 
 	// copy of all functions - using vectors =============================================================
 
-
 	sf::Vector2f Flee(std::vector<sf::Vector2f> locations, std::vector<float> values);
 
 	sf::Vector2f Arrive(std::vector<sf::Vector2f> locations, std::vector<float> values , float r);

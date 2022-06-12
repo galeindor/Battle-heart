@@ -6,18 +6,17 @@
 class Stat
 {
 public:
-	Stat(int initVal);
+	Stat(float initVal);
 	~Stat() = default;
 
-	virtual bool handleStat(int amount);
+	virtual bool handleStat(float amount);
 
 	int getStat() const { return this->m_val; }
-	void setStat(int val) { this->m_val = val; }
+	void setStat(float val) { this->m_val = val; }
 
 protected:
 
 
 private:
-	int m_max;
-	int m_val;
+	float m_val;
 };

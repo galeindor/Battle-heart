@@ -9,7 +9,7 @@ class Character;
 class Object
 {
 public:
-	Object(const sf::Vector2f pos, const int index, AnimationParams animParams, std::vector<int> rowLens);
+	Object(const sf::Vector2f pos, const int index, AnimationParams animParams, std::vector<int> rowLens, sf::Texture* texture);
 	virtual ~Object() = default;
 
 	// Management
@@ -20,21 +20,16 @@ public:
 	virtual bool checkIntersection() const = 0;
 
 	// Getters
-	sf::Sprite getSprite()		    const { return this->m_sprite; }
-	sf::FloatRect getGlobalBounds() const { return m_sprite.getGlobalBounds(); }
-	sf::Vector2f getPosition()		const { return this->m_sprite.getPosition(); }
-	sf::Vector2f getVelocity()		const { return this->m_velocity; }
-	float getMaxVelocity()			const { return this->m_maxVelocity; }
-	float getMaxForce()				const { return this->m_maxForce; }
-	SteeringInterface* behaviour()	const { return this->m_steering; }
-	sf::Vector2f	getDest()		const { return this->m_dest; }
-	bool getIsMoving()				const { return this->m_isMoving; }
-	float getRange()				const { return this->m_range; }
-	float getMass()					const { return this->m_mass; }
-	Character* getTarget()			const { return this->m_target.get(); }
-	bool getFaceRight()				const { return this->m_animation.getFaceRight(); }
+	bool			getIsMoving()			const { return this->m_isMoving; }
+	float			getMoveStat(int index)  const { return m_moveStats[index]; }
+	Character*		getTarget()				const { return this->m_target.get(); }
+	sf::Vector2f	getDest()				const { return this->m_dest; }
+	sf::Sprite		getSprite()				const { return this->m_sprite; }
+	sf::Vector2f	getPosition()			const { return this->m_sprite.getPosition(); }
+	sf::Vector2f	getVelocity()			const { return this->m_velocity; }
+
+	SteeringInterface* behaviour()			const { return this->m_steering; }
 	
-	//check
 	void setFaceRight(bool faceRight) { this->m_animation.setFaceRight(faceRight); }
 	// Setters
 	void setDestination(sf::Vector2f dest) { this->m_dest = adjustLocation(dest); }
@@ -49,9 +44,10 @@ public:
 	sf::Vector2f adjustLocation(sf::Vector2f location);
 
 protected:
-	void setRange(float val)				{ m_range = val; }
+
 	void setScale(sf::Vector2f scale)		{ m_sprite.setScale(scale); }
 	void setOrigin(sf::Vector2f origin)		{ m_sprite.setOrigin(origin); }
+
 private:
 	void initSprite(const sf::Vector2f pos, const int index);
 
@@ -67,8 +63,6 @@ private:
 	SteeringInterface* m_steering;
 	sf::Vector2f m_velocity;
 	sf::Vector2f m_dest;
-	float m_mass;
-	float m_maxForce;
-	float m_maxVelocity;
-	float m_range;
+
+	vector<float> m_moveStats;
 };

@@ -145,7 +145,7 @@ const std::vector<std::vector<int>> CharacterRowLengths = { {14,7,10,7,6,4} ,{12
 
 const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
 
-const std::vector<std::vector<int>> ProjRowlengths = { {22}  , {10} };
+const std::vector<std::vector<int>> ProjRowlengths = { {22} };
 
 
 enum Effects

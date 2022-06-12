@@ -46,6 +46,8 @@ configure_file ("healEffect.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Projectiles
 configure_file ("healProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("fireProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
 
 # Levels file
 configure_file ("Levels.txt" ${CMAKE_BINARY_DIR} COPYONLY)
