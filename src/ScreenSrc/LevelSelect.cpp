@@ -30,12 +30,6 @@ void LevelSelect::manageRowAndCol(int& row, int& col)
 	
 	col += std::pow(-1, row); // increase or decrease 1 based or row
 
-/*
-	if (row % 2 == 0)
-		col++;
-	else
-		col--;
-*/
 	if (col >= LEVELS_CHART_COLS || col < 0)
 	{
 		row++;

@@ -19,9 +19,9 @@ Object::Object(const sf::Vector2f pos, const int index, AnimationParams animPara
 bool Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 {
 	// If facing right.
-	if (movement.x > 0.0f || this->getPosition().x < this->getDest().x)
+	if (this->getPosition().x < this->getDest().x)
 		this->m_animation.setFaceRight(true);
-	else if (movement.x < 0.0f || this->getPosition().x > this->getDest().x)
+	else if (this->getPosition().x > this->getDest().x)
 		this->m_animation.setFaceRight(false);
 
 	auto res = this->m_animation.update(deltaTime);
@@ -34,11 +34,13 @@ bool Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 
 void Object::update(const float deltaTime)
 {
+	/*
 	if (this->getPosition().x < this->m_dest.x)
 		this->m_animation.setFaceRight(true);
 
 	else if (this->getPosition().x > this->m_dest.x)
 		this->m_animation.setFaceRight(false);
+		*/
 }
 
 //=======================================================================================

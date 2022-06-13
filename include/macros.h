@@ -21,7 +21,6 @@ const sf::Vector2f exitButtonPos(615, 550);
 const sf::Vector2f pauseButtonPos(1200, 200);
 
 constexpr auto PI = 3.14159265358979323846;
-constexpr auto DEG90 = 90;
 const sf::Vector2f DEFAULT_VEC(0, 0);
 constexpr auto SPRITE_SIZE = 64;
 constexpr auto LEVELS_CHART_COLS = 5;
