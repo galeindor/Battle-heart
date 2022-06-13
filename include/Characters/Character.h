@@ -6,6 +6,7 @@
 #include "Object.h"
 #include "Skills/Skill.h"
 #include "HashTable.h"
+
 class Enemy;
 class Player;
 

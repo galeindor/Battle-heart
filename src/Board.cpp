@@ -266,9 +266,10 @@ void Board::playerBehavior(std::shared_ptr<Player> character,float deltaTime)
 
 void Board::enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vector2f pos)
 {
-	sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(enemy->getPosition(), enemy->getVelocity(), 
-																	 enemy->getMoveStat(_maxVelocity), enemy->getMoveStat(_maxForce),
-																	 enemy->getTarget()->getPosition(), createObstaclesVec(), 100);
+
+	std::vector<sf::Vector2f> vecs = { enemy->getPosition() , enemy->getVelocity() ,  enemy->getTarget()->getPosition() };
+	vector<float> values = { enemy->getMoveStat(_maxVelocity), enemy->getMoveStat(_maxForce) };
+	sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance( vecs ,createObstaclesVec(), values, 100);
 	this->seperation(enemy.get(), steerForce, deltaTime);
 }
 

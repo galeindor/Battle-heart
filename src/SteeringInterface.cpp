@@ -5,12 +5,15 @@ SteeringInterface::SteeringInterface()
 
 SteeringInterface::~SteeringInterface(){}
 
+
+//====================================================================================================
 float SteeringInterface::distance(sf::Vector2f start, sf::Vector2f end)
 {
 	sf::Vector2f v = start - end;
 	return length(v);
 }
 
+//====================================================================================================
 float SteeringInterface::length(sf::Vector2f vec)
 {
 	auto Rx = vec.x;
@@ -18,6 +21,7 @@ float SteeringInterface::length(sf::Vector2f vec)
 	return std::sqrt(Rx * Rx + Ry * Ry);
 }
 
+//====================================================================================================
 sf::Vector2f SteeringInterface::Normalize(sf::Vector2f vec)
 {
 	float l = length(vec);
@@ -26,6 +30,7 @@ sf::Vector2f SteeringInterface::Normalize(sf::Vector2f vec)
 	else
 		return sf::Vector2f(0, 0);
 }
+//====================================================================================================
 
 sf::Vector2f SteeringInterface::Truncate(const sf::Vector2f& vec, float max)
 {
@@ -35,16 +40,7 @@ sf::Vector2f SteeringInterface::Truncate(const sf::Vector2f& vec, float max)
 
 	return truncated;
 }
-
-sf::Vector2f SteeringInterface::Flee(sf::Vector2f object, sf::Vector2f velocity, float maxVelocity, float maxForce, sf::Vector2f target)
-{
-	sf::Vector2f DesiredVelocity = object - target;
-	DesiredVelocity = Normalize(DesiredVelocity);
-	DesiredVelocity *= maxVelocity;
-	sf::Vector2f SteeringForce = (DesiredVelocity - velocity);
-	SteeringForce /= maxVelocity;
-	return SteeringForce * maxForce;
-}
+//====================================================================================================
 
 sf::Vector2f SteeringInterface::Arrive(sf::Vector2f object, sf::Vector2f velocity, float maxVelocity, float maxForce, sf::Vector2f target, float r) 
 {
@@ -61,59 +57,12 @@ sf::Vector2f SteeringInterface::Arrive(sf::Vector2f object, sf::Vector2f velocit
 	return steeringForce;
 }
 
-sf::Vector2f SteeringInterface::CollisionAvoidance(sf::Vector2f object, sf::Vector2f velocity, float maxVelocity, float maxForce, sf::Vector2f target, std::vector<sf::Vector2f> obstacles, float MAX_AVOID_FORCE)
-{
-	float v = length(velocity) / maxVelocity;
-	sf::Vector2f ahead = object + velocity * v;
-	sf::Vector2f halfahead = object + velocity * 0.5f * v;
-	std::vector <sf::Vector2f> distances, subdistances, avoidForce;
-
-	for (int i = 0; i < obstacles.size(); i++) {
-
-		sf::Vector2f d = ahead - obstacles[i];
-		distances.push_back(d);
-		sf::Vector2f subD = halfahead - obstacles[i];
-		subdistances.push_back(subD);
-		sf::Vector2f af;
-		af = ahead - obstacles[i];
-		af = Normalize(af) * MAX_AVOID_FORCE;
-		avoidForce.push_back(af);
-	}
-	for (int i = 0; i < obstacles.size(); i++) {
-
-		if (length(distances[i]) <= 50 || length(subdistances[i]) <= 50 || distance(object, obstacles[i]) <= 50) 
-		{
-			sf::Vector2f desiredV = target - object;
-			desiredV = Normalize(desiredV);
-			desiredV *= maxVelocity;
-			sf::Vector2f steeringForce = desiredV - velocity;
-			steeringForce /= maxVelocity;
-			steeringForce *= maxForce;
-			distances.clear();
-			subdistances.clear();
-			return steeringForce + avoidForce[i];
-		}
-		else 
-		{
-			sf::Vector2f desiredV = target - object;
-			desiredV = Normalize(desiredV);
-			desiredV *= maxVelocity;
-			sf::Vector2f steeringForce = desiredV - velocity;
-			steeringForce /= maxVelocity;
-			steeringForce *= maxForce;
-			return steeringForce;
-		}
-	}
-	return { 0,0 };
-}
-
-
 //====================================================================================================
 // copy of all functions - using vectors =============================================================
 
-
 sf::Vector2f SteeringInterface::Flee(std::vector<sf::Vector2f> locations, std::vector<float> values)
 {
+
 	sf::Vector2f DesiredVelocity = locations[_object] - locations[_target];
 	DesiredVelocity = Normalize(DesiredVelocity);
 	DesiredVelocity *= values[_maxVelocity];
@@ -121,6 +70,8 @@ sf::Vector2f SteeringInterface::Flee(std::vector<sf::Vector2f> locations, std::v
 	SteeringForce /= values[_maxVelocity];
 	return SteeringForce * values[_maxForce];
 }
+
+//====================================================================================================
 
 sf::Vector2f SteeringInterface::Arrive(std::vector<sf::Vector2f> vectors, std::vector<float> values, float r)
 {
@@ -145,9 +96,12 @@ sf::Vector2f SteeringInterface::Arrive(std::vector<sf::Vector2f> vectors, std::v
 	return steeringForce;
 }
 
+//====================================================================================================
+
 sf::Vector2f SteeringInterface::CollisionAvoidance(std::vector<sf::Vector2f> vectors,
 												   std::vector<sf::Vector2f> obstacles, std::vector<float> values, float MAX_AVOID_FORCE)
 {
+
 	float v = length(vectors[_velocity]) / (values[_maxVelocity]);
 	sf::Vector2f ahead = vectors[_object] + vectors[_velocity] * v;
 	sf::Vector2f halfahead = vectors[_object] + vectors[_velocity] * 0.5f * v;
