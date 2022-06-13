@@ -2,14 +2,16 @@
 #include "Skills/Projectile.h"
 #include "Characters/Character.h"
 
-Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest, const int index, std::shared_ptr<Character> target)
-	:Object(pos, index, projectileParams , ProjRowlengths[0] , Resources::instance().getProjTexture(index))
+Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest, 
+					   const int index, std::shared_ptr<Character> target)
+	:	Object(pos, index, projectileParams, ProjRowlengths[0], 
+			   Resources::instance().getProjTexture(index))
 {
 	setAsTarget(target);
 	setScale({ 2,2 });
 	setAnimation(0);
 	auto origin = this->getSprite().getOrigin();
-	setOrigin({origin.x -10 , origin.y -20});
+	setOrigin({origin.x -10 , origin.y -20}); // this is a plaster
 	setDestination(dest);
 
 }
@@ -32,7 +34,6 @@ void Projectile::draw(sf::RenderWindow& window)
 //==============================================================================
 void Projectile::updateProjectile(sf::Vector2f steerForce,float deltaTime)
 {
-	Object::update(deltaTime);
 	this->setDestination(this->getTarget()->getPosition());
 
 	auto dir = this->getPosition() - this->getDest();

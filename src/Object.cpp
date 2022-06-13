@@ -1,17 +1,12 @@
 #include "Object.h"
 
-Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams, std::vector<int> rowLens , sf::Texture* texture)
+Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams, 
+			   std::vector<int> rowLens , sf::Texture* texture)
 	: m_animation(texture, animParams , rowLens),
-	  m_isMoving(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC), m_dest(pos)
+	  m_isMoving(false), m_steering(new SteeringInterface), 
+	  m_velocity(DEFAULT_VEC), m_dest(pos), m_target(nullptr)
 {
 	this->initSprite(pos, index , texture);
-
-	this->m_target = nullptr;
-
-	// for now
-	m_moveStats.push_back(100);
-	m_moveStats.push_back(50);
-	m_moveStats.push_back(0.1f);
 }
 
 //=======================================================================================
@@ -28,19 +23,6 @@ bool Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 	this->m_sprite.setTextureRect(this->m_animation.getUVRect());
 
 	return res;
-}
-
-//=======================================================================================
-
-void Object::update(const float deltaTime)
-{
-	/*
-	if (this->getPosition().x < this->m_dest.x)
-		this->m_animation.setFaceRight(true);
-
-	else if (this->getPosition().x > this->m_dest.x)
-		this->m_animation.setFaceRight(false);
-		*/
 }
 
 //=======================================================================================

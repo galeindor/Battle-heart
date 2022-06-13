@@ -14,14 +14,12 @@ public:
 
 	// Management
 	bool handleAnimation(sf::Vector2f movement, float deltaTime);
-	void update(const float deltaTime);
 
 	// Virtuals
 	virtual bool checkIntersection() const = 0;
 
 	// Getters
 	bool			getIsMoving()			const { return this->m_isMoving; }
-	float			getMoveStat(int index)  const { return m_moveStats[index]; }
 	Character*		getTarget()				const { return this->m_target.get(); }
 	sf::Vector2f	getDest()				const { return this->m_dest; }
 	sf::Sprite		getSprite()				const { return this->m_sprite; }
@@ -51,7 +49,6 @@ protected:
 
 private:
 	void initSprite(const sf::Vector2f pos, const int index , sf::Texture* texture);
-
 	// General
 	sf::Sprite m_sprite;
 	bool m_isMoving;
@@ -64,6 +61,4 @@ private:
 	SteeringInterface* m_steering;
 	sf::Vector2f m_velocity;
 	sf::Vector2f m_dest;
-
-	vector<float> m_moveStats;
 };
