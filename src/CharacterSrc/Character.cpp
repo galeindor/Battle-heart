@@ -127,7 +127,7 @@ bool Character::targetInRange()
 
 void Character::useBaseAttack()
 {
-	this->setAnimation(_specialAttack);
+	this->setAnimation(_attack);
 }
 
 //=======================================================================================

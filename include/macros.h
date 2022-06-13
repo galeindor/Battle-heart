@@ -138,10 +138,10 @@ enum ObjectEnums
 {
 	_cleric, _knight, _archer, _dummy, _select, _healBall , NUM_OF_OBJECTS
 };
-const std::string textures[NUM_OF_OBJECTS] = { "cleric1.png" , "knightSS.png", "witch.png" ,"walk.png", "select.png", "fireProj.png" };
+const std::string textures[NUM_OF_OBJECTS] = { "cleric1.png" , "knightSS.png", "witch.png" ,"Demon.png", "select.png", "fireProj.png" };
 
-const std::vector<std::vector<int>> CharacterRowLengths = { {14,7,10,7,6,4} ,{6,4,7,8,5,8},
-															{14,7,10,7,6,4} , {0,6,4,0,6,3 } };
+const std::vector<std::vector<int>> CharacterRowLengths = { {6,4,9,8,7,7} ,{6,4,7,8,5,8},
+															{6,4,9,8,7,7} , {6,2,3,4,4,0 } };
 
 const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
 
