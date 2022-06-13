@@ -45,7 +45,8 @@ void Skill::useSkill(sf::Vector2f myLoc)
 		{
 			auto direction = target->getPosition() - myLoc;
 			direction = norm(direction);
-			auto projectile = Projectile(myLoc, target->getPosition(), this->m_projType, target);
+			AnimationParams projParams = { sf::Vector2f(ProjRowlengths[m_projType][0], 1), 0.3f };
+			auto projectile = Projectile(myLoc, target->getPosition(), this->m_projType, target , projParams);
 			m_projs.push_back(projectile);
 		}
 	}

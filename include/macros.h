@@ -112,7 +112,6 @@ struct AnimationParams {
 };
 
 const AnimationParams characterParams = { sf::Vector2f(10,6), 0.3f };
-const AnimationParams projectileParams = { sf::Vector2f(8, 1), 0.3f };
 const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
 // Stats ----------------------------------
@@ -146,7 +145,7 @@ enum ProjEnums
 
 const std::string textures[NUM_OF_OBJECTS] = { "cleric1.png" , "knightSS.png", "witch.png" ,"Demon.png", "Imp.png", "select.png"};
 
-const std::vector<std::string > ProjTextrues = { "healProj.png" , "fireProj.png" , "energy.png" , "lightning.png" , "tesla_ball.png" , "water_strike.png"  , "none"};
+const std::vector<std::string > ProjTextrues = { "healProj.png" , "fireBlast.png" , "energy.png" , "lightning.png" , "tesla_ball.png" , "water_strike.png"  , "none"};
 
 const std::vector<std::vector<int>> CharacterRowLengths = { {6,4,9,8,7,7} ,{6,4,7,8,5,8}, {6,4,9,8,7,7} ,
 															{6,2,3,4,4,0 } , { 6,2,3,4,5,0} 
@@ -154,7 +153,7 @@ const std::vector<std::vector<int>> CharacterRowLengths = { {6,4,9,8,7,7} ,{6,4,
 
 const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
 
-const std::vector<std::vector<int>> ProjRowlengths = { {22} };
+const std::vector<std::vector<int>> ProjRowlengths = { {8}, {11} , {8} , {12} , {16} , {10} , {0} };
 
 
 enum Effects
