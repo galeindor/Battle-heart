@@ -6,7 +6,8 @@ Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest, const in
 	:Object(pos, index, projectileParams , ProjRowlengths[0] , Resources::instance().getProjTexture(index))
 {
 	setAsTarget(target);
-
+	setScale({ 2,2 });
+	setAnimation(0);
 	auto origin = this->getSprite().getOrigin();
 	setOrigin({origin.x -10 , origin.y -20});
 	setDestination(dest);
@@ -32,19 +33,32 @@ void Projectile::draw(sf::RenderWindow& window)
 void Projectile::updateProjectile(sf::Vector2f steerForce,float deltaTime)
 {
 	Object::update(deltaTime);
-	setAnimation(0);
-	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
 	this->setDestination(this->getTarget()->getPosition());
 
-	/*
-	sf::Vector2f acceleration = steerForce / this->getMass();
-	this->setVelocity(this->getVelocity() + acceleration * deltaTime); 
-	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
-	this->setPosition(this->getPosition() + this->getVelocity() * deltaTime);
-	this->setPosition(this->getPosition() + this->getVelocity() * deltaTime);
-	*/
 	auto dir = this->getPosition() - this->getDest();
 	dir = -dir;
 	auto speed = 1.1f;
 	this->setPosition(this->getPosition()+ speed * dir * deltaTime);
+	
+	auto adj = this->getPosition().x - this->getTarget()->getPosition().x;
+	auto opp = this->getTarget()->getPosition().y - this->getPosition().y;
+
+	if (opp == 0) opp++;
+	if (adj == 0) adj++;
+	this->m_orientation = (float)(atan(adj / opp) * RAD2DEG);
+
+	if (opp > 0)
+		this->m_orientation += 90;
+	else
+		this->m_orientation -= 90;
+
+	if (adj > 0)
+	{
+		this->m_orientation += 180;
+		this->setFaceRight(false);
+	}
+
+	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
+
+	this->setRotation(this->m_orientation);
 }

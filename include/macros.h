@@ -7,9 +7,9 @@ class Stat;
 // General ----------------------------------
 const std::string LevelsFileName = "Levels.txt";
 const sf::Vector2f healthOffset(30, 100);
-const sf::Vector2f selectedOffset(35, 25);
-const sf::Vector2f lsLevelsOffset(162, 120);
-const sf::Vector2f lsLevelsStartPos(304, 159);
+const sf::Vector2f selectedOffset(45, 30);
+const sf::Vector2f lsLevelsOffset(163, 123);
+const sf::Vector2f lsLevelsStartPos(318, 188);
 const sf::Vector2f lvlSelOffset(-8, -8);
 const sf::Vector2f startButtonPos(1050, 600);
 const sf::Vector2f returnButtonPos(1020, 30);
@@ -20,7 +20,7 @@ const sf::Vector2f restartButtonPos(615, 500);
 const sf::Vector2f exitButtonPos(615, 550);
 const sf::Vector2f pauseButtonPos(1200, 200);
 
-
+constexpr auto PI = 3.14159265358979323846;
 const sf::Vector2f DEFAULT_VEC(0, 0);
 constexpr auto SPRITE_SIZE = 60;
 constexpr auto LEVELS_CHART_COLS = 5;

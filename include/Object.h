@@ -38,6 +38,7 @@ public:
 	void setPosition(sf::Vector2f pos) { this->m_sprite.setPosition(pos); }
 	void setAsTarget(std::shared_ptr<Character> obj) { this->m_target = obj; }
 	void setAnimation(int index) { this->m_animation.setRow(index); }
+	void setRotation(float angle) { this->m_sprite.setRotation(angle); }
 
 	// Checks/validators
 	bool checkCollision(const sf::Vector2f& location);
