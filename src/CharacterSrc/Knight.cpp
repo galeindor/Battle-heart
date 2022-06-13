@@ -9,8 +9,8 @@ Knight::Knight(const sf::Vector2f pos)
 
 void Knight::initSkills(const int index)
 {
-	this->createSkill(index, _basic, _damage, singleTarget, !onPlayer, !isActive); // basic
-	this->createSkill(index, _skill1, _defend, singleTarget, onPlayer, isActive); // shield wall
-	this->createSkill(index, _skill2, _damage, singleTarget, !onPlayer, isActive); // intimidate
+	this->createSkill(index, _basic, _damage, singleTarget, !onPlayer, !isActive,_none); // basic
+	this->createSkill(index, _skill1, _defend, singleTarget, onPlayer, isActive,_none); // shield wall
+	this->createSkill(index, _skill2, _damage, singleTarget, !onPlayer, isActive, _none); // intimidate
 }
 

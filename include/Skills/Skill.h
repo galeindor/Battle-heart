@@ -14,7 +14,7 @@ class Skill
 {
 public:
 	Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
-		const int effectIndex, bool singleTarget, bool onPlayer, bool isActive , float factor);
+		const int effectIndex, bool singleTarget, bool onPlayer, bool isActive , float factor , int projType);
 	~Skill() = default;
 
 	// Management

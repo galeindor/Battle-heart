@@ -49,7 +49,7 @@ protected:
 	void setOrigin(sf::Vector2f origin)		{ m_sprite.setOrigin(origin); }
 
 private:
-	void initSprite(const sf::Vector2f pos, const int index);
+	void initSprite(const sf::Vector2f pos, const int index , sf::Texture* texture);
 
 	// General
 	sf::Sprite m_sprite;

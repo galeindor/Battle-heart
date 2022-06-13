@@ -31,11 +31,13 @@ public:
 	sf::Texture* getBackground(int i) { return &m_bgTextures[i]; }
 	sf::Font* getFont() { return &m_font; };
 	sf::Texture* getTexture(int i) { return &m_textures[i]; }
+	sf::Texture* getProjTexture(int i) { return &m_projTextures[i]; }
 	sf::Texture* getEffectTexture(int i) { return &m_effectsTextures[i]; }
 	sf::Texture* getLSTexture(int i) { return &m_lsTextures[i]; }
 	sf::Texture* getSkillText(int i, int j) { return &m_skillTextures[i][j]; }
 	sf::Texture* getGameStateText(int i) { return &m_gameStates[i]; }
 	sf::Texture* getGameButtonText(int i) { return &m_gameButtonsTextures[i]; }
+
 	void playSound(int index);
 	void setVolume(int volume);
 	void setPopOutScreen(sf::RectangleShape& rect, sf::Text& text);
@@ -53,6 +55,7 @@ private:
 	sf::Texture m_lsTextures[NUM_OF_LS_TEXTS];
 	sf::Texture m_gameStates[NUM_OF_GAME_STATES];
 	sf::Texture m_gameButtonsTextures[NUM_OF_GBUTTONS];
+	sf::Texture m_projTextures[NUM_OF_PROJ];
 	sf::Font m_font;
 	void loadResources();
 };

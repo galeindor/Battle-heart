@@ -43,6 +43,11 @@ void Resources::loadResources()
 	for (int i = 0; i < NUM_OF_GBUTTONS; i++)
 		m_gameButtonsTextures[i].loadFromFile(gameButtonsTexts[i]);
 
+	for (int i = 0; i < NUM_OF_PROJ; i++)
+	{
+		m_projTextures[i].loadFromFile(ProjTextrues[i]);
+	}
+
 	this->m_font.loadFromFile(MAIN_FONT);
 }
 

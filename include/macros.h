@@ -7,7 +7,7 @@ class Stat;
 // General ----------------------------------
 const std::string LevelsFileName = "Levels.txt";
 const sf::Vector2f healthOffset(30, 100);
-const sf::Vector2f selectedOffset(35, 35);
+const sf::Vector2f selectedOffset(35, 25);
 const sf::Vector2f lsLevelsOffset(162, 120);
 const sf::Vector2f lsLevelsStartPos(304, 159);
 const sf::Vector2f lvlSelOffset(-8, -8);
@@ -22,7 +22,7 @@ const sf::Vector2f pauseButtonPos(1200, 200);
 
 
 const sf::Vector2f DEFAULT_VEC(0, 0);
-constexpr auto SPRITE_SIZE = 64;
+constexpr auto SPRITE_SIZE = 60;
 constexpr auto LEVELS_CHART_COLS = 5;
 constexpr auto MAX_LEVELS = 15;
 constexpr auto WINDOW_WIDTH = 1400;
@@ -103,7 +103,6 @@ const int MENU_BUTTONS_OFFSET = 110, MENU_BUTTONS_GAP = 20;
 // Animations ----------------------------------
 enum CharacterAnimation
 {
-	//_walk,_idle, _specialAttack, _death, _attack, _walk2, _hurt , SPRITE_ROWS
 	_walk,_hurt,_idle,_death, _attack, _specialAttack , SPRITE_ROWS
 };
 
@@ -130,22 +129,32 @@ const std::vector<std::vector<float>> charactersStats =
 	/* cleric */ { 70.f, 2.f, 6.f, 800.f , 10.f},
 	/* knight */ { 120.f, 3.f, 15.f, 40.f , 20.f},
 	/* archer */ { 90.f, 2.f, 20.f, 600.f , 13.f},
-	/* dummy  */ { 80.f, 4.f, 10.f, 40.f , 15.f}
+	/* dummy  */ { 80.f, 4.f, 10.f, 40.f , 15.f},
+	/* imp	  */ { 75.f , 3.f , 20.f , 500.f , 10.f}
 };
 
 // Textures ----------------------------------
 enum ObjectEnums
 {
-	_cleric, _knight, _archer, _dummy, _select, _healBall , NUM_OF_OBJECTS
+	_cleric, _knight, _archer, _demon, _imp, _select , NUM_OF_OBJECTS
 };
-const std::string textures[NUM_OF_OBJECTS] = { "cleric1.png" , "knightSS.png", "witch.png" ,"Demon.png", "select.png", "fireProj.png" };
 
-const std::vector<std::vector<int>> CharacterRowLengths = { {6,4,9,8,7,7} ,{6,4,7,8,5,8},
-															{6,4,9,8,7,7} , {6,2,3,4,4,0 } };
+enum ProjEnums
+{
+	_healBall , _fireProj , _energy , _lightning , _tesla , _waterStrike, _none , NUM_OF_PROJ
+};
+
+const std::string textures[NUM_OF_OBJECTS] = { "cleric1.png" , "knightSS.png", "witch.png" ,"Demon.png", "Imp.png", "select.png"};
+
+const std::vector<std::string > ProjTextrues = { "healProj.png" , "fireProj.png" , "energy.png" , "lightning.png" , "tesla_ball.png" , "water_strike.png"  , "none"};
+
+const std::vector<std::vector<int>> CharacterRowLengths = { {6,4,9,8,7,7} ,{6,4,7,8,5,8}, {6,4,9,8,7,7} ,
+															{6,2,3,4,4,0 } , { 6,2,3,4,5,0} 
+														  };
 
 const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
 
-const std::vector<std::vector<int>> ProjRowlengths = { {22}  , {10} };
+const std::vector<std::vector<int>> ProjRowlengths = { {22} };
 
 
 enum Effects
@@ -158,9 +167,7 @@ const std::string effectsTextures[NUM_OF_EFFECTS] = { "healEffect.png" };
 constexpr auto EFFECT_COOLDOWN = 2.f;
 // Skills ----------------------------------
 constexpr auto NUM_OF_PLAYERS = 3;
-constexpr auto NUM_OF_CHARS = 4;
-constexpr auto MAX_SKILL = 2;
-constexpr auto BASIC_DMG = 1;
+constexpr auto NUM_OF_CHARS = 5;
 constexpr auto SKILL_RECT_SIZE = 80;
 
 enum Skills
@@ -169,16 +176,18 @@ enum Skills
 };
 
 const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = { {1.75f, 20.f, 30.f , 100.f} ,
-															{1.1f ,30.f,  30.f, 100.f } ,
+															{1.65f ,30.f,  30.f, 100.f } ,
 															{1.7f, 5.f , 5.f , 100.f} ,
-															{1.5f}
+															{1.5f},
+															{1.65f}
 
 };
 
 const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {	{1.f, 1.2f, 1.75f , 1.f} ,
 															{1.f ,1.5f, 1.3f, 1.f } ,
 															{1.f, 1.5f , 1.5f , 1.f} ,
-															{5.f}
+															{1.f},
+															{1.f}
 };
 
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
@@ -205,7 +214,9 @@ enum Locations
 const std::vector<std::vector<float>> objectsPhysics = { { 0.1f, 50.f, 90.f },
 														  { 0.3f, 35.f, 80.f },
 														  { 0.2f, 40.f, 100.f },
-														  { 0.1f, 45.f, 70.f } };
+														  { 0.1f, 45.f, 70.f },
+														  { 0.15f , 42.f , 78.f}
+};
 
 enum Physics
 {
@@ -219,14 +230,14 @@ struct LevelInfo
 };
 
 
-
 // Maps
 
-static std::unordered_map<std::string, int> levelsMap = { 
+static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Cleric",_cleric),
 	std::make_pair("Knight", _knight),
 	std::make_pair("Archer", _archer),
-	std::make_pair("Dummy" , _dummy),
+	std::make_pair("Dummy" , _demon),
+	std::make_pair("Imp" , _imp),
 	std::make_pair("Level", NEW_LEVEL_DETECTED)
 };
 

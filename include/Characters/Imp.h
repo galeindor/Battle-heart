@@ -1,12 +1,13 @@
 #pragma once
+
 #include "Enemy.h"
 
-class Dummy : public Enemy
+class Imp : public Enemy
 {
 public:
-	Dummy();
+	Imp();
 	virtual shared_ptr<Enemy> getType() {
-		return make_shared<Dummy>();
+		return make_shared<Imp>();
 	}
 
 	virtual void initSkills(const int index) override;

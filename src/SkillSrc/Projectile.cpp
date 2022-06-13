@@ -3,16 +3,14 @@
 #include "Characters/Character.h"
 
 Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest, const int index, std::shared_ptr<Character> target)
-	:Object(pos, index, projectileParams , ProjRowlengths[0] , Resources::instance().getTexture(index))
+	:Object(pos, index, projectileParams , ProjRowlengths[0] , Resources::instance().getProjTexture(index))
 {
 	setAsTarget(target);
-	setScale({ 2,2 });
 
 	auto origin = this->getSprite().getOrigin();
-	setOrigin({origin.x , origin.y - 50});
+	setOrigin({origin.x -10 , origin.y -20});
 	setDestination(dest);
 
-	this->setVelocity({5, 5});
 }
 
 //==============================================================================
@@ -20,8 +18,8 @@ Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest, const in
 bool Projectile::checkIntersection() const
 {
 	auto norm = sqrt(pow((this->getPosition().x - this->getDest().x), 2) + pow((this->getPosition().y - this->getDest().y), 2));
-	auto epsilon = 30.f;
-	return norm <= epsilon || this->getTarget()->checkCollision(this->getPosition());
+	auto epsilon = 10.f;
+	return norm <= epsilon;// || this->getTarget()->checkCollision(this->getPosition());
 }
 
 //==============================================================================

@@ -18,6 +18,7 @@
                                               "CharacterSrc/Archer.cpp"
                                               "CharacterSrc/Dummy.cpp"
                                               "CharacterSrc/Enemy.cpp"
+                                              "CharacterSrc/Imp.cpp"
                                               "CharacterSrc/Character.cpp"
                                               "CharacterSrc/Player.cpp"
                                               "SkillSrc/Skill.cpp"

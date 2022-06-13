@@ -51,7 +51,7 @@ public:
 protected:
 	
 	void createSkill(int CharIndex, int skillIndex, int effectIndex,
-					 bool single, bool onPlayer, bool active);
+					 bool single, bool onPlayer, bool active, int projType);
 	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }
 	void useSkill(int index);
 	// ############# CHECK LATER ##############
