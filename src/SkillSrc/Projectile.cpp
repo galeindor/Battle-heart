@@ -6,12 +6,12 @@ Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest,
 					   const int index, std::shared_ptr<Character> target,
 					   AnimationParams params)
 	:	Object(pos, index, params, ProjRowlengths[index], 
-			   Resources::instance().getProjTexture(index))
+			   Resources::instance().getProjTexture(index)), m_mvspd(DEF_MVSPD)
 {
 	setAsTarget(target);
 	setAnimation(0);
 	auto origin = this->getSprite().getOrigin();
-	setOrigin({origin.x -10 , origin.y -20}); // this is a plaster
+	setOrigin({origin.x -10 , origin.y -20}); // this is a plaster (+1  i agree) 
 	setDestination(dest);
 
 }
@@ -32,15 +32,23 @@ void Projectile::draw(sf::RenderWindow& window)
 }
 
 //==============================================================================
-void Projectile::updateProjectile(sf::Vector2f steerForce,float deltaTime)
+void Projectile::updateMovement(float deltaTime)
 {
 	this->setDestination(this->getTarget()->getPosition());
 
-	auto dir = this->getPosition() - this->getDest();
-	dir = -dir;
-	auto speed = 2.1f;
-	this->setPosition(this->getPosition()+ speed * dir * deltaTime);
+	auto dir = - (this->getPosition() - this->getDest()); // reasoning (dir = -dir); 
+
+	auto movement = m_mvspd * dir * deltaTime;
+	this->setPosition(this->getPosition()+ m_mvspd * dir * deltaTime);
 	
+	handleAnimation(movement, deltaTime);
+	updateOrientation();
+	this->setRotation(this->m_orientation);
+}
+
+
+void Projectile::updateOrientation()
+{
 	auto adj = this->getPosition().x - this->getTarget()->getPosition().x;
 	auto opp = this->getTarget()->getPosition().y - this->getPosition().y;
 
@@ -58,8 +66,4 @@ void Projectile::updateProjectile(sf::Vector2f steerForce,float deltaTime)
 		this->m_orientation += 180;
 		this->setFaceRight(false);
 	}
-
-	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
-
-	this->setRotation(this->m_orientation);
 }

@@ -44,6 +44,12 @@ public:
 
 	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies , Character* obj);
 
+
+
+	sf::Vector2f	getVelocity()			const { return this->m_velocity; }
+	void setVelocity(sf::Vector2f velocity) { this->m_velocity = velocity; }
+	SteeringInterface* behaviour()			const { return this->m_steering; }
+
 	// Skill management
 	virtual void initSkills(const int index) = 0;
 	bool checkSkillClick(const sf::Vector2f& location);
@@ -70,6 +76,12 @@ private:
 	Timer m_deathTimer;
 	vector<std::unique_ptr<Skill>> m_skills; // skills useable
 	vector<std::shared_ptr<Stat>> m_stats; // all of the character stats
+
+	// Movement
+	SteeringInterface* m_steering;
+	sf::Vector2f m_velocity;
+
+
 	HealthBar m_hpBar;
 	bool m_isAttacking;
 	bool m_isDying;

@@ -3,8 +3,7 @@
 Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams, 
 			   std::vector<int> rowLens , sf::Texture* texture)
 	: m_animation(texture, animParams , rowLens),
-	  m_isMoving(false), m_steering(new SteeringInterface), 
-	  m_velocity(DEFAULT_VEC), m_dest(pos), m_target(nullptr)
+	  m_isMoving(false), m_dest(pos), m_target(nullptr)
 {
 	this->initSprite(pos, index , texture);
 }
@@ -52,8 +51,7 @@ void Object::initSprite(const sf::Vector2f pos, const int index , sf::Texture* t
 
 //=======================================================================================
 
-bool Object::checkCollision(const sf::Vector2f& location)
-{
+bool Object::checkCollision(const sf::Vector2f& location) {
 	return this->m_sprite.getGlobalBounds().contains(location);
 }
 

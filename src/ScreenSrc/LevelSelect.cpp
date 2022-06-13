@@ -27,8 +27,9 @@ void LevelSelect::draw(sf::RenderWindow& window)
 
 void LevelSelect::manageRowAndCol(int& row, int& col)
 {
-	
+
 	col += std::pow(-1, row); // increase or decrease 1 based or row
+
 
 	if (col >= LEVELS_CHART_COLS || col < 0)
 	{
@@ -49,11 +50,11 @@ void LevelSelect::initButtons()
 	tempSprite.setTexture(*Resources::instance().getLSTexture(_lvlCompleted));
 	for (int i = 0; i < this->m_controller->getCurrLvl() + 1; i++)
 	{
-		if(i == this->m_controller->getCurrLvl())
+		if (i == this->m_controller->getCurrLvl())
 			tempSprite.setTexture(*Resources::instance().getLSTexture(_currLvlIcon));
 
-		pos = { lsLevelsStartPos.x + col * lsLevelsOffset.x, 
-			    lsLevelsStartPos.y + row * lsLevelsOffset.y };
+		pos = { lsLevelsStartPos.x + col * lsLevelsOffset.x,
+				lsLevelsStartPos.y + row * lsLevelsOffset.y };
 		tempSprite.setPosition(pos);
 		this->m_availableLevels.push_back(tempSprite);
 		this->manageRowAndCol(row, col);
@@ -94,17 +95,23 @@ void LevelSelect::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& wi
 			this->m_levelHovered = true;
 			return;
 		}
-	
+	// --
 	this->m_levelHovered = false;
 }
 
 void LevelSelect::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window)
 {
 	if (this->m_startButton.getGlobalBounds().contains(clickPos) && this->m_levelSelected)
+	{
 		this->m_controller->setCurrentScreen(ScreenState::PLAY);
+		this->destroyButtons();
+	}
 
 	if (this->m_returnButton.getGlobalBounds().contains(clickPos))
+	{
 		this->m_controller->setCurrentScreen(ScreenState::MENU);
+		this->destroyButtons();
+	}
 
 	for (int index = 0; index < this->m_availableLevels.size(); index++)
 		if (this->m_availableLevels[index].getGlobalBounds().contains(clickPos))
@@ -113,4 +120,9 @@ void LevelSelect::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindo
 			this->m_controller->setCurrLvl(index);
 			this->m_levelSelected = true;
 		}
+}
+// To prevent duplicating a double buttons
+void LevelSelect::destroyButtons()
+{
+	this->m_availableLevels.clear();
 }

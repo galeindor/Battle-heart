@@ -25,7 +25,7 @@ constexpr auto BAR_WIDTH = 60;
 constexpr auto NEW_LEVEL_DETECTED = -3;
 constexpr auto WAVE = '!';
 constexpr auto _levelInProgress = 2;
-
+constexpr float DEF_MVSPD = 5.1;
 // ----------------------------------------------
 //					Animations					-
 // ----------------------------------------------
@@ -48,12 +48,15 @@ const std::vector<std::vector<int>> CharacterRowLengths = {
 	{ 6, 4, 7, 8, 5, 8 },
 	{ 6 ,4 ,9 ,8 ,7 ,7 },
 	{ 6, 2, 3, 4, 4, 0 },
-	{ 6, 2, 3, 4, 5, 0 } 
+	{ 6, 2, 3, 4, 5, 0 }
 };
 
 const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
 
-const std::vector<std::vector<int>> ProjRowlengths = { {22} };
+const std::vector<std::vector<int>> ProjRowlengths = {
+	{8}, {11} , {8} , {12} ,
+	{16} , {10} , {0}
+};
 
 // ----------------------------------------------
 //					Effects						-
@@ -86,17 +89,18 @@ const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 	{1.65f}
 };
 
-const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {	
-	{1.f, 1.2f, 1.75f , 1.f},	
+const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
+	{1.f, 1.2f, 1.75f , 1.f},
 	{1.f ,1.5f, 1.3f, 1.f },
 	{1.f, 1.5f , 1.5f , 1.f},
 	{1.f},
 	{1.f}
 };
 
-const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
-																	{"knightBasic.png", "shield.png","swing.png" , ""} ,
-																	{"archerBasic.png", "aimedshot.png" , "barrage.png" , ""} ,						
+const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] = {
+	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
+	{"knightBasic.png", "shield.png","swing.png" , ""} ,
+	{"archerBasic.png", "aimedshot.png" , "barrage.png" , ""} ,
 };
 
 // ----------------------------------------------------------
@@ -161,25 +165,26 @@ const std::vector<sf::Vector2f> startPositions = {
 // Textures ----------------------------------
 enum ObjectEnums
 {
-	_cleric, _knight, _archer, 
-	_demon, _imp, 
+	_cleric, _knight, _archer,
+	_demon, _imp,
 	_select, NUM_OF_OBJECTS
 };
 
 enum ProjEnums
 {
-	_healBall, _fireProj, _energy, _lightning, 
-	_tesla, _waterStrike, _none, 
+	_healBall, _fireProj, _energy, _lightning,
+	_tesla, _waterStrike, _none,
 	NUM_OF_PROJ
 };
 
-const std::string textures[NUM_OF_OBJECTS] = { 
-	"cleric1.png" , "knightSS.png", "witch.png" ,"Demon.png", 
+const std::string textures[NUM_OF_OBJECTS] = {
+	"cleric1.png" , "knightSS.png", "witch.png" ,"Demon.png",
 	"Imp.png", "select.png" };
 
-const std::vector<std::string > ProjTextrues = { 
-	"healProj.png" , "fireProj.png" , "energy.png" , "lightning.png" , 
-	"tesla_ball.png" , "water_strike.png"  , "none" };
+const std::vector<std::string > ProjTextrues = {
+	"healProj.png", "fireBlast.png", "energy.png", "lightning.png",
+	"tesla_ball.png", "water_strike.png", "none"
+};
 
 // Map ------------------------------------------
 static std::unordered_map<std::string, int> levelsMap = {
@@ -202,7 +207,7 @@ const std::vector<std::vector<float>> charactersStats =
 {
 	/* cleric */ { 70.f, 2.f, 6.f, 800.f , 10.f},
 	/* knight */ { 120.f, 3.f, 15.f, 40.f , 20.f},
-	/* archer */ { 90.f, 2.f, 20.f, 600.f , 13.f},
+	/* archer */ { 90.f, 2.f, 2000.f, 600.f , 13.f},
 	/* dummy  */ { 80.f, 4.f, 10.f, 40.f , 15.f},
 	/* imp	  */ { 75.f , 3.f , 20.f , 500.f , 10.f}
 };
@@ -270,9 +275,4 @@ enum LevelSelectButtons
 	_start, _return,
 	NUM_OF_LSBUTTONS
 };
-
-
-
-
-
 

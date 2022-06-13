@@ -23,10 +23,10 @@ void Controller::run()
 	{
 		deltaTime = this->m_clock.restart().asSeconds();
 		this->m_window.clear();
-		this->swapScreen();
 		this->m_screens[int(this->m_currentScreen)]->draw(this->m_window);
 		this->m_screens[int(this->m_currentScreen)]->run(this->m_window);
 		this->m_window.display();
+		this->swapScreen();
 		this->m_screens[int(this->m_currentScreen)]->update(deltaTime);
 	}
 }
