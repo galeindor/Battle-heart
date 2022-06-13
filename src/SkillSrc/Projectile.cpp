@@ -19,7 +19,7 @@ bool Projectile::checkIntersection() const
 {
 	auto norm = sqrt(pow((this->getPosition().x - this->getDest().x), 2) + pow((this->getPosition().y - this->getDest().y), 2));
 	auto epsilon = 10.f;
-	return norm <= epsilon;// || this->getTarget()->checkCollision(this->getPosition());
+	return norm <= epsilon || this->getTarget()->checkCollision(this->getPosition());
 }
 
 //==============================================================================

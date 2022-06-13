@@ -154,7 +154,10 @@ void Character::useSkill(int skillIndex)
 void Character::setStat(int index, int newVal)
 { 
 	if (index == _hp)
+	{
 		this->showHpBar();
+		this->setAnimation(_hurt);
+	}
 		
 	this->m_stats[index]->setStat(newVal); 
 }
