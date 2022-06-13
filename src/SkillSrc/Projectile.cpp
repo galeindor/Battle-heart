@@ -13,7 +13,6 @@ Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest,
 	auto origin = this->getSprite().getOrigin();
 	setOrigin({origin.x -10 , origin.y -20}); // this is a plaster
 	setDestination(dest);
-
 }
 
 //==============================================================================
@@ -22,10 +21,11 @@ bool Projectile::checkIntersection() const
 {
 	auto norm = sqrt(pow((this->getPosition().x - this->getDest().x), 2) + pow((this->getPosition().y - this->getDest().y), 2));
 	auto epsilon = 10.f;
-	return norm <= epsilon;// || this->getTarget()->checkCollision(this->getPosition());
+	return norm <= epsilon || this->getTarget()->checkCollision(this->getPosition());
 }
 
 //==============================================================================
+
 void Projectile::draw(sf::RenderWindow& window)
 {
 	window.draw(this->getSprite());
@@ -35,12 +35,16 @@ void Projectile::draw(sf::RenderWindow& window)
 void Projectile::updateProjectile(sf::Vector2f steerForce,float deltaTime)
 {
 	this->setDestination(this->getTarget()->getPosition());
-
 	auto dir = this->getPosition() - this->getDest();
 	dir = -dir;
 	auto speed = 2.1f;
 	this->setPosition(this->getPosition()+ speed * dir * deltaTime);
-	
+	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
+	this->setRotation(this->m_orientation);
+}
+
+void Projectile::updateOrientation()
+{
 	auto adj = this->getPosition().x - this->getTarget()->getPosition().x;
 	auto opp = this->getTarget()->getPosition().y - this->getPosition().y;
 
@@ -58,8 +62,4 @@ void Projectile::updateProjectile(sf::Vector2f steerForce,float deltaTime)
 		this->m_orientation += 180;
 		this->setFaceRight(false);
 	}
-
-	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
-
-	this->setRotation(this->m_orientation);
 }

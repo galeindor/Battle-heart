@@ -11,9 +11,9 @@ public:
 			   const int index, std::shared_ptr<Character> target, AnimationParams params);
 	
 	virtual bool checkIntersection() const override;
-
 	void draw(sf::RenderWindow& window);
 	void updateProjectile(sf::Vector2f steerForce,float deltaTime);
+	void updateOrientation();
 
 private:
 	float m_orientation;

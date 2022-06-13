@@ -20,8 +20,6 @@ public:
 
 	sf::Vector2f Arrive(std::vector<sf::Vector2f> locations, std::vector<float> values , float r);
 
-	sf::Vector2f Pursue(std::vector<sf::Vector2f> locations, std::vector<float> values);
-
 	sf::Vector2f CollisionAvoidance(std::vector<sf::Vector2f> locations,
 									std::vector<sf::Vector2f> obstacles, std::vector<float> values, float MAX_AVOID_FORCE);
 
@@ -32,9 +30,6 @@ public:
 
 	sf::Vector2f Arrive(sf::Vector2f object, sf::Vector2f velocity,
 						float maxVelocity, float maxForce, sf::Vector2f target, float r);
-
-	sf::Vector2f Pursue(sf::Vector2f object, sf::Vector2f velocity, 
-						float maxVelocity, float maxForce, sf::Vector2f target);
 
 	sf::Vector2f CollisionAvoidance(sf::Vector2f object, sf::Vector2f velocity, 
 									float maxVelocity, float maxForce, 

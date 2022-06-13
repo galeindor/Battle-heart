@@ -53,7 +53,10 @@ const std::vector<std::vector<int>> CharacterRowLengths = {
 
 const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
 
-const std::vector<std::vector<int>> ProjRowlengths = { {22} };
+const std::vector<std::vector<int>> ProjRowlengths = { 
+	{8}, {11} , {8} , {12} , 
+	{16} , {10} , {0} 
+};
 
 // ----------------------------------------------
 //					Effects						-
@@ -94,9 +97,10 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 	{1.f}
 };
 
-const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
-																	{"knightBasic.png", "shield.png","swing.png" , ""} ,
-																	{"archerBasic.png", "aimedshot.png" , "barrage.png" , ""} ,						
+const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	
+	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
+	{"knightBasic.png", "shield.png","swing.png" , ""} ,
+	{"archerBasic.png", "aimedshot.png" , "barrage.png" , ""} ,						
 };
 
 // ----------------------------------------------------------
@@ -178,8 +182,9 @@ const std::string textures[NUM_OF_OBJECTS] = {
 	"Imp.png", "select.png" };
 
 const std::vector<std::string > ProjTextrues = { 
-	"healProj.png" , "fireProj.png" , "energy.png" , "lightning.png" , 
-	"tesla_ball.png" , "water_strike.png"  , "none" };
+	"healProj.png", "fireBlast.png", "energy.png", "lightning.png", 
+	"tesla_ball.png", "water_strike.png", "none" 
+};
 
 // Map ------------------------------------------
 static std::unordered_map<std::string, int> levelsMap = {
