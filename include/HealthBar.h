@@ -8,7 +8,7 @@ public:
 	HealthBar() :m_showTimer(3.f) ,m_hitTimer(0.8f) , m_max(100){}
 	HealthBar(sf::Vector2f pos, int maxValue);
 	~HealthBar() = default;
-	void updateHealthBar(float statVal);
+	void updateHealthBar(float statVal, const sf::Vector2f& pos);
 	void draw(sf::RenderWindow& window);
 	void setPosition(const sf::Vector2f pos);
 	void show() { m_showTimer.setTimer(); }

@@ -1,8 +1,7 @@
 #include "Object.h"
 
-Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams, std::vector<int> rowLens)
-
-	: m_animation(Resources::instance().getTexture(index), animParams , rowLens),
+Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams, std::vector<int> rowLens , sf::Texture* texture)
+	: m_animation(texture, animParams , rowLens),
 	  m_isMoving(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC), m_dest(pos)
 {
 	this->initSprite(pos, index);
@@ -10,9 +9,9 @@ Object::Object(const sf::Vector2f pos, const int index, AnimationParams animPara
 	this->m_target = nullptr;
 
 	// for now
-	m_mass = 0.1f;
-	m_maxForce = 50;
-	m_maxVelocity = 100;
+	m_moveStats.push_back(100);
+	m_moveStats.push_back(50);
+	m_moveStats.push_back(0.1f);
 }
 
 //=======================================================================================
@@ -35,9 +34,6 @@ bool Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 
 void Object::update(const float deltaTime)
 {
-	//handleAnimation( m_velocity * deltaTime, deltaTime);
-	this->setPosition(this->adjustLocation(this->getPosition()));
-
 	if (this->getPosition().x < this->m_dest.x)
 		this->m_animation.setFaceRight(true);
 
@@ -65,9 +61,9 @@ void Object::initSprite(const sf::Vector2f pos, const int index)
 {
 	this->m_sprite.setPosition(pos);
 	this->m_sprite.setTexture(*Resources::instance().getTexture(index));
-	sf::IntRect size = m_sprite.getTextureRect();
+	auto size = m_sprite.getTextureRect();
 	this->m_sprite.setScale(1.3, 1.3);
-	this->m_sprite.setOrigin(SPRITE_SIZE / 2, SPRITE_SIZE * 2);
+	this->m_sprite.setOrigin( SPRITE_SIZE/ 1.5f , SPRITE_SIZE * 1.5f );
 }
 
 //=======================================================================================

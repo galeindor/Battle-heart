@@ -3,7 +3,7 @@
 #include "Characters/Enemy.h"
 
 Character::Character(const sf::Vector2f pos, const int index, AnimationParams animParams )
-	: m_isAttacking(false), Object(pos, index, animParams , CharacterRowLengths[index]), 
+	: m_isAttacking(false), Object(pos, index, animParams , CharacterRowLengths[index] , Resources::instance().getTexture(index)), 
 	  m_deathTimer(9.f), m_isDying(false)
 {
 	this->initStats(index);
@@ -22,9 +22,9 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 	if (!isAlive())
 		return;
 
-	sf::Vector2f acceleration = steerForce / this->getMass();
+	sf::Vector2f acceleration = steerForce / this->getMoveStat(_mass);
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
-	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMaxVelocity()));
+	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMoveStat(_maxVelocity)));
 
 	auto target = this->getTarget();
 	if (target)
@@ -38,6 +38,18 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 		}
 	}
 
+	updateMovement(deltaTime);
+
+	// Skills update
+	this->updateSkills(deltaTime, m_players, m_enemies);
+	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat() , this->getPosition());
+	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
+}
+
+//======================================================================================
+
+void Character::updateMovement(float deltaTime)
+{
 	if (!this->checkIntersection())
 	{
 		this->setMoving(true);
@@ -60,13 +72,8 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 		else
 			this->setAnimation(_idle);
 	}
-
-	// Skills update
-	this->updateSkills(deltaTime, m_players, m_enemies);
-	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat());
-	this->m_hpBar.setPosition(this->getPosition());
-	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
 }
+
 
 //=======================================================================================
 
@@ -120,7 +127,7 @@ bool Character::targetInRange()
 
 void Character::useBaseAttack()
 {
-	this->setAnimation(_specialAttack);
+	this->setAnimation(_attack);
 }
 
 //=======================================================================================

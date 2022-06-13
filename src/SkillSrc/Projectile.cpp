@@ -3,13 +3,13 @@
 #include "Characters/Character.h"
 
 Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest, const int index, std::shared_ptr<Character> target)
-	:Object(pos, index, projectileParams , ProjRowlengths[0])
+	:Object(pos, index, projectileParams , ProjRowlengths[0] , Resources::instance().getTexture(index))
 {
 	setAsTarget(target);
-	setScale({ 0.5,0.5 });
+	setScale({ 2,2 });
 
 	auto origin = this->getSprite().getOrigin();
-	setOrigin({origin.x , origin.y + 50});
+	setOrigin({origin.x , origin.y - 50});
 	setDestination(dest);
 
 	this->setVelocity({5, 5});

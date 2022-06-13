@@ -4,7 +4,7 @@
 
 configure_file ("CharacterImages/cleric1.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/witch.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("CharacterImages/knight1.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/knightSS.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/fireWarrior.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/imp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -46,6 +46,8 @@ configure_file ("healEffect.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Projectiles
 configure_file ("healProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("fireProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
 
 # Levels file
 configure_file ("Levels.txt" ${CMAKE_BINARY_DIR} COPYONLY)

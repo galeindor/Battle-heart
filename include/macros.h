@@ -104,7 +104,8 @@ const int MENU_BUTTONS_OFFSET = 110, MENU_BUTTONS_GAP = 20;
 // Animations ----------------------------------
 enum CharacterAnimation
 {
-	_idle, _specialAttack, _death, _attack, _walk , _hurt , SPRITE_ROWS 
+	//_walk,_idle, _specialAttack, _death, _attack, _walk2, _hurt , SPRITE_ROWS
+	_walk,_hurt,_idle,_death, _attack, _specialAttack , SPRITE_ROWS
 };
 
 struct AnimationParams {
@@ -112,14 +113,13 @@ struct AnimationParams {
 	float _switchTime;
 };
 
-const AnimationParams characterParams = { sf::Vector2f(14,6), 0.3f };
-const AnimationParams projectileParams = { sf::Vector2f(22, 1), 0.3f };
+const AnimationParams characterParams = { sf::Vector2f(10,6), 0.3f };
+const AnimationParams projectileParams = { sf::Vector2f(8, 1), 0.3f };
 const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
 // Stats ----------------------------------
 constexpr auto MAX_HEALTH = 100;
 constexpr auto DEFAULT_MVSPD = 100;
-
 enum Stats
 {
 	_hp, _attackSpeed, _dmg, _range, _defence, 
@@ -139,13 +139,14 @@ enum ObjectEnums
 {
 	_cleric, _knight, _archer, _dummy, _select, _healBall , NUM_OF_OBJECTS
 };
-const std::string textures[NUM_OF_OBJECTS] = { "cleric1.png" , "knight1.png", "witch.png" ,"imp.png", "select.png", "healProj.png" };
+const std::string textures[NUM_OF_OBJECTS] = { "cleric1.png" , "knightSS.png", "witch.png" ,"Demon.png", "select.png", "fireProj.png" };
 
-const std::vector<std::vector<int>> CharacterRowLengths = { {14,7,10,7,6,4} ,{12,8,8,5,6,4}, {14,7,10,7,6,4} , {0,6,4,0,6,3 } };
+const std::vector<std::vector<int>> CharacterRowLengths = { {6,4,9,8,7,7} ,{6,4,7,8,5,8},
+															{6,4,9,8,7,7} , {6,2,3,4,4,0 } };
 
 const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
 
-const std::vector<std::vector<int>> ProjRowlengths = { {22} };
+const std::vector<std::vector<int>> ProjRowlengths = { {22}  , {10} };
 
 
 enum Effects
@@ -178,7 +179,7 @@ const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = { {1.75f, 20.f, 30.f ,
 const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {	{1.f, 1.2f, 1.75f , 1.f} ,
 															{1.f ,1.5f, 1.3f, 1.f } ,
 															{1.f, 1.5f , 1.5f , 1.f} ,
-															{1.f}
+															{5.f}
 };
 
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
