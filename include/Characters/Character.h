@@ -28,6 +28,7 @@ public:
 	bool targetInRange() ;
 
 	// Getters
+	float	getMoveStat(int index)  const { return m_moveStats[index]; }
 	int getStat(int index)			const { return this->m_stats[index]->getStat(); }
 	bool isAlive()					const { return this->m_stats[_hp]->getStat() > 0; } // return if the character is alive
 	bool getIsAttacking()			const { return this->m_isAttacking; }
@@ -43,7 +44,7 @@ public:
 
 	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies , Character* obj);
 
-	// skill managment
+	// Skill management
 	virtual void initSkills(const int index) = 0;
 	bool checkSkillClick(const sf::Vector2f& location);
 	void drawSkills(sf::RenderWindow& window, bool selected);
@@ -54,12 +55,12 @@ protected:
 					 bool single, bool onPlayer, bool active, int projType);
 	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }
 	void useSkill(int index);
-	// ############# CHECK LATER ##############
 	vector<std::shared_ptr<Stat>>& getStats() { return this->m_stats; }
 
 private:
 	void useBaseAttack();
 	void initStats(const int index);
+	void initPhysics(const int index);
 
 	void updateSkills(const float deltaTime, 
 					  vector<std::shared_ptr<Player>> players,
@@ -72,4 +73,5 @@ private:
 	HealthBar m_hpBar;
 	bool m_isAttacking;
 	bool m_isDying;
+	vector<float> m_moveStats;
 };

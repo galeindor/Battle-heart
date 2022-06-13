@@ -50,32 +50,13 @@ sf::Vector2f SteeringInterface::Arrive(sf::Vector2f object, sf::Vector2f velocit
 {
 	sf::Vector2f desiredV = target - object;
 	sf::Vector2f steeringForce = desiredV - velocity;
-	float factor;
 	sf::Vector2f dist = desiredV;
 
 	if (length(dist) >= r) 
 	{
-		desiredV = Normalize(desiredV);
-		desiredV *= maxVelocity;
 		steeringForce /= maxVelocity;
 		steeringForce *= maxForce;
 	}
-	else {
-		factor = length(dist) / r;
-		desiredV *= factor;
-	}
-
-	return steeringForce;
-}
-
-sf::Vector2f SteeringInterface::Pursue(sf::Vector2f object, sf::Vector2f velocity, float maxVelocity, float maxForce, sf::Vector2f target)
-{
-	sf::Vector2f desiredV = target - object;
-	desiredV = Normalize(desiredV);
-	desiredV *= maxVelocity;
-	sf::Vector2f steeringForce = desiredV - velocity;
-	steeringForce /= maxVelocity;
-	steeringForce *= maxForce;
 
 	return steeringForce;
 }
@@ -114,7 +95,6 @@ sf::Vector2f SteeringInterface::CollisionAvoidance(sf::Vector2f object, sf::Vect
 		}
 		else 
 		{
-
 			sf::Vector2f desiredV = target - object;
 			desiredV = Normalize(desiredV);
 			desiredV *= maxVelocity;
@@ -162,17 +142,6 @@ sf::Vector2f SteeringInterface::Arrive(std::vector<sf::Vector2f> vectors, std::v
 		desiredV *= factor;
 	}
 
-	return steeringForce;
-}
-
-sf::Vector2f SteeringInterface::Pursue(std::vector<sf::Vector2f> vectors, std::vector<float> values)
-{
-	sf::Vector2f desiredV = vectors[_target] - vectors[_object];
-	desiredV = Normalize(desiredV);
-	desiredV *= values[_maxVelocity];
-	sf::Vector2f steeringForce = desiredV - vectors[_velocity];
-	steeringForce /= values[_maxVelocity];
-	steeringForce *= values[_maxForce];
 	return steeringForce;
 }
 

@@ -8,6 +8,7 @@ Controller::Controller()
 	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Heart"),
 	  m_levelLoader(LevelLoader(LevelsFileName))
 {
+	this->m_window.setFramerateLimit(60);
 	this->initScreens();
 	m_screens[int(this->m_currentScreen)]->init();
 }

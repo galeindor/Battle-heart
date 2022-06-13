@@ -7,6 +7,7 @@ Character::Character(const sf::Vector2f pos, const int index, AnimationParams an
 	  m_deathTimer(9.f), m_isDying(false)
 {
 	this->initStats(index);
+	this->initPhysics(index);
 	m_hpBar = HealthBar(pos, m_stats[_hp]->getStat());
 }
 
@@ -17,14 +18,13 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 					   vector<std::shared_ptr<Enemy>> m_enemies)
 {
 	this->m_hpBar.setPosition(this->getPosition());
-	Object::update(deltaTime);	
 	
 	if (!isAlive())
 		return;
 
-	sf::Vector2f acceleration = steerForce / this->getMoveStat(_mass);
+	sf::Vector2f acceleration = steerForce / this->m_moveStats[_mass];
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
-	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->getMoveStat(_maxVelocity)));
+	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->m_moveStats[_maxVelocity]));
 
 	auto target = this->getTarget();
 	if (target)
@@ -104,6 +104,15 @@ void Character::initStats(const int index)
 {
 	for (int stat = 0; stat < NUM_OF_STATS; stat++)
 		this->m_stats.push_back(std::make_shared<Stat>(charactersStats[index][stat]));
+}
+
+//=======================================================================================
+
+void Character::initPhysics(const int index)
+{
+	m_moveStats.push_back(objectsPhysics[index][_mass]);
+	m_moveStats.push_back(objectsPhysics[index][_maxForce]);
+	m_moveStats.push_back(objectsPhysics[index][_maxVelocity]);
 }
 
 //=======================================================================================

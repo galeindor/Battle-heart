@@ -256,7 +256,9 @@ void Board::updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime,
 void Board::playerBehavior(std::shared_ptr<Player> character,float deltaTime)
 {
 	sf::Vector2f steerForce;
-	steerForce = character->behaviour()->Arrive(character->getPosition(), character->getVelocity(), character->getMoveStat(_maxVelocity), character->getMoveStat(_maxForce), character->getDest(), 10);
+	steerForce = character->behaviour()->Arrive(character->getPosition(), character->getVelocity(), 
+												character->getMoveStat(_maxVelocity), character->getMoveStat(_maxForce), 
+												character->getDest(), 10);
 	character->update(steerForce, deltaTime, this->m_players, this->m_enemies);
 }
 
@@ -264,13 +266,9 @@ void Board::playerBehavior(std::shared_ptr<Player> character,float deltaTime)
 
 void Board::enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vector2f pos)
 {
-	if (enemy->behaviour()->length(enemy->getTarget()->getVelocity()) == 0.f)
-		auto t = 2;
-	else
-		auto t = enemy->behaviour()->length(pos) / enemy->behaviour()->length(enemy->getTarget()->getVelocity());
-
-	sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(enemy->getPosition(), enemy->getVelocity(), enemy->getMoveStat(_maxVelocity), enemy->getMoveStat(_maxForce),
-		enemy->getTarget()->getPosition(), createObstaclesVec(), 100);
+	sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance(enemy->getPosition(), enemy->getVelocity(), 
+																	 enemy->getMoveStat(_maxVelocity), enemy->getMoveStat(_maxForce),
+																	 enemy->getTarget()->getPosition(), createObstaclesVec(), 100);
 	this->seperation(enemy.get(), steerForce, deltaTime);
 }
 
