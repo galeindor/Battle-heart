@@ -3,12 +3,12 @@
 #include "Characters/Character.h"
 
 Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest, 
-					   const int index, std::shared_ptr<Character> target)
-	:	Object(pos, index, projectileParams, ProjRowlengths[0], 
+					   const int index, std::shared_ptr<Character> target,
+					   AnimationParams params)
+	:	Object(pos, index, params, ProjRowlengths[index], 
 			   Resources::instance().getProjTexture(index))
 {
 	setAsTarget(target);
-	setScale({ 2,2 });
 	setAnimation(0);
 	auto origin = this->getSprite().getOrigin();
 	setOrigin({origin.x -10 , origin.y -20}); // this is a plaster
@@ -38,7 +38,7 @@ void Projectile::updateProjectile(sf::Vector2f steerForce,float deltaTime)
 
 	auto dir = this->getPosition() - this->getDest();
 	dir = -dir;
-	auto speed = 1.1f;
+	auto speed = 2.1f;
 	this->setPosition(this->getPosition()+ speed * dir * deltaTime);
 	
 	auto adj = this->getPosition().x - this->getTarget()->getPosition().x;

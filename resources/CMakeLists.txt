@@ -47,9 +47,11 @@ configure_file ("healEffect.png" ${CMAKE_BINARY_DIR} COPYONLY)
 # Projectiles
 configure_file ("proj/healProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/fireProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("proj/fireBlast.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/water_strike.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/tesla_ball.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/lightning.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("proj/energy.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Levels file
 configure_file ("Levels.txt" ${CMAKE_BINARY_DIR} COPYONLY)
