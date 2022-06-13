@@ -49,4 +49,8 @@ void Projectile::updateProjectile(sf::Vector2f steerForce,float deltaTime)
 	dir = -dir;
 	auto speed = 1.1f;
 	this->setPosition(this->getPosition()+ speed * dir * deltaTime);
+	
+	auto pos = this->getTarget()->getPosition() - this->getPosition();
+	this->m_orientation = (float)(atan2(pos.x, pos.y) * RAD2DEG);
+	this->setRotation(this->m_orientation);
 }

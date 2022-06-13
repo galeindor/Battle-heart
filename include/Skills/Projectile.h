@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#define RAD2DEG (180.0f / (float)PI)
 
 class Character;
 
@@ -12,5 +13,8 @@ public:
 
 	void draw(sf::RenderWindow& window);
 	void updateProjectile(sf::Vector2f steerForce,float deltaTime);
+
+private:
+	float m_orientation;
 };
 

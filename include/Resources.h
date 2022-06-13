@@ -40,7 +40,6 @@ public:
 	void setVolume(int volume);
 	void setPopOutScreen(sf::RectangleShape& rect, sf::Text& text);
 	void initText(sf::Text& text);
-	void setAnimation(float deltaTime, sf::Sprite& player, int dir);
 
 private:
 	Resources();

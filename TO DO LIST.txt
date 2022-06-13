@@ -13,7 +13,6 @@ Tasks:
 -(***) Make sure the characters don't spawn on each other.
 -(+-) Add more of every class (effects, enemies, players, int).
 -(+-) Start constructing stuff like skills.
--(!!!) Add progress in the game such as unlocking new characters or stats increasing as the level increases.
 
 Bugs:
 - Enemies ignore closest target on spawn.
