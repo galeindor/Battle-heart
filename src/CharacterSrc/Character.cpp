@@ -4,7 +4,7 @@
 
 Character::Character(const sf::Vector2f pos, const int index, AnimationParams animParams )
 	: m_isAttacking(false), Object(pos, index, animParams , CharacterRowLengths[index] , Resources::instance().getTexture(index)), 
-	  m_deathTimer(9.f), m_isDying(false)
+	  m_deathTimer(9.f), m_isDying(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC)
 {
 	this->initStats(index);
 	this->initPhysics(index);
@@ -126,7 +126,6 @@ bool Character::targetInRange()
 		auto range = this->getStat(_range);
 		auto norm = sqrt(pow(myPos.x - tarPos.x, 2) + pow(myPos.y - tarPos.y, 2));
 		return (norm <= range);
-		//return (std::abs(tarPos.x - myPos.x) <= range) && (std::abs(tarPos.y - myPos.y) <= range);
 	}
 
 	return false;
@@ -154,9 +153,7 @@ void Character::createSkill(int charIndex, int skillIndex, int effectIndex, bool
 //=======================================================================================
 
 void Character::useSkill(int skillIndex)
-{
-
-}
+{}
 
 //=======================================================================================
 
@@ -190,7 +187,6 @@ vector<shared_ptr<Character>> Character::createTargetVec(Type vec)
 	{
 		temp.push_back(obj);
 	}
-
 	return temp;
 }
 

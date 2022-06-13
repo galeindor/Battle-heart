@@ -34,6 +34,6 @@ void Screen::run(sf::RenderWindow& window)
 
 void Screen::setBG(const int index)
 {
-	this->m_bg.setSize({ WINDOW_WIDTH, WINDOW_HEIGHT });
-	this->m_bg.setTexture(Resources::instance().getBackground(index));
+    this->m_bg.setSize({ WINDOW_WIDTH, WINDOW_HEIGHT });
+    this->m_bg.setTexture(Resources::instance().getBackground(index));
 }

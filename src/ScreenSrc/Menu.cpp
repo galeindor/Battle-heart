@@ -62,11 +62,11 @@ void Menu::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& wind
 		{
 			switch (index)
 			{
-			// Clicking on battle results in continuing from last point.
+				// Clicking on battle results in continuing from last point.
 			case MenuButtons::_battle:
 				this->m_controller->setCurrentScreen(ScreenState::PLAY);
 				break;
-			// Clicking on levels results in picking a level.
+				// Clicking on levels results in picking a level.
 			case MenuButtons::_levels:
 				this->m_controller->setCurrentScreen(ScreenState::LEVEL_SELECT);
 				break;

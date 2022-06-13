@@ -16,6 +16,9 @@ public:
 	void updateOrientation();
 
 private:
+	void updateOrientation();
+
 	float m_orientation;
+	float m_mvspd;
 };
 
