@@ -32,12 +32,12 @@ void Projectile::draw(sf::RenderWindow& window)
 }
 
 //==============================================================================
+
 void Projectile::updateMovement(float deltaTime)
 {
 	this->setDestination(this->getTarget()->getPosition());
 
-	auto dir = - (this->getPosition() - this->getDest()); // reasoning (dir = -dir); 
-
+	auto dir = this->getDest() - this->getPosition();
 	auto movement = m_mvspd * dir * deltaTime;
 	this->setPosition(this->getPosition()+ m_mvspd * dir * deltaTime);
 	
@@ -67,3 +67,5 @@ void Projectile::updateOrientation()
 		this->setFaceRight(false);
 	}
 }
+
+//===========================

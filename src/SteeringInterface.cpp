@@ -41,25 +41,6 @@ sf::Vector2f SteeringInterface::Truncate(const sf::Vector2f& vec, float max)
 	return truncated;
 }
 //====================================================================================================
-
-sf::Vector2f SteeringInterface::Arrive(sf::Vector2f object, sf::Vector2f velocity, float maxVelocity, float maxForce, sf::Vector2f target, float r) 
-{
-	sf::Vector2f desiredV = target - object;
-	sf::Vector2f steeringForce = desiredV - velocity;
-	sf::Vector2f dist = desiredV;
-
-	if (length(dist) >= r) 
-	{
-		steeringForce /= maxVelocity;
-		steeringForce *= maxForce;
-	}
-
-	return steeringForce;
-}
-
-//====================================================================================================
-// copy of all functions - using vectors =============================================================
-
 sf::Vector2f SteeringInterface::Flee(std::vector<sf::Vector2f> locations, std::vector<float> values)
 {
 
@@ -77,20 +58,12 @@ sf::Vector2f SteeringInterface::Arrive(std::vector<sf::Vector2f> vectors, std::v
 {
 	auto desiredV = vectors[_target] - vectors[_object];
 	auto steeringForce = desiredV - vectors[_velocity];
-	float factor;
 	auto dist = desiredV;
 
 	if (length(dist) >= r) 
 	{
-		desiredV = Normalize(desiredV);
-		desiredV *= values[_maxVelocity];
 		steeringForce /= values[_maxVelocity];
 		steeringForce *= values[_maxForce];
-	}
-	else
-	{
-		factor = length(dist) / r;
-		desiredV *= factor;
 	}
 
 	return steeringForce;

@@ -242,6 +242,10 @@ enum MenuButtons
 	NUM_OF_MBUTTONS
 };
 
+enum ButtonIndexes {
+	_continueIndex, _restartIndex, _exitIndex
+};
+
 const std::vector<std::string> MENU_BUTTONS_STRINGS = { {"Battle"}, {"Levels"}, {"Help"}, {"Exit"} };
 const sf::Vector2f MENU_BUTTONS_START = sf::Vector2f(436, 49);
 const int MENU_BUTTONS_OFFSET = 110, MENU_BUTTONS_GAP = 20;
