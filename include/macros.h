@@ -7,7 +7,7 @@ class Stat;
 // General ----------------------------------
 const std::string LevelsFileName = "Levels.txt";
 const sf::Vector2f healthOffset(30, 100);
-const sf::Vector2f selectedOffset(45, 30);
+const sf::Vector2f selectedOffset(35, 35);
 const sf::Vector2f lsLevelsOffset(162, 120);
 const sf::Vector2f lsLevelsStartPos(304, 159);
 const sf::Vector2f lvlSelOffset(-8, -8);

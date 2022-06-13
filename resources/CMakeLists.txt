@@ -6,7 +6,7 @@ configure_file ("CharacterImages/cleric1.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/witch.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/knightSS.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/fireWarrior.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("CharacterImages/walk.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/imp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 
