@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Effects/Effect.h"
 
 class Heal : public Effect

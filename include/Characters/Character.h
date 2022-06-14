@@ -45,7 +45,10 @@ public:
 
 	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies , Character* obj);
 
+	// Physics management
 
+	vector<sf::Vector2f> getLocationsVec(bool getDest);
+	vector<float> getMoveStats() const { return m_moveStats; }
 
 	sf::Vector2f	getVelocity()			const { return this->m_velocity; }
 	void setVelocity(sf::Vector2f velocity) { this->m_velocity = velocity; }

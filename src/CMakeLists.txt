@@ -15,7 +15,7 @@
                                               "Impact.cpp"
                                               "CharacterSrc/Cleric.cpp"  
                                               "CharacterSrc/Knight.cpp"
-                                              "CharacterSrc/Archer.cpp"
+                                              "CharacterSrc/Witch.cpp"
                                               "CharacterSrc/Dummy.cpp"
                                               "CharacterSrc/Enemy.cpp"
                                               "CharacterSrc/Imp.cpp"
@@ -27,4 +27,5 @@
                                               "EffectSrc/Heal.cpp"
                                               "EffectSrc/Damage.cpp"
                                               "EffectSrc/Defend.cpp"
-                                              "EffectSrc/LifeDrain.cpp")
+                                              "EffectSrc/LifeDrain.cpp"
+                                              "EffectSrc/Fear.cpp")

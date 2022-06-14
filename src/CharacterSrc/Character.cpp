@@ -233,3 +233,19 @@ bool Character::checkSkillClick(const sf::Vector2f& location)
 	}
 	return false;
 }
+
+//==========================================================================================
+
+vector<sf::Vector2f> Character::getLocationsVec(bool getDest)
+{
+	vector<sf::Vector2f> vec;
+	if (getDest)
+		vec.push_back(this->getDest());
+	else
+		vec.push_back(this->getTarget()->getPosition());
+	vec.push_back(getPosition());
+	vec.push_back(m_velocity);
+	return vec;
+}
+
+//===========================================================================================

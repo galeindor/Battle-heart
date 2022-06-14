@@ -85,6 +85,8 @@ void Skill::initEffect(const int effectIndex)
 	case _drainLife:
 		this->m_effect = new LifeDrain(effectParams);
 		break;
+	case _fear:
+		this->m_effect = new Fear(effectParams);
 	default:
 		break;
 	}

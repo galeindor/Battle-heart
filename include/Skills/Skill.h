@@ -4,6 +4,7 @@
 #include "Effects/Damage.h"
 #include "Effects/Defend.h"
 #include "Effects/LifeDrain.h"
+#include "Effects/Fear.h"
 #include "Timer.h"
 #include "Skills/Projectile.h"
 #include "HashTable.h"

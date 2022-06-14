@@ -256,9 +256,7 @@ void Board::updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime,
 void Board::playerBehavior(std::shared_ptr<Player> character, float deltaTime)
 {
 	sf::Vector2f steerForce;
-	vector<sf::Vector2f> vecs = { character->getDest(), character->getPosition() , character->getVelocity() };
-	vector<float> values = { 0.f, character->getMoveStat(_maxForce), character->getMoveStat(_maxVelocity) };
-	steerForce = character->behaviour()->Arrive(vecs, values, 10);
+	steerForce = character->behaviour()->Arrive(character->getLocationsVec(true), character->getMoveStats(), 10);
 	character->update(steerForce, deltaTime, this->m_players, this->m_enemies);
 }
 
@@ -266,13 +264,9 @@ void Board::playerBehavior(std::shared_ptr<Player> character, float deltaTime)
 
 void Board::enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vector2f pos)
 {
-
-	std::vector<sf::Vector2f> vecs = { enemy->getTarget()->getPosition(), enemy->getPosition() , enemy->getVelocity() };
-	vector<float> values = { 0, enemy->getMoveStat(_maxForce), enemy->getMoveStat(_maxVelocity) };
-	sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance( vecs ,createObstaclesVec(), values, 100);
+	sf::Vector2f steerForce = enemy->behaviour()->CollisionAvoidance( enemy->getLocationsVec(false) ,createObstaclesVec(), enemy->getMoveStats(), 100);
 	this->seperation(enemy.get(), steerForce, deltaTime);
 }
-
 
 ////==========================================================
 
@@ -326,7 +320,7 @@ HashTable<int, shared_ptr<Player>> Board::getPlayersTable()
 	std::unordered_map<int, shared_ptr<Player>> playersMap = {
 		std::make_pair(_cleric, Cleric(startPositions[_cleric]).getType()),
 		std::make_pair(_knight, Knight(startPositions[_knight]).getType()),
-		std::make_pair(_archer, Archer(startPositions[_archer]).getType())
+		std::make_pair(_witch, Witch(startPositions[_witch]).getType())
 	};
 	return playersMap;
 }

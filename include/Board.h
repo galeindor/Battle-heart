@@ -3,7 +3,7 @@
 #include "Resources.h"
 #include "Characters/Cleric.h"
 #include "Characters/Knight.h"
-#include "Characters/Archer.h"
+#include "Characters/Witch.h"
 #include "Characters/Dummy.h"
 #include "Characters/Imp.h"
 #include "HashTable.h"
