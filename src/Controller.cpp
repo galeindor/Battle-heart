@@ -33,6 +33,43 @@ void Controller::run()
 
 //=======================================================================================
 
+void Controller::setCurrentScreen(ScreenState state)
+{
+	this->m_currentScreen = state;
+	this->m_changeScreen = true;
+}
+
+//=======================================================================================
+
+void Controller::setMaxLvlAchieved(int newMax)
+{
+	if (this->m_maxLevelAchieved < newMax)
+		this->m_maxLevelAchieved = newMax;
+}
+
+void Controller::manageSound(Sound::VolumeControl action)
+{
+	switch (action)
+	{
+	case Sound::VolumeControl::MUTE:
+		this->m_sound.muteVolume();
+		break;
+
+	case Sound::VolumeControl::INC:
+		this->m_sound.incVolume();
+		break;
+
+	case Sound::VolumeControl::DEC:
+		this->m_sound.decVolume();
+		break;
+
+	default:
+		break;
+	}
+}
+
+//=======================================================================================
+
 void Controller::initScreens()
 {
 	this->m_screens.push_back(std::make_unique<Menu>(this));
@@ -44,11 +81,9 @@ void Controller::swapScreen()
 {
     if (this->m_changeScreen)
     {
+		if (this->m_currentScreen == ScreenState::EXIT)
+			exit(EXIT_SUCCESS);
         m_screens[int(this->m_currentScreen)]->init();
-
-        if (this->m_currentScreen == ScreenState::EXIT)
-            exit(EXIT_SUCCESS);
-
         this->m_changeScreen = false;
     }
 }

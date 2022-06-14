@@ -8,14 +8,14 @@
 #include "Characters/Imp.h"
 #include "Characters/miniDragon.h"
 #include "HashTable.h"
-
+#include "Controller.h"
 using namespace std;
 using std::shared_ptr;
 
 class Board 
 {
 public:
-	Board(const LevelInfo& currLevelInfo);
+	Board(const LevelInfo& currLevelInfo, Controller* controller);
 	bool handleFirstClick(sf::Vector2f location);
 	bool handleSecondClick(sf::Vector2f location);
 	void hoverEnemies(const sf::Vector2f& hoverPos);
@@ -34,7 +34,7 @@ public:
 
 	void playerBehavior(std::shared_ptr<Player> character,float deltaTime);
 	void enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vector2f pos);
-
+	
 	template <class Type>
 	bool checkHover(Type character, const sf::Vector2f pos);
 
@@ -54,11 +54,14 @@ private:
 	vector<shared_ptr<Player>> m_players;
 	vector<shared_ptr<Enemy>> m_enemies;
 	int m_currWave;
+	int m_currPlayerHovered = -1;
+	int m_currEnemyHovered = -1;
 	std::shared_ptr<Player> m_currPlayer;
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
 	sf::Sprite m_selected;
 	sf::Sprite m_hovered;
 	bool m_isHovered = false;
+	Controller* m_controller;
 
 	// Funcs
 	HashTable<int, shared_ptr<Player>> getPlayersTable();

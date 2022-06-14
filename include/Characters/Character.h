@@ -57,10 +57,10 @@ public:
 	// Skill management
 	virtual void initSkills(const int index) = 0;
 	bool checkSkillClick(const sf::Vector2f& location);
+	bool checkSkillHover(sf::Vector2f hoverPos);
 	void drawSkills(sf::RenderWindow& window, bool selected);
 
 protected:
-	
 	void createSkill(int CharIndex, int skillIndex, int effectIndex,
 					 bool single, bool onPlayer, bool active, int projType);
 	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }
@@ -84,7 +84,6 @@ private:
 	// Movement
 	SteeringInterface* m_steering;
 	sf::Vector2f m_velocity;
-
 
 	HealthBar m_hpBar;
 	bool m_isAttacking;

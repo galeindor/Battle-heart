@@ -47,7 +47,11 @@ void Resources::loadResources()
 		m_projTextures[i].loadFromFile(ProjTextrues[i]);
 
 	for (int i = 0; i < soundList.size(); i++)
-		this->m_buffers[i].loadFromFile(soundList[i]);
+	{
+		sf::SoundBuffer temp;
+		temp.loadFromFile(soundList[i]);
+		this->m_buffers.push_back(temp);
+	}
 
 	this->m_font.loadFromFile(MAIN_FONT);
 }

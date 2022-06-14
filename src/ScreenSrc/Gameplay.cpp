@@ -1,11 +1,16 @@
 #include "ScreenManager/Gameplay.h"
 
 //-------------------------------------------------
+
 Gameplay::Gameplay(Controller* controller)
-	: m_currLvl(0), m_board(Board(controller->getLevelInfo(0))),
+	: m_currLvl(0), m_board(Board(controller->getLevelInfo(0), controller)),
 	Screen(controller)
-{}
+{
+	this->initButtons();
+}
+
 //-------------------------------------------------
+
 void Gameplay::update(const float deltaTime)
 {
 	if (!this->m_wonLevel && !this->m_paused && !this->m_lost)
@@ -26,13 +31,17 @@ void Gameplay::update(const float deltaTime)
 	}
 }
 
+//-------------------------------------------------
+
 void Gameplay::init()
 {
 	this->m_currLvl = this->m_controller->getCurrLvl();
 	this->setBG(_firstLevel);
-	this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl));
-	this->initButtons();
+	this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl), m_controller);
+	//this->initButtons();
 }
+
+//-------------------------------------------------
 
 void Gameplay::draw(sf::RenderWindow& window)
 {
@@ -50,7 +59,9 @@ void Gameplay::draw(sf::RenderWindow& window)
 		window.draw(this->m_buttons[_exitIndex]);
 	}
 }
+
 //-------------------------------------------------
+
 bool Gameplay::winLevel()
 {
 	this->m_currLvl++;
@@ -62,6 +73,7 @@ bool Gameplay::winLevel()
 	this->m_wonLevel = true;
 	return true;
 }
+
 //-------------------------------------------------
 
 void Gameplay::winGame()
@@ -69,6 +81,7 @@ void Gameplay::winGame()
 	this->m_wonGame = true;
 	exit(EXIT_SUCCESS);
 }
+
 //-------------------------------------------------
 
 void Gameplay::initButtons()
@@ -95,28 +108,28 @@ void Gameplay::initButtons()
 }
 
 //-------------------------------------------------
+
 void Gameplay::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
 {
 	// If not paused
-	if (!this->m_paused)
+	if (!this->m_paused && !this->m_wonLevel && !this->m_lost)
 	{
-		this->checkButton(hoverPos, _pause, _pauseHL);
+		this->checkPause(hoverPos);
 		auto clericSelected = this->m_board.checkCleric();
 		if (this->m_charSelected && !clericSelected)
 			this->m_board.hoverEnemies(hoverPos);
 		else
 			this->m_board.hoverPlayers(hoverPos);
 	}
-	
-	if (this->m_paused || this->m_wonLevel || this->m_lost)
+	else
 	{
 		// Continue
 		if (!this->m_lost)
-			this->checkButton(hoverPos, _continue, _continueHL);
+			this->checkButton(hoverPos, _continue, _continueHL, _continueIndex);
 		// Restart
-		this->checkButton(hoverPos, _restart, _restartHL);
+		this->checkButton(hoverPos, _restart, _restartHL, _restartIndex);
 		//Exit
-		this->checkButton(hoverPos, _exitButton, _exitButtonHL);
+		this->checkButton(hoverPos, _exitButton, _exitButtonHL, _exitIndex);
 	}
 }
 //-------------------------------------------------
@@ -126,35 +139,11 @@ void Gameplay::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& 
 	if (this->m_paused || this->m_wonLevel || this->m_lost)
 	{
 		if (!this->m_lost && this->m_buttons[_continueIndex].getGlobalBounds().contains(clickPos))
-		{
-			if (this->m_wonLevel)
-			{
-				this->m_wonLevel = false;
-				this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl));
-			}
-			else
-				this->m_paused = false;
-		}
+			this->cont();
 		else if (this->m_buttons[_restartIndex].getGlobalBounds().contains(clickPos))
-		{
-			if (this->m_wonLevel)
-				this->m_board = Board(this->m_controller->getLevelInfo(--this->m_currLvl));
-			else
-				this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl));
-
-			this->m_wonLevel = false;
-			this->m_lost = false;
-			this->m_paused = false;
-		}
+			this->restart();
 		else if (this->m_buttons[_exitIndex].getGlobalBounds().contains(clickPos))
-		{
-			this->m_lost = false;
-			this->m_wonLevel = false;
-			this->m_paused = false;
-			this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl));
-			this->m_controller->setCurrentScreen(ScreenState::MENU);
-
-		}
+			this->exitGame();
 	}
 	else
 	{
@@ -172,11 +161,80 @@ void Gameplay::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& 
 	}
 }
 
-void Gameplay::checkButton(sf::Vector2f hoverPos, GameButtons reg, GameButtons hl)
+//-------------------------------------------------
+
+void Gameplay::checkButton(sf::Vector2f hoverPos, GameButtons reg, GameButtons hl, ButtonIndexes index)
 {
-	if (this->m_exitButton.getGlobalBounds().contains(hoverPos))
-		this->m_exitButton.setTexture(*Resources::instance().getGameButtonText(hl));
+	if (this->m_buttons[index].getGlobalBounds().contains(hoverPos))
+	{
+		this->m_buttons[index].setTexture(*Resources::instance().getGameButtonText(hl));
+		
+		if (reg != this->m_lastButtonHovered)
+		{
+			this->m_lastButtonHovered = int(reg);
+			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+		}
+	}
 	else
-		this->m_exitButton.setTexture(*Resources::instance().getGameButtonText(reg));
+		this->m_buttons[index].setTexture(*Resources::instance().getGameButtonText(reg));
 }
+
+//-------------------------------------------------
+
+void Gameplay::checkPause(sf::Vector2f hoverPos)
+{
+	if (this->m_pauseButton.getGlobalBounds().contains(hoverPos))
+	{
+		if (!this->m_hoveredPause)
+		{
+			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+			this->m_hoveredPause = true;
+		}
+		this->m_pauseButton.setTexture(*Resources::instance().getGameButtonText(_pauseHL));
+	}
+	else
+	{
+		this->m_pauseButton.setTexture(*Resources::instance().getGameButtonText(_pause));
+		this->m_hoveredPause = false;
+	}
+}
+
+//-------------------------------------------------
+
+void Gameplay::cont()
+{
+	if (this->m_wonLevel)
+	{
+		this->m_wonLevel = false;
+		this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl), m_controller);
+	}
+	else
+		this->m_paused = false;
+}
+
+//-------------------------------------------------
+
+void Gameplay::restart()
+{
+	if (this->m_wonLevel)
+		this->m_board = Board(this->m_controller->getLevelInfo(--this->m_currLvl), m_controller);
+	else
+		this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl), m_controller);
+
+	this->m_wonLevel = false;
+	this->m_lost = false;
+	this->m_paused = false;
+}
+
+//-------------------------------------------------
+
+void Gameplay::exitGame()
+{
+	this->m_lost = false;
+	this->m_wonLevel = false;
+	this->m_paused = false;
+	this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl), m_controller);
+	this->m_controller->setCurrentScreen(ScreenState::MENU);
+}
+
 //-------------------------------------------------

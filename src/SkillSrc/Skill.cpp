@@ -147,3 +147,10 @@ bool Skill::handleClick(const sf::Vector2f& pos)
 	timeLeft = std::max(timeLeft, 0.f);
 	return !m_targets.empty() && m_isActive && (timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
 }
+
+//==========================================================
+
+bool Skill::checkHover(sf::Vector2f hoverPos)
+{
+	return this->m_rect.getGlobalBounds().contains(hoverPos);
+}

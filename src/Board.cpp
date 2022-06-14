@@ -1,8 +1,9 @@
 #include "Board.h"
 
-Board::Board(const LevelInfo& currLevelInfo)
+Board::Board(const LevelInfo& currLevelInfo, Controller* controller)
 	:	m_currPlayer(nullptr), m_currWave(0),
-		m_enemyWaves(currLevelInfo.m_enemyWaves)
+		m_enemyWaves(currLevelInfo.m_enemyWaves),
+		m_controller(controller)
 {
 	this->initPlayers(currLevelInfo.m_lvlPlayers);
 	this->initEnemies(currLevelInfo.m_enemyWaves[this->m_currWave]);
@@ -164,8 +165,7 @@ bool Board::handleFirstClick(sf::Vector2f location)
 	{
 		if (player->checkCollision(location))
 		{
-			auto sound = Resources::instance().sound();
-			sound->playSound(int(Sound::Sounds::CLICK_PLAYER));
+			this->m_controller->makeSound(int(Sound::Sounds::CLICK_PLAYER));
 			if(m_currPlayer)
 				m_currPlayer->setSelected(false);
 			player->setSelected(true);
@@ -198,8 +198,7 @@ bool Board::handleSecondClick(sf::Vector2f location)
 				return true;
 
 
-	auto sound = Resources::instance().sound();
-	sound->playSound(int(Sound::Sounds::MOVE_PLAYER));
+	this->m_controller->makeSound(int(Sound::Sounds::MOVE_PLAYER));
 	m_currPlayer->setAsTarget(nullptr);
 	m_currPlayer->setDestination(adjustLocation(location));
 	this->m_selected.setPosition(adjustLocation(location));
@@ -210,10 +209,16 @@ bool Board::handleSecondClick(sf::Vector2f location)
 
 void Board::hoverEnemies(const sf::Vector2f& hoverPos)
 {
-	for (auto& enemy : this->m_enemies)
-		if (this->checkHover(enemy, hoverPos))
+	for (int i = 0; i < this->m_enemies.size(); i++)
+		if (this->checkHover(this->m_enemies[i], hoverPos))
+		{
+			if (this->m_currEnemyHovered != i)
+			{
+				this->m_currEnemyHovered = i;
+				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+			}
 			return;
-
+		}
 	this->m_isHovered = false;
 }
 
@@ -221,10 +226,16 @@ void Board::hoverEnemies(const sf::Vector2f& hoverPos)
 
 void Board::hoverPlayers(const sf::Vector2f& hoverPos)
 {
-	for (auto& player : this->m_players)
-		if (this->checkHover(player, hoverPos))
+	for (int i = 0; i < this->m_players.size(); i++)
+		if (this->checkHover(this->m_players[i], hoverPos))
+		{
+			if (this->m_currPlayerHovered != i)
+			{
+				this->m_currPlayerHovered = i;
+				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+			}
 			return;
-
+		}
 	this->m_isHovered = false;
 }
 

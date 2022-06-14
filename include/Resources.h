@@ -37,12 +37,10 @@ public:
 	sf::Texture* getGameStateText(int i) { return &m_gameStates[i]; }
 	sf::Texture* getGameButtonText(int i) { return &m_gameButtonsTextures[i]; }
 	sf::SoundBuffer* getBuffer(int i) { return &m_buffers[i]; }
-	Sound* sound() { return &m_sound; }
 
 private:
 	Resources();
 	Resources(const Resources&) = default;
-	Sound m_sound;
 	sf::Texture m_textures[NUM_OF_OBJECTS];
 	sf::Texture m_effectsTextures[NUM_OF_EFFECTS];
 	sf::Texture m_skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS];

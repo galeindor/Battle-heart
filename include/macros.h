@@ -67,8 +67,9 @@ constexpr auto DEFAULT_VOLUME = 40;
 const std::vector<std::string> soundList = {
 	"battle.wav",
 	"buttonClick.wav",
-	"clickPlayer.wav",
-	"movePlayer.wav"
+	"clickPlayer.ogg",
+	"movePlayer.wav",
+	"hoverSound.ogg"
 };
 
 // ----------------------------------------------
@@ -136,7 +137,7 @@ const sf::Vector2f selectedOffset(45, 30);
 const sf::Vector2f continueButtonPos(615, 450);
 const sf::Vector2f restartButtonPos(615, 500);
 const sf::Vector2f exitButtonPos(615, 550);
-const sf::Vector2f pauseButtonPos(1200, 200);
+const sf::Vector2f pauseButtonPos(1300, 30);
 constexpr auto singleTarget = true;
 constexpr auto onPlayer = true;
 constexpr auto isActive = true;
@@ -146,6 +147,10 @@ enum GameButtons
 	_pause, _continue, _restart, _exitButton,
 	_pauseHL, _continueHL, _restartHL, _exitButtonHL,
 	NUM_OF_GBUTTONS
+};
+
+enum ButtonIndexes {
+	_continueIndex, _restartIndex, _exitIndex
 };
 
 const std::string gameButtonsTexts[NUM_OF_GBUTTONS] = {
@@ -258,10 +263,6 @@ enum MenuButtons
 {
 	_battle, _levels, _help, _escape,
 	NUM_OF_MBUTTONS
-};
-
-enum ButtonIndexes {
-	_continueIndex, _restartIndex, _exitIndex
 };
 
 const std::vector<std::string> MENU_BUTTONS_STRINGS = { {"Battle"}, {"Levels"}, {"Help"}, {"Exit"} };

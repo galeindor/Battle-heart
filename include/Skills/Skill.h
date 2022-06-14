@@ -31,6 +31,7 @@ public:
 
 	void draw(sf::RenderWindow& window, bool);
 	bool handleClick(const sf::Vector2f& loc);
+	bool checkHover(sf::Vector2f hoverPos);
 private:
 
 	void updateVisual();

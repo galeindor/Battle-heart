@@ -12,7 +12,15 @@ public:
 		BATTLE,
 		BUTTON_CLICK,
 		CLICK_PLAYER,
-		MOVE_PLAYER
+		MOVE_PLAYER,
+		HOVER
+	};
+
+	enum class VolumeControl
+	{
+		MUTE,
+		INC,
+		DEC
 	};
 
 	Sound(); // C-tor.
