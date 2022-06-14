@@ -15,7 +15,7 @@
 #include <algorithm>
 #include <stdlib.h> 
 #include <time.h> 
-
+#include "Sound.h"
 using std::vector;
 using std::list;
 using std::string;
@@ -27,7 +27,6 @@ class Resources
 public:
 	~Resources();
 	static Resources& instance();
-
 	sf::Texture* getBackground(int i) { return &m_bgTextures[i]; }
 	sf::Font* getFont() { return &m_font; };
 	sf::Texture* getTexture(int i) { return &m_textures[i]; }
@@ -37,16 +36,13 @@ public:
 	sf::Texture* getSkillText(int i, int j) { return &m_skillTextures[i][j]; }
 	sf::Texture* getGameStateText(int i) { return &m_gameStates[i]; }
 	sf::Texture* getGameButtonText(int i) { return &m_gameButtonsTextures[i]; }
-
-	void playSound(int index);
-	void setVolume(int volume);
-	void setPopOutScreen(sf::RectangleShape& rect, sf::Text& text);
-	void initText(sf::Text& text);
+	sf::SoundBuffer* getBuffer(int i) { return &m_buffers[i]; }
+	Sound* sound() { return &m_sound; }
 
 private:
 	Resources();
 	Resources(const Resources&) = default;
-
+	Sound m_sound;
 	sf::Texture m_textures[NUM_OF_OBJECTS];
 	sf::Texture m_effectsTextures[NUM_OF_EFFECTS];
 	sf::Texture m_skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS];
@@ -55,6 +51,7 @@ private:
 	sf::Texture m_gameStates[NUM_OF_GAME_STATES];
 	sf::Texture m_gameButtonsTextures[NUM_OF_GBUTTONS];
 	sf::Texture m_projTextures[NUM_OF_PROJ];
+	std::vector<sf::SoundBuffer> m_buffers;
 	sf::Font m_font;
 	void loadResources();
 };

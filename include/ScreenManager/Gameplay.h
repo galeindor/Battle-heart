@@ -24,6 +24,7 @@ protected:
 	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 	
 private:
+	void checkButton(sf::Vector2f hoverPos, GameButtons reg, GameButtons hl);
 	sf::Sprite m_gameState;
 	sf::Sprite m_pauseButton;
 	// Need to put those 3 in a vector

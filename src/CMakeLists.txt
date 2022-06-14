@@ -1,5 +1,6 @@
 ﻿target_sources (${CMAKE_PROJECT_NAME} PRIVATE "main.cpp"
                                               "Controller.cpp"
+                                              "Sound.cpp"
                                               "LevelLoader.cpp"
                                               "ScreenSrc/Screen.cpp"
                                               "ScreenSrc/Gameplay.cpp"

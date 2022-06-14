@@ -40,8 +40,11 @@ void Projectile::updateProjectile(sf::Vector2f steerForce,float deltaTime)
 	auto speed = 2.1f;
 	this->setPosition(this->getPosition()+ speed * dir * deltaTime);
 	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
+	this->updateOrientation();
 	this->setRotation(this->m_orientation);
 }
+
+//==============================================================================
 
 void Projectile::updateOrientation()
 {

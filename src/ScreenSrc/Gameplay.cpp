@@ -92,34 +92,23 @@ void Gameplay::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& windo
 	// If not paused
 	if (!this->m_paused)
 	{
-		if (this->m_pauseButton.getGlobalBounds().contains(hoverPos))
-			this->m_pauseButton.setTexture(*Resources::instance().getGameButtonText(_pauseHL));
+		this->checkButton(hoverPos, _pause, _pauseHL);
+		auto clericSelected = this->m_board.checkCleric();
+		if (this->m_charSelected && !clericSelected)
+			this->m_board.hoverEnemies(hoverPos);
 		else
-			this->m_pauseButton.setTexture(*Resources::instance().getGameButtonText(_pause));
+			this->m_board.hoverPlayers(hoverPos);
 	}
 	
-	if(this->m_paused || this->m_wonLevel || this->m_lost)
+	if (this->m_paused || this->m_wonLevel || this->m_lost)
 	{
 		// Continue
 		if (!this->m_lost)
-		{
-			if (this->m_continueButton.getGlobalBounds().contains(hoverPos))
-				this->m_continueButton.setTexture(*Resources::instance().getGameButtonText(_continueHL));
-			else
-				this->m_continueButton.setTexture(*Resources::instance().getGameButtonText(_continue));
-		}
-
+			this->checkButton(hoverPos, _continue, _continueHL);
 		// Restart
-		if (this->m_restartButton.getGlobalBounds().contains(hoverPos))
-			this->m_restartButton.setTexture(*Resources::instance().getGameButtonText(_restartHL));
-		else
-			this->m_restartButton.setTexture(*Resources::instance().getGameButtonText(_restart));
-
-		// Exit
-		if (this->m_exitButton.getGlobalBounds().contains(hoverPos))
-			this->m_exitButton.setTexture(*Resources::instance().getGameButtonText(_exitButtonHL));
-		else
-			this->m_exitButton.setTexture(*Resources::instance().getGameButtonText(_exitButton));
+		this->checkButton(hoverPos, _restart, _restartHL);
+		//Exit
+		this->checkButton(hoverPos, _exitButton, _exitButtonHL);
 	}
 }
 
@@ -171,4 +160,12 @@ void Gameplay::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& 
 		this->m_gameState.setTexture(*Resources::instance().getGameStateText(_pauseLevel));
 		this->m_paused = true;
 	}
+}
+
+void Gameplay::checkButton(sf::Vector2f hoverPos, GameButtons reg, GameButtons hl)
+{
+	if (this->m_exitButton.getGlobalBounds().contains(hoverPos))
+		this->m_exitButton.setTexture(*Resources::instance().getGameButtonText(hl));
+	else
+		this->m_exitButton.setTexture(*Resources::instance().getGameButtonText(reg));
 }

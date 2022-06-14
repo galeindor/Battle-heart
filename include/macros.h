@@ -59,6 +59,17 @@ const std::vector<std::vector<int>> ProjRowlengths = {
 };
 
 // ----------------------------------------------
+//					Sounds						-
+// ----------------------------------------------
+constexpr auto DEFAULT_VOLUME = 40;
+const std::vector<std::string> soundList = {
+	"battle.wav",
+	"buttonClick.wav",
+	"clickPlayer.wav",
+	"movePlayer.wav"
+};
+
+// ----------------------------------------------
 //					Effects						-
 // ----------------------------------------------
 enum Effects
@@ -104,7 +115,7 @@ const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={
 };
 
 // ----------------------------------------------------------
-//						Screens								-
+//							Screens							-
 // ----------------------------------------------------------
 enum Backgrounds
 {
@@ -157,9 +168,9 @@ const std::string gameStateTexts[NUM_OF_GAME_STATES] = {
 };
 
 const std::vector<sf::Vector2f> startPositions = {
-{ 200, 200 },
-{ 250, 250 },
-{ 300, 300 }
+	{ 200, 200 },
+	{ 250, 250 },
+	{ 300, 300 }
 };
 
 // Textures ----------------------------------
@@ -270,14 +281,9 @@ const std::string lvSelTexts[NUM_OF_LS_TEXTS] = {
 	"startButton.png",
 	"startButtonHL.png"
 };
+
 enum LevelSelectButtons
 {
 	_start, _return,
 	NUM_OF_LSBUTTONS
 };
-
-
-
-
-
-

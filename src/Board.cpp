@@ -7,6 +7,7 @@ Board::Board(const LevelInfo& currLevelInfo)
 	this->initPlayers(currLevelInfo.m_lvlPlayers);
 	this->initEnemies(currLevelInfo.m_enemyWaves[this->m_currWave]);
 	this->initSelected();
+	this->initHovered();
 	this->updateBoard(1.f, false);
 }
 
@@ -94,16 +95,12 @@ int Board::updateBoard(float deltaTime, bool charSelected)
 		if (!enemy->isAlive())
 			this->updateEnemysDeath(enemy, deltaTime, j);
 		else if (enemy->getTarget())
-		{
 			this->enemyBehavior(enemy, deltaTime, firstEnemyDist);
-		}
 
 	}
 
 	if (m_players.empty())
-	{
 		return _loseLevel;
-	}
 
 	if (m_enemies.empty()) // wave clear handler
 	{
@@ -167,6 +164,8 @@ bool Board::handleFirstClick(sf::Vector2f location)
 	{
 		if (player->checkCollision(location))
 		{
+			auto sound = Resources::instance().sound();
+			sound->playSound(int(Sound::Sounds::CLICK_PLAYER));
 			if(m_currPlayer)
 				m_currPlayer->setSelected(false);
 			player->setSelected(true);
@@ -198,10 +197,35 @@ bool Board::handleSecondClick(sf::Vector2f location)
 			if (m_currPlayer->setTarget(enemy))
 				return true;
 
+
+	auto sound = Resources::instance().sound();
+	sound->playSound(int(Sound::Sounds::MOVE_PLAYER));
 	m_currPlayer->setAsTarget(nullptr);
 	m_currPlayer->setDestination(adjustLocation(location));
 	this->m_selected.setPosition(adjustLocation(location));
 	return true;
+}
+
+//==========================================================
+
+void Board::hoverEnemies(const sf::Vector2f& hoverPos)
+{
+	for (auto& enemy : this->m_enemies)
+		if (this->checkHover(enemy, hoverPos))
+			return;
+
+	this->m_isHovered = false;
+}
+
+//==========================================================
+
+void Board::hoverPlayers(const sf::Vector2f& hoverPos)
+{
+	for (auto& player : this->m_players)
+		if (this->checkHover(player, hoverPos))
+			return;
+
+	this->m_isHovered = false;
 }
 
 //==========================================================
@@ -213,15 +237,16 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 	if( draw || charSelected)
 		window.draw(this->m_selected);
 
-	this->drawObjects(window);
+	if (this->m_isHovered)
+		window.draw(this->m_hovered);
 
+	this->drawObjects(window);
 }
 
 //==========================================================
 
 void Board::updatePlayersDeath(std::shared_ptr<Player> character, float deltaTime, int& index)
 {
-
 	if (m_currPlayer == character)
 		m_currPlayer = nullptr;
 
@@ -376,6 +401,15 @@ void Board::initSelected()
 	m_selected.setTexture(*Resources::instance().getTexture(_select));
 	auto origin = m_selected.getOrigin();
 	m_selected.setOrigin(origin + selectedOffset);
+}
+
+//==========================================================
+
+void Board::initHovered()
+{
+	m_hovered.setTexture(*Resources::instance().getTexture(_select));
+	auto origin = m_hovered.getOrigin();
+	m_hovered.setOrigin(origin + selectedOffset);
 }
 
 //==========================================================

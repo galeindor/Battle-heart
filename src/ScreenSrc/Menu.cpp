@@ -57,6 +57,8 @@ void Menu::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
 
 void Menu::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window)
 {
+	auto sound = Resources::instance().sound();
+
 	for (int index = 0; index < this->m_buttons.size(); index++)
 		if (this->m_buttons[index].getGlobalBounds().contains(clickPos))
 		{
@@ -64,6 +66,7 @@ void Menu::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& wind
 			{
 			// Clicking on battle results in continuing from last point.
 			case MenuButtons::_battle:
+				sound->playSound(int(Sound::Sounds::BATTLE));
 				this->m_controller->setCurrentScreen(ScreenState::PLAY);
 				break;
 			// Clicking on levels results in picking a level.
@@ -72,6 +75,7 @@ void Menu::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& wind
 				break;
 			case MenuButtons::_escape:
 				this->m_controller->setCurrentScreen(ScreenState::EXIT);
+				break;
 			}
 		}
 }

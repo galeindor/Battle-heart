@@ -17,8 +17,13 @@ public:
 	Board(const LevelInfo& currLevelInfo);
 	bool handleFirstClick(sf::Vector2f location);
 	bool handleSecondClick(sf::Vector2f location);
+	void hoverEnemies(const sf::Vector2f& hoverPos);
+	void hoverPlayers(const sf::Vector2f& hoverPos);
 	bool checkMoving() const;
-
+	bool checkCleric() { 
+		Player* player = this->m_currPlayer.get();
+		return dynamic_cast<Cleric*>(player); 
+	}
 	vector<sf::Vector2f> createObstaclesVec();
 	void seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime);
 	int updateBoard(float deltaTime, bool charSelected);
@@ -28,6 +33,9 @@ public:
 
 	void playerBehavior(std::shared_ptr<Player> character,float deltaTime);
 	void enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vector2f pos);
+
+	template <class Type>
+	bool checkHover(Type character, const sf::Vector2f pos);
 
 	template <class Type>
 	Type sortObjects(Type vector);
@@ -48,6 +56,8 @@ private:
 	std::shared_ptr<Player> m_currPlayer;
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
 	sf::Sprite m_selected;
+	sf::Sprite m_hovered;
+	bool m_isHovered = false;
 
 	// Funcs
 	HashTable<int, shared_ptr<Player>> getPlayersTable();
@@ -56,7 +66,20 @@ private:
 	void initPlayers(const bool lvlPlayers[NUM_OF_PLAYERS]);
 	void initEnemies(const std::vector<sf::Vector2i> enemyWave);
 	void initSelected();
+	void initHovered();
 };
+
+template<class Type>
+inline bool Board::checkHover(Type character, const sf::Vector2f pos)
+{
+	if (character->getSprite().getGlobalBounds().contains(pos))
+	{
+		this->m_hovered.setPosition(adjustLocation(character->getPosition()));
+		this->m_isHovered = true;
+		return true;
+	}
+	return false;
+}
 
 template <class Type>
 inline Type Board::sortObjects(Type vector)

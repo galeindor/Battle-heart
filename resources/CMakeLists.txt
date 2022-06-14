@@ -9,11 +9,6 @@ configure_file ("CharacterImages/fireWarrior.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/imp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
-
-configure_file ("cleric.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("knight.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("archer.png" ${CMAKE_BINARY_DIR} COPYONLY)
-
 # Enemies
 configure_file ("enemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
@@ -77,3 +72,9 @@ configure_file ("Buttons/exitButtonHL.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("GameStates/Defeat.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("GameStates/Pause.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("GameStates/Victory.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
+# Sounds
+configure_file ("Audio/battle.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audio/buttonClick.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audio/clickPlayer.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audio/movePlayer.wav" ${CMAKE_BINARY_DIR} COPYONLY)
