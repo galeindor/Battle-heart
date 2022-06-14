@@ -221,6 +221,7 @@ static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Level", NEW_LEVEL_DETECTED)
 };
 
+
 // Stats ----------------------------------------
 enum Stats
 {
@@ -276,6 +277,7 @@ const int MENU_BUTTONS_OFFSET = 110, MENU_BUTTONS_GAP = 20;
 // ----------------------------------------------
 // Level Select screen							-
 // ----------------------------------------------
+const sf::Vector2f levelDetailsStart(256, 580);
 const sf::Vector2f lsLevelsOffset(163, 123);
 const sf::Vector2f lsLevelsStartPos(318, 188);
 const sf::Vector2f lvlSelOffset(-8, -8);

@@ -5,7 +5,7 @@
 class Menu : public Screen
 {
 public:
-	using Screen::Screen;
+	Menu(Controller* controller);
 	~Menu() = default;
 
 	virtual void update(const float deltaTime) override;

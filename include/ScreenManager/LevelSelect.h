@@ -6,13 +6,14 @@
 class LevelSelect : public Screen
 {
 public:
-	using Screen::Screen;
+	LevelSelect(Controller* controller);
 	~LevelSelect() = default;
 
 	virtual void update(const float deltaTime) override;
 	virtual void init() override;
 	virtual void draw(sf::RenderWindow& window) override;
 	void manageRowAndCol(int& row, int& col);
+	std::string dataToString(const int level);
 
 protected:
 	virtual void initButtons() override;
@@ -20,12 +21,20 @@ protected:
 	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 
 private:
+	void initRet();
+	void initStart();
+	void initHover();
+	void initLevelButtons();
+	void initlvlDet();
 	void destroyButtons();
+	HashTable<int, std::string> getMap();
+	HashTable<int, std::string> m_map;
 	bool m_levelHovered = false;
 	bool m_levelSelected = false;
 	sf::Sprite m_startButton;
 	sf::Sprite m_levelSelection;
 	sf::Sprite m_levelHover;
 	sf::Text m_returnButton;
+	sf::Text m_levelDetails;
 	std::vector<sf::Sprite> m_availableLevels;
 };

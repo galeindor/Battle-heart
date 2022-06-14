@@ -38,7 +38,6 @@ void Gameplay::init()
 	this->m_currLvl = this->m_controller->getCurrLvl();
 	this->setBG(_firstLevel);
 	this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl), m_controller);
-	//this->initButtons();
 }
 
 //-------------------------------------------------

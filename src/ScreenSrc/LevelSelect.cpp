@@ -1,5 +1,14 @@
 #include "ScreenManager/LevelSelect.h"
 
+LevelSelect::LevelSelect(Controller* controller)
+	: m_map(this->getMap()), Screen(controller)
+{
+	this->initRet();
+	this->initHover();
+	this->initStart();
+	this->initlvlDet();
+}
+
 void LevelSelect::update(const float deltaTime)
 {}
 
@@ -19,7 +28,10 @@ void LevelSelect::draw(sf::RenderWindow& window)
 		window.draw(lvl);
 
 	if (this->m_levelSelected)
+	{
+		window.draw(this->m_levelDetails);
 		window.draw(this->m_levelSelection);
+	}
 
 	if (this->m_levelHovered)
 		window.draw(this->m_levelHover);
@@ -27,10 +39,7 @@ void LevelSelect::draw(sf::RenderWindow& window)
 
 void LevelSelect::manageRowAndCol(int& row, int& col)
 {
-
 	col += std::pow(-1, row); // increase or decrease 1 based or row
-
-
 	if (col >= LEVELS_CHART_COLS || col < 0)
 	{
 		row++;
@@ -42,35 +51,28 @@ void LevelSelect::manageRowAndCol(int& row, int& col)
 	}
 }
 
+std::string LevelSelect::dataToString(const int level)
+{
+	auto lvlInfo = this->m_controller->getLevelInfo(level);
+	std::string str = "Players in current level: \n";
+	for (int i = 0; i < NUM_OF_PLAYERS; i++)
+		if (lvlInfo.m_lvlPlayers[i])
+			str += (this->m_map.getVal(i) + ", ");
+
+	str.resize(str.size() - 2);
+	str += "\nEnemies in current level: \n";
+
+	for (auto& wave : lvlInfo.m_enemyWaves)
+		for (auto& enemy : wave)
+			str += (this->m_map.getVal(enemy.x) + ", ");
+
+	str.resize(str.size() - 2);
+	return str;
+}
+
 void LevelSelect::initButtons()
 {
-	sf::Sprite tempSprite;
-	sf::Vector2f pos;
-	int row = 0, col = 0;
-	tempSprite.setTexture(*Resources::instance().getLSTexture(_lvlCompleted));
-	for (int i = 0; i < this->m_controller->getCurrLvl() + 1; i++)
-	{
-		if (i == this->m_controller->getCurrLvl())
-			tempSprite.setTexture(*Resources::instance().getLSTexture(_currLvlIcon));
-
-		pos = { lsLevelsStartPos.x + col * lsLevelsOffset.x,
-				lsLevelsStartPos.y + row * lsLevelsOffset.y };
-		tempSprite.setPosition(pos);
-		this->m_availableLevels.push_back(tempSprite);
-		this->manageRowAndCol(row, col);
-	}
-
-	this->m_startButton.setTexture(*Resources::instance().getLSTexture(_startButton));
-	this->m_startButton.setPosition(startButtonPos);
-
-	this->m_returnButton.setString("Return");
-	this->m_returnButton.setFont(*Resources::instance().getFont());
-	this->m_returnButton.setStyle(sf::Text::Style::Bold);
-	this->m_returnButton.setCharacterSize(60);
-	this->m_returnButton.setPosition(returnButtonPos);
-
-	this->m_levelHover.setTexture(*Resources::instance().getLSTexture(_levelSelection));
-	this->m_levelSelection.setTexture(*Resources::instance().getLSTexture(_levelSelection));
+	this->initLevelButtons();
 }
 
 void LevelSelect::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
@@ -95,9 +97,10 @@ void LevelSelect::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& wi
 			this->m_levelHovered = true;
 			return;
 		}
-	// --
 	this->m_levelHovered = false;
 }
+
+//-----------------------------------------------
 
 void LevelSelect::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window)
 {
@@ -116,13 +119,91 @@ void LevelSelect::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindo
 	for (int index = 0; index < this->m_availableLevels.size(); index++)
 		if (this->m_availableLevels[index].getGlobalBounds().contains(clickPos))
 		{
+			this->m_levelDetails.setString(this->dataToString(index));
 			this->m_levelSelection.setPosition(this->m_availableLevels[index].getPosition() + lvlSelOffset);
 			this->m_controller->setCurrLvl(index);
 			this->m_levelSelected = true;
 		}
 }
-// To prevent duplicating a double buttons
+
+//-----------------------------------------------
+
+void LevelSelect::initRet()
+{
+	this->m_returnButton.setString("Return");
+	this->m_returnButton.setFont(*Resources::instance().getFont());
+	this->m_returnButton.setStyle(sf::Text::Style::Bold);
+	this->m_returnButton.setCharacterSize(60);
+	this->m_returnButton.setPosition(returnButtonPos);
+}
+
+//-----------------------------------------------
+
+void LevelSelect::initStart()
+{
+	this->m_startButton.setTexture(*Resources::instance().getLSTexture(_startButton));
+	this->m_startButton.setPosition(startButtonPos);
+}
+
+//-----------------------------------------------
+
+void LevelSelect::initHover()
+{
+	this->m_levelHover.setTexture(*Resources::instance().getLSTexture(_levelSelection));
+	this->m_levelSelection.setTexture(*Resources::instance().getLSTexture(_levelSelection));
+}
+
+//-----------------------------------------------
+
+void LevelSelect::initLevelButtons()
+{
+	sf::Sprite tempSprite;
+	sf::Vector2f pos;
+	int row = 0, col = 0;
+	tempSprite.setTexture(*Resources::instance().getLSTexture(_lvlCompleted));
+	for (int i = 0; i < this->m_controller->getCurrLvl() + 1; i++)
+	{
+		if (i == this->m_controller->getCurrLvl())
+			tempSprite.setTexture(*Resources::instance().getLSTexture(_currLvlIcon));
+
+		pos = { lsLevelsStartPos.x + col * lsLevelsOffset.x,
+				lsLevelsStartPos.y + row * lsLevelsOffset.y };
+		tempSprite.setPosition(pos);
+		this->m_availableLevels.push_back(tempSprite);
+		this->manageRowAndCol(row, col);
+	}
+}
+
+//-----------------------------------------------
+
+void LevelSelect::initlvlDet()
+{
+	this->m_levelDetails.setFont(*Resources::instance().getFont());
+	this->m_levelDetails.setStyle(sf::Text::Style::Bold);
+	this->m_levelDetails.setCharacterSize(36);
+	this->m_levelDetails.setPosition(levelDetailsStart);
+}
+
+//-----------------------------------------------
+
 void LevelSelect::destroyButtons()
 {
 	this->m_availableLevels.clear();
 }
+
+//-----------------------------------------------
+
+HashTable<int, std::string> LevelSelect::getMap()
+{
+	std::unordered_map<int, std::string> map = {
+		std::make_pair(_cleric, "Cleric"),
+		std::make_pair(_knight, "Knight"),
+		std::make_pair(_witch, "Witch"),
+		std::make_pair(_demon, "Demon"),
+		std::make_pair(_imp, "Imp"),
+		std::make_pair(_MiniDragon, "Mini Dragon")
+	};
+	return map;
+}
+
+//-----------------------------------------------

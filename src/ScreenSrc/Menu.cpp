@@ -1,5 +1,11 @@
 #include "ScreenManager/Menu.h"
 
+Menu::Menu(Controller* controller)
+	: Screen(controller)
+{
+	this->initButtons();
+}
+
 void Menu::update(const float deltaTime)
 {
 }
@@ -7,7 +13,6 @@ void Menu::update(const float deltaTime)
 void Menu::init()
 {
 	this->setBG(_menu);
-	this->initButtons();
 }
 
 void Menu::draw(sf::RenderWindow& window)
