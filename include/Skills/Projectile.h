@@ -12,10 +12,12 @@ public:
 	
 	virtual bool checkIntersection() const override;
 	void draw(sf::RenderWindow& window);
-	void updateProjectile(sf::Vector2f steerForce,float deltaTime);
-	void updateOrientation();
+	void updateMovement(float deltaTime) override;
 
 private:
+	void updateOrientation();
+
 	float m_orientation;
+	float m_mvspd;
 };
 

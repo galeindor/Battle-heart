@@ -23,7 +23,7 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 
 	for (int i = 0; i < m_projs.size(); i++)
 	{
-		this->m_projs[i].updateProjectile({ 1,1 }, deltaTime);
+		this->m_projs[i].updateMovement(deltaTime);
 		if (m_projs[i].checkIntersection())
 		{
 			this->m_effect->affect(m_baseValue, myStats, m_projs[i].getTarget(), m_factor);
@@ -85,6 +85,8 @@ void Skill::initEffect(const int effectIndex)
 	case _drainLife:
 		this->m_effect = new LifeDrain(effectParams);
 		break;
+	case _fear:
+		this->m_effect = new Fear(effectParams);
 	default:
 		break;
 	}

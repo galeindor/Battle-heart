@@ -25,6 +25,7 @@ constexpr auto BAR_WIDTH = 60;
 constexpr auto NEW_LEVEL_DETECTED = -3;
 constexpr auto WAVE = '!';
 constexpr auto _levelInProgress = 2;
+constexpr float DEF_MVSPD = 5.1;
 
 // ----------------------------------------------
 //					Animations					-
@@ -48,7 +49,8 @@ const std::vector<std::vector<int>> CharacterRowLengths = {
 	{ 6, 4, 7, 8, 5, 8 },
 	{ 6 ,4 ,9 ,8 ,7 ,7 },
 	{ 6, 2, 3, 4, 4, 0 },
-	{ 6, 2, 3, 4, 5, 0 } 
+	{ 6, 2, 3, 4, 5, 0 },
+	{ 4, 2, 3, 2, 3, 0 }
 };
 
 const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
@@ -74,7 +76,7 @@ const std::vector<std::string> soundList = {
 // ----------------------------------------------
 enum Effects
 {
-	_heal, _damage, _defend, _drainLife, NUM_OF_EFFECTS
+	_heal, _damage, _defend, _drainLife, _fear, NUM_OF_EFFECTS
 };
 
 
@@ -84,7 +86,7 @@ constexpr auto EFFECT_COOLDOWN = 2.f;
 // ----------------------------------------------
 //					Skills						-
 // ----------------------------------------------
-constexpr auto NUM_OF_CHARS = 5;
+constexpr auto NUM_OF_CHARS = 6;
 constexpr auto SKILL_RECT_SIZE = 80;
 
 enum Skills
@@ -97,13 +99,15 @@ const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 	{1.65f ,30.f,  30.f, 100.f } ,
 	{1.7f, 5.f , 5.f , 100.f} ,
 	{1.5f},
-	{1.65f}
+	{1.65f},
+	{1.7f}
 };
 
-const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {	
-	{1.f, 1.2f, 1.75f , 1.f},	
+const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
+	{1.f, 1.2f, 1.75f , 1.f},
 	{1.f ,1.5f, 1.3f, 1.f },
 	{1.f, 1.5f , 1.5f , 1.f},
+	{1.f},
 	{1.f},
 	{1.f}
 };
@@ -111,7 +115,7 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	
 	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
 	{"knightBasic.png", "shield.png","swing.png" , ""} ,
-	{"archerBasic.png", "aimedshot.png" , "barrage.png" , ""} ,						
+	{"witchBasic.png", "drainlife.png" , "lightningIcon.png" , ""} ,						
 };
 
 // ----------------------------------------------------------
@@ -176,21 +180,21 @@ const std::vector<sf::Vector2f> startPositions = {
 // Textures ----------------------------------
 enum ObjectEnums
 {
-	_cleric, _knight, _archer, 
-	_demon, _imp, 
+	_cleric, _knight, _witch,
+	_demon, _imp, _miniDragon,
 	_select, NUM_OF_OBJECTS
 };
 
 enum ProjEnums
 {
-	_healBall, _fireProj, _energy, _lightning, 
-	_tesla, _waterStrike, _none, 
+	_healBall, _fireProj, _energy, _lightning,
+	_tesla, _waterStrike, _none,
 	NUM_OF_PROJ
 };
 
-const std::string textures[NUM_OF_OBJECTS] = { 
-	"cleric1.png" , "knightSS.png", "witch.png" ,"Demon.png", 
-	"Imp.png", "select.png" };
+const std::string textures[NUM_OF_OBJECTS] = {
+	"cleric1.png" , "knightSS.png", "witch.png" ,"Demon.png",
+	"Imp.png", "miniDragon.png", "select.png" };
 
 const std::vector<std::string > ProjTextrues = { 
 	"healProj.png", "fireBlast.png", "energy.png", "lightning.png", 
@@ -201,9 +205,10 @@ const std::vector<std::string > ProjTextrues = {
 static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Cleric",_cleric),
 	std::make_pair("Knight", _knight),
-	std::make_pair("Archer", _archer),
+	std::make_pair("Witch", _witch),
 	std::make_pair("Dummy" , _demon),
 	std::make_pair("Imp" , _imp),
+	std::make_pair("miniDragon",_miniDragon),
 	std::make_pair("Level", NEW_LEVEL_DETECTED)
 };
 
@@ -218,15 +223,16 @@ const std::vector<std::vector<float>> charactersStats =
 {
 	/* cleric */ { 70.f, 2.f, 6.f, 800.f , 10.f},
 	/* knight */ { 120.f, 3.f, 15.f, 40.f , 20.f},
-	/* archer */ { 90.f, 2.f, 20.f, 600.f , 13.f},
+	/* Witch */ { 90.f, 2.f, 2000.f, 600.f , 13.f},
 	/* dummy  */ { 80.f, 4.f, 10.f, 40.f , 15.f},
-	/* imp	  */ { 75.f , 3.f , 20.f , 500.f , 10.f}
+	/* imp	  */ { 75.f , 3.f , 20.f , 400.f , 10.f},
+	/* miniDrag */ {90.f , 4.f , 25.f , 200.f , 35.f}
 };
 
 // Movement and Steering ------------------------
 enum Locations
 {
-	_target, _object, _velocity, _obstacles
+	_target, _object, _velocity
 };
 
 //Physics ---------------------------------------
@@ -235,7 +241,8 @@ const std::vector<std::vector<float>> objectsPhysics = {
 	{ 0.3f, 35.f, 80.f },
 	{ 0.2f, 40.f, 100.f },
 	{ 0.1f, 45.f, 70.f },
-	{ 0.15f , 42.f , 78.f}
+	{ 0.15f , 42.f , 78.f},
+	{ 0.2f , 40.f , 70.f}
 };
 
 enum Physics
@@ -251,6 +258,10 @@ enum MenuButtons
 {
 	_battle, _levels, _help, _escape,
 	NUM_OF_MBUTTONS
+};
+
+enum ButtonIndexes {
+	_continueIndex, _restartIndex, _exitIndex
 };
 
 const std::vector<std::string> MENU_BUTTONS_STRINGS = { {"Battle"}, {"Levels"}, {"Help"}, {"Exit"} };

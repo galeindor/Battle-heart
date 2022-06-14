@@ -25,13 +25,6 @@ public:
 
 	//====================================================================================================
 
-	sf::Vector2f Flee(sf::Vector2f object, sf::Vector2f velocity, 
-					  float maxVelocity, float maxForce, sf::Vector2f target);
-
 	sf::Vector2f Arrive(sf::Vector2f object, sf::Vector2f velocity,
 						float maxVelocity, float maxForce, sf::Vector2f target, float r);
-
-	sf::Vector2f CollisionAvoidance(sf::Vector2f object, sf::Vector2f velocity, 
-									float maxVelocity, float maxForce, 
-									sf::Vector2f target, std::vector<sf::Vector2f> obstacles, float MAX_AVOID_FORCE);
 };

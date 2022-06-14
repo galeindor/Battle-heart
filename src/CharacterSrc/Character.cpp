@@ -4,7 +4,7 @@
 
 Character::Character(const sf::Vector2f pos, const int index, AnimationParams animParams )
 	: m_isAttacking(false), Object(pos, index, animParams , CharacterRowLengths[index] , Resources::instance().getTexture(index)), 
-	  m_deathTimer(9.f), m_isDying(false)
+	  m_deathTimer(9.f), m_isDying(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC)
 {
 	this->initStats(index);
 	this->initPhysics(index);
@@ -126,7 +126,6 @@ bool Character::targetInRange()
 		auto range = this->getStat(_range);
 		auto norm = sqrt(pow(myPos.x - tarPos.x, 2) + pow(myPos.y - tarPos.y, 2));
 		return (norm <= range);
-		//return (std::abs(tarPos.x - myPos.x) <= range) && (std::abs(tarPos.y - myPos.y) <= range);
 	}
 
 	return false;
@@ -154,16 +153,17 @@ void Character::createSkill(int charIndex, int skillIndex, int effectIndex, bool
 //=======================================================================================
 
 void Character::useSkill(int skillIndex)
-{
-
-}
+{}
 
 //=======================================================================================
 
 void Character::setStat(int index, int newVal)
 { 
 	if (index == _hp)
+	{
 		this->showHpBar();
+		this->setAnimation(_hurt);
+	}
 		
 	this->m_stats[index]->setStat(newVal); 
 }
@@ -187,7 +187,6 @@ vector<shared_ptr<Character>> Character::createTargetVec(Type vec)
 	{
 		temp.push_back(obj);
 	}
-
 	return temp;
 }
 
@@ -234,3 +233,19 @@ bool Character::checkSkillClick(const sf::Vector2f& location)
 	}
 	return false;
 }
+
+//==========================================================================================
+
+vector<sf::Vector2f> Character::getLocationsVec(bool getDest)
+{
+	vector<sf::Vector2f> vec;
+	if (getDest)
+		vec.push_back(this->getDest());
+	else
+		vec.push_back(this->getTarget()->getPosition());
+	vec.push_back(getPosition());
+	vec.push_back(m_velocity);
+	return vec;
+}
+
+//===========================================================================================

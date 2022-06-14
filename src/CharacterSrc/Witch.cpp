@@ -1,13 +1,13 @@
 
-#include "Characters/Archer.h"
+#include "Characters/Witch.h"
 
-Archer::Archer(const sf::Vector2f pos)
-	:Player(pos, _archer)
+Witch::Witch(const sf::Vector2f pos)
+	:Player(pos, _witch)
 {
-	this->initSkills(_archer);
+	this->initSkills(_witch);
 }
 
-void Archer::initSkills(const int index)
+void Witch::initSkills(const int index)
 {
 	this->createSkill(index, _basic, _damage, singleTarget, !onPlayer, !isActive , _energy); // basic
 	this->createSkill(index, _skill1, _drainLife, singleTarget, !onPlayer, isActive, _tesla ); // aimed shot

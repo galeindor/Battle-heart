@@ -1,13 +1,13 @@
 ﻿#file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/resources)
 
 # Players
-
 configure_file ("CharacterImages/cleric1.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/witch.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/knightSS.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/fireWarrior.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/imp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/miniDragon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Enemies
 configure_file ("enemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -27,11 +27,11 @@ configure_file ("skills/aimedshot.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/debilitate.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/intimidate.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/drainlife.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("skills/lightningIcon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 configure_file ("skills/clericBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("skills/archerBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("skills/knightBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/witchBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("skills/knightBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Fonts
 configure_file ("POORICH.TTF" ${CMAKE_BINARY_DIR} COPYONLY)
