@@ -143,7 +143,6 @@ void Board::updateEnemyDest()
 				pos = player->getPosition();
 			}
 		}
-		//if (!enemy->getIsMoving() && pos.x >= 0) removed condition in order to allow target swap
 		if(pos.x >= 0)
 		{
 			enemy->setDestination(pos);
@@ -241,6 +240,31 @@ void Board::hoverPlayers(const sf::Vector2f& hoverPos)
 
 //==========================================================
 
+void Board::hoverSkills(const sf::Vector2f& hoverPos)
+{
+	if (!this->m_currPlayer)
+	{
+		this->m_skillHovered = false;
+		return;
+	}
+
+	for (int i = 0; i < NUM_OF_SKILLS - 1; i++)
+		if (this->m_currPlayer->checkSkillHover(hoverPos, i))
+		{
+			this->m_skillHovered = true;
+			if (this->m_currSkillHovered != i)
+			{
+				this->m_skillHover.setPosition(sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30));
+				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+				this->m_currSkillHovered = i;
+			}
+			return;
+		}
+	this->m_skillHovered = false;
+}
+
+//==========================================================
+
 void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 {
 	bool draw = checkMoving();
@@ -252,6 +276,9 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 		window.draw(this->m_hovered);
 
 	this->drawObjects(window);
+
+	if (this->m_skillHovered)
+		window.draw(this->m_skillHover);
 }
 
 //==========================================================
@@ -368,7 +395,7 @@ HashTable<int, shared_ptr<Enemy>> Board::getEnemiesTable()
 	std::unordered_map<int, shared_ptr<Enemy>> enemiesMap = {
 		std::make_pair(_demon, Dummy().getType()),
 		std::make_pair(_imp, Imp().getType()),
-		std::make_pair(_miniDragon , miniDragon().getType())
+		std::make_pair(_MiniDragon , MiniDragon().getType())
 	};
 
 	return enemiesMap;
@@ -417,6 +444,8 @@ void Board::initHovered()
 	m_hovered.setTexture(*Resources::instance().getTexture(_select));
 	auto origin = m_hovered.getOrigin();
 	m_hovered.setOrigin(origin + selectedOffset);
+
+	this->m_skillHover.setTexture(*Resources::instance().getGameButtonText(_skillHover));
 }
 
 //==========================================================

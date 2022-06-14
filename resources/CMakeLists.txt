@@ -61,6 +61,7 @@ configure_file ("MenuImages/startButton.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("MenuImages/startButtonHL.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Buttons
+configure_file ("Buttons/skillHover.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Buttons/pauseButton.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Buttons/pauseButtonHL.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Buttons/continueButton.png" ${CMAKE_BINARY_DIR} COPYONLY)

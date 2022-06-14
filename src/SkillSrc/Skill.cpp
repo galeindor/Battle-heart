@@ -3,9 +3,10 @@
 #include "Characters/Character.h"
 
 Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
-	const int effectIndex, bool singleTarget, bool onPlayer, bool isActive , float factor , int projType)
+			 const int effectIndex, bool singleTarget, bool onPlayer, 
+			 bool isActive , float factor , int projType)
 	: m_timer(Timer(cooldown)), m_singleTarget(singleTarget),
-	m_onPlayer(onPlayer), m_isActive(isActive) , m_factor(factor)
+	  m_onPlayer(onPlayer), m_isActive(isActive) , m_factor(factor)
 {
 	this->m_projType = projType;
 	m_baseValue = 0;

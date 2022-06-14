@@ -116,7 +116,7 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	
 	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
 	{"knightBasic.png", "shield.png","swing.png" , ""} ,
-	{"witchBasic.png", "drainlife.png" , "lightningIcon.png" , ""} ,						
+	{"witchBasic.png", "drainlife.png" , "lightningIcon.png" , ""}
 };
 
 // ----------------------------------------------------------
@@ -148,6 +148,7 @@ enum GameButtons
 {
 	_pause, _continue, _restart, _exitButton,
 	_pauseHL, _continueHL, _restartHL, _exitButtonHL,
+	_skillHover,
 	NUM_OF_GBUTTONS
 };
 
@@ -163,7 +164,8 @@ const std::string gameButtonsTexts[NUM_OF_GBUTTONS] = {
 	"pauseButtonHL.png",
 	"continueButtonHL.png",
 	"restartButtonHL.png",
-	"exitButtonHL.png"
+	"exitButtonHL.png",
+	"skillHover.png"
 };
 
 enum GameStates
@@ -188,7 +190,7 @@ const std::vector<sf::Vector2f> startPositions = {
 enum ObjectEnums
 {
 	_cleric, _knight, _witch,
-	_demon, _imp, _miniDragon,
+	_demon, _imp, _MiniDragon,
 	_select, NUM_OF_OBJECTS
 };
 
@@ -201,7 +203,7 @@ enum ProjEnums
 
 const std::string textures[NUM_OF_OBJECTS] = {
 	"cleric1.png" , "knightSS.png", "witch.png" ,"Demon.png",
-	"Imp.png", "miniDragon.png", "select.png" };
+	"Imp.png", "MiniDragon.png", "select.png" };
 
 const std::vector<std::string > ProjTextrues = { 
 	"healProj.png", "fireBlast.png", "energy.png", "lightning.png", 
@@ -215,7 +217,7 @@ static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Witch", _witch),
 	std::make_pair("Dummy" , _demon),
 	std::make_pair("Imp" , _imp),
-	std::make_pair("miniDragon",_miniDragon),
+	std::make_pair("MiniDragon",_MiniDragon),
 	std::make_pair("Level", NEW_LEVEL_DETECTED)
 };
 

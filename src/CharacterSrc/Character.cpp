@@ -236,13 +236,9 @@ bool Character::checkSkillClick(const sf::Vector2f& location)
 
 //========================================================================================
 
-bool Character::checkSkillHover(sf::Vector2f hoverPos)
+bool Character::checkSkillHover(sf::Vector2f hoverPos, int index)
 {
-	for (auto& skill : m_skills)
-	{
-		if (skill->checkHover(hoverPos))
-			return true;
-	}
+	return this->m_skills[index]->checkHover(hoverPos);
 }
 
 //==========================================================================================

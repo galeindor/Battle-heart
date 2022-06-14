@@ -6,7 +6,7 @@
 #include "Characters/Witch.h"
 #include "Characters/Dummy.h"
 #include "Characters/Imp.h"
-#include "Characters/miniDragon.h"
+#include "Characters/MiniDragon.h"
 #include "HashTable.h"
 #include "Controller.h"
 using namespace std;
@@ -20,6 +20,7 @@ public:
 	bool handleSecondClick(sf::Vector2f location);
 	void hoverEnemies(const sf::Vector2f& hoverPos);
 	void hoverPlayers(const sf::Vector2f& hoverPos);
+	void hoverSkills(const sf::Vector2f& hoverPos);
 	bool checkMoving() const;
 	bool checkCleric() { 
 		Player* player = this->m_currPlayer.get();
@@ -56,11 +57,14 @@ private:
 	int m_currWave;
 	int m_currPlayerHovered = -1;
 	int m_currEnemyHovered = -1;
+	int m_currSkillHovered = -1;
 	std::shared_ptr<Player> m_currPlayer;
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
 	sf::Sprite m_selected;
 	sf::Sprite m_hovered;
+	sf::Sprite m_skillHover;
 	bool m_isHovered = false;
+	bool m_skillHovered = false;
 	Controller* m_controller;
 
 	// Funcs

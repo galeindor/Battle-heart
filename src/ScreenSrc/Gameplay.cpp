@@ -114,6 +114,7 @@ void Gameplay::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& windo
 	// If not paused
 	if (!this->m_paused && !this->m_wonLevel && !this->m_lost)
 	{
+		this->m_board.hoverSkills(hoverPos);
 		this->checkPause(hoverPos);
 		auto clericSelected = this->m_board.checkCleric();
 		if (this->m_charSelected && !clericSelected)
@@ -205,6 +206,7 @@ void Gameplay::cont()
 {
 	if (this->m_wonLevel)
 	{
+		this->m_charSelected = false;
 		this->m_wonLevel = false;
 		this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl), m_controller);
 	}

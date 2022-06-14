@@ -2,12 +2,12 @@
 
 #include "Enemy.h"
 
-class miniDragon : public Enemy
+class MiniDragon : public Enemy
 {
 public:
-	miniDragon();
+	MiniDragon();
 	virtual shared_ptr<Enemy> getType() {
-		return make_shared<miniDragon>();
+		return make_shared<MiniDragon>();
 	}
 
 	virtual void initSkills(const int index) override;
