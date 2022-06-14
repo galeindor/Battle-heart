@@ -45,7 +45,7 @@ public:
 	void setAttacking(bool isAttacking) { this->m_isAttacking = isAttacking; }
 	void setStat(int index, int newVal);
 	void setDying();
-
+	void setActiveBuff(float duration);
 	template <class Type>
 	vector<shared_ptr<Character>> createTargetVec(Type type);
 	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies, Character* obj);
@@ -72,8 +72,9 @@ private:
 					  vector<std::shared_ptr<Player>> players,
 					  vector<std::shared_ptr<Enemy>> enemies);
 	void updateMovement(float deltaTime);
+	void updateBuffs();
 
-	Timer m_deathTimer;
+
 	vector<std::unique_ptr<Skill>> m_skills; // skills useable
 	vector<std::shared_ptr<Stat>> m_stats; // all of the character stats
 

@@ -4,7 +4,7 @@
 
 Character::Character(const sf::Vector2f pos, const int index, AnimationParams animParams )
 	: m_isAttacking(false), Object(pos, index, animParams , CharacterRowLengths[index] , Resources::instance().getTexture(index)), 
-	  m_deathTimer(9.f), m_isDying(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC)
+	  m_isDying(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC)
 {
 	this->initStats(index);
 	this->initPhysics(index);
@@ -183,7 +183,6 @@ void Character::setDying()
 	this->setAnimation(_death);
 	this->m_isDying = true;
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat(), this->getPosition());
-	this->m_deathTimer.setTimer();
 }
 
 //=======================================================================================
@@ -265,3 +264,20 @@ vector<sf::Vector2f> Character::getLocationsVec(bool getDest)
 }
 
 //===========================================================================================
+
+void Character::updateBuffs()
+{
+	//for (int)
+	//{
+	//	buff.first.updateTimer();
+	//	if(buff.first.isTimeUp())
+	//		this->setStat()
+	//}
+}
+
+//===========================================================================================
+
+void Character::setActiveBuff(float duration)
+{
+
+}
