@@ -19,6 +19,7 @@
                                               "CharacterSrc/Dummy.cpp"
                                               "CharacterSrc/Enemy.cpp"
                                               "CharacterSrc/Imp.cpp"
+                                              "CharacterSrc/miniDragon.cpp"
                                               "CharacterSrc/Character.cpp"
                                               "CharacterSrc/Player.cpp"
                                               "SkillSrc/Skill.cpp"

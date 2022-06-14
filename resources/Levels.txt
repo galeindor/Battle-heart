@@ -2,7 +2,7 @@ Level 1
 Cleric
 Knight
 Witch
-!Imp 2 !
+!miniDragon 2 !
 
 Level 2
 Knight

@@ -6,6 +6,7 @@
 #include "Characters/Witch.h"
 #include "Characters/Dummy.h"
 #include "Characters/Imp.h"
+#include "Characters/miniDragon.h"
 #include "HashTable.h"
 
 using namespace std;
