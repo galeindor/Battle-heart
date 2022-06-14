@@ -1,12 +1,14 @@
 #include "Board.h"
 
-Board::Board(const LevelInfo& currLevelInfo)
+Board::Board(const LevelInfo& currLevelInfo, Controller* controller)
 	:	m_currPlayer(nullptr), m_currWave(0),
-		m_enemyWaves(currLevelInfo.m_enemyWaves)
+		m_enemyWaves(currLevelInfo.m_enemyWaves),
+		m_controller(controller)
 {
 	this->initPlayers(currLevelInfo.m_lvlPlayers);
 	this->initEnemies(currLevelInfo.m_enemyWaves[this->m_currWave]);
 	this->initSelected();
+	this->initHovered();
 	this->updateBoard(1.f, false);
 }
 
@@ -94,16 +96,12 @@ int Board::updateBoard(float deltaTime, bool charSelected)
 		if (!enemy->isAlive())
 			this->updateEnemysDeath(enemy, deltaTime, j);
 		else if (enemy->getTarget())
-		{
 			this->enemyBehavior(enemy, deltaTime, firstEnemyDist);
-		}
 
 	}
 
 	if (m_players.empty())
-	{
 		return _loseLevel;
-	}
 
 	if (m_enemies.empty()) // wave clear handler
 	{
@@ -145,7 +143,6 @@ void Board::updateEnemyDest()
 				pos = player->getPosition();
 			}
 		}
-		//if (!enemy->getIsMoving() && pos.x >= 0) removed condition in order to allow target swap
 		if(pos.x >= 0)
 		{
 			enemy->setDestination(pos);
@@ -167,6 +164,7 @@ bool Board::handleFirstClick(sf::Vector2f location)
 	{
 		if (player->checkCollision(location))
 		{
+			this->m_controller->makeSound(int(Sound::Sounds::CLICK_PLAYER));
 			if(m_currPlayer)
 				m_currPlayer->setSelected(false);
 			player->setSelected(true);
@@ -198,10 +196,71 @@ bool Board::handleSecondClick(sf::Vector2f location)
 			if (m_currPlayer->setTarget(enemy))
 				return true;
 
+
+	this->m_controller->makeSound(int(Sound::Sounds::MOVE_PLAYER));
 	m_currPlayer->setAsTarget(nullptr);
 	m_currPlayer->setDestination(adjustLocation(location));
 	this->m_selected.setPosition(adjustLocation(location));
 	return true;
+}
+
+//==========================================================
+
+void Board::hoverEnemies(const sf::Vector2f& hoverPos)
+{
+	for (int i = 0; i < this->m_enemies.size(); i++)
+		if (this->checkHover(this->m_enemies[i], hoverPos))
+		{
+			if (this->m_currEnemyHovered != i)
+			{
+				this->m_currEnemyHovered = i;
+				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+			}
+			return;
+		}
+	this->m_isHovered = false;
+}
+
+//==========================================================
+
+void Board::hoverPlayers(const sf::Vector2f& hoverPos)
+{
+	for (int i = 0; i < this->m_players.size(); i++)
+		if (this->checkHover(this->m_players[i], hoverPos))
+		{
+			if (this->m_currPlayerHovered != i)
+			{
+				this->m_currPlayerHovered = i;
+				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+			}
+			return;
+		}
+	this->m_isHovered = false;
+}
+
+//==========================================================
+
+void Board::hoverSkills(const sf::Vector2f& hoverPos)
+{
+	if (!this->m_currPlayer)
+	{
+		this->m_skillHovered = false;
+		return;
+	}
+
+	for (int i = 0; i < NUM_OF_SKILLS - 1; i++)
+		if (this->m_currPlayer->checkSkillHover(hoverPos, i))
+		{
+			this->m_skillHovered = true;
+			if (this->m_currSkillHovered != i)
+			{
+				this->m_skillHover.setPosition(sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30));
+				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+				this->m_currSkillHovered = i;
+			}
+			return;
+		}
+	this->m_skillHovered = false;
 }
 
 //==========================================================
@@ -213,15 +272,19 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 	if( draw || charSelected)
 		window.draw(this->m_selected);
 
+	if (this->m_isHovered)
+		window.draw(this->m_hovered);
+
 	this->drawObjects(window);
 
+	if (this->m_skillHovered)
+		window.draw(this->m_skillHover);
 }
 
 //==========================================================
 
 void Board::updatePlayersDeath(std::shared_ptr<Player> character, float deltaTime, int& index)
 {
-
 	if (m_currPlayer == character)
 		m_currPlayer = nullptr;
 
@@ -332,7 +395,7 @@ HashTable<int, shared_ptr<Enemy>> Board::getEnemiesTable()
 	std::unordered_map<int, shared_ptr<Enemy>> enemiesMap = {
 		std::make_pair(_demon, Dummy().getType()),
 		std::make_pair(_imp, Imp().getType()),
-		std::make_pair(_miniDragon , miniDragon().getType())
+		std::make_pair(_MiniDragon , MiniDragon().getType())
 	};
 
 	return enemiesMap;
@@ -372,6 +435,17 @@ void Board::initSelected()
 	m_selected.setTexture(*Resources::instance().getTexture(_select));
 	auto origin = m_selected.getOrigin();
 	m_selected.setOrigin(origin + selectedOffset);
+}
+
+//==========================================================
+
+void Board::initHovered()
+{
+	m_hovered.setTexture(*Resources::instance().getTexture(_select));
+	auto origin = m_hovered.getOrigin();
+	m_hovered.setOrigin(origin + selectedOffset);
+
+	this->m_skillHover.setTexture(*Resources::instance().getGameButtonText(_skillHover));
 }
 
 //==========================================================

@@ -1,13 +1,13 @@
-#include "Characters/miniDragon.h"
+#include "Characters/MiniDragon.h"
 
-miniDragon::miniDragon()
-	:Enemy(_miniDragon)
+MiniDragon::MiniDragon()
+	:Enemy(_MiniDragon)
 {
-	this->initSkills(_miniDragon);
+	this->initSkills(_MiniDragon);
 	this->setOffset({ 10,-20 });
 }
 
-void miniDragon::initSkills(const int index)
+void MiniDragon::initSkills(const int index)
 {
 	this->createSkill(index, _basic, _damage, AttackType::Single , onPlayer, !isActive, _fireBreath); // basic
 }

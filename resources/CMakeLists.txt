@@ -65,6 +65,9 @@ configure_file ("MenuImages/startButton.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("MenuImages/startButtonHL.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Buttons
+configure_file ("Buttons/skillHover.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Buttons/pauseButton.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Buttons/pauseButtonHL.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Buttons/continueButton.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Buttons/continueButtonHL.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Buttons/restartButton.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -76,3 +79,10 @@ configure_file ("Buttons/exitButtonHL.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("GameStates/Defeat.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("GameStates/Pause.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("GameStates/Victory.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
+# Sounds
+configure_file ("Audio/battle.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audio/buttonClick.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audio/clickPlayer.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audio/hoverSound.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audio/movePlayer.wav" ${CMAKE_BINARY_DIR} COPYONLY)

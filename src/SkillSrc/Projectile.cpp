@@ -40,11 +40,12 @@ void Projectile::updateMovement(float deltaTime)
 	auto movement = m_mvspd * dir * deltaTime;
 	this->setPosition(this->getPosition()+ m_mvspd * dir * deltaTime);
 	
-	handleAnimation(movement, deltaTime);
-	updateOrientation();
+	this->handleAnimation(movement, deltaTime);
+	this->updateOrientation();
 	this->setRotation(this->m_orientation);
 }
 
+//==============================================================================
 
 void Projectile::updateOrientation()
 {

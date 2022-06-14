@@ -6,20 +6,26 @@
 #include "Characters/Witch.h"
 #include "Characters/Dummy.h"
 #include "Characters/Imp.h"
-#include "Characters/miniDragon.h"
+#include "Characters/MiniDragon.h"
 #include "HashTable.h"
-
+#include "Controller.h"
 using namespace std;
 using std::shared_ptr;
 
 class Board 
 {
 public:
-	Board(const LevelInfo& currLevelInfo);
+	Board(const LevelInfo& currLevelInfo, Controller* controller);
 	bool handleFirstClick(sf::Vector2f location);
 	bool handleSecondClick(sf::Vector2f location);
+	void hoverEnemies(const sf::Vector2f& hoverPos);
+	void hoverPlayers(const sf::Vector2f& hoverPos);
+	void hoverSkills(const sf::Vector2f& hoverPos);
 	bool checkMoving() const;
-
+	bool checkCleric() { 
+		Player* player = this->m_currPlayer.get();
+		return dynamic_cast<Cleric*>(player); 
+	}
 	vector<sf::Vector2f> createObstaclesVec();
 	void seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime);
 	int updateBoard(float deltaTime, bool charSelected);
@@ -29,6 +35,9 @@ public:
 
 	void playerBehavior(std::shared_ptr<Player> character,float deltaTime);
 	void enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vector2f pos);
+	
+	template <class Type>
+	bool checkHover(Type character, const sf::Vector2f pos);
 
 	template <class Type>
 	Type sortObjects(Type vector);
@@ -46,9 +55,17 @@ private:
 	vector<shared_ptr<Player>> m_players;
 	vector<shared_ptr<Enemy>> m_enemies;
 	int m_currWave;
+	int m_currPlayerHovered = -1;
+	int m_currEnemyHovered = -1;
+	int m_currSkillHovered = -1;
 	std::shared_ptr<Player> m_currPlayer;
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
 	sf::Sprite m_selected;
+	sf::Sprite m_hovered;
+	sf::Sprite m_skillHover;
+	bool m_isHovered = false;
+	bool m_skillHovered = false;
+	Controller* m_controller;
 
 	// Funcs
 	HashTable<int, shared_ptr<Player>> getPlayersTable();
@@ -57,7 +74,20 @@ private:
 	void initPlayers(const bool lvlPlayers[NUM_OF_PLAYERS]);
 	void initEnemies(const std::vector<sf::Vector2i> enemyWave);
 	void initSelected();
+	void initHovered();
 };
+
+template<class Type>
+inline bool Board::checkHover(Type character, const sf::Vector2f pos)
+{
+	if (character->getSprite().getGlobalBounds().contains(pos))
+	{
+		this->m_hovered.setPosition(adjustLocation(character->getPosition()));
+		this->m_isHovered = true;
+		return true;
+	}
+	return false;
+}
 
 template <class Type>
 inline Type Board::sortObjects(Type vector)

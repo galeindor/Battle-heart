@@ -8,28 +8,28 @@ public:
 	Controller();
 	void run();
 
-	void setCurrentScreen(ScreenState state) { 
-		this->m_currentScreen = state; 
-		this->m_changeScreen = true;
-	}
+	void setCurrentScreen(ScreenState state);
 	void setCurrLvl(int level) { this->m_currentLevel = level; }
-	void setMaxLvlAchieved(int newMax) { 
-		if (this->m_maxLevelAchieved < newMax)
-			this->m_maxLevelAchieved = newMax;
-	}
+	void setMaxLvlAchieved(int newMax);
+	void makeSound(int index) { this->m_sound.playSound(index); }
+	void makeMusic(const std::string fileName) { this->m_sound.playMusic(fileName); }
+	void manageSound(Sound::VolumeControl action);
 
 	int getMaxLvlAchieved() const { return this->m_maxLevelAchieved; }
 	int getCurrLvl() const { return this->m_currentLevel; }
 	bool getGameWon(int level) const { return this->m_levelLoader.getGameEnded(level); }
 	LevelInfo getLevelInfo(int level) const { return this->m_levelLoader.getLevel(level); }
 	unsigned int getNumOfLevels() const { return this->m_levelLoader.getMaxLevel(); }
-
+	
 private:
+	// Screens
 	void initScreens();
 	void swapScreen();
 	std::vector<std::unique_ptr<Screen>> m_screens;
 	ScreenState m_currentScreen = ScreenState::MENU;
 	bool m_changeScreen = false;
+
+	// Levels
 	int m_currentLevel = 0;
 	int m_maxLevelAchieved = 0;
 	LevelLoader m_levelLoader;
@@ -37,4 +37,5 @@ private:
 	// SFML
 	sf::RenderWindow m_window;
 	sf::Clock m_clock;
+	Sound m_sound;
 };

@@ -35,6 +35,12 @@ public:
 	bool getIsAttacking()			const { return this->m_isAttacking; }
 	HealthBar		getHpBar()		const { return this->m_hpBar; }
 	bool getIsDying()				const { return this->m_isDying; }
+	sf::Vector2f	getVelocity()			const { return this->m_velocity; }
+	void setVelocity(sf::Vector2f velocity) { this->m_velocity = velocity; }
+	SteeringInterface* behaviour()			const { return this->m_steering; }
+	vector<sf::Vector2f> getLocationsVec(bool getDest);
+	vector<float> getMoveStats() const { return m_moveStats; }
+
 	// Setters
 	void setAttacking(bool isAttacking) { this->m_isAttacking = isAttacking; }
 	void setStat(int index, int newVal);
@@ -42,25 +48,15 @@ public:
 
 	template <class Type>
 	vector<shared_ptr<Character>> createTargetVec(Type type);
-
-	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies , Character* obj);
-
-	// Physics management
-
-	vector<sf::Vector2f> getLocationsVec(bool getDest);
-	vector<float> getMoveStats() const { return m_moveStats; }
-
-	sf::Vector2f	getVelocity()			const { return this->m_velocity; }
-	void setVelocity(sf::Vector2f velocity) { this->m_velocity = velocity; }
-	SteeringInterface* behaviour()			const { return this->m_steering; }
+	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies, Character* obj);
 
 	// Skill management
 	virtual void initSkills(const int index) = 0;
 	bool checkSkillClick(const sf::Vector2f& location);
+	bool checkSkillHover(sf::Vector2f hoverPos, int index);
 	void drawSkills(sf::RenderWindow& window, bool selected);
 
 protected:
-	
 	void createSkill(int CharIndex, int skillIndex, int effectIndex,
 					 AttackType single, bool onPlayer, bool active, int projType);
 	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }

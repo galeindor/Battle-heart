@@ -46,7 +46,7 @@ void Object::initSprite(const sf::Vector2f pos, const int index , sf::Texture* t
 	this->m_sprite.setTexture(*texture);
 	auto size = m_sprite.getTextureRect();
 	this->m_sprite.setScale(1.3, 1.3);
-	this->m_sprite.setOrigin( SPRITE_SIZE/ 1.5f , SPRITE_SIZE * 1.5f );
+	this->m_sprite.setOrigin( SPRITE_SIZE/ 2.f , SPRITE_SIZE * 1.1f);
 }
 
 //=======================================================================================

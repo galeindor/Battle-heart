@@ -243,6 +243,13 @@ bool Character::checkSkillClick(const sf::Vector2f& location)
 	return false;
 }
 
+//========================================================================================
+
+bool Character::checkSkillHover(sf::Vector2f hoverPos, int index)
+{
+	return this->m_skills[index]->checkHover(hoverPos);
+}
+
 //==========================================================================================
 
 vector<sf::Vector2f> Character::getLocationsVec(bool getDest)

@@ -64,6 +64,7 @@ void Menu::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& wind
 			{
 				// Clicking on battle results in continuing from last point.
 			case MenuButtons::_battle:
+				this->m_controller->makeSound(int(Sound::Sounds::BATTLE));
 				this->m_controller->setCurrentScreen(ScreenState::PLAY);
 				break;
 				// Clicking on levels results in picking a level.
@@ -72,6 +73,7 @@ void Menu::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& wind
 				break;
 			case MenuButtons::_escape:
 				this->m_controller->setCurrentScreen(ScreenState::EXIT);
+				break;
 			}
 		}
 }

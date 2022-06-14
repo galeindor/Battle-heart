@@ -57,6 +57,18 @@ const std::vector<std::vector<int>> CharacterRowLengths = {
 const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
 
 // ----------------------------------------------
+//					Sounds						-
+// ----------------------------------------------
+constexpr auto DEFAULT_VOLUME = 40;
+const std::vector<std::string> soundList = {
+	"battle.wav",
+	"buttonClick.wav",
+	"clickPlayer.ogg",
+	"movePlayer.wav",
+	"hoverSound.ogg"
+};
+
+// ----------------------------------------------
 //					Effects						-
 // ----------------------------------------------
 
@@ -106,11 +118,11 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	
 	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
 	{"knightBasic.png", "shield.png","swing.png" , ""} ,
-	{"witchBasic.png", "drainlife.png" , "lightningIcon.png" , ""} ,						
+	{"witchBasic.png", "drainlife.png" , "lightningIcon.png" , ""}
 };
 
 // ----------------------------------------------------------
-//						Screens								-
+//							Screens							-
 // ----------------------------------------------------------
 enum Backgrounds
 {
@@ -129,7 +141,7 @@ const sf::Vector2f selectedOffset(45, 30);
 const sf::Vector2f continueButtonPos(615, 450);
 const sf::Vector2f restartButtonPos(615, 500);
 const sf::Vector2f exitButtonPos(615, 550);
-const sf::Vector2f pauseButtonPos(1200, 200);
+const sf::Vector2f pauseButtonPos(1300, 30);
 constexpr auto onPlayer = true;
 constexpr auto isActive = true;
 
@@ -137,7 +149,12 @@ enum GameButtons
 {
 	_pause, _continue, _restart, _exitButton,
 	_pauseHL, _continueHL, _restartHL, _exitButtonHL,
+	_skillHover,
 	NUM_OF_GBUTTONS
+};
+
+enum ButtonIndexes {
+	_continueIndex, _restartIndex, _exitIndex
 };
 
 const std::string gameButtonsTexts[NUM_OF_GBUTTONS] = {
@@ -148,7 +165,8 @@ const std::string gameButtonsTexts[NUM_OF_GBUTTONS] = {
 	"pauseButtonHL.png",
 	"continueButtonHL.png",
 	"restartButtonHL.png",
-	"exitButtonHL.png"
+	"exitButtonHL.png",
+	"skillHover.png"
 };
 
 enum GameStates
@@ -164,16 +182,16 @@ const std::string gameStateTexts[NUM_OF_GAME_STATES] = {
 };
 
 const std::vector<sf::Vector2f> startPositions = {
-{ 200, 200 },
-{ 250, 250 },
-{ 300, 300 }
+	{ 200, 200 },
+	{ 250, 250 },
+	{ 300, 300 }
 };
 
 // Textures ----------------------------------
 enum ObjectEnums
 {
 	_cleric, _knight, _witch,
-	_demon, _imp, _miniDragon,
+	_demon, _imp, _MiniDragon,
 	_select, NUM_OF_OBJECTS
 };
 
@@ -186,7 +204,7 @@ enum ProjEnums
 
 const std::string textures[NUM_OF_OBJECTS] = {
 	"cleric.png" , "knight.png", "archer.png" ,"Demon.png",
-	"Imp.png", "miniDragon.png", "select.png" };
+	"Imp.png", "MiniDragon.png", "select.png" };
 
 const std::vector<std::string > ProjTextrues = { 
 	"healProj.png", "fireBlast2.png", "energy.png", "lightning.png", 
@@ -196,7 +214,7 @@ const std::vector<std::string > ProjTextrues = {
 
 const std::vector<std::vector<int>> ProjRowlengths = {
 	{8}, {11} , {8} , {12} ,
-	{16} , {10} , {8} , {0}
+	{16} , {10} , {8} , {1}, {0}
 };
 
 // Map ------------------------------------------
@@ -206,7 +224,7 @@ static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Witch", _witch),
 	std::make_pair("Dummy" , _demon),
 	std::make_pair("Imp" , _imp),
-	std::make_pair("miniDragon",_miniDragon),
+	std::make_pair("MiniDragon",_MiniDragon),
 	std::make_pair("Level", NEW_LEVEL_DETECTED)
 };
 
@@ -222,7 +240,7 @@ const std::vector<std::vector<float>> charactersStats =
 	/* cleric */	{ 70.f, 2.f, 6.f, 800.f , 10.f},
 	/* knight */	{ 120.f, 3.f, 15.f, 40.f , 20.f},
 	/* witch */		{ 90.f, 2.f, 2000.f, 600.f , 13.f},
-	/* demon  */	{ 80.f, 4.f, 30.f, 40.f , 15.f},
+	/* demon  */	{ 80.f, 4.f, 30.f, 70.f , 15.f},
 	/* imp	  */	{ 75.f , 3.f , 20.f , 400.f , 10.f},
 	/* miniDrag */	{90.f , 4.f , 25.f , 200.f , 35.f}
 };
@@ -258,10 +276,6 @@ enum MenuButtons
 	NUM_OF_MBUTTONS
 };
 
-enum ButtonIndexes {
-	_continueIndex, _restartIndex, _exitIndex
-};
-
 const std::vector<std::string> MENU_BUTTONS_STRINGS = { {"Battle"}, {"Levels"}, {"Help"}, {"Exit"} };
 const sf::Vector2f MENU_BUTTONS_START = sf::Vector2f(436, 49);
 const int MENU_BUTTONS_OFFSET = 110, MENU_BUTTONS_GAP = 20;
@@ -290,9 +304,9 @@ const std::string lvSelTexts[NUM_OF_LS_TEXTS] = {
 	"startButton.png",
 	"startButtonHL.png"
 };
+
 enum LevelSelectButtons
 {
 	_start, _return,
 	NUM_OF_LSBUTTONS
 };
-
