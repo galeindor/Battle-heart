@@ -81,7 +81,6 @@ enum Effects
 };
 
 
-const std::string effectsTextures[NUM_OF_EFFECTS] = { "healEffect.png" };
 constexpr auto EFFECT_COOLDOWN = 2.f;
 
 // ----------------------------------------------
@@ -92,31 +91,31 @@ constexpr auto SKILL_RECT_SIZE = 80;
 
 enum Skills
 {
-	_basic, _skill1, _skill2, _passive, NUM_OF_SKILLS
+	_basic, _skill1, _skill2, NUM_OF_SKILLS
 };
 
 const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
-	{1.75f, 20.f, 30.f , 100.f} ,
-	{1.65f ,30.f,  30.f, 100.f } ,
-	{1.7f, 5.f , 5.f , 100.f} ,
+	{1.75f, 20.f, 30.f } ,
+	{1.65f ,30.f,  30.f } ,
+	{1.7f, 5.f , 5.f } ,
 	{1.5f},
 	{1.65f},
 	{1.7f}
 };
 
 const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
-	{1.f, 1.2f, 1.75f , 1.f},
-	{1.f ,1.5f, 1.3f, 1.f },
-	{1.f, 1.5f , 1.5f , 1.f},
+	{1.f, 1.2f, 1.75f },
+	{1.f ,1.5f, 1.3f },
+	{1.f, 1.5f , 1.5f },
 	{1.f},
 	{1.f},
 	{1.f}
 };
 
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	
-	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
-	{"knightBasic.png", "shield.png","swing.png" , ""} ,
-	{"witchBasic.png", "drainlife.png" , "lightningIcon.png" , ""} ,						
+	{"clericBasic.png", "heal.png",	"clericShield.png" } ,
+	{"knightBasic.png", "shield.png","swing.png" } ,
+	{"witchBasic.png", "drainlife.png" , "lightningIcon.png"} ,						
 };
 
 // ----------------------------------------------------------
@@ -195,8 +194,7 @@ enum ObjectEnums
 enum ProjEnums
 {
 	_healBall, _fireProj, _energy, _lightning,
-	_tesla, _waterStrike, _none,
-	NUM_OF_PROJ
+	_tesla, _waterStrike, _none, NUM_OF_PROJ
 };
 
 const std::string textures[NUM_OF_OBJECTS] = {
@@ -205,7 +203,7 @@ const std::string textures[NUM_OF_OBJECTS] = {
 
 const std::vector<std::string > ProjTextrues = { 
 	"healProj.png", "fireBlast.png", "energy.png", "lightning.png", 
-	"tesla_ball.png", "water_strike.png", "none" 
+	"tesla_ball.png", "water_strike.png"
 };
 
 // Map ------------------------------------------

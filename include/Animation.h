@@ -23,6 +23,9 @@ public:
 	bool getFaceRight()	const { return this->m_faceRight; }
 
 private:
+
+
+
 	sf::IntRect uvRect; // The rectangle of the currently displayed sprite.
 	sf::Vector2f m_imageCount;
 	sf::Vector2f m_currentImage;

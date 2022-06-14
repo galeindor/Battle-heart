@@ -30,8 +30,6 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 			m_projs.erase(m_projs.begin() + i);
 		}
 	}
-	for (auto& target : m_targets)
-		this->m_effect->update(target->getPosition(), deltaTime, true);
 }
 
 //============================================================================

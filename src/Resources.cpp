@@ -2,6 +2,7 @@
 
 Resources::Resources()
 {
+
 	this->loadResources();
 }
 
@@ -21,37 +22,64 @@ Resources& Resources::instance()
 
 void Resources::loadResources()
 {
-	for (int i = 0; i < NUM_OF_OBJECTS; i++)
-		m_textures[i].loadFromFile(textures[i]);
+	try {
 
-	for (int i = 0; i < NUM_OF_BG ; i++)
-		m_bgTextures[i].loadFromFile(bgTextures[i]);
+		for (int i = 0; i < NUM_OF_OBJECTS; i++)
+			if (!m_textures[i].loadFromFile(textures[i]))
+				throw std::runtime_error("Cannot load object's texture from file\n");
+			
 
-	for (int i = 0; i < NUM_OF_PLAYERS; i++)
-		for (int j = 0; j < NUM_OF_SKILLS; j++)
-			m_skillTextures[i][j].loadFromFile(skillTextures[i][j]);
 
-	for (int i = 0; i < NUM_OF_EFFECTS; i++)
-		m_effectsTextures[i].loadFromFile(effectsTextures[i]);
+		for (int i = 0; i < NUM_OF_BG; i++)
+			if (!m_bgTextures[i].loadFromFile(bgTextures[i]))
+				throw std::runtime_error("Cannot load background's texture from file\n");
+			
+		for (int i = 0; i < NUM_OF_PLAYERS; i++)
+			for (int j = 0; j < NUM_OF_SKILLS; j++)
+				if (!m_skillTextures[i][j].loadFromFile(skillTextures[i][j]))
+					throw std::runtime_error("Cannot load Skill's texture from file\n");
 
-	for (int i = 0; i < NUM_OF_LS_TEXTS; i++)
-		m_lsTextures[i].loadFromFile(lvSelTexts[i]);
 
-	for (int i = 0; i < NUM_OF_GAME_STATES; i++)
-		m_gameStates[i].loadFromFile(gameStateTexts[i]);
+		for (int i = 0; i < NUM_OF_LS_TEXTS; i++)
+			if (!m_lsTextures[i].loadFromFile(lvSelTexts[i]))
+				throw std::runtime_error("Cannot load object's texture from file\n");
 
-	for (int i = 0; i < NUM_OF_GBUTTONS; i++)
-		m_gameButtonsTextures[i].loadFromFile(gameButtonsTexts[i]);
+		for (int i = 0; i < NUM_OF_GAME_STATES; i++)
+			if (!m_gameStates[i].loadFromFile(gameStateTexts[i]))
+				throw std::runtime_error("Cannot load game state texture from file\n");
 
-	for (int i = 0; i < NUM_OF_PROJ; i++)
-		m_projTextures[i].loadFromFile(ProjTextrues[i]);
+		for (int i = 0; i < NUM_OF_GBUTTONS; i++)
+			if (!m_gameButtonsTextures[i].loadFromFile(gameButtonsTexts[i]))
+				throw std::runtime_error("Cannot load game button's texture from file\n");
 
-	for (int i = 0; i < soundList.size(); i++)
+		for (int i = 0; i < NUM_OF_PROJ - 1; i++)
+			if (!m_projTextures[i].loadFromFile(ProjTextrues[i]))
+				throw std::runtime_error("Cannot load projectile's texture from file\n");
+			
+
+		for (int i = 0; i < soundList.size(); i++)
+		{
+			sf::SoundBuffer temp;
+			if (!temp.loadFromFile(soundList[i]))
+			{
+				//throw std::runtime_error("Cannot load sound buffer from file\n");
+				this->m_buffers.push_back(temp);
+			}
+			else
+				this->m_buffers.push_back(temp);
+		}
+
+		if (!this->m_font.loadFromFile(MAIN_FONT))
+		{
+
+			throw std::runtime_error("Cannot set text font\n");
+		}
+	}
+	catch (std::runtime_error& e)
 	{
-		sf::SoundBuffer temp;
-		temp.loadFromFile(soundList[i]);
-		this->m_buffers.push_back(temp);
+
+		std::cerr << e.what();
+		exit(EXIT_FAILURE);
 	}
 
-	this->m_font.loadFromFile(MAIN_FONT);
 }

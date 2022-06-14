@@ -18,36 +18,15 @@ public:
 	Board(const LevelInfo& currLevelInfo, Controller* controller);
 	bool handleFirstClick(sf::Vector2f location);
 	bool handleSecondClick(sf::Vector2f location);
+	int updateBoard(float deltaTime, bool charSelected);
+	void drawBoard(sf::RenderWindow& window, bool charSelected);
 	void hoverEnemies(const sf::Vector2f& hoverPos);
 	void hoverPlayers(const sf::Vector2f& hoverPos);
-	bool checkMoving() const;
-	bool checkCleric() { 
+
+	bool checkCleric() {
 		Player* player = this->m_currPlayer.get();
-		return dynamic_cast<Cleric*>(player); 
+		return dynamic_cast<Cleric*>(player);
 	}
-	vector<sf::Vector2f> createObstaclesVec();
-	void seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime);
-	int updateBoard(float deltaTime, bool charSelected);
-	void updateEnemyDest();
-	void updatePlayersDeath(std::shared_ptr<Player> character, float deltaTime,int& index);
-	void updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime, int& index);
-
-	void playerBehavior(std::shared_ptr<Player> character,float deltaTime);
-	void enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vector2f pos);
-	
-	template <class Type>
-	bool checkHover(Type character, const sf::Vector2f pos);
-
-	template <class Type>
-	Type sortObjects(Type vector);
-
-	template <typename Vec , typename deathFunc , typename behaviorFunc >
-	void deathHandler(Vec characters, deathFunc dfunc, behaviorFunc bfunc, float deltaTime);
-
-	void drawBoard(sf::RenderWindow& window, bool charSelected);
-	void drawObjects(sf::RenderWindow& window);
-	void drawObject(bool player, int& index, sf::RenderWindow& window);
-	sf::Vector2f adjustLocation(sf::Vector2f location);
 
 private:
 	// Members
@@ -71,6 +50,29 @@ private:
 	void initEnemies(const std::vector<sf::Vector2i> enemyWave);
 	void initSelected();
 	void initHovered();
+	void drawObjects(sf::RenderWindow& window);
+	void drawObject(bool player, int& index, sf::RenderWindow& window);
+	sf::Vector2f adjustLocation(sf::Vector2f location);
+	void updateEnemyDest();
+	void updatePlayersDeath(std::shared_ptr<Player> character, float deltaTime, int& index);
+	void updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime, int& index);
+	void seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime);
+	void playerBehavior(std::shared_ptr<Player> character, float deltaTime);
+	void enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vector2f pos);
+	vector<sf::Vector2f> createObstaclesVec();
+
+	template <class Type>
+	bool checkHover(Type character, const sf::Vector2f pos);
+
+	template <class Type>
+	Type sortObjects(Type vector);
+
+	template <typename Vec, typename deathFunc, typename behaviorFunc >
+	void deathHandler(Vec characters, deathFunc dfunc, behaviorFunc bfunc, float deltaTime);
+
+
+	bool checkMoving() const;
+
 };
 
 template<class Type>
