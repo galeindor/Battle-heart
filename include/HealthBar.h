@@ -1,5 +1,6 @@
 #pragma once
 #include "macros.h"
+#include "Resources.h"
 #include "Timer.h"
 
 class HealthBar
@@ -14,13 +15,16 @@ public:
 	void show() { m_showTimer.setTimer(); }
 
 private:
-	void initHealthBar(const sf::Vector2f pos);
-	void initHitHp(const sf::Vector2f pos);
-	void initCurrHp(const sf::Vector2f pos);
+	void initBars(const sf::Vector2f pos);
+	void initText(const sf::Vector2f pos);
+
 	sf::RectangleShape m_bar;
 	sf::RectangleShape m_currHealth;
 	sf::RectangleShape m_hitHealth;
+	
+	sf::Text m_hitDamage;
 	int m_max;
+
 	// show Hp for a few seconds
 	Timer m_showTimer;
 	Timer m_hitTimer;

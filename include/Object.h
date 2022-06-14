@@ -41,8 +41,8 @@ public:
 
 protected:
 
-	void setScale(sf::Vector2f scale)		{ m_sprite.setScale(scale); }
-	void setOrigin(sf::Vector2f origin)		{ m_sprite.setOrigin(origin); }
+	void setScale(sf::Vector2f scale)			{ m_sprite.setScale(scale); }
+	void setOffset(sf::Vector2f originOffest)	{ m_sprite.setOrigin(m_sprite.getOrigin() + originOffest); }
 
 private:
 	void initSprite(const sf::Vector2f pos, const int index , sf::Texture* texture);
