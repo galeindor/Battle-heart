@@ -97,18 +97,18 @@ enum Skills
 };
 
 const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
-/* cleric*/		{1.75f, 20.f, 30.f , 100.f} ,
-/* knight*/		{1.65f ,30.f,  30.f, 100.f } ,
-/* witch*/		{1.7f, 5.f , 5.f , 100.f} ,
+/* cleric*/		{1.75f, 20.f, 30.f } ,
+/* knight*/		{1.65f ,30.f,  30.f } ,
+/* witch*/		{1.7f, 5.f , 5.f } ,
 /* demon*/		{1.5f},
 /* imp */		{1.65f},
 /* miniDragon*/	{1.7f}
 };
 
 const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
-/* cleric*/		{1.f, 1.2f, 1.75f , 1.f},
-/* knight*/		{1.f ,1.5f, 1.3f, 1.f},
-/* witch*/		{1.f, 1.5f , 1.5f , 1.f},
+/* cleric*/		{1.f, 1.2f, 1.75f },
+/* knight*/		{1.f ,1.5f, 1.3f  },
+/* witch*/		{1.f, 1.5f , 1.5f },
 /* demon*/		{1.f},
 /* imp */		{1.f},
 /* miniDragon*/	{1.f}
@@ -206,7 +206,7 @@ const std::string textures[NUM_OF_OBJECTS] = {
 	"Imp.png", "MiniDragon.png", "select.png" };
 
 const std::vector<std::string > ProjTextrues = { 
-	"healProj.png", "fireBlast2.png", "energy.png", "lightning.png", 
+	"healProj.png", "fireBlast.png", "energy.png", "lightning.png", 
 	"tesla_ball.png", "water_strike.png", "fireBreath.png" ,
 	"arrow.png","none" 
 };

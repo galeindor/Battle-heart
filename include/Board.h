@@ -23,7 +23,7 @@ public:
 	void hoverEnemies(const sf::Vector2f& hoverPos);
 	void hoverPlayers(const sf::Vector2f& hoverPos);
 	void hoverSkills(const sf::Vector2f& hoverPos);
-	bool checkMoving() const;
+
 	bool checkCleric() { 
 		Player* player = this->m_currPlayer.get();
 		return dynamic_cast<Cleric*>(player);
