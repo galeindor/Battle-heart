@@ -14,22 +14,9 @@ public:
 	Effect(const int index);
 	virtual ~Effect() = default;
 
-	void update(const sf::Vector2f pos, const float deltaTime, bool faceRight);
-	void draw(sf::RenderWindow& window);
 
 	virtual void affect(float baseValue, vector<std::shared_ptr<Stat>> myStats,
-						Character* target, float factor) = 0;
+		Character* target, float factor) = 0;
 
-	enum Effects
-	{
-		_heal
-	};
 
-private:
-	void initSprite(const int index);
-	Timer m_timer;
-	bool m_draw;
-	Animation m_animation;
-	sf::Sprite m_sprite;
-	sf::Vector2f m_position;
 };

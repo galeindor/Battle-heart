@@ -83,7 +83,6 @@ enum Effects
 };
 
 
-const std::string effectsTextures[NUM_OF_EFFECTS] = { "healEffect.png" };
 constexpr auto EFFECT_COOLDOWN = 2.f;
 
 // ----------------------------------------------
@@ -94,7 +93,7 @@ constexpr auto SKILL_RECT_SIZE = 80;
 
 enum Skills
 {
-	_basic, _skill1, _skill2, _passive, NUM_OF_SKILLS
+	_basic, _skill1, _skill2, NUM_OF_SKILLS
 };
 
 const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
@@ -116,9 +115,9 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 };
 
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	
-	{"clericBasic.png", "heal.png",	"clericShield.png" , ""} ,
-	{"knightBasic.png", "shield.png","swing.png" , ""} ,
-	{"witchBasic.png", "drainlife.png" , "lightningIcon.png" , ""}
+	{"clericBasic.png", "heal.png",	"clericShield.png" } ,
+	{"knightBasic.png", "shield.png","swing.png" } ,
+	{"witchBasic.png", "drainlife.png" , "lightningIcon.png"} ,						
 };
 
 // ----------------------------------------------------------

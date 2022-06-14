@@ -4,7 +4,7 @@
 Knight::Knight(const sf::Vector2f pos)
 	:Player(pos , _knight)
 {
-	this->initSkills(_knight); //nadav the king
+	this->initSkills(_knight);
 }
 
 void Knight::initSkills(const int index)
