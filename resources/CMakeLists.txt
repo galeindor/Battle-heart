@@ -1,19 +1,16 @@
 ﻿#file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/resources)
 
-# Players
-configure_file ("CharacterImages/cleric1.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("CharacterImages/witch.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("CharacterImages/knightSS.png" ${CMAKE_BINARY_DIR} COPYONLY)
+# Enemies
 configure_file ("CharacterImages/fireWarrior.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/imp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/miniDragon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
-# Enemies
+# Players
+configure_file ("wizard.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("archer.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("cleric.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("knight.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("enemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Backgrounds and utility
 configure_file ("plain.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -39,12 +36,11 @@ configure_file ("skills/knightBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 # Fonts
 configure_file ("POORICH.TTF" ${CMAKE_BINARY_DIR} COPYONLY)
 
-# Effects
-configure_file ("healEffect.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
 
 # Projectiles
 configure_file ("proj/healProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("proj/fireProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("proj/FireBlast.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/arrow.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/fireBreath.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/water_strike.png" ${CMAKE_BINARY_DIR} COPYONLY)

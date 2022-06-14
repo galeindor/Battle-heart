@@ -2,8 +2,7 @@
 
 #include "Characters/Character.h"
 
-Defend::Defend(AnimationParams animParams)
-	: Effect(_defend)
+Defend::Defend()
 {}
 
 void Defend::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, Character* target, float factor)

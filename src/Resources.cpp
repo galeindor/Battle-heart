@@ -56,6 +56,7 @@ void Resources::loadResources()
 			if (!m_projTextures[i].loadFromFile(ProjTextrues[i]))
 				throw std::runtime_error("Cannot load projectile's texture from file\n");
 			
+			
 
 		for (int i = 0; i < soundList.size(); i++)
 		{

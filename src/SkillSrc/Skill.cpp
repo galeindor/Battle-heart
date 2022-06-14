@@ -70,21 +70,21 @@ void Skill::initEffect(const int effectIndex)
 	switch (effectIndex)
 	{
 	case _heal:
-		this->m_effect = new Heal(effectParams);
+		this->m_effect = new Heal();
 		break;
 
 	case _damage:
-		this->m_effect = new Damage(effectParams);
+		this->m_effect = new Damage();
 		break;
 
 	case _defend:
-		this->m_effect = new Defend(effectParams);
+		this->m_effect = new Defend();
 		break;
 	case _drainLife:
-		this->m_effect = new LifeDrain(effectParams);
+		this->m_effect = new LifeDrain();
 		break;
 	case _fear:
-		this->m_effect = new Fear(effectParams);
+		this->m_effect = new Fear();
 	default:
 		break;
 	}

@@ -202,12 +202,12 @@ enum ProjEnums
 };
 
 const std::string textures[NUM_OF_OBJECTS] = {
-	"cleric.png" , "knight.png", "archer.png" ,"Demon.png",
+	"cleric.png" , "knight.png", "wizard.png" ,"Demon.png",
 	"Imp.png", "MiniDragon.png", "select.png" };
 
 const std::vector<std::string > ProjTextrues = { 
-	"healProj.png", "fireBlast.png", "energy.png", "lightning.png", 
-	"tesla_ball.png", "water_strike.png", "fireBreath.png" ,
+	"healProj.png", "FireBlast.png", "energy.png", "Lightning.png", 
+	"Tesla_Ball.png", "water_strike.png", "fireBreath.png" ,
 	"arrow.png","none" 
 };
 

@@ -25,7 +25,6 @@
                                               "CharacterSrc/Player.cpp"
                                               "SkillSrc/Skill.cpp"
                                               "SkillSrc/Projectile.cpp"
-                                              "EffectSrc/Effect.cpp"
                                               "EffectSrc/Heal.cpp"
                                               "EffectSrc/Damage.cpp"
                                               "EffectSrc/Defend.cpp"

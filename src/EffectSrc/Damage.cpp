@@ -2,8 +2,7 @@
 
 #include "Characters/Character.h"
 
-Damage::Damage(AnimationParams animParams)
-	: Effect(_damage)
+Damage::Damage()
 {}
 
 void Damage::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, Character* target , float factor)

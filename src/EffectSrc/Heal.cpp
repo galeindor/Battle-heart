@@ -2,8 +2,7 @@
 
 #include "Characters/Character.h"
 
-Heal::Heal(AnimationParams animParams)
-	: Effect(_heal)
+Heal::Heal()
 {}
 
 void Heal::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, Character* target, float factor)

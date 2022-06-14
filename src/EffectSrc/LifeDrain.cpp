@@ -2,8 +2,7 @@
 
 #include "Characters/Character.h"
 
-LifeDrain::LifeDrain(AnimationParams animParams)
-	: Effect(_drainLife)
+LifeDrain::LifeDrain()
 {}
 
 void LifeDrain::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, Character* target, float factor)

@@ -3,8 +3,7 @@
 
 #include "Characters/Character.h"
 
-Fear::Fear(AnimationParams animParams)
-	: Effect(_heal)
+Fear::Fear()
 {}
 
 //===================================================================================================
