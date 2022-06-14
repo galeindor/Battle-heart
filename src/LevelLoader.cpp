@@ -10,10 +10,8 @@ std::ifstream LevelLoader::openFile(const string fileName)
 {
     std::ifstream file(fileName);
     if (file.fail())
-    {
-        std::cout << "Can't open file.\n";
-        exit(EXIT_FAILURE);
-    }
+        throw std::invalid_argument("Cannot open file\n");
+
     return file;
 }
 

@@ -2,8 +2,10 @@
 #include "Characters/Player.h"
 
 Player::Player(const sf::Vector2f loc , int index)
-	: Character(loc, index, characterParams), m_selected(false)
-{}
+	: Character(loc, index, PlayerParams), m_selected(false)
+{
+	setScale({ 1.5f , 1.5f });
+}
 
 //===========================================================
 
@@ -15,11 +17,36 @@ void Player::draw(sf::RenderWindow& window)
 	drawSkills(window, m_selected);
 	getHpBar().draw(window);
 	window.draw(this->getSprite());
+	//auto bound = this->getSprite().getLocalBounds();
+	//auto rect = sf::RectangleShape();
+	//rect.setSize({ bound.width, bound.height });
+	//rect.setOutlineThickness(3);
+	//rect.setFillColor(sf::Color::Transparent);
+	//rect.setPosition(this->getPosition());
+	//rect.setOrigin(bound.width / 2, bound.height / 2);
+	//window.draw(rect);
+	//auto rect = sf::RectangleShape();
+	//rect.setSize({ bound.width, bound.height });
+	//rect.setOutlineThickness(3);
+	//rect.setFillColor(sf::Color::Transparent);
+	//rect.setPosition(this->getPosition());
+	//rect.setOrigin(bound.width / 2, bound.height / 2);
+	//window.draw(rect);
+	//auto rect = sf::RectangleShape();
+	//rect.setSize({ bound.width, bound.height });
+	//rect.setOutlineThickness(3);
+	//rect.setFillColor(sf::Color::Transparent);
+	//rect.setPosition(this->getPosition());
+	//rect.setOrigin(bound.width / 2, bound.height / 2);
+	//window.draw(rect);
+	//auto rect = sf::RectangleShape();
+	//rect.setSize({ bound.width, bound.height });
+	//rect.setOutlineThickness(3);
+	//rect.setFillColor(sf::Color::Transparent);
+	//rect.setPosition(this->getPosition());
+	//rect.setOrigin(bound.width / 2, bound.height / 2);
+	//window.draw(rect);
 }
-
-//==========================================================
-
-//==========================================================
 
 //==========================================================
 
@@ -45,7 +72,7 @@ bool Player::checkIntersection() const
 	if (this->getTarget())
 		return (norm <= this->getStat(_range));
 
-	auto epsilon = 10.f;
+	const auto epsilon = 10.f;
 	return norm <= epsilon;
 }
 

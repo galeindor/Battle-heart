@@ -4,7 +4,7 @@
 class Damage : public Effect
 {
 public:
-	Damage(AnimationParams animParams);
+	Damage();
 
 	virtual void affect(float baseValue, vector<std::shared_ptr<Stat>> myStats,
 						Character* target, float factor) override;

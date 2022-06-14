@@ -8,5 +8,5 @@ Imp::Imp()
 
 void Imp::initSkills(const int index)
 {
-	this->createSkill(index, _basic, _damage, singleTarget, onPlayer, !isActive, _fireProj); // basic
+	this->createSkill(index, _basic, _damage, AttackType::Single, onPlayer, !isActive, _fireProj); // basic
 }

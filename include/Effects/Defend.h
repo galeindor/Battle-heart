@@ -4,7 +4,7 @@
 class Defend : public Effect
 {
 public:
-	Defend(AnimationParams animParams);
+	Defend();
 
 	virtual void affect(float baseValue, vector<std::shared_ptr<Stat>> myStats,
 		Character* target, float factor) override;

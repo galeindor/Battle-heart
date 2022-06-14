@@ -31,7 +31,6 @@ public:
 	sf::Font* getFont() { return &m_font; };
 	sf::Texture* getTexture(int i) { return &m_textures[i]; }
 	sf::Texture* getProjTexture(int i) { return &m_projTextures[i]; }
-	sf::Texture* getEffectTexture(int i) { return &m_effectsTextures[i]; }
 	sf::Texture* getLSTexture(int i) { return &m_lsTextures[i]; }
 	sf::Texture* getSkillText(int i, int j) { return &m_skillTextures[i][j]; }
 	sf::Texture* getGameStateText(int i) { return &m_gameStates[i]; }
@@ -42,7 +41,7 @@ private:
 	Resources();
 	Resources(const Resources&) = default;
 	sf::Texture m_textures[NUM_OF_OBJECTS];
-	sf::Texture m_effectsTextures[NUM_OF_EFFECTS];
+
 	sf::Texture m_skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS];
 	sf::Texture m_bgTextures[NUM_OF_BG];
 	sf::Texture m_lsTextures[NUM_OF_LS_TEXTS];
