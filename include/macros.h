@@ -121,6 +121,8 @@ const std::string bgTextures[NUM_OF_BG] = { "levelSelectBG.png", "menuBG.png", "
 //				Gameplay screen                 -
 // ----------------------------------------------
 const sf::Vector2f healthOffset(30, 100);
+const sf::Vector2f healthTextOffset(10, 130);
+const sf::Vector2f projectileOffset(-10, -20);
 const sf::Vector2f selectedOffset(45, 30);
 const sf::Vector2f continueButtonPos(615, 450);
 const sf::Vector2f restartButtonPos(615, 500);

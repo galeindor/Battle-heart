@@ -10,9 +10,8 @@ Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest,
 {
 	setAsTarget(target);
 	setAnimation(0);
-	auto origin = this->getSprite().getOrigin();
-	setOrigin({origin.x -10 , origin.y -20}); // this is a plaster (+1  i agree) 
 	setDestination(dest);
+	this->setOffset(projectileOffset);
 }
 
 //==============================================================================
