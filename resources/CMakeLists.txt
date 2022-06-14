@@ -10,6 +10,9 @@ configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/miniDragon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Enemies
+configure_file ("archer.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("cleric.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("knight.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("enemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Backgrounds and utility
@@ -42,7 +45,8 @@ configure_file ("healEffect.png" ${CMAKE_BINARY_DIR} COPYONLY)
 # Projectiles
 configure_file ("proj/healProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/fireProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("proj/fireBlast.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("proj/arrow.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("proj/fireBreath.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/water_strike.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/tesla_ball.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/lightning.png" ${CMAKE_BINARY_DIR} COPYONLY)

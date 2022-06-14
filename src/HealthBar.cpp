@@ -21,8 +21,16 @@ void HealthBar::updateHealthBar(float statVal, const sf::Vector2f& pos)
 
 	if (healthLost > 0.f && m_hitTimer.isTimeUp() ) // lowered damage
 	{
-		m_hitHealth.setSize(sf::Vector2f(currSize, size.y));
+		m_hitDamage.setFillColor(sf::Color::Red);
 		m_hitDamage.setString(std::to_string(int(healthLost)));
+		m_hitHealth.setSize({ currSize, size.y });
+		m_hitTimer.setTimer();
+	}
+	else if (healthLost < 0.f)
+	{
+		m_hitDamage.setFillColor(sf::Color::Green);
+		m_hitDamage.setString(std::to_string(int(-healthLost)));
+		m_hitHealth.setSize({ statVal, size.y });
 		m_hitTimer.setTimer();
 	}
 
@@ -79,7 +87,8 @@ void HealthBar::setPosition(const sf::Vector2f pos)
 void HealthBar::initText(const sf::Vector2f pos)
 {
 	m_hitDamage.setCharacterSize(20);
-	m_hitDamage.Bold;
+	m_hitDamage.setOutlineThickness(2);
+	m_hitDamage.setStyle(sf::Text::Bold);
 	m_hitDamage.setColor(sf::Color::Black);
 	m_hitDamage.setFont(*Resources::instance().getFont());
 	m_hitDamage.setOrigin(m_hitDamage.getOrigin() + healthTextOffset);

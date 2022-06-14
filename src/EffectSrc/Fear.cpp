@@ -11,5 +11,5 @@ Fear::Fear(AnimationParams animParams)
 
 void Fear::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, Character* target, float factor)
 {
-	target->behaviour()->Flee(target->getLocationsVec(true), target->getMoveStats());
+	target->behaviour()->Flee(target->getLocationsVec(false), target->getMoveStats());
 }

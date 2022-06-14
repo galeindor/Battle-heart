@@ -15,7 +15,7 @@ class Skill
 {
 public:
 	Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
-		const int effectIndex, bool singleTarget, bool onPlayer, bool isActive , float factor , int projType);
+		const int effectIndex, AttackType type , bool onPlayer, bool isActive , float factor , int projType);
 	~Skill() = default;
 
 	// Management
@@ -26,7 +26,7 @@ public:
 
 	// Getters
 	bool getOnPlayer() const { return this->m_onPlayer; }
-	bool getSingleTarget() const { return this->m_singleTarget; }
+	AttackType getSkillType() const { return this->m_type; }
 	bool getIsActive() const { return this->m_isActive; }
 
 	void draw(sf::RenderWindow& window, bool);
@@ -38,7 +38,7 @@ private:
 	int m_projType;
 	// Settings of the skill
 	Effect* m_effect;
-	bool m_singleTarget;
+	AttackType m_type;
 	bool m_onPlayer;
 	bool m_isActive;
 	Timer m_timer;

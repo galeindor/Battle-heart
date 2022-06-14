@@ -8,6 +8,5 @@ Dummy::Dummy()
 
 void Dummy::initSkills(const int index)
 {
-
-	this->createSkill(index, _basic, _damage, singleTarget, onPlayer, !isActive, _none); // basic
+	this->createSkill(index, _basic, _damage, AttackType::Single, onPlayer, !isActive, _none); // basic
 }

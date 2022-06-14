@@ -3,8 +3,8 @@
 #include "Characters/Character.h"
 
 Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
-	const int effectIndex, bool singleTarget, bool onPlayer, bool isActive , float factor , int projType)
-	: m_timer(Timer(cooldown)), m_singleTarget(singleTarget),
+	const int effectIndex, AttackType type, bool onPlayer, bool isActive , float factor , int projType)
+	: m_timer(Timer(cooldown)), m_type(type),
 	m_onPlayer(onPlayer), m_isActive(isActive) , m_factor(factor)
 {
 	this->m_projType = projType;

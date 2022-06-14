@@ -32,7 +32,7 @@ constexpr float DEF_MVSPD = 5.1;
 // ----------------------------------------------
 enum CharacterAnimation
 {
-	_walk, _hurt, _idle, _death, _attack, _specialAttack, SPRITE_ROWS
+	_walk, _idle, _death, _attack, _specialAttack, SPRITE_ROWS
 };
 
 struct AnimationParams {
@@ -40,29 +40,31 @@ struct AnimationParams {
 	float _switchTime; // remove switch time because it's 0.3f for all.
 };
 
-const AnimationParams characterParams = { sf::Vector2f(10,6), 0.3f };
+const AnimationParams PlayerParams = { sf::Vector2f(9,5), 0.3f };
+const AnimationParams characterParams = { sf::Vector2f(10,5), 0.3f };
 const AnimationParams projectileParams = { sf::Vector2f(8, 1), 0.3f };
 const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
 
 const std::vector<std::vector<int>> CharacterRowLengths = {
-	{ 6, 4, 9, 8, 7, 7 },
-	{ 6, 4, 7, 8, 5, 8 },
-	{ 6 ,4 ,9 ,8 ,7 ,7 },
-	{ 6, 2, 3, 4, 4, 0 },
-	{ 6, 2, 3, 4, 5, 0 },
-	{ 4, 2, 3, 2, 3, 0 }
+/* cleric*/	{9, 6, 6, 8, 7},
+/* knight*/	{9, 8, 6, 6, 7},
+/* archer*/	{9 ,6 ,6 ,8 ,7},
+/* demon */	{6, 3, 4, 4, 0},
+/* imp */	{6, 3, 4, 5, 0},
+/* miniDra*/{4, 3, 2, 3, 0}
 };
 
 const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
 
-const std::vector<std::vector<int>> ProjRowlengths = { 
-	{8}, {11} , {8} , {12} , 
-	{16} , {10} , {0} 
-};
-
 // ----------------------------------------------
 //					Effects						-
 // ----------------------------------------------
+
+enum class AttackType
+{
+	Single , Multi , Self
+};
+
 enum Effects
 {
 	_heal, _damage, _defend, _drainLife, _fear, NUM_OF_EFFECTS
@@ -84,21 +86,21 @@ enum Skills
 };
 
 const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
-	{1.75f, 20.f, 30.f , 100.f} ,
-	{1.65f ,30.f,  30.f, 100.f } ,
-	{1.7f, 5.f , 5.f , 100.f} ,
-	{1.5f},
-	{1.65f},
-	{1.7f}
+/* cleric*/		{1.75f, 20.f, 30.f , 100.f} ,
+/* knight*/		{1.65f ,30.f,  30.f, 100.f } ,
+/* witch*/		{1.7f, 5.f , 5.f , 100.f} ,
+/* demon*/		{1.5f},
+/* imp */		{1.65f},
+/* miniDragon*/	{1.7f}
 };
 
 const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
-	{1.f, 1.2f, 1.75f , 1.f},
-	{1.f ,1.5f, 1.3f, 1.f },
-	{1.f, 1.5f , 1.5f , 1.f},
-	{1.f},
-	{1.f},
-	{1.f}
+/* cleric*/		{1.f, 1.2f, 1.75f , 1.f},
+/* knight*/		{1.f ,1.5f, 1.3f, 1.f},
+/* witch*/		{1.f, 1.5f , 1.5f , 1.f},
+/* demon*/		{1.f},
+/* imp */		{1.f},
+/* miniDragon*/	{1.f}
 };
 
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	
@@ -128,7 +130,6 @@ const sf::Vector2f continueButtonPos(615, 450);
 const sf::Vector2f restartButtonPos(615, 500);
 const sf::Vector2f exitButtonPos(615, 550);
 const sf::Vector2f pauseButtonPos(1200, 200);
-constexpr auto singleTarget = true;
 constexpr auto onPlayer = true;
 constexpr auto isActive = true;
 
@@ -179,17 +180,23 @@ enum ObjectEnums
 enum ProjEnums
 {
 	_healBall, _fireProj, _energy, _lightning,
-	_tesla, _waterStrike, _none,
+	_tesla, _waterStrike, _fireBreath, _arrow, _none,
 	NUM_OF_PROJ
 };
 
 const std::string textures[NUM_OF_OBJECTS] = {
-	"cleric1.png" , "knightSS.png", "witch.png" ,"Demon.png",
+	"cleric.png" , "knight.png", "archer.png" ,"Demon.png",
 	"Imp.png", "miniDragon.png", "select.png" };
 
 const std::vector<std::string > ProjTextrues = { 
-	"healProj.png", "fireBlast.png", "energy.png", "lightning.png", 
-	"tesla_ball.png", "water_strike.png", "none" 
+	"healProj.png", "fireBlast2.png", "energy.png", "lightning.png", 
+	"tesla_ball.png", "water_strike.png", "fireBreath.png" ,
+	"arrow.png","none" 
+};
+
+const std::vector<std::vector<int>> ProjRowlengths = {
+	{8}, {11} , {8} , {12} ,
+	{16} , {10} , {8} , {0}
 };
 
 // Map ------------------------------------------
@@ -212,12 +219,12 @@ enum Stats
 
 const std::vector<std::vector<float>> charactersStats =
 {
-	/* cleric */ { 70.f, 2.f, 6.f, 800.f , 10.f},
-	/* knight */ { 120.f, 3.f, 15.f, 40.f , 20.f},
-	/* Witch */ { 90.f, 2.f, 2000.f, 600.f , 13.f},
-	/* dummy  */ { 80.f, 4.f, 10.f, 40.f , 15.f},
-	/* imp	  */ { 75.f , 3.f , 20.f , 400.f , 10.f},
-	/* miniDrag */ {90.f , 4.f , 25.f , 200.f , 35.f}
+	/* cleric */	{ 70.f, 2.f, 6.f, 800.f , 10.f},
+	/* knight */	{ 120.f, 3.f, 15.f, 40.f , 20.f},
+	/* witch */		{ 90.f, 2.f, 2000.f, 600.f , 13.f},
+	/* demon  */	{ 80.f, 4.f, 30.f, 40.f , 15.f},
+	/* imp	  */	{ 75.f , 3.f , 20.f , 400.f , 10.f},
+	/* miniDrag */	{90.f , 4.f , 25.f , 200.f , 35.f}
 };
 
 // Movement and Steering ------------------------

@@ -62,7 +62,7 @@ public:
 protected:
 	
 	void createSkill(int CharIndex, int skillIndex, int effectIndex,
-					 bool single, bool onPlayer, bool active, int projType);
+					 AttackType single, bool onPlayer, bool active, int projType);
 	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }
 	void useSkill(int index);
 	vector<std::shared_ptr<Stat>>& getStats() { return this->m_stats; }
@@ -84,6 +84,9 @@ private:
 	// Movement
 	SteeringInterface* m_steering;
 	sf::Vector2f m_velocity;
+
+	vector < std::pair<Timer, float> > m_buffTimers;
+	// used for handleing the buffs given to the character
 
 
 	HealthBar m_hpBar;

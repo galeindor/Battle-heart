@@ -18,7 +18,7 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 					   vector<std::shared_ptr<Enemy>> m_enemies)
 {
 	this->m_hpBar.setPosition(this->getPosition());
-	
+
 	if (!isAlive())
 		return;
 
@@ -83,16 +83,27 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 
 	for (auto& skill : this->m_skills)
 	{
-		if (skill->getSingleTarget() && this->getTarget())
+		auto type = skill->getSkillType();
+		switch (type)
 		{
-			m_targets.push_back(locateInVector(players, enemies, this->getTarget()));
-		}
-		else if (!skill->getSingleTarget())
-		{
+		case AttackType::Single:
+			if(this->getTarget())
+				m_targets.push_back(locateInVector(players, enemies, this->getTarget()));
+			break;
+
+		case AttackType::Multi:
 			if (skill->getOnPlayer())
 				m_targets = this->createTargetVec(players);
 			else
 				m_targets = this->createTargetVec(enemies);
+			break;
+
+		case AttackType::Self:
+			m_targets.push_back(locateInVector(players, enemies , this));
+			break;
+
+		default:
+			break;
 		}
 		skill->updateSkill(deltaTime, m_targets, this->m_stats);
 	}
@@ -140,7 +151,7 @@ void Character::useBaseAttack()
 
 //=======================================================================================
 
-void Character::createSkill(int charIndex, int skillIndex, int effectIndex, bool single, bool onPlayer, bool active , int projType)
+void Character::createSkill(int charIndex, int skillIndex, int effectIndex, AttackType single, bool onPlayer, bool active , int projType)
 {
 	this->addSkill(Skill(Resources::instance().getSkillText(charIndex, skillIndex),
 		sf::Vector2f(skillIndex * (SKILL_RECT_SIZE + 20) + 30, 30),
@@ -160,10 +171,7 @@ void Character::useSkill(int skillIndex)
 void Character::setStat(int index, int newVal)
 { 
 	if (index == _hp)
-	{
 		this->showHpBar();
-		this->setAnimation(_hurt);
-	}
 		
 	this->m_stats[index]->setStat(newVal); 
 }
@@ -174,6 +182,7 @@ void Character::setDying()
 {
 	this->setAnimation(_death);
 	this->m_isDying = true;
+	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat(), this->getPosition());
 	this->m_deathTimer.setTimer();
 }
 
