@@ -83,9 +83,9 @@ void Character::updateMovement(float deltaTime)
 void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Player>> players, vector<std::shared_ptr<Enemy>> enemies)
 {
 	vector<shared_ptr<Character>> m_targets;
-
 	for (auto& skill : this->m_skills)
 	{
+		m_targets.clear();
 		auto type = skill->getSkillType();
 		switch (type)
 		{
@@ -161,7 +161,6 @@ void Character::createSkill(int charIndex, int skillIndex, int effectIndex, Atta
 		skillCooldowns[charIndex][skillIndex], effectIndex,
 		single, onPlayer, active, skillFactors[charIndex][skillIndex],projType));
 
-	skillIndex++;
 }
 
 //=======================================================================================
@@ -278,6 +277,7 @@ void Character::updateBuffs()
 		{
 			this->setStat(i, buff.second);
 			m_activeBuffs[i] = false;
+			this->setColor(sf::Color::White);
 		}
 	}	
 }
@@ -290,6 +290,7 @@ void Character::setActiveBuff(int index ,float duration)
 	m_buffTimers[index].first.setTimer();
 	m_buffTimers[index].second = m_stats[index]->getStat();
 	m_activeBuffs[index] = true;
+	this->setColor(sf::Color::Red);
 }
 
 //============================================================================================

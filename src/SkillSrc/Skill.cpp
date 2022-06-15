@@ -141,9 +141,7 @@ void Skill::updateVisual()
 
 bool Skill::handleClick(const sf::Vector2f& pos)
 {
-	auto timeLeft = m_timer.getTimeLeft();
-	timeLeft = std::max(timeLeft, 0.f);
-	return !m_targets.empty() && m_isActive && (timeLeft == 0.f) && (m_rect.getGlobalBounds().contains(pos));
+	return !m_targets.empty() && m_isActive && (m_timer.getTimeLeft() <= 0.f) && (m_rect.getGlobalBounds().contains(pos));
 }
 
 //==========================================================

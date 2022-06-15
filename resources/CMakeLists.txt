@@ -1,7 +1,6 @@
 ﻿#file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/resources)
 
 # Enemies
-configure_file ("CharacterImages/fireWarrior.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/imp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/miniDragon.png" ${CMAKE_BINARY_DIR} COPYONLY)

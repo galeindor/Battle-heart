@@ -86,7 +86,7 @@ enum Effects
 
 constexpr auto NUM_OF_BUFFS = 2;
 constexpr auto EFFECT_COOLDOWN = 2.f;
-constexpr auto BUFF_DURATION = 10.f;
+constexpr auto BUFF_DURATION = 20.f;
 
 // ----------------------------------------------
 //					Skills						-
@@ -245,7 +245,7 @@ const std::vector<std::vector<float>> charactersStats =
 	/* witch */		{ 90.f, 2.f, 2000.f, 600.f , 13.f},
 	/* demon  */	{ 80.f, 4.f, 30.f, 70.f , 15.f},
 	/* imp	  */	{ 75.f , 3.f , 20.f , 400.f , 10.f},
-	/* miniDrag */	{90.f , 4.f , 25.f , 200.f , 35.f}
+	/* miniDrag */	{90.f , 4.f , 30.f , 200.f , 35.f}
 };
 
 // Movement and Steering ------------------------

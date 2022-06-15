@@ -41,6 +41,8 @@ public:
 
 protected:
 
+
+	void setColor(sf::Color color)				{ m_sprite.setColor(color); }
 	void setScale(sf::Vector2f scale)			{ m_sprite.setScale(scale); }
 	void setOffset(sf::Vector2f originOffest)	{ m_sprite.setOrigin(m_sprite.getOrigin() + originOffest); }
 
