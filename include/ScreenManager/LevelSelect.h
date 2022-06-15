@@ -16,7 +16,6 @@ public:
 	std::string dataToString(const int level);
 
 protected:
-	virtual void initButtons() override;
 	virtual void handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window) override;
 	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 
@@ -27,6 +26,7 @@ private:
 	void initLevelButtons();
 	void initlvlDet();
 	void destroyButtons();
+	virtual void initButtons() override;
 	HashTable<int, std::string> getMap();
 	HashTable<int, std::string> m_map;
 	bool m_levelHovered = false;

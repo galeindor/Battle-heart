@@ -13,10 +13,10 @@ public:
 	virtual void draw(sf::RenderWindow& window) override;
 
 protected:
-	virtual void initButtons() override;
 	virtual void handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window) override;
 	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 
 private:
+	virtual void initButtons() override;
 	sf::Text m_returnButton;
 };

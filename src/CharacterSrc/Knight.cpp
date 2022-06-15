@@ -13,4 +13,3 @@ void Knight::initSkills(const int index)
 	this->createSkill(index, _skill1, _defend, AttackType::Self, onPlayer, isActive,_none); // shield wall
 	this->createSkill(index, _skill2, _damage, AttackType::Multi, !onPlayer, isActive, _none); // swing
 }
-

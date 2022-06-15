@@ -30,7 +30,7 @@ void HealthBar::updateHealthBar(float statVal, const sf::Vector2f& pos)
 	{
 		m_hitDamage.setFillColor(sf::Color::Green);
 		m_hitDamage.setString(std::to_string(int(std::floor(-healthLost))));
-		m_hitHealth.setSize({ statVal, size.y });
+		m_hitHealth.setSize({statVal, size.y });
 		m_hitTimer.setTimer();
 	}
 	m_curr = temp;

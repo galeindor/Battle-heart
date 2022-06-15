@@ -23,6 +23,7 @@ constexpr auto WINDOW_WIDTH = 1400;
 constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto HEIGHT_LIMIT = 200;
 constexpr auto CUT_CORNERS = 50; // used to limit the player movement to not touch corners
+constexpr auto SKILL_GAP = 100;
 constexpr auto BAR_WIDTH = 60;
 constexpr auto BAR_HEIGHT = 10;
 constexpr auto NEW_LEVEL_DETECTED = -3;
@@ -83,7 +84,7 @@ enum class AttackType
 
 enum Effects
 {
-	_heal, _damage, _defend, _drainLife, _fear, NUM_OF_EFFECTS
+	_heal, _damage, _defend, _drainLife, NUM_OF_EFFECTS
 };
 
 constexpr auto EFFECT_COOLDOWN = 2.f;
@@ -252,13 +253,13 @@ enum Stats
 
 const std::vector<std::vector<float>> charactersStats =
 {
-	/* cleric */	{ 70.f, 2.f, 6.f, 800.f , 10.f},
-	/* knight */	{ 120.f, 3.f, 15.f, 40.f , 20.f},
-	/* witch */		{ 90.f, 2.f, 2000.f, 600.f , 13.f},
-	/* archer */	{ 95.f, 1.f, 32.f, 600.f , 15.f},
-	/* demon  */	{ 80.f, 4.f, 30.f, 70.f , 15.f},
-	/* imp	  */	{ 75.f , 3.f , 20.f , 400.f , 10.f},
-	/* miniDrag */	{90.f , 4.f , 30.f , 200.f , 35.f}
+	/* cleric */	{ 700.f, 2.f, 50.f, 800.f , 10.f},
+	/* knight */	{ 1200.f, 3.f,120.f, 40.f , 20.f},
+	/* witch */		{ 900.f, 2.f, 100.f, 600.f , 13.f},
+	/* archer */	{ 800.f, 1.f, 95.f, 600.f , 15.f},
+	/* demon  */	{ 900.f, 4.f, 130.f, 70.f , 15.f},
+	/* imp	  */	{ 750.f , 3.f ,100.f , 400.f , 10.f},
+	/* miniDrag */	{1250.f , 4.f ,1200.f , 200.f , 35.f}
 };
 
 // Movement and Steering ------------------------
