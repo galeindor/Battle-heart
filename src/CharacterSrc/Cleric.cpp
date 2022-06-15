@@ -1,6 +1,8 @@
 
 #include "Characters/Cleric.h"
 
+//================================================================
+// Constructor.
 Cleric::Cleric(const sf::Vector2f pos)
 	:Player(pos , _cleric)
 {
@@ -8,20 +10,22 @@ Cleric::Cleric(const sf::Vector2f pos)
 }
 
 //==========================================================
-
-bool Cleric::setTarget(std::shared_ptr<Player> obj) // cleric can get an ally target
+// Sets player as target.
+bool Cleric::setTarget(std::shared_ptr<Player> obj)
 {
 	setAsTarget(obj); 
 	return true;
 }
-//==========================================================
 
-bool Cleric::setTarget(std::shared_ptr<Enemy>) // cleric can't have enemy target
+//==========================================================
+// Can't set enemy as target.
+bool Cleric::setTarget(std::shared_ptr<Enemy>)
 {
 	return false;
 }
 
 //==========================================================
+// Inits skills.
 void Cleric::initSkills(const int index)
 {
 	this->createSkill(index, _basic, _heal, AttackType::Single, onPlayer, !isActive,_healBall); // basic

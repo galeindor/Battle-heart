@@ -1,7 +1,7 @@
 #include "Characters/Enemy.h"
 
 //==========================================================
-
+// Constructor.
 Enemy::Enemy(const int index)
 	: Character(this->randEnemyPos(), index, characterParams)
 {
@@ -9,6 +9,7 @@ Enemy::Enemy(const int index)
 }
 
 //=======================================================================================
+// Draw function.
 void Enemy::draw(sf::RenderWindow& window)
 {
 	showHpBar();
@@ -18,14 +19,14 @@ void Enemy::draw(sf::RenderWindow& window)
 }
 
 //=======================================================================================
-// Enemies cannot target other enemies
+// Enemies cannot target other enemies, unless meant to.
 bool Enemy::setTarget(std::shared_ptr<Enemy>) 
 {
 	return false;
 }
 
 //=======================================================================================
-// Any enemy can target any player 
+// Any enemy can target any player.
 bool Enemy::setTarget(std::shared_ptr<Player> obj)
 {
 	setAsTarget(obj);
@@ -33,7 +34,7 @@ bool Enemy::setTarget(std::shared_ptr<Player> obj)
 }
 
 //=======================================================================================
-// Returns if the enemy is close enough to start attacking
+// Returns if the enemy is close enough to start attacking.
 bool Enemy::checkIntersection() const
 {
 	auto norm = sqrt(pow((this->getPosition().x - this->getDest().x), 2) + pow((this->getPosition().y - this->getDest().y), 2));
@@ -41,13 +42,12 @@ bool Enemy::checkIntersection() const
 }
 
 //=======================================================================================
-
-// Enemies start at a random pos
+// Enemies start at a random pos.
 sf::Vector2f Enemy::randEnemyPos()
 {
 	sf::Vector2f pos;
 	int side = rand();
-	bool left = (side % 2 == 0) ? true : false; // Left/Right side of the screen
+	bool left = (side % 2 == 0) ? true : false; // Left/Right side of the screen.
 	if (left)
 		pos.x = 0; 
 	else

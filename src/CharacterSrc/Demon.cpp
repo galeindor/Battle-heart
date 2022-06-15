@@ -1,5 +1,7 @@
 #include "Characters/Demon.h"
 
+//================================================================
+// Constructor.
 Demon::Demon()
 	:Enemy(_demon)
 {
@@ -8,7 +10,7 @@ Demon::Demon()
 }
 
 //================================================================
-
+// Inits skills.
 void Demon::initSkills(const int index)
 {
 	this->createSkill(index, _basic, _damage, AttackType::Single, onPlayer, !isActive, _none); // basic

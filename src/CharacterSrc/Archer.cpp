@@ -1,10 +1,14 @@
 #include "Characters/Archer.h"
 
+//==========================================================================================
+// Constructor.
 Archer::Archer(const sf::Vector2f pos)
 	:Player(pos, _archer)
 {
 	this->initSkills(_archer);
 }
+
+//==========================================================================================
 
 void Archer::initSkills(const int index)
 {
