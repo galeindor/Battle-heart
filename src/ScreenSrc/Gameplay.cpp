@@ -7,6 +7,7 @@ Gameplay::Gameplay(Controller* controller)
 	Screen(controller)
 {
 	this->initButtons();
+	this->setBG(_firstLevel);
 }
 
 //-------------------------------------------------
@@ -36,8 +37,8 @@ void Gameplay::update(const float deltaTime)
 void Gameplay::init()
 {
 	this->m_currLvl = this->m_controller->getCurrLvl();
-	this->setBG(_firstLevel);
 	this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl), m_controller);
+	this->m_controller->makeMusic(levelsMusic[(this->m_currLvl % levelsMusic.size())]);
 }
 
 //-------------------------------------------------
@@ -89,21 +90,14 @@ void Gameplay::initButtons()
 	this->m_pauseButton.setTexture(*Resources::instance().getGameButtonText(_pause));
 	this->m_pauseButton.setPosition(pauseButtonPos);
 
-	// (Initialize the vector)
-	sf::Sprite tempSprite;
-	tempSprite.setTexture(*Resources::instance().getGameButtonText(_continue));
-	tempSprite.setPosition(continueButtonPos);
-	this->m_buttons.push_back(tempSprite);
-
-	// Restart
-	tempSprite.setTexture(*Resources::instance().getGameButtonText(_restart));
-	tempSprite.setPosition(restartButtonPos);
-	this->m_buttons.push_back(tempSprite);
-
-	// Exit
-	tempSprite.setTexture(*Resources::instance().getGameButtonText(_exitButton));
-	tempSprite.setPosition(exitButtonPos);
-	this->m_buttons.push_back(tempSprite);
+	for (int i = 1; i < ((NUM_OF_GBUTTONS - 1) / 2); i++)
+	{
+		sf::Sprite temp;
+		temp.setTexture(*Resources::instance().getGameButtonText(i));
+		auto pos = sf::Vector2f(gameButtonPos.x, gameButtonPos.y + (i * buttonOffset * 0.55f));
+		temp.setPosition(pos);
+		this->m_buttons.push_back(temp);
+	}
 }
 
 //-------------------------------------------------
@@ -132,6 +126,7 @@ void Gameplay::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& windo
 		this->checkButton(hoverPos, _exitButton, _exitButtonHL, _exitIndex);
 	}
 }
+
 //-------------------------------------------------
 
 void Gameplay::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window)

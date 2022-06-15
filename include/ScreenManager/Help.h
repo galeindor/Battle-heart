@@ -5,7 +5,7 @@
 class Help : public Screen
 {
 public:
-	using Screen::Screen;
+	Help(Controller* controller);
 	~Help() = default;
 
 	virtual void update(const float deltaTime) override;
@@ -17,6 +17,7 @@ protected:
 	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 
 private:
+	void initRet();
 	virtual void initButtons() override;
 	sf::Text m_returnButton;
 };

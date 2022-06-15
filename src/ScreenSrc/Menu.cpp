@@ -4,15 +4,15 @@ Menu::Menu(Controller* controller)
 	: Screen(controller)
 {
 	this->initButtons();
+	this->setBG(_menu);
 }
 
 void Menu::update(const float deltaTime)
-{
-}
+{}
 
 void Menu::init()
 {
-	this->setBG(_menu);
+	this->m_controller->makeMusic("menuMusic.ogg");
 }
 
 void Menu::draw(sf::RenderWindow& window)
@@ -34,13 +34,9 @@ void Menu::initButtons()
 		tempText.setString(MENU_BUTTONS_STRINGS[i]);
 
 		if (i == _battle)
-			tempText.setPosition(sf::Vector2f(MENU_BUTTONS_START.x, MENU_BUTTONS_START.y));
-		else if (i == _levels)
-			tempText.setPosition(sf::Vector2f(MENU_BUTTONS_START.x - 2 * MENU_BUTTONS_GAP,
-				MENU_BUTTONS_START.y + (MENU_BUTTONS_OFFSET + 1.5 * MENU_BUTTONS_GAP) * i));
+			tempText.setPosition(battleButtonPos);
 		else
-			tempText.setPosition(sf::Vector2f(MENU_BUTTONS_START.x - 2 * MENU_BUTTONS_GAP,
-				MENU_BUTTONS_START.y + MENU_BUTTONS_OFFSET * i));
+			tempText.setPosition(sf::Vector2f(screenButtonsStart.x, screenButtonsStart.y + buttonOffset * i));
 
 		this->m_buttons.push_back(tempText);
 	}
@@ -72,18 +68,26 @@ void Menu::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& wind
 		{
 			switch (index)
 			{
-				// Clicking on battle results in continuing from last point.
+			// Clicking on battle results in continuing from last point.
 			case MenuButtons::_battle:
 				this->m_controller->makeSound(int(Sound::Sounds::BATTLE));
 				this->m_controller->setCurrentScreen(ScreenState::PLAY);
-				break;
-				// Clicking on levels results in picking a level.
+				return;
+			// Clicking on levels results in picking a level.
 			case MenuButtons::_levels:
 				this->m_controller->setCurrentScreen(ScreenState::LEVEL_SELECT);
-				break;
+				return;
+			// Clicking on help displays info on how to play.
+			case MenuButtons::_help:
+				this->m_controller->setCurrentScreen(ScreenState::HELP);
+				return;
+			case MenuButtons::_settings:
+				this->m_controller->setCurrentScreen(ScreenState::SETTINGS);
+				return;
+			// Exits game.
 			case MenuButtons::_escape:
 				this->m_controller->setCurrentScreen(ScreenState::EXIT);
-				break;
+				return;
 			}
 		}
 }

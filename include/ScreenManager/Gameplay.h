@@ -18,7 +18,6 @@ public:
 	void winGame();
 
 protected:
-
 	virtual void handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window) override;
 	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 

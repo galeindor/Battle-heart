@@ -7,6 +7,7 @@
                                               "ScreenSrc/Menu.cpp"
                                               "ScreenSrc/LevelSelect.cpp"
                                               "ScreenSrc/Help.cpp"
+                                              "ScreenSrc/Settings.cpp"
                                               "Animation.cpp"
                                               "SteeringInterface.cpp"
                                               "Object.cpp"

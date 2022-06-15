@@ -6,6 +6,8 @@ enum class ScreenState {
 	MENU,
 	PLAY,
 	LEVEL_SELECT,
+	HELP,
+	SETTINGS,
 	EXIT
 };
 
