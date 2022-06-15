@@ -4,7 +4,7 @@
 Player::Player(const sf::Vector2f loc , int index)
 	: Character(loc, index, PlayerParams), m_selected(false)
 {
-	setScale({ 1.5f , 1.5f });
+	setScale(SPRITE_SCALE);
 }
 
 //===========================================================

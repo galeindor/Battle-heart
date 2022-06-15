@@ -4,6 +4,8 @@
 configure_file ("CharacterImages/imp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/miniDragon.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/DarkCleric.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/Wolf.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Players
 configure_file ("wizard.png" ${CMAKE_BINARY_DIR} COPYONLY)
