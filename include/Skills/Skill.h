@@ -4,7 +4,6 @@
 #include "Effects/Damage.h"
 #include "Effects/Defend.h"
 #include "Effects/LifeDrain.h"
-#include "Effects/Fear.h"
 #include "Timer.h"
 #include "Skills/Projectile.h"
 #include "HashTable.h"
@@ -14,7 +13,7 @@ using std::vector;
 class Skill
 {
 public:
-	Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
+	Skill(const sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 		const int effectIndex, AttackType type , bool onPlayer, bool isActive , float factor , int projType);
 	~Skill() = default;
 
@@ -46,7 +45,7 @@ private:
 	//std::vector<Target> m_targets = {};
 	vector<shared_ptr<Character>> m_targets;
 	vector<Projectile> m_projs;
-	float m_baseValue;
+
 	float m_factor;
 
 	// Visuals
@@ -55,6 +54,6 @@ private:
 	
 	// Initiation functions
 	void initEffect(const int effectIndex);
-	void initRect(sf::Texture* texture, const sf::Vector2f pos);
+	void initRect(const sf::Texture* texture, const sf::Vector2f pos);
 	void initCooldown(const sf::Vector2f pos);
 };

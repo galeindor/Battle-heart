@@ -2,13 +2,13 @@
 
 #include "Characters/Character.h"
 
-Skill::Skill(sf::Texture* texture, const sf::Vector2f pos, float cooldown,
+Skill::Skill(const sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 	const int effectIndex, AttackType type, bool onPlayer, bool isActive , float factor , int projType)
 	: m_timer(Timer(cooldown)), m_type(type),
 	m_onPlayer(onPlayer), m_isActive(isActive) , m_factor(factor)
 {
 	this->m_projType = projType;
-	m_baseValue = 0;
+
 	this->initRect(texture, pos);
 	this->initCooldown(pos);
 	this->initEffect(effectIndex);
@@ -26,7 +26,7 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 		this->m_projs[i].updateMovement(deltaTime);
 		if (m_projs[i].checkIntersection())
 		{
-			this->m_effect->affect(m_baseValue, myStats, m_projs[i].getTarget(), m_factor);
+			this->m_effect->affect(myStats, m_projs[i].getTarget(), m_factor);
 			m_projs.erase(m_projs.begin() + i);
 		}
 	}
@@ -83,8 +83,7 @@ void Skill::initEffect(const int effectIndex)
 	case _drainLife:
 		this->m_effect = new LifeDrain();
 		break;
-	case _fear:
-		this->m_effect = new Fear();
+
 	default:
 		break;
 	}
@@ -92,7 +91,7 @@ void Skill::initEffect(const int effectIndex)
 
 //============================================================================
 
-void Skill::initRect(sf::Texture* texture, const sf::Vector2f pos)
+void Skill::initRect(const sf::Texture* texture, const sf::Vector2f pos)
 {
 	m_rect.setTexture(texture);
 	m_rect.setPosition(pos);

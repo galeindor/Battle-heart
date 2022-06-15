@@ -41,7 +41,7 @@ void Sound::stopMusic()
 void Sound::setSound(Sound::Sounds soundEnum)
 {
 	sf::Sound tempSound;
-	sf::SoundBuffer* tempBuffer = Resources::instance().getBuffer(int(soundEnum));
+	const sf::SoundBuffer* tempBuffer = Resources::instance().getBuffer(int(soundEnum));
 	tempSound.setBuffer(*tempBuffer);
 	tempSound.setLoop(false);
 	this->m_sounds.push_back(tempSound);
