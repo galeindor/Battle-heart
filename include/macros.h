@@ -19,6 +19,7 @@ struct LevelInfo {
 constexpr auto PI = 3.14159265358979323846;
 const sf::Vector2f DEFAULT_VEC(0, 0);
 const sf::Vector2f SPRITE_SCALE(1.5f, 1.5f);
+const sf::Vector2f SCALE(1.3f, 1.3f);
 
 // each attack has a const defence ignore rate ( dmg / (def * ignore_rate)) - for balanced damage
 constexpr auto DEFENSE_IGNORE_RATE = 0.3f;

@@ -75,7 +75,7 @@ void Resources::loadResources()
 			throw std::runtime_error("Cannot set text font\n");
 		}
 	}
-	catch (std::runtime_error& e)
+	catch (std::runtime_error& e) // catch exeption if a file is failed to load
 	{
 		std::cerr << e.what();
 		exit(EXIT_FAILURE);

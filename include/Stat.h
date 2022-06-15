@@ -19,5 +19,5 @@ public:
 
 private:
 	bool handleStat(float amount);
-	float m_val;
+	float m_val; // value of the stat
 };
