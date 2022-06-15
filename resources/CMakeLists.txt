@@ -20,6 +20,8 @@ configure_file ("Backgrounds/levelSelectBG.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Backgrounds/menuBG.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Backgrounds/skillInfoBG.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("plain.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("snowlands.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("firelands.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("select.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Skills
