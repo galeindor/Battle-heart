@@ -31,6 +31,7 @@ constexpr auto BAR_HEIGHT = 10;
 constexpr auto NEW_LEVEL_DETECTED = -3;
 constexpr auto WAVE = '!';
 constexpr auto _levelInProgress = 2;
+constexpr auto NUM_OF_BACKGROUNDS = 3;
 constexpr float DEF_MVSPD = 5.1;
 
 // ----------------------------------------------
@@ -159,13 +160,14 @@ const std::vector<std::vector<int>> ProjRowlengths = {
 // ----------------------------------------------------------
 enum Backgrounds {
 	_skillInfo, _helpBG, _settingsBG, 
-	_levelSelect, _menu, _firstLevel, 
+	_levelSelect, _menu,
+	_firstLevel, _secondLevel, _thirdLevel,
 	NUM_OF_BG
 };
 
 const std::string bgTextures[NUM_OF_BG] = { 
 	"skillInfoBG.png", "help.png", "settings.png", 
-	"levelSelectBG.png", "menuBG.png", "plain.png" 
+	"levelSelectBG.png", "menuBG.png", "plain.png", "snowlands.png", "firelands.png"
 };
 
 // ----------------------------------------------
@@ -267,15 +269,14 @@ enum Stats {
 
 const std::vector<std::vector<float>> charactersStats = {
 	/* cleric */	{ 700.f , 50.f, 800.f , 10.f},
-	/* knight */	{ 1200.f, 120.f, 40.f , 20.f},
-	/* wizard */	{ 900.f , 100.f, 600.f , 13.f},
-	/* archer */	{ 800.f , 200.f, 600.f , 15.f},
-	/* demon  */	{ 900.f , 130.f, 70.f , 15.f},
-	/* imp	  */	{ 750.f , 100.f , 400.f , 10.f},
-	/* miniDrag */	{1250.f , 200.f , 200.f , 35.f},
-	/* wolf */		{1250.f , 120.f , 200.f , 35.f},
-	/* darkCleric*/ {1000.f , 300.f , 200.f , 35.f}
-
+	/* knight */	{ 1200.f, 180.f, 40.f , 20.f},
+	/* wizard */	{ 900.f , 300.f, 600.f , 13.f},
+	/* archer */	{ 600.f , 250.f, 600.f , 10.f},
+	/* demon  */	{ 660.f , 400.f, 70.f , 9.f},
+	/* imp	  */	{ 750.f , 150.f , 400.f , 10.f},
+	/* miniDrag */	{700.f , 500.f , 200.f , 12.f},
+	/* wolf */		{600.f , 400.f , 50.f , 5.f},
+	/* darkCleric*/ {500.f , 50.f , 200.f , 5.f}
 };
 
 // Movement and Steering ------------------------

@@ -7,7 +7,6 @@ Gameplay::Gameplay(Controller* controller)
 	Screen(controller)
 {
 	this->initButtons();
-	this->setBG(_firstLevel);
 }
 
 //-------------------------------------------------
@@ -16,6 +15,7 @@ void Gameplay::update(const float deltaTime)
 {
 	if (!this->m_wonLevel && !this->m_paused && !this->m_lost)
 	{
+
 		auto state = this->m_board.updateBoard(deltaTime, this->m_charSelected);
 		if (state == _winLevel)
 		{
@@ -39,6 +39,9 @@ void Gameplay::init()
 	this->m_currLvl = this->m_controller->getCurrLvl();
 	this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl), m_controller);
 	this->m_controller->makeMusic(levelsMusic[(this->m_currLvl % levelsMusic.size())]);
+	
+	auto bgIndex = this->m_currLvl % NUM_OF_BACKGROUNDS;
+	this->setBG(bgIndex + _firstLevel);
 }
 
 //-------------------------------------------------
@@ -203,6 +206,8 @@ void Gameplay::cont()
 		this->m_charSelected = false;
 		this->m_wonLevel = false;
 		this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl), m_controller);
+		auto bgIndex = this->m_currLvl % NUM_OF_BACKGROUNDS;
+		this->setBG(bgIndex + _firstLevel);
 	}
 	else
 		this->m_paused = false;
