@@ -267,12 +267,12 @@ const std::vector<std::vector<float>> charactersStats =
 	/* cleric */	{ 700.f , 50.f, 800.f , 10.f},
 	/* knight */	{ 1200.f, 120.f, 40.f , 20.f},
 	/* witch */		{ 900.f , 100.f, 600.f , 13.f},
-	/* archer */	{ 800.f , 1.f, 95.f, 600.f , 15.f},
-	/* demon  */	{ 900.f , 4.f, 130.f, 70.f , 15.f},
-	/* imp	  */	{ 750.f , 3.f ,100.f , 400.f , 10.f},
-	/* miniDrag */	{1250.f , 4.f ,200.f , 200.f , 35.f},
-	/* wolf */		{1250.f , 4.f ,70.f , 200.f , 35.f},
-	/* darkCleric */{1250.f , 4.f ,700.f , 200.f , 35.f}
+	/* archer */	{ 800.f , 95.f, 600.f , 15.f},
+	/* demon  */	{ 900.f , 130.f, 70.f , 15.f},
+	/* imp	  */	{ 750.f , 100.f , 400.f , 10.f},
+	/* miniDrag */	{1250.f , 200.f , 200.f , 35.f},
+	/* wolf */		{1250.f , 70.f , 200.f , 35.f},
+	/* darkCleric*/ {1250.f , 700.f , 200.f , 35.f}
 
 };
 
