@@ -5,7 +5,7 @@
 #include "Characters/Knight.h"
 #include "Characters/Witch.h"
 #include "Characters/Archer.h"
-#include "Characters/Dummy.h"
+#include "Characters/Demon.h"
 #include "Characters/Imp.h"
 #include "Characters/MiniDragon.h"
 #include "HashTable.h"

@@ -7,10 +7,10 @@ Witch
 Level 2
 Knight
 Witch
-!Dummy 4 !
+!Demon 4 !
 
 Level 3
 Knight
 Witch
 Cleric
-!Dummy 5 !
+!Demon 5 !

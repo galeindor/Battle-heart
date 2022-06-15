@@ -42,10 +42,10 @@ struct AnimationParams {
 	float _switchTime; // remove switch time because it's 0.3f for all.
 };
 
-const AnimationParams PlayerParams = { sf::Vector2f(9,5), 0.3f };
-const AnimationParams characterParams = { sf::Vector2f(10,5), 0.3f };
-const AnimationParams projectileParams = { sf::Vector2f(8, 1), 0.3f };
-const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
+const AnimationParams PlayerParams =		{ sf::Vector2f(9,5) , 0.3f  };
+const AnimationParams characterParams =		{ sf::Vector2f(10,5), 0.3f  };
+const AnimationParams projectileParams =	{ sf::Vector2f(8, 1), 0.3f  };
+const AnimationParams effectParams =		{ sf::Vector2f(5, 1), 0.3f  };
 
 const std::vector<std::vector<int>> CharacterRowLengths = {
 /* cleric*/	{9, 6, 6, 8, 7},
@@ -54,7 +54,7 @@ const std::vector<std::vector<int>> CharacterRowLengths = {
 /* archer*/	{9 ,6 ,6 ,8 ,7},
 /* demon */	{6, 3, 4, 4, 0},
 /* imp */	{6, 3, 4, 5, 0},
-/* miniDra*/{4, 3, 2, 3, 0}
+/* miniDra*/{4, 3, 2, 3, 0},
 };
 
 const std::vector<std::vector<int>> EffectsSSLengths = { {5} };
@@ -235,7 +235,7 @@ static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Knight", _knight),
 	std::make_pair("Witch", _witch),
 	std::make_pair("Archer", _archer),
-	std::make_pair("Dummy" , _demon),
+	std::make_pair("Demon" , _demon),
 	std::make_pair("Imp" , _imp),
 	std::make_pair("MiniDragon",_MiniDragon),
 	std::make_pair("Level", NEW_LEVEL_DETECTED)

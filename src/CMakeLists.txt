@@ -18,7 +18,7 @@
                                               "CharacterSrc/Knight.cpp"
                                               "CharacterSrc/Witch.cpp"
                                               "CharacterSrc/Archer.cpp"
-                                              "CharacterSrc/Dummy.cpp"
+                                              "CharacterSrc/Demon.cpp"
                                               "CharacterSrc/Enemy.cpp"
                                               "CharacterSrc/Imp.cpp"
                                               "CharacterSrc/MiniDragon.cpp"
