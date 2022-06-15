@@ -20,4 +20,5 @@ private:
 	void initRet();
 	virtual void initButtons() override;
 	sf::Text m_returnButton;
+	bool m_returnHovered = false;
 };

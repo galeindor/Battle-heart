@@ -7,11 +7,17 @@ Help::Help(Controller* controller)
 	this->setBG(_helpBG);
 }
 
+//===================================================
 void Help::update(const float deltaTime)
 {}
 
+
+//===================================================
+
 void Help::init()
 {}
+
+//===================================================
 
 void Help::draw(sf::RenderWindow& window)
 {
@@ -19,10 +25,14 @@ void Help::draw(sf::RenderWindow& window)
 	window.draw(this->m_returnButton);
 }
 
+//===================================================
+
 void Help::initButtons()
 {
 	this->initRet();
 }
+
+//===================================================
 
 void Help::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
 {
@@ -30,16 +40,26 @@ void Help::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
 	{
 		this->m_returnButton.setOutlineColor(sf::Color::Black);
 		this->m_returnButton.setOutlineThickness(4);
+		if(!m_returnHovered)
+			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+		m_returnHovered = true;
 	}
 	else
+	{
 		this->m_returnButton.setOutlineThickness(0);
+		m_returnHovered = false;
+	}
 }
+
+//===================================================
 
 void Help::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window)
 {
 	if (this->m_returnButton.getGlobalBounds().contains(clickPos))
 		this->m_controller->setCurrentScreen(ScreenState::MENU);
 }
+
+//===================================================
 
 void Help::initRet()
 {

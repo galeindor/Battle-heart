@@ -65,9 +65,9 @@ void Character::updateMovement(float deltaTime)
 
 		if (targetInRange())
 		{
-			this->useBaseAttack();
-			if (handleAnimation(this->getVelocity() * deltaTime, deltaTime))
-			{
+			this->setAnimation(_attack);
+			if (handleAnimation(this->getVelocity() * deltaTime, deltaTime)) 
+			{ // if reached end of attack animation
 				this->m_skills[_basic]->handleClick({ 0, 0 });
 				this->m_skills[_basic]->useSkill(this->getPosition());
 			}
@@ -145,12 +145,6 @@ bool Character::targetInRange()
 	return false;
 }
 
-//=======================================================================================
-
-void Character::useBaseAttack()
-{
-	this->setAnimation(_attack);
-}
 
 //=======================================================================================
 

@@ -2,7 +2,7 @@ Level 1
 Cleric
 Knight
 Archer
-!Wolf 2 !
+!Wolf 2 DarkCleric 1!
 
 Level 2
 Knight

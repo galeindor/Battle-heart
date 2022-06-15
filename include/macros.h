@@ -53,7 +53,7 @@ const AnimationParams effectParams =		{ sf::Vector2f(5, 1), 0.3f  };
 const std::vector<std::vector<int>> CharacterRowLengths = {
 /* cleric*/		{9, 6, 6, 8, 7},
 /* knight*/		{9, 8, 6, 6, 7},
-/* witch*/		{9 ,6 ,6 ,8 ,7},
+/* wizard*/		{9 ,6 ,6 ,8 ,7},
 /* archer*/		{9 ,6 ,6 ,8 ,7},
 /* demon */		{6, 3, 4, 4, 0},
 /* imp */		{6, 3, 4, 5, 0},
@@ -102,9 +102,9 @@ enum Skills {
 
 const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* cleric*/		{1.75f, 20.f, 30.f } ,
-/* knight*/		{1.65f ,30.f,  30.f } ,
-/* witch*/		{1.7f, 5.f , 5.f } ,
-/* archer*/		{0.8f, 20.f , 15.f } ,
+/* knight*/		{0.f ,30.f,  30.f } ,
+/* wizard*/		{1.7f, 5.f , 5.f } ,
+/* archer*/		{0.f, 20.f , 15.f } ,
 /* demon*/		{1.5f},
 /* imp */		{1.65f},
 /* miniDragon*/	{1.7f},
@@ -115,7 +115,7 @@ const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* cleric*/		{1.f, 1.2f, 1.75f },
 /* knight*/		{1.f ,1.5f, 1.3f  },
-/* witch*/		{1.f, 1.5f , 1.5f },
+/* wizard*/		{1.f, 1.5f , 1.5f },
 /* archer*/		{1.f, 1.8f , 1.4f },
 /* demon*/		{1.f},
 /* imp */		{1.f},
@@ -127,7 +127,7 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	
 	{"clericBasic.png", "heal.png",	"clericShield.png" } ,
 	{"knightBasic.png", "shield.png","swing.png" } ,
-	{"witchBasic.png", "drainlife.png" , "lightningIcon.png"} ,		
+	{"wizardBasic.png", "drainlife.png" , "lightningIcon.png"} ,		
 	{"archerBasic.png" , "aimedshot.png" , "barrage.png"}
 };
 
@@ -173,6 +173,7 @@ const sf::Vector2f healthOffset(30, 100);
 const sf::Vector2f healthTextOffset(10, 130);
 const sf::Vector2f projectileOffset(-10, -20);
 const sf::Vector2f selectedOffset(45, 30);
+const sf::Vector2f DemonOffset(20, 50);
 const sf::Vector2f gameButtonPos(615, 450);
 const sf::Vector2f restartButtonPos(615, 500);
 const sf::Vector2f exitButtonPos(615, 550);
@@ -231,7 +232,7 @@ const std::vector<sf::Vector2f> startPositions = {
 
 // Textures ----------------------------------
 enum ObjectEnums {
-	_cleric, _knight, _witch, _archer,	// players
+	_cleric, _knight, _wizard, _archer,	// players
 	_demon, _imp, _MiniDragon,_wolf , _darkCleric,	// enemies
 	_select, NUM_OF_OBJECTS
 };
@@ -245,7 +246,7 @@ const std::string textures[NUM_OF_OBJECTS] = {
 static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Cleric", _cleric),
 	std::make_pair("Knight", _knight),
-	std::make_pair("Witch", _witch),
+	std::make_pair("Wizard", _wizard),
 	std::make_pair("Archer", _archer),
 	std::make_pair("Demon" , _demon),
 	std::make_pair("Imp" , _imp),
@@ -265,8 +266,8 @@ enum Stats {
 const std::vector<std::vector<float>> charactersStats = {
 	/* cleric */	{ 700.f , 50.f, 800.f , 10.f},
 	/* knight */	{ 1200.f, 120.f, 40.f , 20.f},
-	/* witch */		{ 900.f , 100.f, 600.f , 13.f},
-	/* archer */	{ 800.f , 13500.f, 600.f , 15.f},
+	/* wizard */	{ 900.f , 100.f, 600.f , 13.f},
+	/* archer */	{ 800.f , 200.f, 600.f , 15.f},
 	/* demon  */	{ 900.f , 130.f, 70.f , 15.f},
 	/* imp	  */	{ 750.f , 100.f , 400.f , 10.f},
 	/* miniDrag */	{1250.f , 200.f , 200.f , 35.f},
@@ -284,7 +285,7 @@ enum Locations {
 const std::vector<std::vector<float>> objectsPhysics = {
 	/* cleric */		{ 0.1f, 50.f, 90.f },
 	/* knight */		{ 0.3f, 35.f, 80.f },
-	/* witch */			{ 0.2f, 40.f, 100.f },
+	/* wizard */			{ 0.2f, 40.f, 100.f },
 	/* archer */		{ 0.2f, 40.f, 100.f },
 	/* demon  */		{ 0.1f, 45.f, 70.f },
 	/* imp */			{ 0.15f , 42.f , 78.f},

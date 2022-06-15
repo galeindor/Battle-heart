@@ -17,7 +17,7 @@
                                               "Board.cpp"
                                               "CharacterSrc/Cleric.cpp"  
                                               "CharacterSrc/Knight.cpp"
-                                              "CharacterSrc/Witch.cpp"
+                                              "CharacterSrc/Wizard.cpp"
                                               "CharacterSrc/Archer.cpp"
                                               "CharacterSrc/Demon.cpp"
                                               "CharacterSrc/Enemy.cpp"

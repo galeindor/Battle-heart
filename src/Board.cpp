@@ -381,7 +381,7 @@ HashTable<int, shared_ptr<Player>> Board::getPlayersTable()
 	std::unordered_map<int, shared_ptr<Player>> playersMap = {
 		std::make_pair(_cleric, Cleric(startPositions[_cleric]).getType()),
 		std::make_pair(_knight, Knight(startPositions[_knight]).getType()),
-		std::make_pair(_witch, Witch(startPositions[_witch]).getType()),
+		std::make_pair(_wizard, Wizard(startPositions[_wizard]).getType()),
 		std::make_pair(_archer, Archer(startPositions[_archer]).getType()),
 	};
 	return playersMap;

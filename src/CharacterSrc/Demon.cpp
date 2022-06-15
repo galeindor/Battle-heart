@@ -4,7 +4,10 @@ Demon::Demon()
 	:Enemy(_demon)
 {
 	this->initSkills(_demon);
+	this->setOffset(DemonOffset);
 }
+
+//================================================================
 
 void Demon::initSkills(const int index)
 {

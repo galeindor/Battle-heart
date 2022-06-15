@@ -46,7 +46,8 @@ void Projectile::updateMovement(float deltaTime)
 }
 
 //==============================================================================
-
+// this func calculates the orientation needed to rotate the projectile to the
+// right angle (facing the target)
 void Projectile::updateOrientation()
 {
 	auto adj = this->getPosition().x - this->getTarget()->getPosition().x;
@@ -68,4 +69,5 @@ void Projectile::updateOrientation()
 	}
 }
 
-//===========================
+//==============================================================================
+

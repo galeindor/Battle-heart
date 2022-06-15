@@ -22,6 +22,8 @@ void Menu::draw(sf::RenderWindow& window)
 		window.draw(button);
 }
 
+//=============================================================================
+
 void Menu::initButtons()
 {
 	sf::Text tempText;
@@ -42,6 +44,8 @@ void Menu::initButtons()
 	}
 }
 
+//=============================================================================
+
 void Menu::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
 {
 	for (int index = 0; index < this->m_buttons.size(); index++)
@@ -60,6 +64,8 @@ void Menu::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
 	}
 	m_lastButtonHovered = -1;
 }
+
+//=============================================================================
 
 void Menu::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window)
 {
