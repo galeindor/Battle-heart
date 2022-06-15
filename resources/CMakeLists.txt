@@ -1,17 +1,16 @@
 ﻿#file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/resources)
 
 # Enemies
-configure_file ("CharacterImages/imp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/miniDragon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/DarkCleric.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/Wolf.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Players
-configure_file ("wizard.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("archer.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("cleric.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("knight.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/wizard.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/archer.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/cleric.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/knight.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Backgrounds and utility
 configure_file ("Backgrounds/help.png" ${CMAKE_BINARY_DIR} COPYONLY)

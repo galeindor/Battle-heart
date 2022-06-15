@@ -105,8 +105,7 @@ void Skill::initRect(const sf::Texture* texture, const sf::Vector2f pos)
 {
 	m_rect.setTexture(texture);
 	m_rect.setPosition(pos);
-	m_rect.setSize({ 
-		, SKILL_RECT_SIZE });
+	m_rect.setSize({ SKILL_RECT_SIZE, SKILL_RECT_SIZE });
 }
 
 //============================================================================
@@ -214,7 +213,7 @@ bool Skill::handleClick(const sf::Vector2f& pos)
 }
 
 //==========================================================
-// check for hover 
+// check for hover
 bool Skill::checkHover(sf::Vector2f hoverPos)
 {
 	return this->m_rect.getGlobalBounds().contains(hoverPos);

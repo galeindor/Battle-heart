@@ -67,7 +67,7 @@ protected:
 	vector<std::shared_ptr<Stat>>& getStats() { return this->m_stats; }
 
 private:
-	void useBaseAttack();
+
 	void initStats(const int index);
 	void initPhysics(const int index);
 	void initBuffs();
