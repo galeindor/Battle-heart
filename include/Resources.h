@@ -35,6 +35,7 @@ public:
 	sf::Texture* getSkillText(int i, int j) { return &m_skillTextures[i][j]; }
 	sf::Texture* getGameStateText(int i) { return &m_gameStates[i]; }
 	sf::Texture* getGameButtonText(int i) { return &m_gameButtonsTextures[i]; }
+	sf::Texture* getVolText(int i) { return &m_volTextures[i]; }
 	sf::SoundBuffer* getBuffer(int i) { return &m_buffers[i]; }
 
 private:
@@ -48,6 +49,7 @@ private:
 	sf::Texture m_gameStates[NUM_OF_GAME_STATES];
 	sf::Texture m_gameButtonsTextures[NUM_OF_GBUTTONS];
 	sf::Texture m_projTextures[NUM_OF_PROJ];
+	sf::Texture m_volTextures[NUM_OF_VOL_BUTTONS];
 	std::vector<sf::SoundBuffer> m_buffers;
 	sf::Font m_font;
 	void loadResources();

@@ -1,5 +1,7 @@
 #include "ScreenManager/LevelSelect.h"
 
+//-----------------------------------------------
+
 LevelSelect::LevelSelect(Controller* controller)
 	: m_map(this->getMap()), Screen(controller)
 {
@@ -7,16 +9,22 @@ LevelSelect::LevelSelect(Controller* controller)
 	this->initHover();
 	this->initStart();
 	this->initlvlDet();
+	this->setBG(_levelSelect);
 }
+
+//-----------------------------------------------
 
 void LevelSelect::update(const float deltaTime)
 {}
 
+//-----------------------------------------------
+
 void LevelSelect::init()
 {
-	this->setBG(_levelSelect);
 	this->initButtons();
 }
+
+//-----------------------------------------------
 
 void LevelSelect::draw(sf::RenderWindow& window)
 {
@@ -37,6 +45,8 @@ void LevelSelect::draw(sf::RenderWindow& window)
 		window.draw(this->m_levelHover);
 }
 
+//-----------------------------------------------
+
 void LevelSelect::manageRowAndCol(int& row, int& col)
 {
 	col += std::pow(-1, row); // increase or decrease 1 based or row
@@ -50,6 +60,8 @@ void LevelSelect::manageRowAndCol(int& row, int& col)
 			col++;
 	}
 }
+
+//-----------------------------------------------
 
 std::string LevelSelect::dataToString(const int level)
 {
@@ -70,10 +82,14 @@ std::string LevelSelect::dataToString(const int level)
 	return str;
 }
 
+//-----------------------------------------------
+
 void LevelSelect::initButtons()
 {
 	this->initLevelButtons();
 }
+
+//-----------------------------------------------
 
 void LevelSelect::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
 {
@@ -182,6 +198,9 @@ void LevelSelect::initlvlDet()
 	this->m_levelDetails.setStyle(sf::Text::Style::Bold);
 	this->m_levelDetails.setCharacterSize(36);
 	this->m_levelDetails.setPosition(levelDetailsStart);
+	this->m_levelDetails.setColor(sf::Color::Black);
+	this->m_levelDetails.setOutlineColor(sf::Color::White);
+	this->m_levelDetails.setOutlineThickness(1);
 }
 
 //-----------------------------------------------

@@ -13,6 +13,10 @@ configure_file ("cleric.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("knight.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Backgrounds and utility
+configure_file ("Backgrounds/help.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Backgrounds/settings.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Backgrounds/levelSelectBG.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Backgrounds/menuBG.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("plain.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("select.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
@@ -36,8 +40,6 @@ configure_file ("skills/knightBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 # Fonts
 configure_file ("POORICH.TTF" ${CMAKE_BINARY_DIR} COPYONLY)
 
-
-
 # Projectiles
 configure_file ("proj/healProj.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/FireBlast.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -48,12 +50,10 @@ configure_file ("proj/tesla_ball.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/lightning.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("proj/energy.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
-# Levels file
+# Levels files
 configure_file ("Levels.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Menu and LV Select
-configure_file ("MenuImages/levelSelectBG.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("MenuImages/menuBG.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("MenuImages/currentLevelIcon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("MenuImages/levelSelection.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("MenuImages/levelCompleted.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -70,6 +70,12 @@ configure_file ("Buttons/restartButton.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Buttons/restartButtonHL.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Buttons/exitButton.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Buttons/exitButtonHL.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Buttons/volInc.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Buttons/volIncHL.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Buttons/volDec.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Buttons/volDecHL.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Buttons/volMute.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Buttons/volMuteHL.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Game states
 configure_file ("GameStates/Defeat.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -82,3 +88,6 @@ configure_file ("Audio/buttonClick.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Audio/clickPlayer.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Audio/hoverSound.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Audio/movePlayer.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audio/levelMusic1.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audio/levelMusic2.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audio/menuMusic.ogg" ${CMAKE_BINARY_DIR} COPYONLY)

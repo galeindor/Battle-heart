@@ -248,7 +248,7 @@ void Board::hoverSkills(const sf::Vector2f& hoverPos)
 		return;
 	}
 
-	for (int i = 0; i < NUM_OF_SKILLS - 1; i++)
+	for (int i = 0; i < NUM_OF_SKILLS; i++)
 		if (this->m_currPlayer->checkSkillHover(hoverPos, i))
 		{
 			this->m_skillHovered = true;

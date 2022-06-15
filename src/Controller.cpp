@@ -3,6 +3,8 @@
 #include "ScreenManager/Gameplay.h"
 #include "ScreenManager/Menu.h"
 #include "ScreenManager/LevelSelect.h"
+#include "ScreenManager/Help.h"
+#include "ScreenManager/Settings.h"
 
 Controller::Controller()
 	: m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battle Heart"),
@@ -10,7 +12,7 @@ Controller::Controller()
 {
 	this->m_window.setFramerateLimit(60);
 	this->initScreens();
-	m_screens[int(this->m_currentScreen)]->init();
+	this->makeMusic("menuMusic.ogg");
 }
 
 //=======================================================================================
@@ -57,16 +59,16 @@ void Controller::manageSound(Sound::VolumeControl action)
 {
 	switch (action)
 	{
-	case Sound::VolumeControl::MUTE:
-		this->m_sound.muteVolume();
-		break;
-
 	case Sound::VolumeControl::INC:
 		this->m_sound.incVolume();
 		break;
 
 	case Sound::VolumeControl::DEC:
 		this->m_sound.decVolume();
+		break;
+
+	case Sound::VolumeControl::MUTE:
+		this->m_sound.muteVolume();
 		break;
 
 	default:
@@ -81,6 +83,8 @@ void Controller::initScreens()
 	this->m_screens.push_back(std::make_unique<Menu>(this));
 	this->m_screens.push_back(std::make_unique<Gameplay>(this));
 	this->m_screens.push_back(std::make_unique<LevelSelect>(this));
+	this->m_screens.push_back(std::make_unique<Help>(this));
+	this->m_screens.push_back(std::make_unique<Settings>(this));
 }
 
 void Controller::swapScreen()

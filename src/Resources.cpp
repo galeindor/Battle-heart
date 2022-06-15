@@ -28,8 +28,6 @@ void Resources::loadResources()
 			if (!m_textures[i].loadFromFile(textures[i]))
 				throw std::runtime_error("Cannot load object's texture from file\n");
 			
-
-
 		for (int i = 0; i < NUM_OF_BG; i++)
 			if (!m_bgTextures[i].loadFromFile(bgTextures[i]))
 				throw std::runtime_error("Cannot load background's texture from file\n");
@@ -38,7 +36,6 @@ void Resources::loadResources()
 			for (int j = 0; j < NUM_OF_SKILLS; j++)
 				if (!m_skillTextures[i][j].loadFromFile(skillTextures[i][j]))
 					throw std::runtime_error("Cannot load Skill's texture from file\n");
-
 
 		for (int i = 0; i < NUM_OF_LS_TEXTS; i++)
 			if (!m_lsTextures[i].loadFromFile(lvSelTexts[i]))
@@ -56,7 +53,9 @@ void Resources::loadResources()
 			if (!m_projTextures[i].loadFromFile(ProjTextrues[i]))
 				throw std::runtime_error("Cannot load projectile's texture from file\n");
 			
-			
+		for (int i = 0; i < NUM_OF_VOL_BUTTONS; i++)
+			if (!m_volTextures[i].loadFromFile(volTextures[i]))
+				throw std::runtime_error("Cannot load projectile's texture from file\n");
 
 		for (int i = 0; i < soundList.size(); i++)
 		{
@@ -78,7 +77,6 @@ void Resources::loadResources()
 	}
 	catch (std::runtime_error& e)
 	{
-
 		std::cerr << e.what();
 		exit(EXIT_FAILURE);
 	}

@@ -7,6 +7,7 @@ Gameplay::Gameplay(Controller* controller)
 	Screen(controller)
 {
 	this->initButtons();
+	this->setBG(_firstLevel);
 }
 
 //-------------------------------------------------
@@ -36,8 +37,8 @@ void Gameplay::update(const float deltaTime)
 void Gameplay::init()
 {
 	this->m_currLvl = this->m_controller->getCurrLvl();
-	this->setBG(_firstLevel);
 	this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl), m_controller);
+	this->m_controller->makeMusic(levelsMusic[(this->m_currLvl % levelsMusic.size())]);
 }
 
 //-------------------------------------------------
@@ -132,6 +133,7 @@ void Gameplay::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& windo
 		this->checkButton(hoverPos, _exitButton, _exitButtonHL, _exitIndex);
 	}
 }
+
 //-------------------------------------------------
 
 void Gameplay::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window)

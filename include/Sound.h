@@ -18,9 +18,9 @@ public:
 
 	enum class VolumeControl
 	{
-		MUTE,
 		INC,
-		DEC
+		DEC,
+		MUTE
 	};
 
 	Sound(); // C-tor.
