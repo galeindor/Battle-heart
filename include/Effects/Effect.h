@@ -5,9 +5,9 @@
 #include "Timer.h"
 
 class Character;
-
 using namespace std;
 
+// This class is the base class of the different effects.
 class Effect 
 {
 public:

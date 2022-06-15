@@ -1,11 +1,11 @@
 #pragma once
-
 #include "Enemy.h"
-class Character;
 
+// Class Player is in charge of the different players in the game.
 class Player : public Character
 {
 public:
+	// C-tor.
 	Player(const sf::Vector2f pos, int index);
 
 	// Virtuals
@@ -17,5 +17,5 @@ public:
 	void setSelected(bool state) { this->m_selected = state; }
 
 private:
-	bool m_selected;
+	bool m_selected; // Stores if the player is currently selected.
 };

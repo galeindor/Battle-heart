@@ -16,6 +16,7 @@ public:
 		HOVER
 	};
 
+	// Enum for volume control.
 	enum class VolumeControl
 	{
 		INC,
@@ -27,7 +28,6 @@ public:
 	~Sound() = default; // D-tor.
 
 	// Functions to play/stop music/sound.
-
 	void playSound(const int place);
 	void playMusic(const std::string fileName);
 	void stopMusic();

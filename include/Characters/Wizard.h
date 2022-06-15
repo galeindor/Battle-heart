@@ -1,7 +1,7 @@
 #pragma once
-
 #include "Player.h"
 
+// Class Wizard is in charge of the wizard player.
 class Wizard : public Player
 {
 public:

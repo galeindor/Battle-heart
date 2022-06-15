@@ -1,7 +1,7 @@
 #pragma once
-
 #include "Enemy.h"
 
+// Class Wolf is in charge of the wolf enemy.
 class Wolf : public Enemy
 {
 public:

@@ -1,11 +1,13 @@
 #pragma once
-
 #include "Resources.h"
 #include "Player.h"
 
+// Class Cleric is in charge of the cleric player.
+// The cleric can heal other players.
 class Cleric : public Player
 {
 public:
+	// C-tor and d-tor.
 	Cleric(const sf::Vector2f pos);
 	~Cleric() = default;
 
@@ -15,5 +17,4 @@ public:
 		return make_shared<Cleric>(startPositions[_cleric]);
 	}
 	virtual void initSkills(const int index) override;
-protected:
 };

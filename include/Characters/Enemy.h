@@ -2,6 +2,7 @@
 #include "Character.h"
 #include "Player.h"
 
+// Base class for all enemies.
 class Enemy : public Character
 {
 public:
@@ -18,6 +19,5 @@ protected:
 	virtual shared_ptr<Enemy> getType() = 0;
 
 private:
-
 	sf::Vector2f randEnemyPos();
 };

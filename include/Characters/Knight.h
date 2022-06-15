@@ -1,7 +1,8 @@
 #pragma once
-
 #include "Player.h"
 
+// This class is in charge of the knight player.
+// The knight is designed to be tanky but doesn't do a lot of damage.
 class Knight : public Player
 {
 public:
@@ -12,6 +13,4 @@ public:
 	}
 
 	virtual void initSkills(const int index) override;
-protected:
-
 };

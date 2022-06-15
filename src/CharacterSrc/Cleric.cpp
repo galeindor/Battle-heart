@@ -11,7 +11,6 @@ Cleric::Cleric(const sf::Vector2f pos)
 
 bool Cleric::setTarget(std::shared_ptr<Player> obj) // cleric can get an ally target
 {
-	this->setAttacking(true);
 	setAsTarget(obj); 
 	return true;
 }

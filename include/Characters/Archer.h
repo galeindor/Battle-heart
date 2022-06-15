@@ -1,8 +1,8 @@
 #pragma once
 #pragma once
-
 #include "Player.h"
 
+// This class is in charge of the arhcer player.
 class Archer : public Player
 {
 public:
@@ -13,6 +13,4 @@ public:
 	}
 
 	virtual void initSkills(const int index) override;
-protected:
-
 };

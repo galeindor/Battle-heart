@@ -1,5 +1,5 @@
 #include "SteeringInterface.h"
-
+#include "Characters/Enemy.h"
 SteeringInterface::SteeringInterface()
 {}
 
@@ -39,17 +39,6 @@ sf::Vector2f SteeringInterface::Truncate(const sf::Vector2f& vec, float max)
 		truncated = Normalize(truncated) * max;
 
 	return truncated;
-}
-//====================================================================================================
-sf::Vector2f SteeringInterface::Flee(std::vector<sf::Vector2f> locations, std::vector<float> values)
-{
-
-	sf::Vector2f DesiredVelocity = locations[_object] - locations[_target];
-	DesiredVelocity = Normalize(DesiredVelocity);
-	DesiredVelocity *= values[_maxVelocity];
-	sf::Vector2f SteeringForce = (DesiredVelocity - locations[_velocity]);
-	SteeringForce /= values[_maxVelocity];
-	return SteeringForce * values[_maxForce];
 }
 
 //====================================================================================================

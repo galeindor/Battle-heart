@@ -11,6 +11,7 @@ Board::Board(const LevelInfo& currLevelInfo, Controller* controller)
 	this->initHovered();
 	this->updateBoard(1.f, false);
 }
+
 //==========================================================
 
 vector<sf::Vector2f> Board::createObstaclesVec()
@@ -355,18 +356,6 @@ void Board::drawObjects(sf::RenderWindow& window)
 
 //==========================================================
 
-void Board::drawObject(bool player, int& index, sf::RenderWindow& window)
-{
-	if (player)
-		this->m_players[index]->draw(window);
-	else
-		this->m_enemies[index]->draw(window);
-
-	index++;
-}
-
-//==========================================================
-
 bool Board::checkMoving() const
 {
 	return (m_currPlayer) && (m_currPlayer->getIsMoving());
@@ -418,7 +407,7 @@ void Board::initPlayers(const bool lvlPlayers[NUM_OF_PLAYERS])
 void Board::initEnemies(const std::vector<sf::Vector2i> enemyWave)
 {	
 	srand(time(NULL));
-	for (auto& detail : enemyWave) // for now , will be changed soon 
+	for (auto& detail : enemyWave)
 	{
 		for (int i = 0; i < detail.y; i++)
 		{

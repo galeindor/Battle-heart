@@ -65,11 +65,7 @@ void Character::updateMovement(float deltaTime)
 		if (targetInRange())
 		{
 			this->setAnimation(_attack);
-			if (handleAnimation(this->getVelocity() * deltaTime, deltaTime))
-			{
-				this->m_skills[_basic]->handleClick({ 0, 0 });
-				this->m_skills[_basic]->useSkill(this->getPosition());
-			}
+			this->m_skills[_basic]->useSkill(this->getPosition());
 		}
 		else
 			this->setAnimation(_idle);

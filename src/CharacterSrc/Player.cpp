@@ -24,7 +24,6 @@ void Player::draw(sf::RenderWindow& window)
 bool Player::setTarget(std::shared_ptr<Enemy> obj)
 {
 	setAsTarget(obj);
-	this->setAttacking(true);
 	return true;
 }
 

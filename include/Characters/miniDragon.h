@@ -1,7 +1,7 @@
 #pragma once
-
 #include "Enemy.h"
 
+// This class is in charge of the mini dragon enemy.
 class MiniDragon : public Enemy
 {
 public:

@@ -2,9 +2,11 @@
 #include "Screen.h"
 #include "Board.h"
 
+// This class is in charge of the gameplay screen.
 class Gameplay : public Screen
 {
 public:
+	// C-tor & d-tor.
 	Gameplay(Controller* controller);
 	virtual ~Gameplay() = default;
 
@@ -13,15 +15,16 @@ public:
 	virtual void update(const float deltaTime) override;
 	virtual void draw(sf::RenderWindow& window) override;
 
-	//
-	bool winLevel();
-	void winGame();
+	bool winLevel(); // Checks if the level is won.
+	void winGame(); // Wins the game (just exits).
 
 protected:
+	// Protected virtuals.
 	virtual void handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window) override;
 	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 
 private:
+	// Lots of buttons.
 	virtual void initButtons() override;
 	void checkButton(sf::Vector2f hoverPos, GameButtons reg, GameButtons hl, ButtonIndexes index);
 	void checkPause(sf::Vector2f hoverPos);
@@ -32,7 +35,9 @@ private:
 	sf::Sprite m_pauseButton;
 	vector<sf::Sprite> m_buttons;
 
-	Board m_board;
+	Board m_board; // Stores the main data of the game.
+
+	// Hovering and game states management.
 	bool m_paused = false;
 	bool m_continued = false;
 	bool m_wonLevel = false;

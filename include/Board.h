@@ -62,7 +62,6 @@ private:
 	void updatePlayers(const float deltaTime);
 	void updateEnemies(const float deltaTime, const sf::Vector2f dist);
 	void drawObjects(sf::RenderWindow& window);
-	void drawObject(bool player, int& index, sf::RenderWindow& window);
 	void updateEnemyDest();
 	void updatePlayersDeath(std::shared_ptr<Player> character, float deltaTime, int& index);
 	void updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime, int& index);
