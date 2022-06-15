@@ -18,10 +18,11 @@ public:
 	virtual ~Character() = default;
 
 	// Virtuals
+	virtual bool checkIntersection() const = 0;
+	virtual void initSkills(const int index) = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
 	virtual bool setTarget(std::shared_ptr<Enemy> obj) = 0;
 	virtual bool setTarget(std::shared_ptr<Player> obj) = 0;
-	virtual bool checkIntersection() const = 0;
 	virtual void update(sf::Vector2f steerForce, const float deltaTime, 
 						vector<std::shared_ptr<Player>> m_players, vector<std::shared_ptr<Enemy>> m_enemies);
 	// Management
@@ -29,32 +30,34 @@ public:
 	bool targetInRange() ;
 
 	// Getters
-	float	getMoveStat(int index)  const { return m_moveStats[index]; }
-	int getStat(int index)			const { return this->m_stats[index]->getStat(); }
-	bool isAlive()					const { return this->m_stats[_hp]->getStat() > 0; } // return if the character is alive
-	bool getIsAttacking()			const { return this->m_isAttacking; }
-	HealthBar		getHpBar()		const { return this->m_hpBar; }
-	bool getIsDying()				const { return this->m_isDying; }
-	sf::Vector2f	getVelocity()			const { return this->m_velocity; }
-	void setVelocity(sf::Vector2f velocity) { this->m_velocity = velocity; }
-	SteeringInterface* behaviour()			const { return this->m_steering; }
-	vector<sf::Vector2f> getLocationsVec(bool getDest);
-	vector<float> getMoveStats() const { return m_moveStats; }
+	float				getMoveStat(int index)			const { return m_moveStats[index]; }
+	int					getStat(int index)				const { return this->m_stats[index]->getStat(); }
+	bool				getIsAttacking()					const { return this->m_isAttacking; }
+	bool				isAlive()							const { return this->m_stats[_hp]->getStat() > 0; } // return if the character is alive
+	bool				getIsDying()						const { return this->m_isDying; }
+	HealthBar			getHpBar()				const { return this->m_hpBar; }
+	sf::Vector2f		getVelocity()			const { return this->m_velocity; }
+	SteeringInterface*	behaviour()			const { return this->m_steering; }
+
+	vector<sf::Vector2f> getLocationsVec (bool getDest) const;
+	vector<float>		getMoveStats() const { return m_moveStats; }
 
 	// Setters
+	void setVelocity(sf::Vector2f velocity) { this->m_velocity = velocity; }
 	void setAttacking(bool isAttacking) { this->m_isAttacking = isAttacking; }
 	void setStat(int index, int newVal);
 	void setDying();
-	void setActiveBuff(float duration);
+	void setActiveBuff(int index , float duration);
+
 	template <class Type>
 	vector<shared_ptr<Character>> createTargetVec(Type type);
 	shared_ptr<Character> locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies, Character* obj);
 
 	// Skill management
-	virtual void initSkills(const int index) = 0;
 	bool checkSkillClick(const sf::Vector2f& location);
 	bool checkSkillHover(sf::Vector2f hoverPos, int index);
 	void drawSkills(sf::RenderWindow& window, bool selected);
+
 
 protected:
 	void createSkill(int CharIndex, int skillIndex, int effectIndex,
@@ -67,6 +70,7 @@ private:
 	void useBaseAttack();
 	void initStats(const int index);
 	void initPhysics(const int index);
+	void initBuffs();
 
 	void updateSkills(const float deltaTime, 
 					  vector<std::shared_ptr<Player>> players,
@@ -82,9 +86,9 @@ private:
 	SteeringInterface* m_steering;
 	sf::Vector2f m_velocity;
 
+	// memebers to handle buffs given to character
 	vector < std::pair<Timer, float> > m_buffTimers;
-	// used for handleing the buffs given to the character
-
+	vector< bool > m_activeBuffs;
 
 	HealthBar m_hpBar;
 	bool m_isAttacking;

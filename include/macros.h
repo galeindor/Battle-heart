@@ -10,6 +10,8 @@ class Stat;
 const std::string LevelsFileName = "Levels.txt";
 const std::string MAIN_FONT = "POORICH.TTF";
 constexpr auto NUM_OF_PLAYERS = 3;
+
+
 struct LevelInfo {
 	bool m_lvlPlayers[NUM_OF_PLAYERS];
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
@@ -82,8 +84,9 @@ enum Effects
 	_heal, _damage, _defend, _drainLife, _fear, NUM_OF_EFFECTS
 };
 
-
+constexpr auto NUM_OF_BUFFS = 2;
 constexpr auto EFFECT_COOLDOWN = 2.f;
+constexpr auto BUFF_DURATION = 10.f;
 
 // ----------------------------------------------
 //					Skills						-

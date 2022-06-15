@@ -22,14 +22,14 @@ void HealthBar::updateHealthBar(float statVal, const sf::Vector2f& pos)
 	if (healthLost > 0.f && m_hitTimer.isTimeUp() ) // lowered damage
 	{
 		m_hitDamage.setFillColor(sf::Color::Red);
-		m_hitDamage.setString(std::to_string(int(healthLost)));
+		m_hitDamage.setString(std::to_string(int(std::ceil(healthLost))));
 		m_hitHealth.setSize({ currSize, size.y });
 		m_hitTimer.setTimer();
 	}
 	else if (healthLost < 0.f)
 	{
 		m_hitDamage.setFillColor(sf::Color::Green);
-		m_hitDamage.setString(std::to_string(int(-healthLost)));
+		m_hitDamage.setString(std::to_string(int(std::floor(-healthLost))));
 		m_hitHealth.setSize({ statVal, size.y });
 		m_hitTimer.setTimer();
 	}

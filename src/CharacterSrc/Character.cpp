@@ -8,6 +8,7 @@ Character::Character(const sf::Vector2f pos, const int index, AnimationParams an
 {
 	this->initStats(index);
 	this->initPhysics(index);
+	this->initBuffs();
 	m_hpBar = HealthBar(pos, m_stats[_hp]->getStat());
 }
 
@@ -39,6 +40,8 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 	}
 
 	updateMovement(deltaTime);
+
+	updateBuffs();
 
 	// Skills update
 	this->updateSkills(deltaTime, m_players, m_enemies);
@@ -251,7 +254,7 @@ bool Character::checkSkillHover(sf::Vector2f hoverPos, int index)
 
 //==========================================================================================
 
-vector<sf::Vector2f> Character::getLocationsVec(bool getDest)
+vector<sf::Vector2f> Character::getLocationsVec(bool getDest) const
 {
 	vector<sf::Vector2f> vec;
 	if (getDest)
@@ -267,17 +270,36 @@ vector<sf::Vector2f> Character::getLocationsVec(bool getDest)
 
 void Character::updateBuffs()
 {
-	//for (int)
-	//{
-	//	buff.first.updateTimer();
-	//	if(buff.first.isTimeUp())
-	//		this->setStat()
-	//}
+	for (size_t i = 0; i < m_buffTimers.size(); i++)
+	{
+		auto buff = m_buffTimers[i];
+		buff.first.updateTimer();
+		if (m_activeBuffs[i] && buff.first.isTimeUp())
+		{
+			this->setStat(i, buff.second);
+			m_activeBuffs[i] = false;
+		}
+	}	
 }
 
 //===========================================================================================
 
-void Character::setActiveBuff(float duration)
+void Character::setActiveBuff(int index ,float duration)
 {
+	m_buffTimers[index].first.setCooldown(duration);
+	m_buffTimers[index].first.setTimer();
+	m_buffTimers[index].second = m_stats[index]->getStat();
+	m_activeBuffs[index] = true;
+}
 
+//============================================================================================
+
+void Character::initBuffs()
+{
+	for (size_t i = 0; i < NUM_OF_STATS ; i++)
+	{
+		auto timer = Timer(0.f);
+		m_buffTimers.push_back(std::make_pair(timer , m_stats[i]->getStat()));
+		m_activeBuffs.push_back(false);
+	}
 }

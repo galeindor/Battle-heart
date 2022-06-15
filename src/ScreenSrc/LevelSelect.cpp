@@ -86,6 +86,7 @@ void LevelSelect::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& wi
 	{
 		this->m_returnButton.setOutlineColor(sf::Color::Black);
 		this->m_returnButton.setOutlineThickness(4);
+		this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 	}
 	else
 		this->m_returnButton.setOutlineThickness(0);
@@ -95,6 +96,7 @@ void LevelSelect::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& wi
 		{
 			this->m_levelHover.setPosition(this->m_availableLevels[index].getPosition() + lvlSelOffset);
 			this->m_levelHovered = true;
+			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 			return;
 		}
 	this->m_levelHovered = false;
