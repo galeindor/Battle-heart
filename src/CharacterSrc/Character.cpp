@@ -65,7 +65,8 @@ void Character::updateMovement(float deltaTime)
 
 		if (targetInRange())
 		{
-			this->useBaseAttack();
+			
+			this->setAnimation(_attack);
 			if (handleAnimation(this->getVelocity() * deltaTime, deltaTime))
 			{
 				this->m_skills[_basic]->handleClick({ 0, 0 });
@@ -131,7 +132,7 @@ void Character::initPhysics(const int index)
 
 //=======================================================================================
 
-bool Character::targetInRange() 
+bool Character::targetInRange() const
 {
 	if (this->getTarget())
 	{
@@ -141,16 +142,12 @@ bool Character::targetInRange()
 		auto norm = sqrt(pow(myPos.x - tarPos.x, 2) + pow(myPos.y - tarPos.y, 2));
 		return (norm <= range);
 	}
-
 	return false;
 }
 
 //=======================================================================================
 
-void Character::useBaseAttack()
-{
-	this->setAnimation(_attack);
-}
+
 
 //=======================================================================================
 
@@ -167,7 +164,7 @@ void Character::createSkill(const int charIndex, const int skillIndex, const int
 //=======================================================================================
 
 //=======================================================================================
-
+// Set 
 void Character::setStat(const int index, const int newVal)
 { 
 	if (index == _hp)

@@ -110,7 +110,7 @@ const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* cleric*/		{1.75f, 20.f, 30.f } ,
 /* knight*/		{1.65f ,30.f,  30.f } ,
 /* witch*/		{1.7f, 5.f , 5.f } ,
-/* archer*/		{1.7f, 20.f , 15.f } ,
+/* archer*/		{0.8f, 20.f , 15.f } ,
 /* demon*/		{1.5f},
 /* imp */		{1.65f},
 /* miniDragon*/	{1.7f},
