@@ -1,7 +1,7 @@
 #include "Object.h"
 
 Object::Object(const sf::Vector2f pos, const int index, AnimationParams animParams, 
-			   std::vector<int> rowLens , sf::Texture* texture)
+			   std::vector<int> rowLens ,const sf::Texture* texture)
 	: m_animation(texture, animParams , rowLens),
 	  m_isMoving(false), m_dest(pos), m_target(nullptr)
 {
@@ -40,7 +40,7 @@ sf::Vector2f Object::adjustLocation(sf::Vector2f location)
 
 //=======================================================================================
 
-void Object::initSprite(const sf::Vector2f pos, const int index , sf::Texture* texture)
+void Object::initSprite(const sf::Vector2f pos, const int index ,const sf::Texture* texture)
 {
 	this->m_sprite.setPosition(pos);
 	this->m_sprite.setTexture(*texture);

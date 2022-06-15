@@ -29,5 +29,4 @@
                                               "EffectSrc/Heal.cpp"
                                               "EffectSrc/Damage.cpp"
                                               "EffectSrc/Defend.cpp"
-                                              "EffectSrc/LifeDrain.cpp"
-                                              "EffectSrc/Fear.cpp")
+                                              "EffectSrc/LifeDrain.cpp")

@@ -12,7 +12,7 @@ class Effect
 {
 public:
 	virtual ~Effect() = default;
-	virtual void affect(float baseValue, vector<std::shared_ptr<Stat>> myStats,
+	virtual void affect(vector<std::shared_ptr<Stat>> myStats,
 		Character* target, float factor) = 0;
 };
  
