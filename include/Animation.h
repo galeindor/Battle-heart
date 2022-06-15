@@ -5,10 +5,10 @@
 class Animation
 {
 public:
-	Animation(sf::Texture* texture, AnimationParams animParams); // C-tor.
+	Animation(const sf::Texture* texture, AnimationParams animParams); // C-tor.
 
 	// special C-tor - for sprite sheets with different row lengths
-	Animation(sf::Texture* texture, AnimationParams animParams , std::vector<int> lengths ); 
+	Animation(const sf::Texture* texture, AnimationParams animParams , std::vector<int> lengths ); 
 	~Animation() = default; // D-tor.
 
 	// Animation management.

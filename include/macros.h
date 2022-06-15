@@ -9,7 +9,9 @@ class Stat;
 // ----------------------------------------------
 const std::string LevelsFileName = "Levels.txt";
 const std::string MAIN_FONT = "POORICH.TTF";
-constexpr auto NUM_OF_PLAYERS = 3;
+constexpr auto NUM_OF_PLAYERS = 4;
+
+
 struct LevelInfo {
 	bool m_lvlPlayers[NUM_OF_PLAYERS];
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
@@ -21,7 +23,9 @@ constexpr auto WINDOW_WIDTH = 1400;
 constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto HEIGHT_LIMIT = 200;
 constexpr auto CUT_CORNERS = 50; // used to limit the player movement to not touch corners
+constexpr auto SKILL_GAP = 100;
 constexpr auto BAR_WIDTH = 60;
+constexpr auto BAR_HEIGHT = 10;
 constexpr auto NEW_LEVEL_DETECTED = -3;
 constexpr auto WAVE = '!';
 constexpr auto _levelInProgress = 2;
@@ -39,18 +43,19 @@ struct AnimationParams {
 	float _switchTime; // remove switch time because it's 0.3f for all.
 };
 
-const AnimationParams PlayerParams = { sf::Vector2f(9,5), 0.3f };
-const AnimationParams characterParams = { sf::Vector2f(10,5), 0.3f };
-const AnimationParams projectileParams = { sf::Vector2f(8, 1), 0.3f };
-const AnimationParams effectParams = { sf::Vector2f(5, 1), 0.3f };
+const AnimationParams PlayerParams =		{ sf::Vector2f(9,5) , 0.3f  };
+const AnimationParams characterParams =		{ sf::Vector2f(10,5), 0.3f  };
+const AnimationParams projectileParams =	{ sf::Vector2f(8, 1), 0.3f  };
+const AnimationParams effectParams =		{ sf::Vector2f(5, 1), 0.3f  };
 
 const std::vector<std::vector<int>> CharacterRowLengths = {
 /* cleric*/	{9, 6, 6, 8, 7},
 /* knight*/	{9, 8, 6, 6, 7},
+/* witch*/	{9 ,6 ,6 ,8 ,7},
 /* archer*/	{9 ,6 ,6 ,8 ,7},
 /* demon */	{6, 3, 4, 4, 0},
 /* imp */	{6, 3, 4, 5, 0},
-/* miniDra*/{4, 3, 2, 3, 0}
+/* miniDra*/{4, 3, 2, 3, 0},
 };
 
 // ----------------------------------------------
@@ -74,16 +79,16 @@ enum class AttackType {
 };
 
 enum Effects {
-	_heal, _damage, _defend, _drainLife, _fear, NUM_OF_EFFECTS
+	_heal, _damage, _defend, _drainLife, NUM_OF_EFFECTS
 };
 
-
 constexpr auto EFFECT_COOLDOWN = 2.f;
+constexpr auto BUFF_DURATION = 20.f;
 
 // ----------------------------------------------
 //					Skills						-
 // ----------------------------------------------
-constexpr auto NUM_OF_CHARS = 6;
+constexpr auto NUM_OF_CHARS = 7;
 constexpr auto SKILL_RECT_SIZE = 80;
 
 enum Skills {
@@ -94,6 +99,7 @@ const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* cleric*/		{1.75f, 20.f, 30.f } ,
 /* knight*/		{1.65f ,30.f,  30.f } ,
 /* witch*/		{1.7f, 5.f , 5.f } ,
+/* archer*/		{1.7f, 20.f , 15.f } ,
 /* demon*/		{1.5f},
 /* imp */		{1.65f},
 /* miniDragon*/	{1.7f}
@@ -103,6 +109,7 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* cleric*/		{1.f, 1.2f, 1.75f },
 /* knight*/		{1.f ,1.5f, 1.3f  },
 /* witch*/		{1.f, 1.5f , 1.5f },
+/* archer*/		{1.f, 1.8f , 1.4f },
 /* demon*/		{1.f},
 /* imp */		{1.f},
 /* miniDragon*/	{1.f}
@@ -111,7 +118,31 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	
 	{"clericBasic.png", "heal.png",	"clericShield.png" } ,
 	{"knightBasic.png", "shield.png","swing.png" } ,
-	{"witchBasic.png", "drainlife.png" , "lightningIcon.png"} ,						
+	{"witchBasic.png", "drainlife.png" , "lightningIcon.png"} ,		
+	{"archerBasic.png" , "aimedshot.png" , "barrage.png"}
+};
+
+
+// ----------------------------------------------------------
+//						Projectiles							-
+// ----------------------------------------------------------
+
+enum ProjEnums
+{
+	_healBall, _fireProj, _energy, _lightning,
+	_tesla, _waterStrike, _fireBreath, _arrow, _none,
+	NUM_OF_PROJ
+};
+
+const std::vector<std::string > ProjTextrues = {
+	"healProj.png", "FireBlast.png", "energy.png", "Lightning.png",
+	"Tesla_Ball.png", "water_strike.png", "fireBreath.png" ,
+	"arrow.png","none"
+};
+
+const std::vector<std::vector<int>> ProjRowlengths = {
+	{8}, {11} , {8} , {12} ,
+	{16} , {10} , {8} , {1}, {0}
 };
 
 // ----------------------------------------------------------
@@ -185,43 +216,29 @@ const std::string gameStateTexts[NUM_OF_GAME_STATES] = {
 const std::vector<sf::Vector2f> startPositions = {
 	{ 200, 200 },
 	{ 250, 250 },
-	{ 300, 300 }
+	{ 300, 300 },
+	{ 350, 350 }
 };
 
 // Textures ----------------------------------
 enum ObjectEnums {
-	_cleric, _knight, _witch,
+	_cleric, _knight, _witch, _archer,
 	_demon, _imp, _MiniDragon,
 	_select, NUM_OF_OBJECTS
 };
 
-enum ProjEnums {
-	_healBall, _fireProj, _energy, _lightning,
-	_tesla, _waterStrike, _fireBreath, _arrow, _none,
-	NUM_OF_PROJ
-};
-
 const std::string textures[NUM_OF_OBJECTS] = {
-	"cleric.png" , "knight.png", "wizard.png" ,"Demon.png",
-	"Imp.png", "MiniDragon.png", "select.png" };
+	"cleric.png" , "knight.png", "wizard.png" , "archer.png",
+	"Demon.png","Imp.png", "MiniDragon.png", "select.png" };
 
-const std::vector<std::string > ProjTextrues = { 
-	"healProj.png", "FireBlast.png", "energy.png", "Lightning.png", 
-	"Tesla_Ball.png", "water_strike.png", "fireBreath.png" ,
-	"arrow.png","none" 
-};
-
-const std::vector<std::vector<int>> ProjRowlengths = {
-	{8}, {11} , {8} , {12} ,
-	{16} , {10} , {8} , {1}, {0}
-};
 
 // Map ------------------------------------------
 static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Cleric",_cleric),
 	std::make_pair("Knight", _knight),
 	std::make_pair("Witch", _witch),
-	std::make_pair("Dummy" , _demon),
+	std::make_pair("Archer", _archer),
+	std::make_pair("Demon" , _demon),
 	std::make_pair("Imp" , _imp),
 	std::make_pair("MiniDragon",_MiniDragon),
 	std::make_pair("Level", NEW_LEVEL_DETECTED)
@@ -250,12 +267,13 @@ enum Locations {
 
 //Physics ---------------------------------------
 const std::vector<std::vector<float>> objectsPhysics = {
-	{ 0.1f, 50.f, 90.f },
-	{ 0.3f, 35.f, 80.f },
-	{ 0.2f, 40.f, 100.f },
-	{ 0.1f, 45.f, 70.f },
-	{ 0.15f , 42.f , 78.f},
-	{ 0.2f , 40.f , 70.f}
+	/* cleric */		{ 0.1f, 50.f, 90.f },
+	/* knight */		{ 0.3f, 35.f, 80.f },
+	/* witch */			{ 0.2f, 40.f, 100.f },
+	/* archer */		{ 0.2f, 40.f, 100.f },
+	/* demon  */		{ 0.1f, 45.f, 70.f },
+	/* imp */			{ 0.15f , 42.f , 78.f},
+	/* MiniDragon */	{ 0.2f , 40.f , 70.f}
 };
 
 enum Physics {

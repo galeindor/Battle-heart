@@ -1,16 +1,16 @@
 Level 1
 Cleric
 Knight
-Witch
+Archer
 !MiniDragon 2 !
 
 Level 2
 Knight
 Witch
-!Dummy 4 !
+!Demon 4 !
 
 Level 3
 Knight
 Witch
 Cleric
-!Dummy 5 !
+!Demon 5 !

@@ -4,13 +4,14 @@
 #include "Characters/Cleric.h"
 #include "Characters/Knight.h"
 #include "Characters/Witch.h"
-#include "Characters/Dummy.h"
+#include "Characters/Archer.h"
+#include "Characters/Demon.h"
 #include "Characters/Imp.h"
 #include "Characters/MiniDragon.h"
 #include "HashTable.h"
 #include "Controller.h"
+
 using namespace std;
-using std::shared_ptr;
 
 class Board 
 {
@@ -18,7 +19,7 @@ public:
 	Board(const LevelInfo& currLevelInfo, Controller* controller);
 	bool handleFirstClick(sf::Vector2f location);
 	bool handleSecondClick(sf::Vector2f location);
-	int updateBoard(float deltaTime, bool charSelected);
+	int	updateBoard(float deltaTime, bool charSelected);
 	void drawBoard(sf::RenderWindow& window, bool charSelected);
 	void hoverEnemies(const sf::Vector2f& hoverPos);
 	void hoverPlayers(const sf::Vector2f& hoverPos);
@@ -71,10 +72,6 @@ private:
 	template <class Type>
 	Type sortObjects(Type vector);
 
-	template <typename Vec, typename deathFunc, typename behaviorFunc >
-	void deathHandler(Vec characters, deathFunc dfunc, behaviorFunc bfunc, float deltaTime);
-
-
 	bool checkMoving() const;
 
 };
@@ -101,15 +98,3 @@ inline Type Board::sortObjects(Type vector)
 	return copy;
 }
 
-template <typename Vec,typename deathFunc,typename behaviorFunc >
-inline void Board::deathHandler(Vec characters, deathFunc dfunc, behaviorFunc bfunc , float deltaTime)
-{
-	for (int i = 0; i < characters.size(); i++)
-	{
-		auto obj = characters[i];
-		if (!obj->isAlive())
-			dfunc(obj, deltaTime, i);
-		else
-			bfunc(obj, deltaTime);
-	}
-}

@@ -1,12 +1,12 @@
-#include "Characters/Dummy.h"
+#include "Characters/Demon.h"
 
-Dummy::Dummy()
+Demon::Demon()
 	:Enemy(_demon)
 {
 	this->initSkills(_demon);
 }
 
-void Dummy::initSkills(const int index)
+void Demon::initSkills(const int index)
 {
 	this->createSkill(index, _basic, _damage, AttackType::Single, onPlayer, !isActive, _none); // basic
 }

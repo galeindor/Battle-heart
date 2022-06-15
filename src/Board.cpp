@@ -5,14 +5,12 @@ Board::Board(const LevelInfo& currLevelInfo, Controller* controller)
 		m_enemyWaves(currLevelInfo.m_enemyWaves),
 		m_controller(controller)
 {
-
 	this->initPlayers(currLevelInfo.m_lvlPlayers);
 	this->initEnemies(currLevelInfo.m_enemyWaves[this->m_currWave]);
 	this->initSelected();
 	this->initHovered();
 	this->updateBoard(1.f, false);
 }
-
 //==========================================================
 
 vector<sf::Vector2f> Board::createObstaclesVec()
@@ -383,7 +381,8 @@ HashTable<int, shared_ptr<Player>> Board::getPlayersTable()
 	std::unordered_map<int, shared_ptr<Player>> playersMap = {
 		std::make_pair(_cleric, Cleric(startPositions[_cleric]).getType()),
 		std::make_pair(_knight, Knight(startPositions[_knight]).getType()),
-		std::make_pair(_witch, Witch(startPositions[_witch]).getType())
+		std::make_pair(_witch, Witch(startPositions[_witch]).getType()),
+		std::make_pair(_archer, Archer(startPositions[_archer]).getType()),
 	};
 	return playersMap;
 }
@@ -393,7 +392,7 @@ HashTable<int, shared_ptr<Player>> Board::getPlayersTable()
 HashTable<int, shared_ptr<Enemy>> Board::getEnemiesTable()
 {
 	std::unordered_map<int, shared_ptr<Enemy>> enemiesMap = {
-		std::make_pair(_demon, Dummy().getType()),
+		std::make_pair(_demon, Demon().getType()),
 		std::make_pair(_imp, Imp().getType()),
 		std::make_pair(_MiniDragon , MiniDragon().getType())
 	};

@@ -18,7 +18,8 @@
                                               "CharacterSrc/Cleric.cpp"  
                                               "CharacterSrc/Knight.cpp"
                                               "CharacterSrc/Witch.cpp"
-                                              "CharacterSrc/Dummy.cpp"
+                                              "CharacterSrc/Archer.cpp"
+                                              "CharacterSrc/Demon.cpp"
                                               "CharacterSrc/Enemy.cpp"
                                               "CharacterSrc/Imp.cpp"
                                               "CharacterSrc/MiniDragon.cpp"
@@ -29,5 +30,4 @@
                                               "EffectSrc/Heal.cpp"
                                               "EffectSrc/Damage.cpp"
                                               "EffectSrc/Defend.cpp"
-                                              "EffectSrc/LifeDrain.cpp"
-                                              "EffectSrc/Fear.cpp")
+                                              "EffectSrc/LifeDrain.cpp")

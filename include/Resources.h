@@ -27,16 +27,16 @@ class Resources
 public:
 	~Resources();
 	static Resources& instance();
-	sf::Texture* getBackground(int i) { return &m_bgTextures[i]; }
-	sf::Font* getFont() { return &m_font; };
-	sf::Texture* getTexture(int i) { return &m_textures[i]; }
-	sf::Texture* getProjTexture(int i) { return &m_projTextures[i]; }
-	sf::Texture* getLSTexture(int i) { return &m_lsTextures[i]; }
-	sf::Texture* getSkillText(int i, int j) { return &m_skillTextures[i][j]; }
-	sf::Texture* getGameStateText(int i) { return &m_gameStates[i]; }
-	sf::Texture* getGameButtonText(int i) { return &m_gameButtonsTextures[i]; }
-	sf::Texture* getVolText(int i) { return &m_volTextures[i]; }
-	sf::SoundBuffer* getBuffer(int i) { return &m_buffers[i]; }
+	const sf::Texture* getBackground(int i)			const { return &m_bgTextures[i]; }
+	const sf::Font* getFont()						const { return &m_font; };
+	const sf::Texture* getTexture(int i)			const { return &m_textures[i]; }
+	const sf::Texture* getProjTexture(int i)		const { return &m_projTextures[i]; }
+	const sf::Texture* getLSTexture(int i)			const { return &m_lsTextures[i]; }
+	const sf::Texture* getSkillText(int i, int j)	const { return &m_skillTextures[i][j]; }
+	const sf::Texture* getGameStateText(int i)		const { return &m_gameStates[i]; }
+	const sf::Texture* getGameButtonText(int i)		const { return &m_gameButtonsTextures[i]; }
+	const sf::Texture* getVolText(int i)			const { return &m_volTextures[i]; }
+	const sf::SoundBuffer* getBuffer(int i)			const { return &m_buffers[i]; }
 
 private:
 	Resources();

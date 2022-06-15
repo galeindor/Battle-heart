@@ -10,7 +10,7 @@ public:
 	~Stat() = default;
 
 
-	int getStat() const { return this->m_val; }
+	float getStat() const { return this->m_val; }
 	void setStat(float val) { this->m_val = val; }
 
 protected:

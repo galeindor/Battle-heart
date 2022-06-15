@@ -1,7 +1,7 @@
 #include "Animation.h"
 
 // Constructor.
-Animation::Animation(sf::Texture* texture, AnimationParams animParms)
+Animation::Animation(const sf::Texture* texture, AnimationParams animParms)
 	:m_imageCount(animParms._imageCount), m_switchTime(animParms._switchTime), m_totalTime(0.0f), m_row(0), m_faceRight(true)
 {
 	this->m_currentImage.x = 0;
@@ -12,7 +12,7 @@ Animation::Animation(sf::Texture* texture, AnimationParams animParms)
 
 }
 
-Animation::Animation(sf::Texture* texture, AnimationParams animParms, std::vector<int> lengths)
+Animation::Animation(const sf::Texture* texture, AnimationParams animParms, std::vector<int> lengths)
 	:Animation(texture,animParms)
 {
 	m_rowLens=lengths;

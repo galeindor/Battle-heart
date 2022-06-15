@@ -23,8 +23,8 @@ private:
 	sf::RectangleShape m_hitHealth;
 	
 	sf::Text m_hitDamage;
-	int m_max;
-
+	float m_max;
+	float m_curr;
 	// show Hp for a few seconds
 	Timer m_showTimer;
 	Timer m_hitTimer;

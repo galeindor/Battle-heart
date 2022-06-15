@@ -50,6 +50,7 @@ void Menu::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
 		{
 			this->m_buttons[index].setOutlineColor(sf::Color::Black);
 			this->m_buttons[index].setOutlineThickness(4);
+			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 		}
 		else
 			this->m_buttons[index].setOutlineThickness(0);

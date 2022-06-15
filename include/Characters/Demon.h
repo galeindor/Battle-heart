@@ -1,15 +1,16 @@
 #pragma once
-
 #include "Enemy.h"
 
-class MiniDragon : public Enemy
+class Demon : public Enemy
 {
 public:
-	MiniDragon();
+	Demon();
+
 	virtual void initSkills(const int index) override;
 
 	virtual shared_ptr<Enemy> getType() {
-		return make_shared<MiniDragon>();
+		return make_shared<Demon>();
 	}
+
 
 };

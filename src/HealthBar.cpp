@@ -1,7 +1,7 @@
 #include "HealthBar.h"
 
 HealthBar::HealthBar(sf::Vector2f pos , int maxValue)
-	:m_max(maxValue), m_hitTimer(1.2f) , m_showTimer(3.f)
+	:m_max(maxValue),m_curr(maxValue), m_hitTimer(1.2f) , m_showTimer(3.f)
 {
 	this->initBars(pos);
 	this->initText(pos);
@@ -14,29 +14,29 @@ HealthBar::HealthBar(sf::Vector2f pos , int maxValue)
 void HealthBar::updateHealthBar(float statVal, const sf::Vector2f& pos)
 {
 	this->setPosition(pos);
-	auto currSize = m_currHealth.getSize().x;
 	auto size = m_bar.getSize();
+	auto healthLost = m_curr - statVal ;
+	auto temp = statVal;
 	statVal = std::min(statVal * BAR_WIDTH / m_max, size.x);
-	auto healthLost = currSize - statVal ;
 
-	if (healthLost > 0.f && m_hitTimer.isTimeUp() ) // lowered damage
+	if (healthLost > 0.f && m_hitTimer.isTimeUp() ) // lowered hp
 	{
 		m_hitDamage.setFillColor(sf::Color::Red);
-		m_hitDamage.setString(std::to_string(int(healthLost)));
-		m_hitHealth.setSize({ currSize, size.y });
+		m_hitDamage.setString(std::to_string(int(std::ceil(healthLost))));
+		m_hitHealth.setSize({m_curr * BAR_WIDTH / m_max , size.y });
 		m_hitTimer.setTimer();
 	}
 	else if (healthLost < 0.f)
 	{
 		m_hitDamage.setFillColor(sf::Color::Green);
-		m_hitDamage.setString(std::to_string(int(-healthLost)));
-		m_hitHealth.setSize({ statVal, size.y });
+		m_hitDamage.setString(std::to_string(int(std::floor(-healthLost))));
+		m_hitHealth.setSize({statVal, size.y });
 		m_hitTimer.setTimer();
 	}
+	m_curr = temp;
 
 	m_showTimer.updateTimer();
 	m_hitTimer.updateTimer();
-
 	auto newX = std::max(statVal, 0.f);
 	m_currHealth.setSize(sf::Vector2f(newX, size.y));
 }
@@ -45,7 +45,7 @@ void HealthBar::updateHealthBar(float statVal, const sf::Vector2f& pos)
 
 void HealthBar::initBars(const sf::Vector2f pos)
 {
-	auto size = sf::Vector2f(BAR_WIDTH, 10);
+	auto size = sf::Vector2f(BAR_WIDTH, BAR_HEIGHT);
 	auto origin = m_bar.getOrigin();
 	m_bar.setOrigin(origin + healthOffset);
 	m_bar.setSize(size);

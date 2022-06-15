@@ -27,18 +27,21 @@ public:
 	~Sound() = default; // D-tor.
 
 	// Functions to play/stop music/sound.
-	void setSound(Sound::Sounds soundEnum);
-	void playSound(int place);
+
+	void playSound(const int place);
 	void playMusic(const std::string fileName);
 	void stopMusic();
 
 	// Volume control.
-	void setVolume();
 	void incVolume();
 	void decVolume();
 	void muteVolume();
 
 private:
+	// Private methods
+	void setSound(const Sound::Sounds soundEnum);
+	void setVolume();
+
 	std::vector<sf::Sound> m_sounds; // Stores the sounds of the game.
 	sf::Music m_music; // Used to stream music.
 	unsigned int m_volume; // For volume control.

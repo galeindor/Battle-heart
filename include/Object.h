@@ -9,7 +9,7 @@ class Character;
 class Object
 {
 public:
-	Object(const sf::Vector2f pos, const int index, AnimationParams animParams, std::vector<int> rowLens, sf::Texture* texture);
+	Object(const sf::Vector2f pos, const int index, AnimationParams animParams, std::vector<int> rowLens,const sf::Texture* texture);
 	virtual ~Object() = default;
 
 	// Management
@@ -41,11 +41,13 @@ public:
 
 protected:
 
+
+	void setColor(sf::Color color)				{ m_sprite.setColor(color); }
 	void setScale(sf::Vector2f scale)			{ m_sprite.setScale(scale); }
 	void setOffset(sf::Vector2f originOffest)	{ m_sprite.setOrigin(m_sprite.getOrigin() + originOffest); }
 
 private:
-	void initSprite(const sf::Vector2f pos, const int index , sf::Texture* texture);
+	void initSprite(const sf::Vector2f pos, const int index , const sf::Texture* texture);
 	// General
 	sf::Sprite m_sprite;
 	bool m_isMoving;

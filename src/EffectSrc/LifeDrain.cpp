@@ -5,7 +5,7 @@
 LifeDrain::LifeDrain()
 {}
 
-void LifeDrain::affect(float baseValue, vector<std::shared_ptr<Stat>> myStats, Character* target, float factor)
+void LifeDrain::affect(vector<std::shared_ptr<Stat>> myStats, Character* target, float factor)
 {
 	auto currHP = target->getStat(_hp);
 	auto dmgByDefence = (myStats[_dmg]->getStat() * factor / target->getStat(_defence)) ;

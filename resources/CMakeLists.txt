@@ -1,7 +1,6 @@
 ﻿#file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/resources)
 
 # Enemies
-configure_file ("CharacterImages/fireWarrior.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/imp.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/miniDragon.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -36,6 +35,7 @@ configure_file ("skills/lightningIcon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/clericBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/witchBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/knightBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("skills/archerBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 # Fonts
 configure_file ("POORICH.TTF" ${CMAKE_BINARY_DIR} COPYONLY)

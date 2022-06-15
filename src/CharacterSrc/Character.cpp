@@ -8,6 +8,7 @@ Character::Character(const sf::Vector2f pos, const int index, AnimationParams an
 {
 	this->initStats(index);
 	this->initPhysics(index);
+	this->initBuffs();
 	m_hpBar = HealthBar(pos, m_stats[_hp]->getStat());
 }
 
@@ -40,6 +41,8 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 
 	updateMovement(deltaTime);
 
+	updateBuffs();
+
 	// Skills update
 	this->updateSkills(deltaTime, m_players, m_enemies);
 	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat() , this->getPosition());
@@ -63,7 +66,7 @@ void Character::updateMovement(float deltaTime)
 		if (targetInRange())
 		{
 			this->useBaseAttack();
-			if (!handleAnimation(this->getVelocity() * deltaTime, deltaTime))
+			if (handleAnimation(this->getVelocity() * deltaTime, deltaTime))
 			{
 				this->m_skills[_basic]->handleClick({ 0, 0 });
 				this->m_skills[_basic]->useSkill(this->getPosition());
@@ -80,9 +83,9 @@ void Character::updateMovement(float deltaTime)
 void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Player>> players, vector<std::shared_ptr<Enemy>> enemies)
 {
 	vector<shared_ptr<Character>> m_targets;
-
 	for (auto& skill : this->m_skills)
 	{
+		m_targets.clear();
 		auto type = skill->getSkillType();
 		switch (type)
 		{
@@ -151,29 +154,27 @@ void Character::useBaseAttack()
 
 //=======================================================================================
 
-void Character::createSkill(int charIndex, int skillIndex, int effectIndex, AttackType single, bool onPlayer, bool active , int projType)
+void Character::createSkill(const int charIndex, const int skillIndex, const int effectIndex, const AttackType single, 
+	const bool onPlayer, const bool active , const int projType)
 {
 	this->addSkill(Skill(Resources::instance().getSkillText(charIndex, skillIndex),
-		sf::Vector2f(skillIndex * (SKILL_RECT_SIZE + 20) + 30, 30),
+		sf::Vector2f(skillIndex * (SKILL_GAP) + 30, 30),
 		skillCooldowns[charIndex][skillIndex], effectIndex,
 		single, onPlayer, active, skillFactors[charIndex][skillIndex],projType));
 
-	skillIndex++;
 }
 
 //=======================================================================================
 
-void Character::useSkill(int skillIndex)
-{}
-
 //=======================================================================================
 
-void Character::setStat(int index, int newVal)
+void Character::setStat(const int index, const int newVal)
 { 
 	if (index == _hp)
 		this->showHpBar();
-		
-	this->m_stats[index]->setStat(newVal); 
+
+	if(this->isAlive())
+		this->m_stats[index]->setStat(newVal); 
 }
 
 //=======================================================================================
@@ -219,7 +220,7 @@ shared_ptr<Character> Character::locateInVector(vector<shared_ptr<Player>> playe
 
 //========================================================================================
 
-void Character::drawSkills(sf::RenderWindow& window , bool selected)
+void Character::drawSkills(sf::RenderWindow& window, const bool selected)
 {
 	for (auto& skill : m_skills)
 	{
@@ -251,7 +252,7 @@ bool Character::checkSkillHover(sf::Vector2f hoverPos, int index)
 
 //==========================================================================================
 
-vector<sf::Vector2f> Character::getLocationsVec(bool getDest)
+vector<sf::Vector2f> Character::getLocationsVec(bool getDest) const
 {
 	vector<sf::Vector2f> vec;
 	if (getDest)
@@ -267,17 +268,38 @@ vector<sf::Vector2f> Character::getLocationsVec(bool getDest)
 
 void Character::updateBuffs()
 {
-	//for (int)
-	//{
-	//	buff.first.updateTimer();
-	//	if(buff.first.isTimeUp())
-	//		this->setStat()
-	//}
+	for (size_t i = 0; i < m_buffTimers.size(); i++)
+	{
+		auto buff = m_buffTimers[i];
+		buff.first.updateTimer();
+		if (m_activeBuffs[i] && buff.first.isTimeUp())
+		{
+			this->setStat(i, buff.second);
+			m_activeBuffs[i] = false;
+			this->setColor(sf::Color::White);
+		}
+	}	
 }
 
 //===========================================================================================
 
-void Character::setActiveBuff(float duration)
+void Character::setActiveBuff(int index ,float duration)
 {
+	m_buffTimers[index].first.setCooldown(duration);
+	m_buffTimers[index].first.setTimer();
+	m_buffTimers[index].second = m_stats[index]->getStat();
+	m_activeBuffs[index] = true;
+	this->setColor(sf::Color::Red);
+}
 
+//============================================================================================
+
+void Character::initBuffs()
+{
+	for (size_t i = 0; i < NUM_OF_STATS ; i++)
+	{
+		auto timer = Timer(0.f);
+		m_buffTimers.push_back(std::make_pair(timer , m_stats[i]->getStat()));
+		m_activeBuffs.push_back(false);
+	}
 }
