@@ -20,6 +20,7 @@ constexpr auto PI = 3.14159265358979323846;
 const sf::Vector2f DEFAULT_VEC(0, 0);
 const sf::Vector2f SPRITE_SCALE(1.5f, 1.5f);
 
+constexpr auto DEFENSE_IGNORE_RATE = 0.3f;
 constexpr auto SPRITE_SIZE = 60;
 constexpr auto WINDOW_WIDTH = 1400;
 constexpr auto WINDOW_HEIGHT = 800;
@@ -267,11 +268,11 @@ const std::vector<std::vector<float>> charactersStats =
 	/* cleric */	{ 700.f , 50.f, 800.f , 10.f},
 	/* knight */	{ 1200.f, 120.f, 40.f , 20.f},
 	/* witch */		{ 900.f , 100.f, 600.f , 13.f},
-	/* archer */	{ 800.f , 95.f, 600.f , 15.f},
+	/* archer */	{ 800.f , 13500.f, 600.f , 15.f},
 	/* demon  */	{ 900.f , 130.f, 70.f , 15.f},
 	/* imp	  */	{ 750.f , 100.f , 400.f , 10.f},
 	/* miniDrag */	{1250.f , 200.f , 200.f , 35.f},
-	/* wolf */		{1250.f , 70.f , 200.f , 35.f},
+	/* wolf */		{1250.f , 120.f , 200.f , 35.f},
 	/* darkCleric*/ {1250.f , 700.f , 200.f , 35.f}
 
 };

@@ -54,11 +54,15 @@ void Menu::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
 		{
 			this->m_buttons[index].setOutlineColor(sf::Color::Black);
 			this->m_buttons[index].setOutlineThickness(4);
-			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+			if(m_lastButtonHovered != index)
+				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+			m_lastButtonHovered = index;
+			return;
 		}
 		else
 			this->m_buttons[index].setOutlineThickness(0);
 	}
+	m_lastButtonHovered = -1;
 }
 
 void Menu::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window)

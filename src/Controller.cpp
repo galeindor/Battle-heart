@@ -53,6 +53,8 @@ void Controller::setMaxLvlAchieved(int newMax)
 		this->m_maxLevelAchieved = newMax;
 }
 
+//=======================================================================================
+
 void Controller::manageSound(Sound::VolumeControl action)
 {
 	switch (action)

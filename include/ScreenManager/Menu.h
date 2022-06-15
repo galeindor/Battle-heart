@@ -18,6 +18,7 @@ protected:
 	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 
 private:
+	int m_lastButtonHovered = -1;
 	virtual void initButtons() override;
 	std::vector<sf::Text> m_buttons;
 };
