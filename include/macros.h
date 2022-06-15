@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
+
 class Stat;
 
 // ----------------------------------------------
@@ -19,6 +20,7 @@ constexpr auto PI = 3.14159265358979323846;
 const sf::Vector2f DEFAULT_VEC(0, 0);
 const sf::Vector2f SPRITE_SCALE(1.5f, 1.5f);
 
+// each attack has a const defence ignore rate ( dmg / (def * ignore_rate)) - for balanced damage
 constexpr auto DEFENSE_IGNORE_RATE = 0.3f;
 constexpr auto SPRITE_SIZE = 60;
 constexpr auto WINDOW_WIDTH = 1400;
@@ -26,11 +28,13 @@ constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto HEIGHT_LIMIT = 200;
 constexpr auto CUT_CORNERS = 50; // used to limit the player movement to not touch corners
 constexpr auto SKILL_GAP = 100;
+constexpr auto RADIUS = 55;
 constexpr auto BAR_WIDTH = 60;
 constexpr auto BAR_HEIGHT = 10;
 constexpr auto NEW_LEVEL_DETECTED = -3;
 constexpr auto WAVE = '!';
 constexpr auto _levelInProgress = 2;
+constexpr auto NUM_OF_BACKGROUNDS = 3;
 constexpr float DEF_MVSPD = 5.1;
 
 // ----------------------------------------------
@@ -45,11 +49,14 @@ struct AnimationParams {
 	float _switchTime; // remove switch time because it's 0.3f for all.
 };
 
+// animation parameters for every type of character and sprite
 const AnimationParams PlayerParams =		{ sf::Vector2f(9,5) , 0.3f  };
 const AnimationParams characterParams =		{ sf::Vector2f(10,5), 0.3f  };
 const AnimationParams projectileParams =	{ sf::Vector2f(8, 1), 0.3f  };
 const AnimationParams effectParams =		{ sf::Vector2f(5, 1), 0.3f  };
 
+// each character sprite sheet has different lengths rows so in order to handle all type of spritesheets
+// we save the length of each row in the sheet
 const std::vector<std::vector<int>> CharacterRowLengths = {
 /* cleric*/		{9, 6, 6, 8, 7},
 /* knight*/		{9, 8, 6, 6, 7},
@@ -79,15 +86,15 @@ const std::vector<std::string> soundList = {
 //					Effects						-
 // ----------------------------------------------
 
-enum class AttackType {
+enum class AttackType { // different type of attacks targets
 	Single , Multi , Self
 };
 
+// different type of effects
 enum Effects {
 	_heal, _damage, _defend, _drainLife, NUM_OF_EFFECTS
 };
 
-constexpr auto EFFECT_COOLDOWN = 2.f;
 constexpr auto BUFF_DURATION = 20.f;
 
 // ----------------------------------------------
@@ -136,7 +143,7 @@ const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={
 //						Projectiles							-
 // ----------------------------------------------------------
 
-enum ProjEnums
+enum ProjEnums // types of projectile
 {
 	_healBall, _fireProj, _energy, _lightning,
 	_tesla, _waterStrike, _fireBreath, _arrow, _none,
@@ -149,6 +156,7 @@ const std::vector<std::string > ProjTextrues = {
 	"arrow.png", "none"
 };
 
+// sprite sheets row lengths
 const std::vector<std::vector<int>> ProjRowlengths = {
 	{8}, {11} , {8} , {12} ,
 	{16} , {10} , {8} , {1}, {0}
@@ -157,20 +165,24 @@ const std::vector<std::vector<int>> ProjRowlengths = {
 // ----------------------------------------------------------
 //							Screens							-
 // ----------------------------------------------------------
+
 enum Backgrounds {
 	_skillInfo, _helpBG, _settingsBG, 
-	_levelSelect, _menu, _firstLevel, 
+	_levelSelect, _menu,
+	_firstLevel, _secondLevel, _thirdLevel,
 	NUM_OF_BG
 };
 
 const std::string bgTextures[NUM_OF_BG] = { 
 	"skillInfoBG.png", "help.png", "settings.png", 
-	"levelSelectBG.png", "menuBG.png", "plain.png" 
+	"levelSelectBG.png", "menuBG.png", "plain.png", "snowlands.png", "firelands.png"
 };
 
 // ----------------------------------------------
 //				Gameplay screen                 -
 // ----------------------------------------------
+
+// offset to center the sprites.
 const sf::Vector2f healthOffset(30, 100);
 const sf::Vector2f healthTextOffset(10, 130);
 const sf::Vector2f projectileOffset(-10, -20);
@@ -235,9 +247,10 @@ const std::vector<sf::Vector2f> startPositions = {
 // Textures ----------------------------------
 enum ObjectEnums {
 	_cleric, _knight, _wizard, _archer,	// players
-	_demon, _imp, _MiniDragon,_wolf , _darkCleric,	// enemies
+	_demon, _imp, _MiniDragon,_wolf , _darkCleric,// enemies
 	_select, NUM_OF_OBJECTS
 };
+
 
 const std::string textures[NUM_OF_OBJECTS] = {
 	"cleric.png" , "knight.png", "wizard.png" , "archer.png",
@@ -245,6 +258,7 @@ const std::string textures[NUM_OF_OBJECTS] = {
 
 
 // Map ------------------------------------------
+// create hash table of all objects
 static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Cleric", _cleric),
 	std::make_pair("Knight", _knight),
@@ -254,7 +268,7 @@ static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Imp" , _imp),
 	std::make_pair("MiniDragon",_MiniDragon),
 	std::make_pair("Wolf" , _wolf),
-	std::make_pair("DarkCleric" , _darkCleric),
+	std::make_pair("DarkCleric",_darkCleric),
 	std::make_pair("Level", NEW_LEVEL_DETECTED)
 };
 
@@ -265,17 +279,17 @@ enum Stats {
 	NUM_OF_STATS
 };
 
+// stats of all characters
 const std::vector<std::vector<float>> charactersStats = {
 	/* cleric */	{ 700.f , 50.f, 800.f , 10.f},
-	/* knight */	{ 1200.f, 120.f, 40.f , 20.f},
-	/* wizard */	{ 900.f , 100.f, 600.f , 13.f},
-	/* archer */	{ 800.f , 200.f, 600.f , 15.f},
-	/* demon  */	{ 900.f , 130.f, 70.f , 15.f},
-	/* imp	  */	{ 750.f , 100.f , 400.f , 10.f},
-	/* miniDrag */	{1250.f , 200.f , 200.f , 35.f},
-	/* wolf */		{1250.f , 120.f , 200.f , 35.f},
-	/* darkCleric*/ {1250.f , 700.f , 200.f , 35.f}
-
+	/* knight */	{ 1200.f, 180.f, 40.f , 20.f},
+	/* wizard */	{ 900.f , 300.f, 600.f , 13.f},
+	/* archer */	{ 600.f , 250.f, 600.f , 10.f},
+	/* demon  */	{ 660.f , 400.f, 70.f , 9.f},
+	/* imp	  */	{ 750.f , 150.f , 400.f , 10.f},
+	/* miniDrag */	{700.f , 500.f , 200.f , 12.f},
+	/* wolf */		{600.f , 400.f , 50.f , 5.f},
+	/* darkCleric*/ {500.f , 50.f , 200.f , 5.f}
 };
 
 // Movement and Steering ------------------------

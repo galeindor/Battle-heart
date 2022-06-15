@@ -112,4 +112,3 @@ sf::Vector2f SteeringInterface::CollisionAvoidance(std::vector<sf::Vector2f> vec
 	return { 0,0 };
 }
 
-//====================================================================================================

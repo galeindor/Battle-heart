@@ -28,15 +28,21 @@ void Settings::initButtons()
 	this->initVolButtons();
 }
 
-void Settings::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
+void Settings::handleHover(const sf::Vector2f& hoverPos)
 {
 	if (this->m_returnButton.getGlobalBounds().contains(hoverPos))
 	{
 		this->m_returnButton.setOutlineColor(sf::Color::Black);
 		this->m_returnButton.setOutlineThickness(4);
+		if (!m_returnHovered)
+			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+		m_returnHovered = true;
 	}
 	else
+	{
 		this->m_returnButton.setOutlineThickness(0);
+		m_returnHovered = false;
+	}
 
 	for (int i = 0; i < this->m_volButtons.size(); i++)
 		this->checkButton(hoverPos, i);

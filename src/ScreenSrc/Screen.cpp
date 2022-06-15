@@ -22,7 +22,7 @@ void Screen::run(sf::RenderWindow& window)
         case sf::Event::MouseMoved: // Moved the mouse on the menu.
         {
             auto mouse_loc = sf::Vector2f(sf::Mouse::getPosition(window)); // Current position of the mouse.
-            this->handleHover(mouse_loc, window);
+            this->handleHover(mouse_loc);
             break;
         }
 

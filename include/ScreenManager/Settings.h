@@ -17,7 +17,7 @@ public:
 
 protected:
 	virtual void initButtons() override;
-	virtual void handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window) override;
+	virtual void handleHover(const sf::Vector2f& hoverPos) override;
 	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 
 	// Unique functions.
@@ -29,4 +29,5 @@ private:
 	void initRet();
 	sf::Text m_returnButton;
 	std::vector<sf::Sprite> m_volButtons;
+	bool m_returnHovered = false;
 };

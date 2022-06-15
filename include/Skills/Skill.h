@@ -24,7 +24,7 @@ public:
 	void setTargets(vector<shared_ptr<Character>> targets) { this->m_targets = targets; }
 	sf::Vector2f norm(sf::Vector2f vec);
 	void draw(sf::RenderWindow& window, bool);
-	bool handleClick(const sf::Vector2f& loc);
+	bool handleClick(const sf::Vector2f& loc); // check click on skill
 	bool checkHover(sf::Vector2f hoverPos);
 
 	// Getters
@@ -34,6 +34,9 @@ public:
 	std::string getInfo() const { return this->m_info; }
 
 private:
+	
+	// info is a popout screen that shows the skill info 
+	// such as target type , multi/ single and etc
 	void initInfo(const int effectIndex, const bool onPlayer, 
 				  const bool isActive, const float cooldown,
 				  AttackType type);
@@ -44,6 +47,7 @@ private:
 	std::string attackType(AttackType type);
 	void updateVisual();
 
+	// members
 	int m_projType;
 	Effect* m_effect;
 	AttackType m_type;
@@ -63,7 +67,7 @@ private:
 	sf::RectangleShape m_rect;
 	sf::RectangleShape m_cooldownScale;
 	
-	// Initiation functions
+	// Initiation functions - create effects and skill visuals
 	void initEffect(const int effectIndex);
 	void initRect(const sf::Texture* texture, const sf::Vector2f pos);
 	void initCooldown(const sf::Vector2f pos); 

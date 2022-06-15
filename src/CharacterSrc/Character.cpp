@@ -152,8 +152,6 @@ void Character::createSkill(const int charIndex, const int skillIndex, const int
 }
 
 //=======================================================================================
-
-//=======================================================================================
 // Set 
 void Character::setStat(const int index, const int newVal)
 { 
@@ -268,7 +266,6 @@ void Character::updateBuffs()
 		{
 			this->setStat(i, buff.second);
 			m_activeBuffs[i] = false;
-			this->setColor(sf::Color::White);
 		}
 	}	
 }
@@ -287,7 +284,6 @@ void Character::setActiveBuff(int index ,float duration)
 	m_buffTimers[index].first.setTimer();
 	m_buffTimers[index].second = m_stats[index]->getStat();
 	m_activeBuffs[index] = true;
-	this->setColor(sf::Color::Red);
 }
 
 //============================================================================================
