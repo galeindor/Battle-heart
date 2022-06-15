@@ -63,7 +63,6 @@ const std::vector<std::vector<int>> CharacterRowLengths = {
 /* wizard*/		{9 ,6 ,6 ,8 ,7},
 /* archer*/		{9 ,6 ,6 ,8 ,7},
 /* demon */		{6, 3, 4, 4, 0},
-/* imp */		{6, 3, 4, 5, 0},
 /* miniDra*/	{4, 3, 2, 3, 0},
 /* wolf	  */	{9, 6, 6, 8, 7},
 /* darkCleric*/	{9, 6, 6, 8, 7}
@@ -113,7 +112,6 @@ const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* wizard*/		{1.7f, 5.f , 5.f } ,
 /* archer*/		{1.f, 20.f , 15.f } ,
 /* demon*/		{1.5f},
-/* imp */		{1.65f},
 /* miniDragon*/	{1.7f},
 /* wolf*/		{1.7f},
 /* darkCleric*/	{1.7f},
@@ -125,7 +123,6 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* wizard*/		{1.f, 1.5f , 1.5f },
 /* archer*/		{1.f, 1.8f , 1.4f },
 /* demon*/		{1.f},
-/* imp */		{1.f},
 /* miniDragon*/	{1.f},
 /* wolf	*/		{1.f},
 /* darkCleric*/	{1.f},
@@ -247,14 +244,14 @@ const std::vector<sf::Vector2f> startPositions = {
 // Textures ----------------------------------
 enum ObjectEnums {
 	_cleric, _knight, _wizard, _archer,	// players
-	_demon, _imp, _MiniDragon,_wolf , _darkCleric,// enemies
+	_demon, _MiniDragon,_wolf , _darkCleric,// enemies
 	_select, NUM_OF_OBJECTS
 };
 
 
 const std::string textures[NUM_OF_OBJECTS] = {
 	"cleric.png" , "knight.png", "wizard.png" , "archer.png",
-	"Demon.png","Imp.png", "MiniDragon.png", "wolf.png" , "DarkCleric.png", "select.png" };
+	"Demon.png", "MiniDragon.png", "wolf.png" , "DarkCleric.png", "select.png" };
 
 
 // Map ------------------------------------------
@@ -265,7 +262,6 @@ static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Wizard", _wizard),
 	std::make_pair("Archer", _archer),
 	std::make_pair("Demon" , _demon),
-	std::make_pair("Imp" , _imp),
 	std::make_pair("MiniDragon",_MiniDragon),
 	std::make_pair("Wolf" , _wolf),
 	std::make_pair("DarkCleric",_darkCleric),
@@ -286,7 +282,6 @@ const std::vector<std::vector<float>> charactersStats = {
 	/* wizard */	{ 900.f , 300.f, 600.f , 13.f},
 	/* archer */	{ 600.f , 250.f, 600.f , 10.f},
 	/* demon  */	{ 660.f , 400.f, 70.f , 9.f},
-	/* imp	  */	{ 750.f , 150.f , 400.f , 10.f},
 	/* miniDrag */	{700.f , 500.f , 200.f , 12.f},
 	/* wolf */		{600.f , 400.f , 50.f , 5.f},
 	/* darkCleric*/ {500.f , 50.f , 200.f , 5.f}
@@ -304,7 +299,6 @@ const std::vector<std::vector<float>> objectsPhysics = {
 	/* wizard */		{ 0.2f, 40.f, 100.f },
 	/* archer */		{ 0.2f, 40.f, 100.f },
 	/* demon  */		{ 0.1f, 45.f, 70.f },
-	/* imp */			{ 0.15f , 42.f , 78.f},
 	/* MiniDragon */	{ 0.2f , 40.f , 70.f},
 	/* wolf */			{ 0.2f , 40.f , 70.f},
 	/* darkCleric */	{ 0.2f , 40.f , 70.f},

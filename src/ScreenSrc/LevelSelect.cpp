@@ -240,8 +240,7 @@ HashTable<int, std::string> LevelSelect::getMap()
 		std::make_pair(_knight, "Knight"),
 		std::make_pair(_wizard, "Wizard"),
 		std::make_pair(_demon, "Demon"),
-		std::make_pair(_imp, "Imp"),
-		std::make_pair(_MiniDragon, "Mini Dragon")
+		std::make_pair(_MiniDragon, "MiniDragon")
 	};
 	return map;
 }

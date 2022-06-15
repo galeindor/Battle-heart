@@ -213,7 +213,7 @@ bool Skill::handleClick(const sf::Vector2f& pos)
 }
 
 //==========================================================
-// check for hover 
+// check for hover
 bool Skill::checkHover(sf::Vector2f hoverPos)
 {
 	return this->m_rect.getGlobalBounds().contains(hoverPos);
