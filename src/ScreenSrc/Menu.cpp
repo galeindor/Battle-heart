@@ -3,6 +3,7 @@
 Menu::Menu(Controller* controller)
 	: Screen(controller)
 {
+	this->m_controller->makeMusic("menuMusic.ogg");
 	this->initButtons();
 	this->setBG(_menu);
 }
@@ -11,9 +12,7 @@ void Menu::update(const float deltaTime)
 {}
 
 void Menu::init()
-{
-	this->m_controller->makeMusic("menuMusic.ogg");
-}
+{}
 
 void Menu::draw(sf::RenderWindow& window)
 {

@@ -146,7 +146,7 @@ enum ProjEnums
 const std::vector<std::string > ProjTextrues = {
 	"healProj.png", "FireBlast.png", "energy.png", "Lightning.png",
 	"Tesla_Ball.png", "water_strike.png", "fireBreath.png" ,
-	"arrow.png","none"
+	"arrow.png", "none"
 };
 
 const std::vector<std::vector<int>> ProjRowlengths = {
@@ -158,12 +158,14 @@ const std::vector<std::vector<int>> ProjRowlengths = {
 //							Screens							-
 // ----------------------------------------------------------
 enum Backgrounds {
-	_helpBG, _settingsBG, _levelSelect, _menu, _firstLevel, NUM_OF_BG
+	_skillInfo, _helpBG, _settingsBG, 
+	_levelSelect, _menu, _firstLevel, 
+	NUM_OF_BG
 };
 
 const std::string bgTextures[NUM_OF_BG] = { 
-	"help.png", "settings.png", "levelSelectBG.png", "menuBG.png", 
-	"plain.png" 
+	"skillInfoBG.png", "help.png", "settings.png", 
+	"levelSelectBG.png", "menuBG.png", "plain.png" 
 };
 
 // ----------------------------------------------
@@ -207,8 +209,8 @@ const std::string gameButtonsTexts[NUM_OF_GBUTTONS] = {
 
 // Music in levels ------------------------------
 const std::vector<std::string> levelsMusic{
-	{"levelMusic1.png"},
-	{"levelMusic2.png"}
+	{"levelMusic1.ogg"},
+	{"levelMusic2.ogg"}
 };
 
 // States ---------------------------------------

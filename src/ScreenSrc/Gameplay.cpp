@@ -229,6 +229,7 @@ void Gameplay::exitGame()
 	this->m_lost = false;
 	this->m_wonLevel = false;
 	this->m_paused = false;
+	this->m_controller->makeMusic("menuMusic.ogg");
 	this->m_board = Board(this->m_controller->getLevelInfo(this->m_currLvl), m_controller);
 	this->m_controller->setCurrentScreen(ScreenState::MENU);
 }

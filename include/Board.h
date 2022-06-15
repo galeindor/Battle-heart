@@ -45,6 +45,8 @@ private:
 	sf::Sprite m_selected;
 	sf::Sprite m_hovered;
 	sf::Sprite m_skillHover;
+	sf::Sprite m_skillInfoBG;
+	sf::Text m_hoveredSkillInfo;
 	bool m_isHovered = false;
 	bool m_skillHovered = false;
 	Controller* m_controller;
@@ -57,9 +59,10 @@ private:
 	void initEnemies(const std::vector<sf::Vector2i> enemyWave);
 	void initSelected();
 	void initHovered();
+	void updatePlayers(const float deltaTime);
+	void updateEnemies(const float deltaTime, const sf::Vector2f dist);
 	void drawObjects(sf::RenderWindow& window);
 	void drawObject(bool player, int& index, sf::RenderWindow& window);
-	sf::Vector2f adjustLocation(sf::Vector2f location);
 	void updateEnemyDest();
 	void updatePlayersDeath(std::shared_ptr<Player> character, float deltaTime, int& index);
 	void updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime, int& index);
@@ -67,6 +70,7 @@ private:
 	void playerBehavior(std::shared_ptr<Player> character, float deltaTime);
 	void enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vector2f pos);
 	vector<sf::Vector2f> createObstaclesVec();
+	sf::Vector2f adjustLocation(sf::Vector2f location);
 
 	template <class Type>
 	bool checkHover(Type character, const sf::Vector2f pos);
@@ -75,7 +79,6 @@ private:
 	Type sortObjects(Type vector);
 
 	bool checkMoving() const;
-
 };
 
 template<class Type>

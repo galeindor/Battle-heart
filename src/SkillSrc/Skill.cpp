@@ -4,11 +4,11 @@
 
 Skill::Skill(const sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 	const int effectIndex, AttackType type, bool onPlayer, bool isActive , float factor , int projType)
-	: m_timer(Timer(cooldown)), m_type(type),
+	: m_timer(Timer(cooldown)), m_type(type), m_effectsTable(this->getTable()),
 	m_onPlayer(onPlayer), m_isActive(isActive) , m_factor(factor)
 {
 	this->m_projType = projType;
-
+	this->initInfo(effectIndex, onPlayer, isActive, cooldown, type);
 	this->initRect(texture, pos);
 	this->initCooldown(pos);
 	this->initEffect(effectIndex);
@@ -64,6 +64,17 @@ sf::Vector2f Skill::norm(sf::Vector2f vec)
 }
 
 //============================================================================
+
+HashTable<int, string> Skill::getTable()
+{
+	std::unordered_map<int, std::string> map = {
+		std::make_pair(_heal, "Heal"),
+		std::make_pair(_damage, "Damage"),
+		std::make_pair(_defend, "Defend"),
+		std::make_pair(_drainLife, "Life steal")
+	};
+	return map;
+}
 
 void Skill::initEffect(const int effectIndex)
 {
@@ -124,6 +135,65 @@ void Skill::draw(sf::RenderWindow& window, bool selected)
 }
 
 //==========================================================
+
+void Skill::initInfo(const int effectIndex, const bool onPlayer, 
+					 const bool isActive, const float cooldown, 
+					 AttackType type)
+{
+	this->m_info += ("Effect: " + this->effectName(effectIndex) + "\n");
+	this->m_info += ("Target type: " + this->targetType(onPlayer) + "\n");
+	this->m_info += ("Use type: " + this->useType(isActive) + "\n");
+	this->m_info += ("Cooldown: " + this->cooldownStr(cooldown) + "\n");
+	this->m_info += ("Attack type :" + this->attackType(type));
+}
+
+std::string Skill::effectName(const int index)
+{
+	return this->m_effectsTable.getVal(index);
+}
+
+std::string Skill::targetType(const bool player)
+{
+	if (player)
+		return "Player";
+	else
+		return "Enemy";
+}
+
+std::string Skill::useType(const bool active)
+{
+	if (active)
+		return "Active";
+	else
+		return "Passive";
+}
+
+std::string Skill::cooldownStr(const float cooldown)
+{
+	auto string = std::to_string(cooldown);
+	if (string[1] != '.')
+		string.resize(5);
+	else
+		string.resize(4);
+
+	return string;
+}
+
+std::string Skill::attackType(AttackType type)
+{
+	switch (type)
+	{
+	case AttackType::Multi:
+		return "Multi";
+	case AttackType::Self:
+		return "Self";
+	case AttackType::Single:
+		return "Single";
+
+	default:
+		return "";
+	}
+}
 
 void Skill::updateVisual()
 {

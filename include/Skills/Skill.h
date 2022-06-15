@@ -14,7 +14,8 @@ class Skill
 {
 public:
 	Skill(const sf::Texture* texture, const sf::Vector2f pos, float cooldown,
-		const int effectIndex, AttackType type , bool onPlayer, bool isActive , float factor , int projType);
+		const int effectIndex, AttackType type , bool onPlayer, bool isActive , 
+		float factor , int projType);
 	~Skill() = default;
 
 	// Management
@@ -22,21 +23,28 @@ public:
 	void useSkill(sf::Vector2f myLoc);
 	void setTargets(vector<shared_ptr<Character>> targets) { this->m_targets = targets; }
 	sf::Vector2f norm(sf::Vector2f vec);
+	void draw(sf::RenderWindow& window, bool);
+	bool handleClick(const sf::Vector2f& loc);
+	bool checkHover(sf::Vector2f hoverPos);
 
 	// Getters
 	bool getOnPlayer() const { return this->m_onPlayer; }
 	AttackType getSkillType() const { return this->m_type; }
 	bool getIsActive() const { return this->m_isActive; }
+	std::string getInfo() const { return this->m_info; }
 
-	void draw(sf::RenderWindow& window, bool);
-	bool handleClick(const sf::Vector2f& loc);
-	bool checkHover(sf::Vector2f hoverPos);
 private:
-
+	void initInfo(const int effectIndex, const bool onPlayer, 
+				  const bool isActive, const float cooldown,
+				  AttackType type);
+	std::string effectName(const int index);
+	std::string targetType(const bool player);
+	std::string useType(const bool active);
+	std::string cooldownStr(const float cooldown);
+	std::string attackType(AttackType type);
 	void updateVisual();
 
 	int m_projType;
-	// Settings of the skill
 	Effect* m_effect;
 	AttackType m_type;
 	bool m_onPlayer;
@@ -44,8 +52,12 @@ private:
 	Timer m_timer;
 	vector<shared_ptr<Character>> m_targets;
 	vector<Projectile> m_projs;
+	std::string m_info = "";
+	float m_factor;
 
-	float m_factor; // each skill has a factor that determines the precentege  
+	// Hash tables
+	HashTable<int, string> getTable();
+	HashTable<int, string> m_effectsTable;
 
 	// Visuals - each skill has a visual side that might be pressed(if skill isn't passive/base skill)
 	sf::RectangleShape m_rect;

@@ -38,7 +38,7 @@ public:
 	HealthBar			getHpBar()				const { return this->m_hpBar; }
 	sf::Vector2f		getVelocity()			const { return this->m_velocity; }
 	SteeringInterface*	behaviour()			const { return this->m_steering; }
-
+	std::string getSkillData(int index) const;
 	vector<sf::Vector2f> getLocationsVec (bool getDest) const;
 	vector<float>		getMoveStats() const { return m_moveStats; }
 

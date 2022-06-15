@@ -2,7 +2,8 @@
 
 // Constructor.
 Animation::Animation(const sf::Texture* texture, AnimationParams animParms)
-	:m_imageCount(animParms._imageCount), m_switchTime(animParms._switchTime), m_totalTime(0.0f), m_row(0), m_faceRight(true)
+	:	m_imageCount(animParms._imageCount), m_switchTime(animParms._switchTime), 
+		m_totalTime(0.0f), m_row(0), m_faceRight(true)
 {
 	this->m_currentImage.x = 0;
 	this->uvRect.width = texture->getSize().x / float(animParms._imageCount.x);
