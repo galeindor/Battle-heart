@@ -285,7 +285,7 @@ enum Locations {
 const std::vector<std::vector<float>> objectsPhysics = {
 	/* cleric */		{ 0.1f, 50.f, 90.f },
 	/* knight */		{ 0.3f, 35.f, 80.f },
-	/* wizard */			{ 0.2f, 40.f, 100.f },
+	/* wizard */		{ 0.2f, 40.f, 100.f },
 	/* archer */		{ 0.2f, 40.f, 100.f },
 	/* demon  */		{ 0.1f, 45.f, 70.f },
 	/* imp */			{ 0.15f , 42.f , 78.f},
