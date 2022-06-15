@@ -11,7 +11,6 @@ const std::string LevelsFileName = "Levels.txt";
 const std::string MAIN_FONT = "POORICH.TTF";
 constexpr auto NUM_OF_PLAYERS = 4;
 
-
 struct LevelInfo {
 	bool m_lvlPlayers[NUM_OF_PLAYERS];
 	std::vector<std::vector<sf::Vector2i>> m_enemyWaves;
@@ -164,7 +163,7 @@ const sf::Vector2f healthOffset(30, 100);
 const sf::Vector2f healthTextOffset(10, 130);
 const sf::Vector2f projectileOffset(-10, -20);
 const sf::Vector2f selectedOffset(45, 30);
-const sf::Vector2f continueButtonPos(615, 450);
+const sf::Vector2f gameButtonPos(615, 450);
 const sf::Vector2f restartButtonPos(615, 500);
 const sf::Vector2f exitButtonPos(615, 550);
 const sf::Vector2f pauseButtonPos(1300, 30);
@@ -234,7 +233,7 @@ const std::string textures[NUM_OF_OBJECTS] = {
 
 // Map ------------------------------------------
 static std::unordered_map<std::string, int> levelsMap = {
-	std::make_pair("Cleric",_cleric),
+	std::make_pair("Cleric", _cleric),
 	std::make_pair("Knight", _knight),
 	std::make_pair("Witch", _witch),
 	std::make_pair("Archer", _archer),

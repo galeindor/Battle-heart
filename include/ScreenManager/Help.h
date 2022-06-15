@@ -18,5 +18,6 @@ protected:
 
 private:
 	void initRet();
+	virtual void initButtons() override;
 	sf::Text m_returnButton;
 };
