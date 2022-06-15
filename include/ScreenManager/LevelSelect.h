@@ -29,7 +29,10 @@ private:
 	virtual void initButtons() override;
 	HashTable<int, std::string> getMap();
 	HashTable<int, std::string> m_map;
+	int m_lastButtonHovered = -1;
 	bool m_levelHovered = false;
+	bool m_returnHovered = false;
+	bool m_startHovered = false;
 	bool m_levelSelected = false;
 	sf::Sprite m_startButton;
 	sf::Sprite m_levelSelection;

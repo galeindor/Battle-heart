@@ -59,12 +59,12 @@ private:
 	HashTable<int, string> getTable();
 	HashTable<int, string> m_effectsTable;
 
-	// Visuals
+	// Visuals - each skill has a visual side that might be pressed(if skill isn't passive/base skill)
 	sf::RectangleShape m_rect;
 	sf::RectangleShape m_cooldownScale;
 	
 	// Initiation functions
 	void initEffect(const int effectIndex);
 	void initRect(const sf::Texture* texture, const sf::Vector2f pos);
-	void initCooldown(const sf::Vector2f pos);
+	void initCooldown(const sf::Vector2f pos); 
 };

@@ -15,11 +15,12 @@ void HealthBar::updateHealthBar(float statVal, const sf::Vector2f& pos)
 {
 	this->setPosition(pos);
 	auto size = m_bar.getSize();
+
+	statVal = std::min(statVal, m_max); // health can not be more than m_max
 	auto healthLost = m_curr - statVal ;
-	auto temp = statVal;
-	statVal = std::min(statVal * BAR_WIDTH / m_max, size.x);
 	
-	if (healthLost > 0.f && m_hitTimer.isTimeUp() ) 
+	
+	if (healthLost > 0.f && m_hitTimer.isTimeUp() )
 	{
 		m_hitDamage.setFillColor(sf::Color::Red);
 		m_hitDamage.setString(std::to_string(int(std::ceil(healthLost))));
@@ -30,14 +31,15 @@ void HealthBar::updateHealthBar(float statVal, const sf::Vector2f& pos)
 	{
 		m_hitDamage.setFillColor(sf::Color::Green);
 		m_hitDamage.setString(std::to_string(int(std::floor(-healthLost))));
-		m_hitHealth.setSize({statVal, size.y });
+		m_hitHealth.setSize({statVal * BAR_WIDTH / m_max , size.y });
 		m_hitTimer.setTimer();
 	}
-	m_curr = temp;
+
+	m_curr = statVal; // update current hp to be the new Stat
 
 	m_showTimer.updateTimer();
 	m_hitTimer.updateTimer();
-	auto newX = std::max(statVal, 0.f);
+	auto newX = std::max(statVal * BAR_WIDTH / m_max , 0.f);
 	m_currHealth.setSize(sf::Vector2f(newX, size.y));
 }
 

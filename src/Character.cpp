@@ -66,9 +66,9 @@ void Character::updateMovement(float deltaTime)
 
 		if (targetInRange())
 		{
-			this->useBaseAttack();
-			if (handleAnimation(this->getVelocity() * deltaTime, deltaTime))
-			{
+			this->setAnimation(_attack);
+			if (handleAnimation(this->getVelocity() * deltaTime, deltaTime)) 
+			{ // if reached end of attack animation
 				this->m_skills[_basic]->handleClick({ 0, 0 });
 				this->m_skills[_basic]->useSkill(this->getPosition());
 			}
@@ -146,12 +146,6 @@ bool Character::targetInRange()
 	return false;
 }
 
-//=======================================================================================
-
-void Character::useBaseAttack()
-{
-	this->setAnimation(_attack);
-}
 
 //=======================================================================================
 
@@ -286,6 +280,13 @@ void Character::updateBuffs()
 
 void Character::setActiveBuff(int index ,float duration)
 {
+
+	if (!m_buffTimers[index].first.isTimeUp()) // prevent double buffs
+	{
+		m_buffTimers[index].first.updateTimer(m_buffTimers[index].first.getTimeLeft()); // set to 0
+		this->updateBuffs();
+	}
+
 	m_buffTimers[index].first.setCooldown(duration);
 	m_buffTimers[index].first.setTimer();
 	m_buffTimers[index].second = m_stats[index]->getStat();

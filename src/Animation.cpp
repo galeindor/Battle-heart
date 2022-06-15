@@ -54,3 +54,12 @@ bool Animation::update(float deltaTime)
 
 	return eor;
 }
+
+//===================================================
+
+void Animation::setRow(int index)
+{ 
+	if(m_row != index) // each time we set a new animation row - set to first picture
+		this->m_currentImage.x = 0; 
+	this->m_row = index; 
+}

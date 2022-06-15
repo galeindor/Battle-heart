@@ -36,7 +36,7 @@ configure_file ("skills/drainlife.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/lightningIcon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 configure_file ("skills/clericBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("skills/witchBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("skills/wizardBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/knightBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("skills/archerBasic.png" ${CMAKE_BINARY_DIR} COPYONLY)
 

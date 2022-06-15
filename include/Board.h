@@ -3,7 +3,7 @@
 #include "Resources.h"
 #include "Characters/Cleric.h"
 #include "Characters/Knight.h"
-#include "Characters/Witch.h"
+#include "Characters/Wizard.h"
 #include "Characters/Archer.h"
 #include "Characters/Demon.h"
 #include "Characters/Imp.h"

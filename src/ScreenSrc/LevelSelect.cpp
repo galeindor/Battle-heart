@@ -82,43 +82,62 @@ std::string LevelSelect::dataToString(const int level)
 	return str;
 }
 
-//-----------------------------------------------
+//=============================================================================
 
 void LevelSelect::initButtons()
 {
 	this->initLevelButtons();
 }
 
-//-----------------------------------------------
+//=============================================================================
 
 void LevelSelect::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
 {
 	if (this->m_startButton.getGlobalBounds().contains(hoverPos))
+	{
 		this->m_startButton.setTexture(*Resources::instance().getLSTexture(_startButtonHL));
+		if (!(m_lastButtonHovered == _start && m_startHovered))
+			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+		m_startHovered = true;
+		m_lastButtonHovered = _start;
+	}
 	else
+	{
 		this->m_startButton.setTexture(*Resources::instance().getLSTexture(_startButton));
+		m_startHovered = false;
+	}
 
-	if (this->m_returnButton.getGlobalBounds().contains(hoverPos))
+	if (this->m_returnButton.getGlobalBounds().contains(hoverPos) )
 	{
 		this->m_returnButton.setOutlineColor(sf::Color::Black);
 		this->m_returnButton.setOutlineThickness(4);
-		this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+		if(!(m_lastButtonHovered == _return && m_returnHovered))
+			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+		m_lastButtonHovered = _return;
+		m_returnHovered = true;
 	}
 	else
+	{
 		this->m_returnButton.setOutlineThickness(0);
+		m_returnHovered = false;
+	}
 
 	for (int index = 0; index < this->m_availableLevels.size(); index++)
 		if (this->m_availableLevels[index].getGlobalBounds().contains(hoverPos))
 		{
 			this->m_levelHover.setPosition(this->m_availableLevels[index].getPosition() + lvlSelOffset);
+			if (!(m_lastButtonHovered == index && m_levelHovered))
+				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 			this->m_levelHovered = true;
-			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+			m_lastButtonHovered = index;
 			return;
 		}
-	this->m_levelHovered = false;
+	
+	m_levelHovered = false;
+			
 }
 
-//-----------------------------------------------
+//=============================================================================
 
 void LevelSelect::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window)
 {
@@ -144,7 +163,7 @@ void LevelSelect::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindo
 		}
 }
 
-//-----------------------------------------------
+//=============================================================================
 
 void LevelSelect::initRet()
 {
@@ -155,7 +174,7 @@ void LevelSelect::initRet()
 	this->m_returnButton.setPosition(returnButtonPos);
 }
 
-//-----------------------------------------------
+//=============================================================================
 
 void LevelSelect::initStart()
 {
@@ -163,7 +182,7 @@ void LevelSelect::initStart()
 	this->m_startButton.setPosition(startButtonPos);
 }
 
-//-----------------------------------------------
+//=============================================================================
 
 void LevelSelect::initHover()
 {
@@ -192,7 +211,7 @@ void LevelSelect::initLevelButtons()
 	}
 }
 
-//-----------------------------------------------
+//=============================================================================
 
 void LevelSelect::initlvlDet()
 {
@@ -205,21 +224,21 @@ void LevelSelect::initlvlDet()
 	this->m_levelDetails.setOutlineThickness(1);
 }
 
-//-----------------------------------------------
+//=============================================================================
 
 void LevelSelect::destroyButtons()
 {
 	this->m_availableLevels.clear();
 }
 
-//-----------------------------------------------
+//=============================================================================
 
 HashTable<int, std::string> LevelSelect::getMap()
 {
 	std::unordered_map<int, std::string> map = {
 		std::make_pair(_cleric, "Cleric"),
 		std::make_pair(_knight, "Knight"),
-		std::make_pair(_witch, "Witch"),
+		std::make_pair(_wizard, "Wizard"),
 		std::make_pair(_demon, "Demon"),
 		std::make_pair(_imp, "Imp"),
 		std::make_pair(_MiniDragon, "Mini Dragon")
@@ -227,4 +246,4 @@ HashTable<int, std::string> LevelSelect::getMap()
 	return map;
 }
 
-//-----------------------------------------------
+//=============================================================================

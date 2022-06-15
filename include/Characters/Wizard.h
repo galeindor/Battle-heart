@@ -2,13 +2,12 @@
 
 #include "Player.h"
 
-class Witch : public Player
+class Wizard : public Player
 {
 public:
-	Witch(const sf::Vector2f pos);
-	~Witch() = default;
+	Wizard(const sf::Vector2f pos);
 	virtual shared_ptr<Player> getType() {
-		return make_shared<Witch>(startPositions[_witch]);
+		return make_shared<Wizard>(startPositions[_wizard]);
 	}
 
 	virtual void initSkills(const int index) override;

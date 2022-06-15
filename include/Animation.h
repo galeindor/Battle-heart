@@ -16,7 +16,7 @@ public:
 	sf::IntRect& getUVRect() { return this->uvRect; }
 
 	// Setters
-	void setRow(int index) { this->m_row = index; }
+	void setRow(int index);
 	void setFaceRight(bool faceRight) { this->m_faceRight = faceRight; }
 
 	// Getters
