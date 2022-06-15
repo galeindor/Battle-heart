@@ -51,20 +51,18 @@ void Skill::useSkill(sf::Vector2f myLoc)
 }
 
 //============================================================================
-
+// get the norm of vector
 sf::Vector2f Skill::norm(sf::Vector2f vec)
 {
-	float l = std::sqrt(vec.x * vec.x + vec.y * vec.y);
+	float l = std::sqrt(std::pow(vec.x,2) + std::pow(vec.y, 2));
 	if (l > 0.0f)
-		vec = sf::Vector2f(vec.x / l, vec.y / l);
+		return sf::Vector2f(vec.x / l, vec.y / l);
 	else
-		vec = sf::Vector2f(0, 0);
-
-	return vec;
+		return { 0,0 };
 }
 
 //============================================================================
-
+// get table of effects
 HashTable<int, string> Skill::getTable()
 {
 	std::unordered_map<int, std::string> map = {
@@ -76,6 +74,7 @@ HashTable<int, string> Skill::getTable()
 	return map;
 }
 
+//=============================================================================
 void Skill::initEffect(const int effectIndex)
 {
 	switch (effectIndex)
@@ -106,7 +105,8 @@ void Skill::initRect(const sf::Texture* texture, const sf::Vector2f pos)
 {
 	m_rect.setTexture(texture);
 	m_rect.setPosition(pos);
-	m_rect.setSize({ SKILL_RECT_SIZE , SKILL_RECT_SIZE });
+	m_rect.setSize({ 
+		, SKILL_RECT_SIZE });
 }
 
 //============================================================================
@@ -123,14 +123,14 @@ void Skill::initCooldown(const sf::Vector2f pos)
 
 void Skill::draw(sf::RenderWindow& window, bool selected)
 {
-	if (selected)
+	if (selected) // if the character is selected we need to print the skill visuals of the character
 	{
 		updateVisual();
 		window.draw(m_rect);
 		window.draw(m_cooldownScale);
 	}
 
-	for (auto& proj : m_projs)
+	for (auto& proj : m_projs) // draw all current projectiles
 		proj.draw(window);
 }
 
@@ -207,14 +207,14 @@ void Skill::updateVisual()
 }
 
 //==========================================================
-
-bool Skill::handleClick(const sf::Vector2f& pos)
+// check for click - if no targets or cooldown isn't over - skill can't be clicked
+bool Skill::handleClick(const sf::Vector2f& pos) 
 {
 	return !m_targets.empty() && m_isActive && (m_timer.getTimeLeft() <= 0.f) && (m_rect.getGlobalBounds().contains(pos));
 }
 
 //==========================================================
-
+// check for hover 
 bool Skill::checkHover(sf::Vector2f hoverPos)
 {
 	return this->m_rect.getGlobalBounds().contains(hoverPos);

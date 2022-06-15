@@ -20,18 +20,19 @@ void DarkCleric::update(sf::Vector2f steerForce, const float deltaTime,
 	Enemy::update(steerForce, deltaTime, m_players, m_enemies);
 }
 
-
 //====================================================================================
 // Dark cleric will target the enemy with the lowest hp at the moment
 std::shared_ptr<Enemy> DarkCleric::findClosestEnemy(vector<std::shared_ptr<Enemy>> enemies)
 {
 	auto copy = enemies;
+
+	// sort the enemies by x values and find one that isn't dead
 	std::sort(copy.begin(), copy.end(),
-		[](auto e1, auto e2) {return e1->getPosition().x < e2->getPosition().x; });
+		[](auto e1 , auto e2) {return e1->getPosition().x < e2->getPosition().x; });
 
 	auto i = 0;
 
-	while (i < copy.size()) // target the first not dead enemy with the lowest Hp
+	while (i < copy.size()) // target the first not dead enemy
 	{
 		if(copy[i]->isAlive())
 			return copy[i];

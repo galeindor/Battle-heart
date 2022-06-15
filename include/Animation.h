@@ -25,13 +25,12 @@ public:
 private:
 
 
-
 	sf::IntRect uvRect; // The rectangle of the currently displayed sprite.
-	sf::Vector2f m_imageCount;
-	sf::Vector2f m_currentImage;
-	std::vector<int> m_rowLens;
+	sf::Vector2f m_imageCount; // number of images in each row
+	sf::Vector2f m_currentImage; // current image in sprite sheet
+	std::vector<int> m_rowLens; // vector of lengths , used when length of rows isn't consistant
 	float m_totalTime;
 	float m_switchTime;
-	unsigned int m_row;
-	bool m_faceRight;
+	unsigned int m_row; // current row
+	bool m_faceRight; // is facing right ( or left)
 };

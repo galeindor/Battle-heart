@@ -55,20 +55,31 @@ private:
 	HashTable<int, shared_ptr<Player>> getPlayersTable();
 	HashTable<int, shared_ptr<Enemy>> getEnemiesTable();
 
+	// init functions - init members and interfaces used on characters
 	void initPlayers(const bool lvlPlayers[NUM_OF_PLAYERS]);
 	void initEnemies(const std::vector<sf::Vector2i> enemyWave);
 	void initSelected();
 	void initHovered();
+
+	// update functions - update objects by time passed
 	void updatePlayers(const float deltaTime);
 	void updateEnemies(const float deltaTime, const sf::Vector2f dist);
-	void drawObjects(sf::RenderWindow& window);
-	void drawObject(bool player, int& index, sf::RenderWindow& window);
 	void updateEnemyDest();
+
+	// check for characters death
 	void updatePlayersDeath(std::shared_ptr<Player> character, float deltaTime, int& index);
 	void updateEnemysDeath(std::shared_ptr<Enemy> character, float deltaTime, int& index);
+
+	// draw functions - draw objects
+	void drawObjects(sf::RenderWindow& window);
+	void drawObject(bool player, int& index, sf::RenderWindow& window);
+
+	// movement and behavior functions
 	void seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime);
 	void playerBehavior(std::shared_ptr<Player> character, float deltaTime);
 	void enemyBehavior(std::shared_ptr<Enemy> enemy, float deltaTime, sf::Vector2f pos);
+
+
 	vector<sf::Vector2f> createObstaclesVec();
 	sf::Vector2f adjustLocation(sf::Vector2f location);
 
@@ -78,9 +89,11 @@ private:
 	template <class Type>
 	Type sortObjects(Type vector);
 
-	bool checkMoving() const;
+	bool checkMoving() const; 
 };
 
+
+// check if a character is hovered
 template<class Type>
 inline bool Board::checkHover(Type character, const sf::Vector2f pos)
 {
@@ -93,6 +106,8 @@ inline bool Board::checkHover(Type character, const sf::Vector2f pos)
 	return false;
 }
 
+
+// sort vector of Enemy or Player
 template <class Type>
 inline Type Board::sortObjects(Type vector)
 {

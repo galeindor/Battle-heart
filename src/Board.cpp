@@ -36,7 +36,7 @@ void Board::seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime)
 		float farness = enemy->behaviour()->distance(enemy->getPosition(), this->m_enemies[index]->getPosition());
 		sf::Vector2f farVec = sf::Vector2f(farness, farness);
 
-		if (this->m_enemies[index]->behaviour()->length(farVec) <= 55) // 50 = radius
+		if (this->m_enemies[index]->behaviour()->length(farVec) <= RADIUS)
 		{
 			alignment += (this->m_enemies[index]->getVelocity());
 			cohesion += this->m_enemies[index]->getPosition();
