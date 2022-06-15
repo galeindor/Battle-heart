@@ -40,7 +40,6 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 	}
 
 	updateMovement(deltaTime);
-
 	updateBuffs();
 
 	// Skills update
@@ -65,7 +64,6 @@ void Character::updateMovement(float deltaTime)
 
 		if (targetInRange())
 		{
-			
 			this->setAnimation(_attack);
 			if (handleAnimation(this->getVelocity() * deltaTime, deltaTime))
 			{
@@ -144,10 +142,6 @@ bool Character::targetInRange() const
 	}
 	return false;
 }
-
-//=======================================================================================
-
-
 
 //=======================================================================================
 
@@ -248,6 +242,11 @@ bool Character::checkSkillHover(sf::Vector2f hoverPos, int index)
 }
 
 //==========================================================================================
+
+std::string Character::getSkillData(int index) const
+{
+	return this->m_skills[index]->getInfo();
+}
 
 vector<sf::Vector2f> Character::getLocationsVec(bool getDest) const
 {

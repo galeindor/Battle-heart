@@ -3,7 +3,8 @@
 #include "Characters/Enemy.h"
 
 Character::Character(const sf::Vector2f pos, const int index, AnimationParams animParams )
-	: m_isAttacking(false), Object(pos, index, animParams , CharacterRowLengths[index] , Resources::instance().getTexture(index)), 
+	: m_isAttacking(false), Object(pos, index, animParams , CharacterRowLengths[index] , 
+	  Resources::instance().getTexture(index)), 
 	  m_isDying(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC)
 {
 	this->initStats(index);

@@ -50,7 +50,7 @@ void Sound::setSound(const Sound::Sounds soundEnum)
 void Sound::setVolume()
 {
 	for (int i = 0; i < this->m_sounds.size(); i++)
-		this->m_sounds[i].setVolume(this->m_volume);
+		this->m_sounds[i].setVolume(this->m_volume / 2);
 
 	this->m_music.setVolume(this->m_volume);
 }

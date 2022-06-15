@@ -24,6 +24,7 @@ vector<sf::Vector2f> Board::createObstaclesVec()
 
 	return obstacles;
 }
+
 //==========================================================
 
 void Board::seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime)
@@ -59,8 +60,6 @@ void Board::seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime)
 }
 
 //==========================================================
-// Need to split this.
-
 int Board::updateBoard(float deltaTime, bool charSelected)
 {
 	this->updateEnemyDest(); // Targets the player with highest max HP.
@@ -78,25 +77,8 @@ int Board::updateBoard(float deltaTime, bool charSelected)
 			m_selected.setPosition(m_currPlayer->getTarget()->getPosition());
 	}
 
-	for (int i = 0; i < m_players.size(); i++)
-	{
-		auto player = m_players[i];
-		if (!player->isAlive())
-			this->updatePlayersDeath(player, deltaTime, i);
-		else
-			this->playerBehavior(player, deltaTime);
-		
-	}
-
-	for (int j = 0; j < m_enemies.size(); j++)
-	{
-		auto enemy = m_enemies[j];
-		if (!enemy->isAlive())
-			this->updateEnemysDeath(enemy, deltaTime, j);
-		else if (enemy->getTarget())
-			this->enemyBehavior(enemy, deltaTime, firstEnemyDist);
-
-	}
+	this->updatePlayers(deltaTime);
+	this->updateEnemies(deltaTime, firstEnemyDist);
 
 	if (m_players.empty())
 		return _loseLevel;
@@ -216,6 +198,8 @@ void Board::hoverEnemies(const sf::Vector2f& hoverPos)
 			}
 			return;
 		}
+		else if (this->m_currEnemyHovered == i)
+				this->m_currEnemyHovered = -1;
 	this->m_isHovered = false;
 }
 
@@ -233,6 +217,8 @@ void Board::hoverPlayers(const sf::Vector2f& hoverPos)
 			}
 			return;
 		}
+		else if (this->m_currPlayerHovered == i)
+			this->m_currPlayerHovered = -1;
 	this->m_isHovered = false;
 }
 
@@ -252,12 +238,19 @@ void Board::hoverSkills(const sf::Vector2f& hoverPos)
 			this->m_skillHovered = true;
 			if (this->m_currSkillHovered != i)
 			{
+				// Skill info
+				this->m_skillInfoBG.setPosition(hoverPos);
+				this->m_hoveredSkillInfo.setPosition(hoverPos.x + 15, hoverPos.y + 8);
+				this->m_hoveredSkillInfo.setString(this->m_currPlayer->getSkillData(i));
+
 				this->m_skillHover.setPosition(sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30));
 				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 				this->m_currSkillHovered = i;
 			}
 			return;
 		}
+		else if (this->m_currSkillHovered == i)
+			this->m_currSkillHovered = -1;
 	this->m_skillHovered = false;
 }
 
@@ -276,7 +269,11 @@ void Board::drawBoard(sf::RenderWindow& window, bool charSelected)
 	this->drawObjects(window);
 
 	if (this->m_skillHovered)
+	{
 		window.draw(this->m_skillHover);
+		window.draw(this->m_skillInfoBG);
+		window.draw(this->m_hoveredSkillInfo);
+	}
 }
 
 //==========================================================
@@ -443,11 +440,45 @@ void Board::initSelected()
 
 void Board::initHovered()
 {
+	this->m_hoveredSkillInfo.setFont(*Resources::instance().getFont());
+	this->m_hoveredSkillInfo.setStyle(sf::Text::Bold);
+	this->m_hoveredSkillInfo.setCharacterSize(20);
+	this->m_hoveredSkillInfo.setColor(sf::Color::Black);
+	this->m_hoveredSkillInfo.setOutlineColor(sf::Color::White);
+	this->m_hoveredSkillInfo.setOutlineThickness(0.5);
+
+	this->m_skillInfoBG.setTexture(*Resources::instance().getBackground(_skillInfo));
+
 	m_hovered.setTexture(*Resources::instance().getTexture(_select));
 	auto origin = m_hovered.getOrigin();
 	m_hovered.setOrigin(origin + selectedOffset);
 
 	this->m_skillHover.setTexture(*Resources::instance().getGameButtonText(_skillHover));
+}
+
+void Board::updatePlayers(const float deltaTime)
+{
+	for (int i = 0; i < m_players.size(); i++)
+	{
+		auto player = m_players[i];
+		if (!player->isAlive())
+			this->updatePlayersDeath(player, deltaTime, i);
+		else
+			this->playerBehavior(player, deltaTime);
+	}
+}
+
+void Board::updateEnemies(const float deltaTime, const sf::Vector2f dist)
+{
+	for (int j = 0; j < m_enemies.size(); j++)
+	{
+		auto enemy = m_enemies[j];
+		if (!enemy->isAlive())
+			this->updateEnemysDeath(enemy, deltaTime, j);
+		else if (enemy->getTarget())
+			this->enemyBehavior(enemy, deltaTime, dist);
+
+	}
 }
 
 //==========================================================

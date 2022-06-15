@@ -5,8 +5,6 @@
 Tasks:
 -(!!!) Make some order in resources and macros.
 -(!!!) Make some order in gameplay and board.
--(!!!) Skills hashing.
--(***) Make sure the characters don't spawn on each other.
 
 Bugs:
 - Enemies ignore closest target on spawn.
