@@ -15,6 +15,7 @@ bool Object::handleAnimation(sf::Vector2f movement, float deltaTime)
 	// If facing right.
 	if (this->getPosition().x < this->getDest().x)
 		this->m_animation.setFaceRight(true);
+
 	else if (this->getPosition().x > this->getDest().x)
 		this->m_animation.setFaceRight(false);
 

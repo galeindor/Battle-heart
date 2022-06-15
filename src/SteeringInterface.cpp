@@ -5,7 +5,6 @@ SteeringInterface::SteeringInterface()
 
 SteeringInterface::~SteeringInterface(){}
 
-
 //====================================================================================================
 float SteeringInterface::distance(sf::Vector2f start, sf::Vector2f end)
 {
