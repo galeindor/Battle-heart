@@ -1,5 +1,7 @@
 #include "Characters/DarkCleric.h"
 
+//================================================================
+// Constructor.
 DarkCleric::DarkCleric()
 	:Enemy(_darkCleric)
 {
@@ -7,12 +9,15 @@ DarkCleric::DarkCleric()
 	setScale(SPRITE_SCALE);
 }
 
+//================================================================
+// Inits skills.
 void DarkCleric::initSkills(const int index)
 {
 	this->createSkill(index, _basic, _heal, AttackType::Multi, !onPlayer, !isActive, _energy); // basic heal on all enemies
 }
 
 //====================================================================================
+// Unique update function.
 void DarkCleric::update(sf::Vector2f steerForce, const float deltaTime,
 	vector<std::shared_ptr<Player>> m_players, vector<std::shared_ptr<Enemy>> m_enemies)
 {
@@ -21,7 +26,7 @@ void DarkCleric::update(sf::Vector2f steerForce, const float deltaTime,
 }
 
 //====================================================================================
-// Dark cleric will target the enemy with the lowest hp at the moment
+// Dark cleric will target the enemy with the lowest hp at the moment.
 std::shared_ptr<Enemy> DarkCleric::findClosestEnemy(vector<std::shared_ptr<Enemy>> enemies)
 {
 	auto copy = enemies;
@@ -38,5 +43,4 @@ std::shared_ptr<Enemy> DarkCleric::findClosestEnemy(vector<std::shared_ptr<Enemy
 			return copy[i];
 		i++;
 	}
-
 }

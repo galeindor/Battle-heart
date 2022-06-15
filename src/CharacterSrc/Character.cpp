@@ -2,79 +2,89 @@
 #include "Characters/Player.h"
 #include "Characters/Enemy.h"
 
+//================================================================
+// Constructor.
 Character::Character(const sf::Vector2f pos, const int index, AnimationParams animParams )
 	: m_isAttacking(false), Object(pos, index, animParams , CharacterRowLengths[index] , Resources::instance().getTexture(index)), 
 	  m_isDying(false), m_steering(new SteeringInterface), m_velocity(DEFAULT_VEC)
 {
-	this->initStats(index);
-	this->initPhysics(index);
-	this->initBuffs();
-	m_hpBar = HealthBar(pos, m_stats[_hp]->getStat());
+	this->initStats(index); // Stats
+	this->initPhysics(index); // Physics
+	this->initBuffs(); // Buffs
+	m_hpBar = HealthBar(pos, m_stats[_hp]->getStat()); // Health bar
 }
 
 //=======================================================================================
-
+// General update function to characters.
 void Character::update(sf::Vector2f steerForce, float deltaTime,
 					   vector<std::shared_ptr<Player>> m_players, 
 					   vector<std::shared_ptr<Enemy>> m_enemies)
 {
+	// HP bar follows the character.
 	this->m_hpBar.setPosition(this->getPosition());
 
+	// If it's dead.
 	if (!isAlive())
 		return;
 
+	// Calculates movement.
 	sf::Vector2f acceleration = steerForce / this->m_moveStats[_mass];
 	this->setVelocity(this->getVelocity() + acceleration * deltaTime);
 	this->setVelocity(this->behaviour()->Truncate(this->getVelocity(), this->m_moveStats[_maxVelocity]));
 
 	auto target = this->getTarget();
+	// If the character has a target.
 	if (target)
 	{
+		// If the target is alive.
 		if (target->isAlive())
+			// Go to it.
 			this->setDestination(this->getTarget()->getPosition());
-		else
+		else // If it's dead.
 		{
+			// Leave it.
 			this->setAsTarget(nullptr);
 			this->setDestination(this->getPosition());
 		}
 	}
 
-	updateMovement(deltaTime);
-	updateBuffs();
-
-	// Skills update
-	this->updateSkills(deltaTime, m_players, m_enemies);
-	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat() , this->getPosition());
-	handleAnimation(this->getVelocity() * deltaTime, deltaTime);
+	updateMovement(deltaTime); // Movement update.
+	updateBuffs(); // Buffs update.
+	this->updateSkills(deltaTime, m_players, m_enemies); // Skills update.
+	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat() , this->getPosition()); // HP update.
+	handleAnimation(this->getVelocity() * deltaTime, deltaTime); // Animation update.
 }
 
 //======================================================================================
-
+// Updates the movement of the character.
 void Character::updateMovement(float deltaTime)
 {
+	// If character not at their destination.
 	if (!this->checkIntersection())
 	{
+		// Walk to destination.
 		this->setMoving(true);
 		this->setPosition(this->getPosition() + this->getVelocity() * deltaTime);
 		this->setAnimation(_walk);
 	}
 	else
 	{
-		this->setMoving(false);
+		this->setMoving(false); // Not moving.
 
+		// If character has a target and it's in range, attack it.
 		if (targetInRange())
 		{
 			this->setAnimation(_attack);
 			this->m_skills[_basic]->useSkill(this->getPosition());
 		}
 		else
-			this->setAnimation(_idle);
+			this->setAnimation(_idle); // Idle.
 	}
 }
 
 
 //=======================================================================================
-
+// Updates skills.
 void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Player>> players, vector<std::shared_ptr<Enemy>> enemies)
 {
 	vector<shared_ptr<Character>> m_targets;
@@ -108,7 +118,7 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 }
 
 //=======================================================================================
-
+// Inits stats.
 void Character::initStats(const int index)
 {
 	for (int stat = 0; stat < NUM_OF_STATS; stat++)
@@ -125,7 +135,7 @@ void Character::initPhysics(const int index)
 }
 
 //=======================================================================================
-
+// Checks if the target is in range.
 bool Character::targetInRange() const
 {
 	if (this->getTarget())
@@ -140,7 +150,7 @@ bool Character::targetInRange() const
 }
 
 //=======================================================================================
-
+// Creates a skill by given parameters.
 void Character::createSkill(const int charIndex, const int skillIndex, const int effectIndex, const AttackType single, 
 	const bool onPlayer, const bool active , const int projType)
 {
@@ -152,7 +162,7 @@ void Character::createSkill(const int charIndex, const int skillIndex, const int
 }
 
 //=======================================================================================
-// Set 
+// Sets stat.
 void Character::setStat(const int index, const int newVal)
 { 
 	if (index == _hp)
@@ -172,7 +182,7 @@ void Character::setDying()
 }
 
 //=======================================================================================
-
+// Creates a vector of the targets.
 template<class Type>
 vector<shared_ptr<Character>> Character::createTargetVec(Type vec)
 {
@@ -185,7 +195,7 @@ vector<shared_ptr<Character>> Character::createTargetVec(Type vec)
 }
 
 //=======================================================================================
-
+// Locates the object in the vector.
 shared_ptr<Character> Character::locateInVector(vector<shared_ptr<Player>> players, vector<shared_ptr<Enemy>> enemies, Character* obj)
 {
 	for (auto player : players)
@@ -214,7 +224,7 @@ void Character::drawSkills(sf::RenderWindow& window, const bool selected)
 }
 
 //========================================================================================
-
+// Checks if the skill was clicked and if off cooldown, and if so then uses it.
 bool Character::checkSkillClick(const sf::Vector2f& location)
 {
 	for (auto& skill : m_skills)
@@ -229,7 +239,7 @@ bool Character::checkSkillClick(const sf::Vector2f& location)
 }
 
 //========================================================================================
-
+// Checks hover on skills.
 bool Character::checkSkillHover(sf::Vector2f hoverPos, int index)
 {
 	return this->m_skills[index]->checkHover(hoverPos);
@@ -242,6 +252,8 @@ std::string Character::getSkillData(int index) const
 	return this->m_skills[index]->getInfo();
 }
 
+//==========================================================================================
+// Turns locations to vector.
 vector<sf::Vector2f> Character::getLocationsVec(bool getDest) const
 {
 	vector<sf::Vector2f> vec;
@@ -255,7 +267,7 @@ vector<sf::Vector2f> Character::getLocationsVec(bool getDest) const
 }
 
 //===========================================================================================
-
+// Buffs are meant to affect for a certain time, not forever.
 void Character::updateBuffs()
 {
 	for (size_t i = 0; i < m_buffTimers.size(); i++)

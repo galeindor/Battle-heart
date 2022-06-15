@@ -1,12 +1,14 @@
 
 #include "Characters/Wizard.h"
 
+// Constructor.
 Wizard::Wizard(const sf::Vector2f pos)
 	:Player(pos, _wizard)
 {
 	this->initSkills(_wizard);
 }
 
+// Inits skills.
 void Wizard::initSkills(const int index)
 {
 	this->createSkill(index, _basic, _damage, AttackType::Single, !onPlayer, !isActive , _energy); // basic

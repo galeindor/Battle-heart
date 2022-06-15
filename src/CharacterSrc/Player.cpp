@@ -1,6 +1,7 @@
 
 #include "Characters/Player.h"
 
+// Constructor.
 Player::Player(const sf::Vector2f loc , int index)
 	: Character(loc, index, PlayerParams), m_selected(false)
 {
@@ -8,7 +9,7 @@ Player::Player(const sf::Vector2f loc , int index)
 }
 
 //===========================================================
-
+// Draw function.
 void Player::draw(sf::RenderWindow& window)
 {
 	if (m_selected)
@@ -20,7 +21,7 @@ void Player::draw(sf::RenderWindow& window)
 }
 
 //==========================================================
-
+// Sets enemy as target.
 bool Player::setTarget(std::shared_ptr<Enemy> obj)
 {
 	setAsTarget(obj);
@@ -28,14 +29,14 @@ bool Player::setTarget(std::shared_ptr<Enemy> obj)
 }
 
 //==========================================================
-
+// Players set enemies as targets, unless meant to affect other players.
 bool Player::setTarget(std::shared_ptr<Player>)
 {
 	return false;
 }
 
 //==========================================================
-
+// Checks if intersecting with the destination.
 bool Player::checkIntersection() const
 {
 	auto norm = sqrt(pow((this->getPosition().x - this->getDest().x), 2) + pow((this->getPosition().y - this->getDest().y), 2));

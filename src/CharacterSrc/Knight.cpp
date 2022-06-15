@@ -1,12 +1,13 @@
-
 #include "Characters/Knight.h"
 
+// Constructor.
 Knight::Knight(const sf::Vector2f pos)
 	:Player(pos , _knight)
 {
 	this->initSkills(_knight);
 }
 
+// Inits skills.
 void Knight::initSkills(const int index)
 {
 	this->createSkill(index, _basic, _damage, AttackType::Single, !onPlayer, !isActive,_none); // basic

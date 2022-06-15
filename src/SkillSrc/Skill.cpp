@@ -2,6 +2,8 @@
 
 #include "Characters/Character.h"
 
+//==========================================================================================
+// Constructs a skill.
 Skill::Skill(const sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 	const int effectIndex, AttackType type, bool onPlayer, bool isActive , float factor , int projType)
 	: m_timer(Timer(cooldown)), m_type(type), m_effectsTable(this->getTable()),
@@ -15,7 +17,7 @@ Skill::Skill(const sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 }
 
 //============================================================================
-
+// Updates skill and cooldown.
 void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targets, std::vector<std::shared_ptr<Stat>> myStats)
 {
 	this->setTargets(targets);
@@ -33,7 +35,7 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 }
 
 //============================================================================
-
+// Uses a skill when it's off cooldown.
 void Skill::useSkill(sf::Vector2f myLoc)
 {
 	if (this->m_timer.isTimeUp() )
