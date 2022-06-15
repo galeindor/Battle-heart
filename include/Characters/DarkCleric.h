@@ -17,5 +17,5 @@ public:
 
 private:
 
-	std::shared_ptr<Enemy> findMostInjured(vector<std::shared_ptr<Enemy>> m_enemies);
+	std::shared_ptr<Enemy> findClosestEnemy(vector<std::shared_ptr<Enemy>> m_enemies);
 };

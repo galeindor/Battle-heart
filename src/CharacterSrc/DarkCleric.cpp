@@ -16,18 +16,19 @@ void DarkCleric::initSkills(const int index)
 void DarkCleric::update(sf::Vector2f steerForce, const float deltaTime,
 	vector<std::shared_ptr<Player>> m_players, vector<std::shared_ptr<Enemy>> m_enemies)
 {
-	this->setAsTarget(findMostInjured(m_enemies));
+	this->setAsTarget(findClosestEnemy(m_enemies));
 	Enemy::update(steerForce, deltaTime, m_players, m_enemies);
 }
 
 
 //====================================================================================
 // Dark cleric will target the enemy with the lowest hp at the moment
-std::shared_ptr<Enemy> DarkCleric::findMostInjured(vector<std::shared_ptr<Enemy>> enemies)
+std::shared_ptr<Enemy> DarkCleric::findClosestEnemy(vector<std::shared_ptr<Enemy>> enemies)
 {
 	auto copy = enemies;
 	std::sort(copy.begin(), copy.end(),
-		[](auto e1, auto e2) {return e1->getStat(_hp) < e2->getStat(_hp); });
+		[](auto e1, auto e2) {return e1->getPosition().x < e2->getPosition().x; });
+
 	auto i = 0;
 
 	while (i < copy.size()) // target the first not dead enemy with the lowest Hp

@@ -23,4 +23,5 @@ private:
 	void initRet();
 	sf::Text m_returnButton;
 	std::vector<sf::Sprite> m_volButtons;
+	bool m_returnHovered = false;
 };

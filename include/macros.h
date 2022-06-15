@@ -274,7 +274,7 @@ const std::vector<std::vector<float>> charactersStats = {
 	/* imp	  */	{ 750.f , 100.f , 400.f , 10.f},
 	/* miniDrag */	{1250.f , 200.f , 200.f , 35.f},
 	/* wolf */		{1250.f , 120.f , 200.f , 35.f},
-	/* darkCleric*/ {1250.f , 700.f , 200.f , 35.f}
+	/* darkCleric*/ {1000.f , 300.f , 200.f , 35.f}
 
 };
 
