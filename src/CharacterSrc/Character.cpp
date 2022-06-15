@@ -66,7 +66,7 @@ void Character::updateMovement(float deltaTime)
 		if (targetInRange())
 		{
 			this->useBaseAttack();
-			if (!handleAnimation(this->getVelocity() * deltaTime, deltaTime))
+			if (handleAnimation(this->getVelocity() * deltaTime, deltaTime))
 			{
 				this->m_skills[_basic]->handleClick({ 0, 0 });
 				this->m_skills[_basic]->useSkill(this->getPosition());
@@ -173,7 +173,10 @@ void Character::useSkill(int skillIndex)
 void Character::setStat(int index, int newVal)
 { 
 	if (index == _hp)
+	{
 		this->showHpBar();
+		this->m_hpBar.updateHealthBar(newVal, this->getPosition());
+	}
 		
 	this->m_stats[index]->setStat(newVal); 
 }

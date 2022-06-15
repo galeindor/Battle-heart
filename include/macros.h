@@ -24,6 +24,7 @@ constexpr auto WINDOW_HEIGHT = 800;
 constexpr auto HEIGHT_LIMIT = 200;
 constexpr auto CUT_CORNERS = 50; // used to limit the player movement to not touch corners
 constexpr auto BAR_WIDTH = 60;
+constexpr auto BAR_HEIGHT = 10;
 constexpr auto NEW_LEVEL_DETECTED = -3;
 constexpr auto WAVE = '!';
 constexpr auto _levelInProgress = 2;
