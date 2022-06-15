@@ -105,7 +105,7 @@ const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* cleric*/		{1.75f, 20.f, 30.f } ,
 /* knight*/		{1.65f ,30.f,  30.f } ,
 /* witch*/		{1.7f, 5.f , 5.f } ,
-/* archer*/		{1.7f, 20.f , 15.f } ,
+/* archer*/		{0.8f, 20.f , 15.f } ,
 /* demon*/		{1.5f},
 /* imp */		{1.65f},
 /* miniDragon*/	{1.7f}
@@ -257,9 +257,9 @@ const std::vector<std::vector<float>> charactersStats =
 	/* knight */	{ 1200.f, 3.f,120.f, 40.f , 20.f},
 	/* witch */		{ 900.f, 2.f, 100.f, 600.f , 13.f},
 	/* archer */	{ 800.f, 1.f, 95.f, 600.f , 15.f},
-	/* demon  */	{ 900.f, 4.f, 130.f, 70.f , 15.f},
-	/* imp	  */	{ 750.f , 3.f ,100.f , 400.f , 10.f},
-	/* miniDrag */	{1250.f , 4.f ,1200.f , 200.f , 35.f}
+	/* demon  */	{ 900.f, 4.f, 130.f, 70.f , 5.f},
+	/* imp	  */	{ 750.f , 3.f ,100.f , 400.f , 5.f},
+	/* miniDrag */	{1250.f , 4.f ,1200.f , 200.f , 1.f}
 };
 
 // Movement and Steering ------------------------
