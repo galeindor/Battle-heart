@@ -72,10 +72,6 @@ private:
 	template <class Type>
 	Type sortObjects(Type vector);
 
-	template <typename Vec, typename deathFunc, typename behaviorFunc >
-	void deathHandler(Vec characters, deathFunc dfunc, behaviorFunc bfunc, float deltaTime);
-
-
 	bool checkMoving() const;
 
 };
@@ -102,15 +98,3 @@ inline Type Board::sortObjects(Type vector)
 	return copy;
 }
 
-template <typename Vec,typename deathFunc,typename behaviorFunc >
-inline void Board::deathHandler(Vec characters, deathFunc dfunc, behaviorFunc bfunc , float deltaTime)
-{
-	for (int i = 0; i < characters.size(); i++)
-	{
-		auto obj = characters[i];
-		if (!obj->isAlive())
-			dfunc(obj, deltaTime, i);
-		else
-			bfunc(obj, deltaTime);
-	}
-}
