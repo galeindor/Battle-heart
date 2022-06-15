@@ -163,9 +163,9 @@ void LevelSelect::initLevelButtons()
 	sf::Vector2f pos;
 	int row = 0, col = 0;
 	tempSprite.setTexture(*Resources::instance().getLSTexture(_lvlCompleted));
-	for (int i = 0; i < this->m_controller->getCurrLvl() + 1; i++)
+	for (int i = 0; i < this->m_controller->getMaxLvlAchieved() + 1; i++)
 	{
-		if (i == this->m_controller->getCurrLvl())
+		if (i == this->m_controller->getMaxLvlAchieved())
 			tempSprite.setTexture(*Resources::instance().getLSTexture(_currLvlIcon));
 
 		pos = { lsLevelsStartPos.x + col * lsLevelsOffset.x,

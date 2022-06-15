@@ -154,10 +154,11 @@ void Character::useBaseAttack()
 
 //=======================================================================================
 
-void Character::createSkill(int charIndex, int skillIndex, int effectIndex, AttackType single, bool onPlayer, bool active , int projType)
+void Character::createSkill(const int charIndex, const int skillIndex, const int effectIndex, const AttackType single, 
+	const bool onPlayer, const bool active , const int projType)
 {
 	this->addSkill(Skill(Resources::instance().getSkillText(charIndex, skillIndex),
-		sf::Vector2f(skillIndex * (SKILL_RECT_SIZE + 20) + 30, 30),
+		sf::Vector2f(skillIndex * (SKILL_GAP) + 30, 30),
 		skillCooldowns[charIndex][skillIndex], effectIndex,
 		single, onPlayer, active, skillFactors[charIndex][skillIndex],projType));
 
@@ -165,17 +166,14 @@ void Character::createSkill(int charIndex, int skillIndex, int effectIndex, Atta
 
 //=======================================================================================
 
-void Character::useSkill(int skillIndex)
-{}
-
 //=======================================================================================
 
-void Character::setStat(int index, int newVal)
+void Character::setStat(const int index, const int newVal)
 { 
 	if (index == _hp)
 		this->showHpBar();
-		
-	this->m_stats[index]->setStat(newVal); 
+	if(this->isAlive())
+		this->m_stats[index]->setStat(newVal); 
 }
 
 //=======================================================================================
@@ -221,7 +219,7 @@ shared_ptr<Character> Character::locateInVector(vector<shared_ptr<Player>> playe
 
 //========================================================================================
 
-void Character::drawSkills(sf::RenderWindow& window , bool selected)
+void Character::drawSkills(sf::RenderWindow& window, const bool selected)
 {
 	for (auto& skill : m_skills)
 	{

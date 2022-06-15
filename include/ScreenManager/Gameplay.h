@@ -18,11 +18,12 @@ public:
 	void winGame();
 
 protected:
-	virtual void initButtons() override;
+
 	virtual void handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window) override;
 	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 
 private:
+	virtual void initButtons() override;
 	void checkButton(sf::Vector2f hoverPos, GameButtons reg, GameButtons hl, ButtonIndexes index);
 	void checkPause(sf::Vector2f hoverPos);
 	void cont();

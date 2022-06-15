@@ -56,14 +56,14 @@ public:
 	// Skill management
 	bool checkSkillClick(const sf::Vector2f& location);
 	bool checkSkillHover(sf::Vector2f hoverPos, int index);
-	void drawSkills(sf::RenderWindow& window, bool selected);
+	void drawSkills(sf::RenderWindow& window, const bool selected);
 
 
 protected:
-	void createSkill(int CharIndex, int skillIndex, int effectIndex,
-					 AttackType single, bool onPlayer, bool active, int projType);
-	void addSkill(Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }
-	void useSkill(int index);
+	void createSkill(const int CharIndex, const int skillIndex, const int effectIndex,
+		const AttackType single, const bool onPlayer, const bool active, const int projType);
+	void addSkill(const Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }
+
 	vector<std::shared_ptr<Stat>>& getStats() { return this->m_stats; }
 
 private:

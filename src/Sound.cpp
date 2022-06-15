@@ -17,7 +17,7 @@ Sound::Sound()
 }
 
 /* Plays the sound once. */
-void Sound::playSound(int place)
+void Sound::playSound(const int place)
 {
 	this->m_sounds[place].play();
 }
@@ -38,7 +38,7 @@ void Sound::stopMusic()
 }
 
 /* Sets a new sound. Must have buffer. */
-void Sound::setSound(Sound::Sounds soundEnum)
+void Sound::setSound(const Sound::Sounds soundEnum)
 {
 	sf::Sound tempSound;
 	tempSound.setBuffer(*Resources::instance().getBuffer(int(soundEnum)));

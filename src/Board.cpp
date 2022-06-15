@@ -5,14 +5,12 @@ Board::Board(const LevelInfo& currLevelInfo, Controller* controller)
 		m_enemyWaves(currLevelInfo.m_enemyWaves),
 		m_controller(controller)
 {
-
 	this->initPlayers(currLevelInfo.m_lvlPlayers);
 	this->initEnemies(currLevelInfo.m_enemyWaves[this->m_currWave]);
 	this->initSelected();
 	this->initHovered();
 	this->updateBoard(1.f, false);
 }
-
 //==========================================================
 
 vector<sf::Vector2f> Board::createObstaclesVec()
