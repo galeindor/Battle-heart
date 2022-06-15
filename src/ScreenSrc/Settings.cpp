@@ -28,7 +28,7 @@ void Settings::initButtons()
 	this->initVolButtons();
 }
 
-void Settings::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
+void Settings::handleHover(const sf::Vector2f& hoverPos)
 {
 	if (this->m_returnButton.getGlobalBounds().contains(hoverPos))
 	{

@@ -252,7 +252,7 @@ static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Imp" , _imp),
 	std::make_pair("MiniDragon",_MiniDragon),
 	std::make_pair("Wolf" , _wolf),
-	std::make_pair("DarkCleric" , _darkCleric),
+	std::make_pair("DarkCleric",_darkCleric),
 	std::make_pair("Level", NEW_LEVEL_DETECTED)
 };
 

@@ -46,7 +46,7 @@ void Menu::initButtons()
 
 //=============================================================================
 
-void Menu::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
+void Menu::handleHover(const sf::Vector2f& hoverPos)
 {
 	for (int index = 0; index < this->m_buttons.size(); index++)
 	{

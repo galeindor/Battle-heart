@@ -34,7 +34,7 @@ void Help::initButtons()
 
 //===================================================
 
-void Help::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
+void Help::handleHover(const sf::Vector2f& hoverPos)
 {
 	if (this->m_returnButton.getGlobalBounds().contains(hoverPos))
 	{

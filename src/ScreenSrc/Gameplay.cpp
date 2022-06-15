@@ -102,7 +102,7 @@ void Gameplay::initButtons()
 
 //-------------------------------------------------
 
-void Gameplay::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
+void Gameplay::handleHover(const sf::Vector2f& hoverPos)
 {
 	// If not paused
 	if (!this->m_paused && !this->m_wonLevel && !this->m_lost)

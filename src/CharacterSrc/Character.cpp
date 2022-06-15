@@ -147,10 +147,6 @@ bool Character::targetInRange() const
 
 //=======================================================================================
 
-
-
-//=======================================================================================
-
 void Character::createSkill(const int charIndex, const int skillIndex, const int effectIndex, const AttackType single, 
 	const bool onPlayer, const bool active , const int projType)
 {
@@ -160,8 +156,6 @@ void Character::createSkill(const int charIndex, const int skillIndex, const int
 		single, onPlayer, active, skillFactors[charIndex][skillIndex],projType));
 
 }
-
-//=======================================================================================
 
 //=======================================================================================
 // Set 
@@ -273,7 +267,6 @@ void Character::updateBuffs()
 		{
 			this->setStat(i, buff.second);
 			m_activeBuffs[i] = false;
-			this->setColor(sf::Color::White);
 		}
 	}	
 }
@@ -292,7 +285,6 @@ void Character::setActiveBuff(int index ,float duration)
 	m_buffTimers[index].first.setTimer();
 	m_buffTimers[index].second = m_stats[index]->getStat();
 	m_activeBuffs[index] = true;
-	this->setColor(sf::Color::Red);
 }
 
 //============================================================================================

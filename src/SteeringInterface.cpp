@@ -1,5 +1,7 @@
 #include "SteeringInterface.h"
 
+#include "Characters/Enemy.h"
+
 SteeringInterface::SteeringInterface()
 {}
 
@@ -124,3 +126,8 @@ sf::Vector2f SteeringInterface::CollisionAvoidance(std::vector<sf::Vector2f> vec
 }
 
 //====================================================================================================
+
+void  SteeringInterface::seperation(Enemy* enemy, std::shared_ptr<Enemy> currEnemy,  sf::Vector2f steerForce, float deltaTime)
+{
+		
+}

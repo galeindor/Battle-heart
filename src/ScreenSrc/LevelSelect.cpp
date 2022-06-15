@@ -91,7 +91,7 @@ void LevelSelect::initButtons()
 
 //=============================================================================
 
-void LevelSelect::handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window)
+void LevelSelect::handleHover(const sf::Vector2f& hoverPos)
 {
 	if (this->m_startButton.getGlobalBounds().contains(hoverPos))
 	{

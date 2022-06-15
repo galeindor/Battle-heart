@@ -14,7 +14,7 @@ public:
 
 protected:
 	virtual void initButtons() override;
-	virtual void handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window) override;
+	virtual void handleHover(const sf::Vector2f& hoverPos) override;
 	virtual void handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& window) override;
 	void initVolButtons();
 	void checkButton(sf::Vector2f hoverPos, int index);

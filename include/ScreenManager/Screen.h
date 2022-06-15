@@ -25,7 +25,7 @@ public:
 
 protected:
 	virtual void initButtons() = 0;
-	virtual void handleHover(const sf::Vector2f& hoverPos, sf::RenderWindow& window) = 0;
+	virtual void handleHover(const sf::Vector2f& hoverPos) = 0;
 	virtual void handleMouseClick(const sf::Vector2f& hoverPos, sf::RenderWindow& window) = 0;
 	void setBG(const int index);
 	void drawBG(sf::RenderWindow& window) { window.draw(this->m_bg); }
