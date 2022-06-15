@@ -36,7 +36,7 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 
 void Skill::useSkill(sf::Vector2f myLoc)
 {
-	if (this->m_timer.isTimeUp())
+	if (this->m_timer.isTimeUp() )
 	{
 		this->m_timer.setTimer();
 		for (auto& target : m_targets)

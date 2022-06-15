@@ -13,9 +13,8 @@ public:
 	virtual bool setTarget(std::shared_ptr<Player> obj) override;
 	virtual bool checkIntersection() const override;
 
-	// Returns a new shared ptr for a specific enemy character 
-
 protected:
+	// Returns a new shared ptr for a specific enemy character 
 	virtual shared_ptr<Enemy> getType() = 0;
 
 private:

@@ -7,7 +7,9 @@
 #include "Characters/Archer.h"
 #include "Characters/Demon.h"
 #include "Characters/Imp.h"
+#include "Characters/Wolf.h"
 #include "Characters/MiniDragon.h"
+#include "Characters/DarkCleric.h"
 #include "HashTable.h"
 #include "Controller.h"
 

@@ -27,7 +27,7 @@ public:
 						vector<std::shared_ptr<Player>> m_players, vector<std::shared_ptr<Enemy>> m_enemies);
 	// Management
 	void showHpBar() { m_hpBar.show(); }
-	bool targetInRange() ;
+	bool targetInRange() const;
 
 	// Getters
 	float				getMoveStat(int index)			const { return m_moveStats[index]; }

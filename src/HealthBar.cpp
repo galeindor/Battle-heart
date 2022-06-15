@@ -10,7 +10,7 @@ HealthBar::HealthBar(sf::Vector2f pos , int maxValue)
 }
 
 //====================================================================
-
+// Updating health's bar position and hp amount 
 void HealthBar::updateHealthBar(float statVal, const sf::Vector2f& pos)
 {
 	this->setPosition(pos);
@@ -18,8 +18,8 @@ void HealthBar::updateHealthBar(float statVal, const sf::Vector2f& pos)
 	auto healthLost = m_curr - statVal ;
 	auto temp = statVal;
 	statVal = std::min(statVal * BAR_WIDTH / m_max, size.x);
-
-	if (healthLost > 0.f && m_hitTimer.isTimeUp() ) // lowered hp
+	
+	if (healthLost > 0.f && m_hitTimer.isTimeUp() ) 
 	{
 		m_hitDamage.setFillColor(sf::Color::Red);
 		m_hitDamage.setString(std::to_string(int(std::ceil(healthLost))));

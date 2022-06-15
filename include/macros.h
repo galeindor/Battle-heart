@@ -17,6 +17,8 @@ struct LevelInfo {
 };
 constexpr auto PI = 3.14159265358979323846;
 const sf::Vector2f DEFAULT_VEC(0, 0);
+const sf::Vector2f SPRITE_SCALE(1.5f, 1.5f);
+
 constexpr auto SPRITE_SIZE = 60;
 constexpr auto WINDOW_WIDTH = 1400;
 constexpr auto WINDOW_HEIGHT = 800;
@@ -48,13 +50,16 @@ const AnimationParams projectileParams =	{ sf::Vector2f(8, 1), 0.3f  };
 const AnimationParams effectParams =		{ sf::Vector2f(5, 1), 0.3f  };
 
 const std::vector<std::vector<int>> CharacterRowLengths = {
-/* cleric*/	{9, 6, 6, 8, 7},
-/* knight*/	{9, 8, 6, 6, 7},
-/* witch*/	{9 ,6 ,6 ,8 ,7},
-/* archer*/	{9 ,6 ,6 ,8 ,7},
-/* demon */	{6, 3, 4, 4, 0},
-/* imp */	{6, 3, 4, 5, 0},
-/* miniDra*/{4, 3, 2, 3, 0},
+/* cleric*/		{9, 6, 6, 8, 7},
+/* knight*/		{9, 8, 6, 6, 7},
+/* witch*/		{9 ,6 ,6 ,8 ,7},
+/* archer*/		{9 ,6 ,6 ,8 ,7},
+/* demon */		{6, 3, 4, 4, 0},
+/* imp */		{6, 3, 4, 5, 0},
+/* miniDra*/	{4, 3, 2, 3, 0},
+/* wolf	  */	{9, 6, 6, 8, 7},
+/* darkCleric*/	{9, 6, 6, 8, 7}
+
 };
 
 // ----------------------------------------------
@@ -87,7 +92,7 @@ constexpr auto BUFF_DURATION = 20.f;
 // ----------------------------------------------
 //					Skills						-
 // ----------------------------------------------
-constexpr auto NUM_OF_CHARS = 7;
+constexpr auto NUM_OF_CHARS = 9;
 constexpr auto SKILL_RECT_SIZE = 80;
 
 enum Skills {
@@ -98,10 +103,12 @@ const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* cleric*/		{1.75f, 20.f, 30.f } ,
 /* knight*/		{1.65f ,30.f,  30.f } ,
 /* witch*/		{1.7f, 5.f , 5.f } ,
-/* archer*/		{1.7f, 20.f , 15.f } ,
+/* archer*/		{0.8f, 20.f , 15.f } ,
 /* demon*/		{1.5f},
 /* imp */		{1.65f},
-/* miniDragon*/	{1.7f}
+/* miniDragon*/	{1.7f},
+/* wolf*/		{1.7f},
+/* darkCleric*/	{1.7f},
 };
 
 const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
@@ -111,7 +118,9 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* archer*/		{1.f, 1.8f , 1.4f },
 /* demon*/		{1.f},
 /* imp */		{1.f},
-/* miniDragon*/	{1.f}
+/* miniDragon*/	{1.f},
+/* wolf	*/		{1.f},
+/* darkCleric*/	{1.f},
 };
 
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	
@@ -221,14 +230,14 @@ const std::vector<sf::Vector2f> startPositions = {
 
 // Textures ----------------------------------
 enum ObjectEnums {
-	_cleric, _knight, _witch, _archer,
-	_demon, _imp, _MiniDragon,
+	_cleric, _knight, _witch, _archer,	// players
+	_demon, _imp, _MiniDragon,_wolf , _darkCleric,	// enemies
 	_select, NUM_OF_OBJECTS
 };
 
 const std::string textures[NUM_OF_OBJECTS] = {
 	"cleric.png" , "knight.png", "wizard.png" , "archer.png",
-	"Demon.png","Imp.png", "MiniDragon.png", "select.png" };
+	"Demon.png","Imp.png", "MiniDragon.png", "wolf.png" , "DarkCleric.png", "select.png" };
 
 
 // Map ------------------------------------------
@@ -240,23 +249,29 @@ static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Demon" , _demon),
 	std::make_pair("Imp" , _imp),
 	std::make_pair("MiniDragon",_MiniDragon),
+	std::make_pair("Wolf" , _wolf),
+	std::make_pair("DarkCleric" , _darkCleric),
 	std::make_pair("Level", NEW_LEVEL_DETECTED)
 };
 
 
 // Stats ----------------------------------------
 enum Stats {
-	_hp, _attackSpeed, _dmg, _range, _defence,
+	_hp, _dmg, _range, _defence,
 	NUM_OF_STATS
 };
 
 const std::vector<std::vector<float>> charactersStats = {
-	/* cleric */	{ 70.f, 2.f, 6.f, 800.f , 10.f},
-	/* knight */	{ 120.f, 3.f, 15.f, 40.f , 20.f},
-	/* witch */		{ 90.f, 2.f, 2000.f, 600.f , 13.f},
-	/* demon  */	{ 80.f, 4.f, 30.f, 70.f , 15.f},
-	/* imp	  */	{ 75.f , 3.f , 20.f , 400.f , 10.f},
-	/* miniDrag */	{90.f , 4.f , 25.f , 200.f , 35.f}
+	/* cleric */	{ 700.f , 50.f, 800.f , 10.f},
+	/* knight */	{ 1200.f, 120.f, 40.f , 20.f},
+	/* witch */		{ 900.f , 100.f, 600.f , 13.f},
+	/* archer */	{ 800.f , 95.f, 600.f , 15.f},
+	/* demon  */	{ 900.f , 130.f, 70.f , 15.f},
+	/* imp	  */	{ 750.f , 100.f , 400.f , 10.f},
+	/* miniDrag */	{1250.f , 200.f , 200.f , 35.f},
+	/* wolf */		{1250.f , 70.f , 200.f , 35.f},
+	/* darkCleric*/ {1250.f , 700.f , 200.f , 35.f}
+
 };
 
 // Movement and Steering ------------------------
@@ -272,7 +287,9 @@ const std::vector<std::vector<float>> objectsPhysics = {
 	/* archer */		{ 0.2f, 40.f, 100.f },
 	/* demon  */		{ 0.1f, 45.f, 70.f },
 	/* imp */			{ 0.15f , 42.f , 78.f},
-	/* MiniDragon */	{ 0.2f , 40.f , 70.f}
+	/* MiniDragon */	{ 0.2f , 40.f , 70.f},
+	/* wolf */			{ 0.2f , 40.f , 70.f},
+	/* darkCleric */	{ 0.2f , 40.f , 70.f},
 };
 
 enum Physics {

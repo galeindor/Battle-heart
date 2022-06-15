@@ -23,6 +23,8 @@
                                               "CharacterSrc/Enemy.cpp"
                                               "CharacterSrc/Imp.cpp"
                                               "CharacterSrc/MiniDragon.cpp"
+                                              "CharacterSrc/DarkCleric.cpp"
+                                              "CharacterSrc/Wolf.cpp"
                                               "CharacterSrc/Character.cpp"
                                               "CharacterSrc/Player.cpp"
                                               "SkillSrc/Skill.cpp"
