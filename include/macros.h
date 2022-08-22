@@ -3,6 +3,21 @@
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
 
+
+// each character sprite sheet has different lengths rows so in order to handle all type of spritesheets
+// we save the length of each row in the sheet
+const std::vector<std::vector<int>> CharacterRowLengths = {
+	/* cleric*/		{9, 6, 6, 8, 7},
+	/* knight*/		{9, 8, 6, 6, 7},
+	/* wizard*/		{9 ,6 ,6 ,8 ,7},
+	/* archer*/		{9 ,6 ,6 ,8 ,7},
+	/* demon */		{6, 3, 4, 4, 0},
+	/* miniDra*/	{4, 3, 2, 3, 0},
+	/* wolf	  */	{9, 6, 6, 8, 7},
+	/* darkCleric*/	{9, 6, 6, 8, 7}
+
+};
+
 class Stat;
 
 // ----------------------------------------------
@@ -56,20 +71,6 @@ const AnimationParams characterParams =		{ sf::Vector2f(10,5), 0.3f  };
 const AnimationParams projectileParams =	{ sf::Vector2f(8, 1), 0.3f  };
 const AnimationParams effectParams =		{ sf::Vector2f(5, 1), 0.3f  };
 
-// each character sprite sheet has different lengths rows so in order to handle all type of spritesheets
-// we save the length of each row in the sheet
-const std::vector<std::vector<int>> CharacterRowLengths = {
-/* cleric*/		{9, 6, 6, 8, 7},
-/* knight*/		{9, 8, 6, 6, 7},
-/* wizard*/		{9 ,6 ,6 ,8 ,7},
-/* archer*/		{9 ,6 ,6 ,8 ,7},
-/* demon */		{6, 3, 4, 4, 0},
-/* miniDra*/	{4, 3, 2, 3, 0},
-/* wolf	  */	{9, 6, 6, 8, 7},
-/* darkCleric*/	{9, 6, 6, 8, 7}
-
-};
-
 // ----------------------------------------------
 //					Sounds						-
 // ----------------------------------------------
@@ -92,7 +93,7 @@ enum class AttackType { // different type of attacks targets
 
 // different type of effects
 enum Effects {
-	_heal, _damage, _defend, _drainLife, NUM_OF_EFFECTS
+	_heal, _damage, _defend, _drainLife, _teleport , NUM_OF_EFFECTS
 };
 
 constexpr auto BUFF_DURATION = 20.f;
@@ -111,11 +112,11 @@ const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* cleric*/		{1.75f, 20.f, 30.f } ,
 /* knight*/		{1.f ,30.f,  30.f } ,
 /* wizard*/		{1.7f, 5.f , 5.f } ,
-/* archer*/		{1.f, 20.f , 15.f } ,
+/* archer*/		{1.f, 20.f , 2.f } ,
 /* demon*/		{1.5f},
-/* miniDragon*/	{1.7f},
+/* Dragon*/		{1.7f},
 /* wolf*/		{1.7f},
-/* darkCleric*/	{1.7f},
+/* darkCleric*/	{1.7f , 5.f},
 };
 
 const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
@@ -124,9 +125,9 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* wizard*/		{1.f, 1.5f , 1.5f },
 /* archer*/		{1.f, 1.8f , 1.4f },
 /* demon*/		{1.f},
-/* miniDragon*/	{1.f},
+/* Dragon*/		{1.f},
 /* wolf	*/		{1.f},
-/* darkCleric*/	{1.f},
+/* darkCleric*/	{1.f, 1.f},
 };
 
 const std::string skillTextures[NUM_OF_PLAYERS][NUM_OF_SKILLS] ={	
@@ -245,14 +246,14 @@ const std::vector<sf::Vector2f> startPositions = {
 // Textures ----------------------------------
 enum ObjectEnums {
 	_cleric, _knight, _wizard, _archer,	// players
-	_demon, _MiniDragon,_wolf , _darkCleric,// enemies
+	_demon, _Dragon,_wolf , _darkCleric,// enemies
 	_select, NUM_OF_OBJECTS
 };
 
 
 const std::string textures[NUM_OF_OBJECTS] = {
 	"cleric.png" , "knight.png", "wizard.png" , "archer.png",
-	"Demon.png", "MiniDragon.png", "wolf.png" , "DarkCleric.png", "select.png" };
+	"Demon.png", "Dragon.png", "wolf.png" , "DarkCleric.png", "select.png" };
 
 
 // Map ------------------------------------------
@@ -263,7 +264,7 @@ static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Wizard", _wizard),
 	std::make_pair("Archer", _archer),
 	std::make_pair("Demon" , _demon),
-	std::make_pair("MiniDragon",_MiniDragon),
+	std::make_pair("Dragon",_Dragon),
 	std::make_pair("Wolf" , _wolf),
 	std::make_pair("DarkCleric",_darkCleric),
 	std::make_pair("Level", NEW_LEVEL_DETECTED)
@@ -271,6 +272,10 @@ static std::unordered_map<std::string, int> levelsMap = {
 
 
 // Stats ----------------------------------------
+
+constexpr float SHORT_RANGE = 100;
+constexpr float LONG_RANGE = WINDOW_WIDTH + WINDOW_HEIGHT;
+
 enum Stats {
 	_hp, _dmg, _range, _defence,
 	NUM_OF_STATS
@@ -278,14 +283,14 @@ enum Stats {
 
 // stats of all characters
 const std::vector<std::vector<float>> charactersStats = {
-	/* cleric */	{ 700.f , 50.f, 800.f , 10.f},
-	/* knight */	{ 1200.f, 180.f, 40.f , 20.f},
-	/* wizard */	{ 900.f , 300.f, 600.f , 13.f},
-	/* archer */	{ 600.f , 250.f, 600.f , 10.f},
-	/* demon  */	{ 660.f , 400.f, 70.f , 9.f},
-	/* miniDrag */	{700.f , 500.f , 200.f , 12.f},
-	/* wolf */		{600.f , 400.f , 50.f , 5.f},
-	/* darkCleric*/ {500.f , 50.f , 200.f , 5.f}
+	/* cleric */	{ 700.f , 50.f	, LONG_RANGE	, 10.f},
+	/* knight */	{ 1200.f, 180.f	, SHORT_RANGE	, 20.f},
+	/* wizard */	{ 900.f , 300.f	, LONG_RANGE	, 13.f},
+	/* archer */	{ 600.f , 250.f	, LONG_RANGE	, 10.f},
+	/* demon  */	{ 660.f , 400.f	, SHORT_RANGE	, 9.f},
+	/* miniDrag */	{ 700.f , 500.f , LONG_RANGE	, 12.f},
+	/* wolf */		{ 600.f , 400.f , SHORT_RANGE	, 5.f},
+	/* darkCleric*/ { 500.f , 50.f	, LONG_RANGE	, 5.f}
 };
 
 // Movement and Steering ------------------------
@@ -300,7 +305,7 @@ const std::vector<std::vector<float>> objectsPhysics = {
 	/* wizard */		{ 0.2f, 40.f, 100.f },
 	/* archer */		{ 0.2f, 40.f, 100.f },
 	/* demon  */		{ 0.1f, 45.f, 70.f },
-	/* MiniDragon */	{ 0.2f , 40.f , 70.f},
+	/* Dragon */	{ 0.2f , 40.f , 70.f},
 	/* wolf */			{ 0.2f , 40.f , 70.f},
 	/* darkCleric */	{ 0.2f , 40.f , 70.f},
 };

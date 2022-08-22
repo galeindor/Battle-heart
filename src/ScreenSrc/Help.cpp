@@ -40,8 +40,8 @@ void Help::handleHover(const sf::Vector2f& hoverPos)
 	{
 		this->m_returnButton.setOutlineColor(sf::Color::Black);
 		this->m_returnButton.setOutlineThickness(4);
-		if(!m_returnHovered)
-			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+		//if(!m_returnHovered)
+		//	this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 		m_returnHovered = true;
 	}
 	else

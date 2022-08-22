@@ -14,6 +14,7 @@ DarkCleric::DarkCleric()
 void DarkCleric::initSkills(const int index)
 {
 	this->createSkill(index, _basic, _heal, AttackType::Multi, !onPlayer, !isActive, _energy); // basic heal on all enemies
+	this->createSkill(index, _skill1, _teleport, AttackType::Self, !onPlayer, !isActive, _none); // teleport
 }
 
 //====================================================================================
@@ -23,6 +24,9 @@ void DarkCleric::update(sf::Vector2f steerForce, const float deltaTime,
 {
 	this->setAsTarget(findClosestEnemy(m_enemies));
 	Enemy::update(steerForce, deltaTime, m_players, m_enemies);
+
+	if (useSkill(_skill1, this->getPosition()))
+		this->setPosition(this->randEnemyPos());
 }
 
 //====================================================================================
@@ -43,4 +47,15 @@ std::shared_ptr<Enemy> DarkCleric::findClosestEnemy(vector<std::shared_ptr<Enemy
 			return copy[i];
 		i++;
 	}
+}
+
+//===============================================================================
+
+sf::Vector2f DarkCleric::randEnemyPos()
+{
+	auto pos = Enemy::randEnemyPos();
+
+	pos.x = rand() % (WINDOW_WIDTH - CUT_CORNERS);
+
+	return pos;
 }

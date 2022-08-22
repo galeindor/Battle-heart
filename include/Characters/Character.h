@@ -62,6 +62,7 @@ protected:
 	void createSkill(const int CharIndex, const int skillIndex, const int effectIndex,
 		const AttackType single, const bool onPlayer, const bool active, const int projType);
 	void addSkill(const Skill skill) { m_skills.push_back(std::make_unique<Skill>(skill)); }
+	bool useSkill(const int index, const sf::Vector2f& loc) { return m_skills[index]->useSkill(loc); }
 	vector<std::shared_ptr<Stat>>& getStats() { return this->m_stats; }
 
 private:

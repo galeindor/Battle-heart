@@ -36,7 +36,7 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 
 //============================================================================
 // Uses a skill when it's off cooldown.
-void Skill::useSkill(sf::Vector2f myLoc)
+bool Skill::useSkill(sf::Vector2f myLoc)
 {
 	if (this->m_timer.isTimeUp() )
 	{
@@ -49,7 +49,10 @@ void Skill::useSkill(sf::Vector2f myLoc)
 			auto projectile = Projectile(myLoc, target->getPosition(), this->m_projType, target , projParams);
 			m_projs.push_back(projectile);
 		}
+		return true;
 	}
+	return false;
+	
 }
 
 //============================================================================
@@ -71,7 +74,8 @@ HashTable<int, string> Skill::getTable()
 		std::make_pair(_heal, "Heal"),
 		std::make_pair(_damage, "Damage"),
 		std::make_pair(_defend, "Defend"),
-		std::make_pair(_drainLife, "Life steal")
+		std::make_pair(_drainLife, "Life steal"),
+		std::make_pair(_teleport , "Teleport")
 	};
 	return map;
 }
@@ -95,6 +99,10 @@ void Skill::initEffect(const int effectIndex)
 	case _drainLife:
 		this->m_effect = new LifeDrain();
 		break;
+
+	//case _teleport:
+	//	this->m_effect = new Teleport();
+	//	break;
 
 	default:
 		break;
@@ -148,10 +156,14 @@ void Skill::initInfo(const int effectIndex, const bool onPlayer,
 	this->m_info += ("Attack type :" + this->attackType(type));
 }
 
+//==========================================================
+
 std::string Skill::effectName(const int index)
 {
 	return this->m_effectsTable.getVal(index);
 }
+
+//==========================================================
 
 std::string Skill::targetType(const bool player)
 {
@@ -161,6 +173,8 @@ std::string Skill::targetType(const bool player)
 		return "Enemy";
 }
 
+//==========================================================
+
 std::string Skill::useType(const bool active)
 {
 	if (active)
@@ -168,6 +182,8 @@ std::string Skill::useType(const bool active)
 	else
 		return "Passive";
 }
+
+//==========================================================
 
 std::string Skill::cooldownStr(const float cooldown)
 {
@@ -179,6 +195,8 @@ std::string Skill::cooldownStr(const float cooldown)
 
 	return string;
 }
+
+//==========================================================
 
 std::string Skill::attackType(AttackType type)
 {
@@ -195,6 +213,8 @@ std::string Skill::attackType(AttackType type)
 		return "";
 	}
 }
+
+//==========================================================
 
 void Skill::updateVisual()
 {

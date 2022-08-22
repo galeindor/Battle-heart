@@ -17,7 +17,6 @@ public:
 protected:
 	// Returns a new shared ptr for a specific enemy character 
 	virtual shared_ptr<Enemy> getType() = 0;
+	virtual sf::Vector2f randEnemyPos();
 
-private:
-	sf::Vector2f randEnemyPos();
 };

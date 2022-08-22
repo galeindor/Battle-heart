@@ -12,6 +12,8 @@ Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest,
 	setAnimation(0);
 	setDestination(dest);
 	this->setOffset(projectileOffset);
+	this->updateOrientation();
+	this->setRotation(this->m_orientation);
 }
 
 //==============================================================================
@@ -39,15 +41,14 @@ void Projectile::updateMovement(float deltaTime)
 	auto dir = this->getDest() - this->getPosition();
 	auto movement = m_mvspd * dir * deltaTime;
 	this->setPosition(this->getPosition()+ m_mvspd * dir * deltaTime);
-	
 	this->handleAnimation(movement, deltaTime);
-	this->updateOrientation();
-	this->setRotation(this->m_orientation);
+
 }
 
 //==============================================================================
 // this func calculates the orientation needed to rotate the projectile to the
 // right angle (facing the target)
+
 void Projectile::updateOrientation()
 {
 	auto adj = this->getPosition().x - this->getTarget()->getPosition().x;

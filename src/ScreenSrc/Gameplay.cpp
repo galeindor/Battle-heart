@@ -171,7 +171,7 @@ void Gameplay::checkButton(sf::Vector2f hoverPos, GameButtons reg, GameButtons h
 		if (reg != this->m_lastButtonHovered)
 		{
 			this->m_lastButtonHovered = int(reg);
-			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+			//this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 		}
 	}
 	else
@@ -186,7 +186,7 @@ void Gameplay::checkPause(sf::Vector2f hoverPos)
 	{
 		if (!this->m_hoveredPause)
 		{
-			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+			//this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 			this->m_hoveredPause = true;
 		}
 		this->m_pauseButton.setTexture(*Resources::instance().getGameButtonText(_pauseHL));

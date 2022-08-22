@@ -10,12 +10,12 @@ Knight
 Cleric
 Archer
 !Demon 4 !
-! miniDragon 2 DarkCleric 2 !
+! Dragon 2 DarkCleric 2 !
 
 Level 3
 Knight
 Archer
 Cleric
-!Demon 3 miniDragon 2 !
-! Wolf 3 miniDragon 3 !
-! miniDragon 1 DarkCleric 1 !
+!Demon 3 Dragon 2 !
+! Wolf 3 Dragon 3 !
+! Dragon 1 DarkCleric 1 !

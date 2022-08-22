@@ -96,8 +96,8 @@ void LevelSelect::handleHover(const sf::Vector2f& hoverPos)
 	if (this->m_startButton.getGlobalBounds().contains(hoverPos))
 	{
 		this->m_startButton.setTexture(*Resources::instance().getLSTexture(_startButtonHL));
-		if (!(m_lastButtonHovered == _start && m_startHovered))
-			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+		//if (!(m_lastButtonHovered == _start && m_startHovered))
+		//	this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 		m_startHovered = true;
 		m_lastButtonHovered = _start;
 	}
@@ -111,8 +111,8 @@ void LevelSelect::handleHover(const sf::Vector2f& hoverPos)
 	{
 		this->m_returnButton.setOutlineColor(sf::Color::Black);
 		this->m_returnButton.setOutlineThickness(4);
-		if(!(m_lastButtonHovered == _return && m_returnHovered))
-			this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+		//if(!(m_lastButtonHovered == _return && m_returnHovered))
+		//	this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 		m_lastButtonHovered = _return;
 		m_returnHovered = true;
 	}
@@ -126,8 +126,8 @@ void LevelSelect::handleHover(const sf::Vector2f& hoverPos)
 		if (this->m_availableLevels[index].getGlobalBounds().contains(hoverPos))
 		{
 			this->m_levelHover.setPosition(this->m_availableLevels[index].getPosition() + lvlSelOffset);
-			if (!(m_lastButtonHovered == index && m_levelHovered))
-				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+			//if (!(m_lastButtonHovered == index && m_levelHovered))
+			//	this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 			this->m_levelHovered = true;
 			m_lastButtonHovered = index;
 			return;
@@ -240,7 +240,7 @@ HashTable<int, std::string> LevelSelect::getMap()
 		std::make_pair(_knight, "Knight"),
 		std::make_pair(_wizard, "Wizard"),
 		std::make_pair(_demon, "Demon"),
-		std::make_pair(_MiniDragon, "MiniDragon")
+		std::make_pair(_Dragon, "Dragon")
 	};
 	return map;
 }

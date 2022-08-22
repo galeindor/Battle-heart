@@ -49,9 +49,9 @@ sf::Vector2f Enemy::randEnemyPos()
 	int side = rand();
 	bool left = (side % 2 == 0) ? true : false; // Left/Right side of the screen.
 	if (left)
-		pos.x = 0; 
+		pos.x = CUT_CORNERS; 
 	else
-		pos.x = WINDOW_WIDTH;
+		pos.x = WINDOW_WIDTH - CUT_CORNERS;
 	pos.y = (rand() % (WINDOW_HEIGHT - HEIGHT_LIMIT)) + HEIGHT_LIMIT;
 	return pos;
 }

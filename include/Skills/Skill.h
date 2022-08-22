@@ -20,12 +20,12 @@ public:
 
 	// Management
 	void updateSkill(float deltaTime, vector<shared_ptr<Character>> targets, vector<shared_ptr<Stat>> myStats);
-	void useSkill(sf::Vector2f myLoc);
 	void setTargets(vector<shared_ptr<Character>> targets) { this->m_targets = targets; }
 	sf::Vector2f norm(sf::Vector2f vec);
 	void draw(sf::RenderWindow& window, bool);
-	bool handleClick(const sf::Vector2f& loc); // check click on skill
+	bool useSkill(sf::Vector2f myLoc);
 	bool checkHover(sf::Vector2f hoverPos);
+	bool handleClick(const sf::Vector2f& loc); // check click on skill
 
 	// Getters
 	bool getOnPlayer() const { return this->m_onPlayer; }

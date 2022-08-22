@@ -75,7 +75,7 @@ void Character::updateMovement(float deltaTime)
 		if (targetInRange())
 		{
 			this->setAnimation(_attack);
-			this->m_skills[_basic]->useSkill(this->getPosition());
+			useSkill(_basic, this->getPosition());
 		}
 		else
 			this->setAnimation(_idle); // Idle.

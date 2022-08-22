@@ -19,7 +19,8 @@ Sound::Sound()
 /* Plays the sound once. */
 void Sound::playSound(const int place)
 {
-	this->m_sounds[place].play();
+	if(m_sounds[place].getStatus() != sf::Sound::Playing)
+		this->m_sounds[place].play();
 }
 
 /* Plays the music in a loop. */

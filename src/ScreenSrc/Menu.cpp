@@ -53,8 +53,8 @@ void Menu::handleHover(const sf::Vector2f& hoverPos)
 		{
 			this->m_buttons[index].setOutlineColor(sf::Color::Black);
 			this->m_buttons[index].setOutlineThickness(4);
-			if(m_lastButtonHovered != index)
-				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+			///if(m_lastButtonHovered != index)
+			//	this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 			m_lastButtonHovered = index;
 			return;
 		}

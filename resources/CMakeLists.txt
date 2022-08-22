@@ -2,7 +2,7 @@
 
 # Enemies
 configure_file ("CharacterImages/Demon.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("CharacterImages/miniDragon.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("CharacterImages/Dragon.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/DarkCleric.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CharacterImages/Wolf.png" ${CMAKE_BINARY_DIR} COPYONLY)
 

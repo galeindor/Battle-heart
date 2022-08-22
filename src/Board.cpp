@@ -146,7 +146,7 @@ bool Board::handleFirstClick(sf::Vector2f location)
 	{
 		if (player->checkCollision(location))
 		{
-			this->m_controller->makeSound(int(Sound::Sounds::CLICK_PLAYER));
+			//this->m_controller->makeSound(int(Sound::Sounds::CLICK_PLAYER));
 			if(m_currPlayer)
 				m_currPlayer->setSelected(false);
 			player->setSelected(true);
@@ -179,7 +179,7 @@ bool Board::handleSecondClick(sf::Vector2f location)
 				return true;
 
 
-	this->m_controller->makeSound(int(Sound::Sounds::MOVE_PLAYER));
+	//this->m_controller->makeSound(int(Sound::Sounds::MOVE_PLAYER));
 	m_currPlayer->setAsTarget(nullptr);
 	m_currPlayer->setDestination(adjustLocation(location));
 	this->m_selected.setPosition(adjustLocation(location));
@@ -196,7 +196,7 @@ void Board::hoverEnemies(const sf::Vector2f& hoverPos)
 			if (this->m_currEnemyHovered != i)
 			{
 				this->m_currEnemyHovered = i;
-				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+				//this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 			}
 			return;
 		}
@@ -215,7 +215,7 @@ void Board::hoverPlayers(const sf::Vector2f& hoverPos)
 			if (this->m_currPlayerHovered != i)
 			{
 				this->m_currPlayerHovered = i;
-				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+				//this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 			}
 			return;
 		}
@@ -246,7 +246,7 @@ void Board::hoverSkills(const sf::Vector2f& hoverPos)
 				this->m_hoveredSkillInfo.setString(this->m_currPlayer->getSkillData(i));
 
 				this->m_skillHover.setPosition(sf::Vector2f(i * (SKILL_RECT_SIZE + 20) + 30, 30));
-				this->m_controller->makeSound(int(Sound::Sounds::HOVER));
+				//this->m_controller->makeSound(int(Sound::Sounds::HOVER));
 				this->m_currSkillHovered = i;
 			}
 			return;
@@ -380,7 +380,7 @@ HashTable<int, shared_ptr<Enemy>> Board::getEnemiesTable()
 {
 	std::unordered_map<int, shared_ptr<Enemy>> enemiesMap = {
 		std::make_pair(_demon, Demon().getType()),
-		std::make_pair(_MiniDragon , MiniDragon().getType()),
+		std::make_pair(_Dragon , Dragon().getType()),
 		std::make_pair(_wolf , Wolf().getType()),
 		std::make_pair(_darkCleric , DarkCleric().getType())
 

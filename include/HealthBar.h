@@ -1,5 +1,4 @@
 #pragma once
-#include "macros.h"
 #include "Resources.h"
 #include "Timer.h"
 
@@ -7,7 +6,7 @@ class HealthBar
 {
 public:
 	// C-tors and d-tor.
-	HealthBar() :m_showTimer(3.f) ,m_hitTimer(0.8f) , m_max(100){}
+	HealthBar() :m_showTimer(3.f) ,m_hitTimer(0.8f) , m_max(100), m_curr(100){}
 	HealthBar(sf::Vector2f pos, int maxValue);
 	~HealthBar() = default;
 
@@ -33,4 +32,5 @@ private:
 	float m_curr;
 	Timer m_showTimer;
 	Timer m_hitTimer;
+
 };
