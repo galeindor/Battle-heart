@@ -93,7 +93,7 @@ enum class AttackType { // different type of attacks targets
 
 // different type of effects
 enum Effects {
-	_heal, _damage, _defend, _drainLife, _teleport , NUM_OF_EFFECTS
+	_heal, _damage, _defend, _drainLife, _teleport, _dmgByDistance, NUM_OF_EFFECTS
 };
 
 constexpr auto BUFF_DURATION = 20.f;
@@ -112,7 +112,7 @@ const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* cleric*/		{1.75f, 20.f, 30.f } ,
 /* knight*/		{1.f ,30.f,  30.f } ,
 /* wizard*/		{1.7f, 5.f , 5.f } ,
-/* archer*/		{1.f, 20.f , 2.f } ,
+/* archer*/		{1.f, 5.f , 2.f } ,
 /* demon*/		{1.5f},
 /* Dragon*/		{1.7f},
 /* wolf*/		{1.7f},
@@ -123,7 +123,7 @@ const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* cleric*/		{1.f, 1.2f, 1.75f },
 /* knight*/		{1.f ,1.5f, 1.3f  },
 /* wizard*/		{1.f, 1.5f , 1.5f },
-/* archer*/		{1.f, 1.8f , 1.4f },
+/* archer*/		{0.2f, 1.f , 1.4f },
 /* demon*/		{1.f},
 /* Dragon*/		{1.f},
 /* wolf	*/		{1.f},

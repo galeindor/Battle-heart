@@ -18,7 +18,7 @@ Skill::Skill(const sf::Texture* texture, const sf::Vector2f pos, float cooldown,
 
 //============================================================================
 // Updates skill and cooldown.
-void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targets, std::vector<std::shared_ptr<Stat>> myStats)
+void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targets, Character* caster)
 {
 	this->setTargets(targets);
 	this->m_timer.updateTimer(deltaTime);
@@ -28,7 +28,7 @@ void Skill::updateSkill(float deltaTime, vector<std::shared_ptr<Character>> targ
 		this->m_projs[i].updateMovement(deltaTime);
 		if (m_projs[i].checkIntersection())
 		{
-			this->m_effect->affect(myStats, m_projs[i].getTarget(), m_factor);
+			this->m_effect->affect(caster, m_projs[i].getTarget(), m_factor);
 			m_projs.erase(m_projs.begin() + i);
 		}
 	}
@@ -75,7 +75,8 @@ HashTable<int, string> Skill::getTable()
 		std::make_pair(_damage, "Damage"),
 		std::make_pair(_defend, "Defend"),
 		std::make_pair(_drainLife, "Life steal"),
-		std::make_pair(_teleport , "Teleport")
+		std::make_pair(_teleport , "Teleport"),
+		std::make_pair(_dmgByDistance, "Damage By Distance")
 	};
 	return map;
 }
@@ -98,6 +99,9 @@ void Skill::initEffect(const int effectIndex)
 		break;
 	case _drainLife:
 		this->m_effect = new LifeDrain();
+		break;
+	case _dmgByDistance:
+		this->m_effect = new DmgByDistance();
 		break;
 
 	//case _teleport:

@@ -113,7 +113,7 @@ void Character::updateSkills(const float deltaTime, vector<std::shared_ptr<Playe
 		default:
 			break;
 		}
-		skill->updateSkill(deltaTime, m_targets, this->m_stats);
+		skill->updateSkill(deltaTime, m_targets, this);
 	}
 }
 

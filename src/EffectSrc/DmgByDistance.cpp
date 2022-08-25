@@ -5,11 +5,12 @@
 DmgByDistance::DmgByDistance()
 {}
 
-void DmgByDistance::affect(vector<std::shared_ptr<Stat>> myStats, Character* target, float factor)
+void DmgByDistance::affect(Character* self, Character* target, float factor)
 {
 	auto currHP = target->getStat(_hp);
-	auto dmgByDefence = (myStats[_dmg]->getStat() * factor / target->getStat(_defence));
-
-	auto distance = sqrt(pow(myPos.x - tarPos.x, 2) + pow(myPos.y - tarPos.y, 2));
-	target->setStat(_hp, currHP - dmgByDefence);
+	auto dmgByDefence = (self->getStat(_dmg) * factor / target->getStat(_defence));
+	auto myPos = self->getPosition();
+	auto tarPos = target->getPosition();
+	auto distance = sqrt(pow(myPos.x - tarPos.x, 2) + pow(myPos.y - tarPos.y, 2)) / SPRITE_SIZE;
+	target->setStat(_hp, currHP - (distance * dmgByDefence));
 }

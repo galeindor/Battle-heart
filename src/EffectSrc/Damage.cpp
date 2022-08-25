@@ -5,9 +5,9 @@
 Damage::Damage()
 {}
 
-void Damage::affect(vector<std::shared_ptr<Stat>> myStats, Character* target , float factor)
+void Damage::affect(Character* self, Character* target , float factor)
 {
 	auto currHP = target->getStat(_hp);
-	auto dmgByDefence = ( myStats[_dmg]->getStat() * factor / (target->getStat(_defence) * DEFENSE_IGNORE_RATE) ) ;
+	auto dmgByDefence = ( self->getStat(_dmg) * factor / (target->getStat(_defence) * DEFENSE_IGNORE_RATE) ) ;
 	target->setStat(_hp, currHP - dmgByDefence);
 }

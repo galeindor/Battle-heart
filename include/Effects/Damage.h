@@ -7,6 +7,6 @@ class Damage : public Effect
 {
 public:
 	Damage();
-	virtual void affect(vector<std::shared_ptr<Stat>> myStats,
+	virtual void affect(Character* self,
 						Character* target, float factor) override;
 };

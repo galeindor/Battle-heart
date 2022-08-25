@@ -1,11 +1,12 @@
 #pragma once
-#include "Effect.h"
+#include <cmath>
+#include "Effects/Effect.h"
 
-// This class is in charge of the defend effect.
-class Defend : public Effect
+
+class DmgByDistance : public Effect
 {
 public:
-	Defend();
+	DmgByDistance();
 
 	virtual void affect(Character* self,
 		Character* target, float factor) override;

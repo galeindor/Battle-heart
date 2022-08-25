@@ -6,6 +6,6 @@ class LifeDrain : public Effect
 {
 public:
 	LifeDrain();
-	virtual void affect(vector<std::shared_ptr<Stat>> myStats,
+	virtual void affect(Character* self,
 		Character* target, float factor) override;
 };
