@@ -1,12 +1,20 @@
 #pragma once
 #include "Resources.h"
 #include "Timer.h"
+#include <utility>
+
+struct HitUI
+{
+	sf::Text _text;
+	Timer _timer = Timer(0.8f);
+	sf::RectangleShape _hitRect;
+};
 
 class HealthBar
 {
 public:
 	// C-tors and d-tor.
-	HealthBar() :m_showTimer(3.f) ,m_hitTimer(0.8f) , m_max(100), m_curr(100){}
+	HealthBar() :m_showTimer(3.f), m_max(100), m_curr(100){}
 	HealthBar(sf::Vector2f pos, int maxValue);
 	~HealthBar() = default;
 
@@ -19,18 +27,17 @@ public:
 private:
 	// Initiation functions.
 	void initBars(const sf::Vector2f pos);
-	void initText(const sf::Vector2f pos);
+	void initText(sf::Text& text, const sf::Vector2f pos);
+	void addDamageText(bool lostHP, float amount, const sf::Vector2f& pos);
 
 	// Visuals.
 	sf::RectangleShape m_bar;
 	sf::RectangleShape m_currHealth;
-	sf::RectangleShape m_hitHealth;
-	sf::Text m_hitDamage;
+	vector<HitUI> m_hitUI;
 
 	// Mangement.
 	float m_max;
 	float m_curr;
 	Timer m_showTimer;
-	Timer m_hitTimer;
 
 };
