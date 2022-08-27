@@ -71,8 +71,7 @@ private:
 
 	// draw functions - draw objects
 	void drawObjects(sf::RenderWindow& window);
-	void drawObject(bool player, int& index, sf::RenderWindow& window);
-
+	
 	// movement and behavior functions
 	void seperation(Enemy* enemy, sf::Vector2f steerForce, float deltaTime);
 	void playerBehavior(std::shared_ptr<Player> character, float deltaTime);

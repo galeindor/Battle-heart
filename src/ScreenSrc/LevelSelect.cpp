@@ -238,9 +238,12 @@ HashTable<int, std::string> LevelSelect::getMap()
 	std::unordered_map<int, std::string> map = {
 		std::make_pair(_cleric, "Cleric"),
 		std::make_pair(_knight, "Knight"),
+		std::make_pair(_archer, "Archer"),
 		std::make_pair(_wizard, "Wizard"),
+		std::make_pair(_wolf, "Wolf"),
+		std::make_pair(_darkCleric, "DarkCleric"),
 		std::make_pair(_demon, "Demon"),
-		std::make_pair(_Dragon, "Dragon")
+		std::make_pair(_dragon, "Dragon")
 	};
 	return map;
 }

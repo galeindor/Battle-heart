@@ -21,7 +21,7 @@ public:
 	float	getCooldown() const { return m_cooldown; }
 	bool	isTimeUp() const { return this->m_timeLeft <= 0; }
 	void	updateTimer(const float deltaTime) { m_timeLeft -= deltaTime; }
-	void	setCooldown(int newCD) { m_cooldown = newCD; }
+	void	setCooldown(float newCD) { m_cooldown = newCD; }
 	void	setTimer() { this->m_timeLeft = this->m_cooldown; }
 	float	getTimeLeft() const { return m_timeLeft; }
 
