@@ -32,4 +32,5 @@
                                               "EffectSrc/Damage.cpp"
                                               "EffectSrc/Defend.cpp"
                                               "EffectSrc/LifeDrain.cpp"
-                                              "EffectSrc/DmgByDistance.cpp")
+                                              "EffectSrc/DmgByDistance.cpp"
+                                              "EffectSrc/Teleport.cpp")

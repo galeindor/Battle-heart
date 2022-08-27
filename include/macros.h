@@ -12,7 +12,7 @@ const std::vector<std::vector<int>> CharacterRowLengths = {
 	/* wizard*/		{9 ,6 ,6 ,8 ,7},
 	/* archer*/		{9 ,6 ,6 ,8 ,7},
 	/* demon */		{6, 3, 4, 4, 0},
-	/* miniDra*/	{4, 3, 2, 3, 0},
+	/* dragon */	{4, 3, 2, 3, 0},
 	/* wolf	  */	{9, 6, 6, 8, 7},
 	/* darkCleric*/	{9, 6, 6, 8, 7}
 
@@ -33,7 +33,7 @@ struct LevelInfo {
 };
 constexpr auto PI = 3.14159265358979323846;
 const sf::Vector2f DEFAULT_VEC(0, 0);
-const sf::Vector2f SPRITE_SCALE(1.5f, 1.5f);
+const sf::Vector2f SPRITE_SCALE(2.0f, 2.0f);
 const sf::Vector2f SCALE(1.3f, 1.3f);
 
 // each attack has a const defence ignore rate ( dmg / (def * ignore_rate)) - for balanced damage
@@ -51,7 +51,7 @@ constexpr auto NEW_LEVEL_DETECTED = -3;
 constexpr auto WAVE = '!';
 constexpr auto _levelInProgress = 2;
 constexpr auto NUM_OF_BACKGROUNDS = 3;
-constexpr float DEF_MVSPD = 5.1;
+constexpr auto DEF_MVSPD = 6.f;
 
 // ----------------------------------------------
 //					Animations					-
@@ -110,20 +110,20 @@ enum Skills {
 
 const float skillCooldowns[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* cleric*/		{1.75f, 20.f, 30.f } ,
-/* knight*/		{1.f ,30.f,  30.f } ,
-/* wizard*/		{1.7f, 5.f , 5.f } ,
-/* archer*/		{1.f, 5.f , 2.f } ,
+/* knight*/		{1.1f ,30.f,  30.f } ,
+/* wizard*/		{1.5f, 20.f , 15.f } ,
+/* archer*/		{2.f, 15.f , 20.f } ,
 /* demon*/		{1.5f},
-/* Dragon*/		{1.7f},
+/* Dragon*/		{1.3f},
 /* wolf*/		{1.7f},
-/* darkCleric*/	{1.7f , 5.f},
+/* darkCleric*/	{1.75f , 5.f},
 };
 
 const float skillFactors[NUM_OF_CHARS][NUM_OF_SKILLS] = {
 /* cleric*/		{1.f, 1.2f, 1.75f },
 /* knight*/		{1.f ,1.5f, 1.3f  },
 /* wizard*/		{1.f, 1.5f , 1.5f },
-/* archer*/		{0.2f, 1.f , 1.4f },
+/* archer*/		{1.f, 1.f , 1.2f },
 /* demon*/		{1.f},
 /* Dragon*/		{1.f},
 /* wolf	*/		{1.f},
@@ -182,7 +182,7 @@ const std::string bgTextures[NUM_OF_BG] = {
 // ----------------------------------------------
 
 // offset to center the sprites.
-const sf::Vector2f healthOffset(30, 100);
+const sf::Vector2f healthOffset(30, 120);
 const sf::Vector2f healthTextOffset(10, 130);
 const sf::Vector2f projectileOffset(-10, -20);
 const sf::Vector2f selectedOffset(45, 30);
@@ -246,7 +246,7 @@ const std::vector<sf::Vector2f> startPositions = {
 // Textures ----------------------------------
 enum ObjectEnums {
 	_cleric, _knight, _wizard, _archer,	// players
-	_demon, _Dragon,_wolf , _darkCleric,// enemies
+	_demon, _dragon, _wolf, _darkCleric,// enemies
 	_select, NUM_OF_OBJECTS
 };
 
@@ -264,7 +264,7 @@ static std::unordered_map<std::string, int> levelsMap = {
 	std::make_pair("Wizard", _wizard),
 	std::make_pair("Archer", _archer),
 	std::make_pair("Demon" , _demon),
-	std::make_pair("Dragon",_Dragon),
+	std::make_pair("Dragon",_dragon),
 	std::make_pair("Wolf" , _wolf),
 	std::make_pair("DarkCleric",_darkCleric),
 	std::make_pair("Level", NEW_LEVEL_DETECTED)
@@ -283,14 +283,15 @@ enum Stats {
 
 // stats of all characters
 const std::vector<std::vector<float>> charactersStats = {
-	/* cleric */	{ 700.f , 50.f	, LONG_RANGE	, 10.f},
-	/* knight */	{ 1200.f, 180.f	, SHORT_RANGE	, 20.f},
-	/* wizard */	{ 900.f , 300.f	, LONG_RANGE	, 13.f},
-	/* archer */	{ 600.f , 250.f	, LONG_RANGE	, 10.f},
-	/* demon  */	{ 660.f , 400.f	, SHORT_RANGE	, 9.f},
-	/* miniDrag */	{ 700.f , 500.f , LONG_RANGE	, 12.f},
-	/* wolf */		{ 600.f , 400.f , SHORT_RANGE	, 5.f},
-	/* darkCleric*/ { 500.f , 50.f	, LONG_RANGE	, 5.f}
+	//				HP		DMG		RANGE		DEFENCE
+	/* cleric */	{ 100.f, 16.f	,LONG_RANGE	, 9.f},
+	/* knight */	{ 100.f, 25.f	,SHORT_RANGE, 21.f},
+	/* wizard */	{ 100.f, 30.f	,LONG_RANGE	, 13.f},
+	/* archer */	{ 100.f, 32.f	,LONG_RANGE	, 14.f},
+	/* demon  */	{ 100.f, 23.f	,SHORT_RANGE, 10.f},
+	/* Dragon */	{ 100.f, 18.f	,LONG_RANGE	, 12.f},
+	/* wolf */		{ 100.f, 20.f	,SHORT_RANGE, 5.f},
+	/* darkCleric*/ { 100.f, 15.f	,LONG_RANGE	, 5.f}
 };
 
 // Movement and Steering ------------------------
@@ -305,7 +306,7 @@ const std::vector<std::vector<float>> objectsPhysics = {
 	/* wizard */		{ 0.2f, 40.f, 100.f },
 	/* archer */		{ 0.2f, 40.f, 100.f },
 	/* demon  */		{ 0.1f, 45.f, 70.f },
-	/* Dragon */	{ 0.2f , 40.f , 70.f},
+	/* Dragon */		{ 0.2f , 40.f , 70.f},
 	/* wolf */			{ 0.2f , 40.f , 70.f},
 	/* darkCleric */	{ 0.2f , 40.f , 70.f},
 };

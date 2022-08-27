@@ -1,6 +1,7 @@
 Level 1
 Knight
 Archer
+Wizard
 !DarkCleric 1 !
 ! Demon 2 !
 

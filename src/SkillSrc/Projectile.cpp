@@ -20,7 +20,9 @@ Projectile::Projectile(const sf::Vector2f pos, const sf::Vector2f dest,
 
 bool Projectile::checkIntersection() const
 {
-	auto norm = sqrt(pow((this->getPosition().x - this->getDest().x), 2) + pow((this->getPosition().y - this->getDest().y), 2));
+	auto pos = this->getPosition();
+	auto dest = this->getDest();
+	auto norm = sqrt(pow((pos.x - dest.x), 2) + pow((pos.y - dest.y), 2));
 	auto epsilon = 10.f;
 	return norm <= epsilon || this->getTarget()->checkCollision(this->getPosition());
 }

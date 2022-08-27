@@ -2,9 +2,9 @@
 
 // Constructor.
 Dragon::Dragon()
-	:Enemy(_Dragon)
+	:Enemy(_dragon)
 {
-	this->initSkills(_Dragon);
+	this->initSkills(_dragon);
 	this->setOffset({ 10,-20 });
 }
 

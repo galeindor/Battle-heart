@@ -76,7 +76,7 @@ HashTable<int, string> Skill::getTable()
 		std::make_pair(_defend, "Defend"),
 		std::make_pair(_drainLife, "Life steal"),
 		std::make_pair(_teleport , "Teleport"),
-		std::make_pair(_dmgByDistance, "Damage By Distance")
+		std::make_pair(_dmgByDistance, "Distance Dmg")
 	};
 	return map;
 }
@@ -104,9 +104,9 @@ void Skill::initEffect(const int effectIndex)
 		this->m_effect = new DmgByDistance();
 		break;
 
-	//case _teleport:
-	//	this->m_effect = new Teleport();
-	//	break;
+	case _teleport:
+		this->m_effect = new Teleport();
+		break;
 
 	default:
 		break;

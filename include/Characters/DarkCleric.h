@@ -16,9 +16,6 @@ public:
 	virtual void update(sf::Vector2f steerForce, const float deltaTime,
 		vector<std::shared_ptr<Player>> m_players, vector<std::shared_ptr<Enemy>> m_enemies) override;
 
-protected:
-	sf::Vector2f randEnemyPos() override;
-
 private:
 	std::shared_ptr<Enemy> findClosestEnemy(vector<std::shared_ptr<Enemy>> m_enemies);
 };

@@ -380,7 +380,7 @@ HashTable<int, shared_ptr<Enemy>> Board::getEnemiesTable()
 {
 	std::unordered_map<int, shared_ptr<Enemy>> enemiesMap = {
 		std::make_pair(_demon, Demon().getType()),
-		std::make_pair(_Dragon , Dragon().getType()),
+		std::make_pair(_dragon , Dragon().getType()),
 		std::make_pair(_wolf , Wolf().getType()),
 		std::make_pair(_darkCleric , DarkCleric().getType())
 

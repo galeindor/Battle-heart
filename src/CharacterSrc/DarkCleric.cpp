@@ -25,37 +25,36 @@ void DarkCleric::update(sf::Vector2f steerForce, const float deltaTime,
 	this->setAsTarget(findClosestEnemy(m_enemies));
 	Enemy::update(steerForce, deltaTime, m_players, m_enemies);
 
-	if (useSkill(_skill1, this->getPosition()))
-		this->setPosition(this->randEnemyPos());
+	useSkill(_skill1, this->getPosition());
 }
 
+//====================================================================================
+float distance(sf::Vector2f pos1, sf::Vector2f pos2)
+{
+	return std::sqrt(std::pow(pos1.x - pos2.x, 2) + std::pow(pos1.y - pos2.y, 2));
+}
 //====================================================================================
 // Dark cleric will target the enemy with the lowest hp at the moment.
 std::shared_ptr<Enemy> DarkCleric::findClosestEnemy(vector<std::shared_ptr<Enemy>> enemies)
 {
 	auto copy = enemies;
 
+	auto myPos = this->getPosition();
 	// sort the enemies by x values and find one that isn't dead
 	std::sort(copy.begin(), copy.end(),
-		[](auto e1 , auto e2) {return e1->getPosition().x < e2->getPosition().x; });
+		[&](auto e1, auto e2) {return distance(e1->getPosition(), myPos) < distance(e2->getPosition(), myPos); });
 
-	auto i = 0;
 
-	while (i < copy.size()) // target the first not dead enemy
+	std::shared_ptr<Enemy> self;
+	for (auto enemy : copy)
 	{
-		if(copy[i]->isAlive())
-			return copy[i];
-		i++;
+		if (enemy.get() == this)
+		{
+			self = enemy;
+			continue;
+		}
+		else if(enemy->isAlive())
+			return enemy;
 	}
-}
-
-//===============================================================================
-
-sf::Vector2f DarkCleric::randEnemyPos()
-{
-	auto pos = Enemy::randEnemyPos();
-
-	pos.x = rand() % (WINDOW_WIDTH - CUT_CORNERS);
-
-	return pos;
+	return self;
 }

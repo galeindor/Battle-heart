@@ -11,7 +11,7 @@ Character::Character(const sf::Vector2f pos, const int index, AnimationParams an
 	this->initStats(index); // Stats
 	this->initPhysics(index); // Physics
 	this->initBuffs(); // Buffs
-	m_hpBar = HealthBar(pos, m_stats[_hp]->getStat()); // Health bar
+	m_hpBar = HealthBar(pos, m_stats[_hp]->getValue()); // Health bar
 }
 
 //=======================================================================================
@@ -51,7 +51,7 @@ void Character::update(sf::Vector2f steerForce, float deltaTime,
 	updateMovement(deltaTime); // Movement update.
 	updateBuffs(); // Buffs update.
 	this->updateSkills(deltaTime, m_players, m_enemies); // Skills update.
-	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat() , this->getPosition()); // HP update.
+	this->m_hpBar.updateHealthBar(m_stats[_hp]->getValue() , this->getPosition()); // HP update.
 	handleAnimation(this->getVelocity() * deltaTime, deltaTime); // Animation update.
 }
 
@@ -123,6 +123,7 @@ void Character::initStats(const int index)
 {
 	for (int stat = 0; stat < NUM_OF_STATS; stat++)
 		this->m_stats.push_back(std::make_shared<Stat>(charactersStats[index][stat]));
+	this->m_stats[_hp]->setMax(m_stats[_hp]->getValue());
 }
 
 //=======================================================================================
@@ -178,7 +179,7 @@ void Character::setDying()
 {
 	this->setAnimation(_death);
 	this->m_isDying = true;
-	this->m_hpBar.updateHealthBar(m_stats[_hp]->getStat(), this->getPosition());
+	this->m_hpBar.updateHealthBar(m_stats[_hp]->getValue(), this->getPosition());
 }
 
 //=======================================================================================
@@ -294,7 +295,7 @@ void Character::setActiveBuff(int index ,float duration)
 
 	m_buffTimers[index].first.setCooldown(duration);
 	m_buffTimers[index].first.setTimer();
-	m_buffTimers[index].second = m_stats[index]->getStat();
+	m_buffTimers[index].second = m_stats[index]->getValue();
 	m_activeBuffs[index] = true;
 }
 
@@ -305,7 +306,7 @@ void Character::initBuffs()
 	for (size_t i = 0; i < NUM_OF_STATS ; i++)
 	{
 		auto timer = Timer(0.f);
-		m_buffTimers.push_back(std::make_pair(timer , m_stats[i]->getStat()));
+		m_buffTimers.push_back(std::make_pair(timer , m_stats[i]->getValue()));
 		m_activeBuffs.push_back(false);
 	}
 }

@@ -36,13 +36,13 @@ public:
 
 	// Getters.
 	float				getMoveStat(int index)			const { return m_moveStats[index]; }
-	int					getStat(int index)				const { return this->m_stats[index]->getStat(); }
-	bool				isAlive()							const { return this->m_stats[_hp]->getStat() > 0; } // return if the character is alive
+	int					getStat(int index)				const { return this->m_stats[index]->getValue(); }
+	bool				isAlive()							const { return this->m_stats[_hp]->getValue() > 0; } // return if the character is alive
 	bool				getIsDying()						const { return this->m_isDying; }
 	HealthBar			getHpBar()				const { return this->m_hpBar; }
 	sf::Vector2f		getVelocity()			const { return this->m_velocity; }
 	SteeringInterface*	behaviour()			const { return this->m_steering; }
-	std::string getSkillData(int index) const;
+	std::string			getSkillData(int index) const;
 	vector<sf::Vector2f> getLocationsVec (bool getDest) const;
 	vector<float>		getMoveStats() const { return m_moveStats; }
 

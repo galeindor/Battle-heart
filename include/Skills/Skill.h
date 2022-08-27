@@ -5,6 +5,7 @@
 #include "Effects/Defend.h"
 #include "Effects/DmgByDistance.h"
 #include "Effects/LifeDrain.h"
+#include "Effects/Teleport.h"
 #include "Timer.h"
 #include "Skills/Projectile.h"
 #include "HashTable.h"
