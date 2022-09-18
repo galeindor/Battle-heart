@@ -13,8 +13,8 @@ DarkCleric::DarkCleric()
 // Inits skills.
 void DarkCleric::initSkills(const int index)
 {
-	this->createSkill(index, _basic, _heal, AttackType::Multi, !onPlayer, !isActive, _energy); // basic heal on all enemies
-	this->createSkill(index, _skill1, _teleport, AttackType::Self, !onPlayer, !isActive, _none); // teleport
+	this->createSkill(index, _basic, _heal, AttackType::Multi, !onPlayer, !isActive, _energy, Sound::Sounds::HEAL); // basic heal on all enemies
+	this->createSkill(index, _skill1, _teleport, AttackType::Self, !onPlayer, !isActive, _none, Sound::Sounds::NO_SOUND); // teleport
 }
 
 //====================================================================================

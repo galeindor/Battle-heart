@@ -4,10 +4,21 @@
 
 //==========================================================================================
 // Constructs a skill.
-Skill::Skill(const sf::Texture* texture, const sf::Vector2f pos, float cooldown,
-	const int effectIndex, AttackType type, bool onPlayer, bool isActive , float factor , int projType)
+Skill::Skill
+(
+	const sf::Texture* texture,
+	const sf::Vector2f pos,
+	float cooldown,
+	const int effectIndex,
+	AttackType type,
+	bool onPlayer,
+	bool isActive,
+	float factor,
+	int projType,
+	Sound::Sounds soundIndex
+)
 	: m_timer(Timer(cooldown)), m_type(type), m_effectsTable(this->getTable()),
-	m_onPlayer(onPlayer), m_isActive(isActive) , m_factor(factor)
+	m_onPlayer(onPlayer), m_isActive(isActive) , m_factor(factor) , m_soundIndex(int(soundIndex))
 {
 	this->m_projType = projType;
 	this->initInfo(effectIndex, onPlayer, isActive, cooldown, type);
@@ -41,6 +52,7 @@ bool Skill::useSkill(sf::Vector2f myLoc)
 	if (this->m_timer.isTimeUp() )
 	{
 		this->m_timer.setTimer();
+		Sound::instance().playSound(m_soundIndex);
 		for (auto& target : m_targets)
 		{
 			auto direction = target->getPosition() - myLoc;
@@ -49,6 +61,7 @@ bool Skill::useSkill(sf::Vector2f myLoc)
 			auto projectile = Projectile(myLoc, target->getPosition(), this->m_projType, target , projParams);
 			m_projs.push_back(projectile);
 		}
+
 		return true;
 	}
 	return false;

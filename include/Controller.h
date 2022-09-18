@@ -19,8 +19,8 @@ public:
 	void setMaxLvlAchieved(int newMax);
 
 	// Audio.
-	void makeSound(int index)					{ this->m_sound.playSound(index); }
-	void makeMusic(const std::string fileName)	{ this->m_sound.playMusic(fileName); }
+	void makeSound(Sound::Sounds index)					{ Sound::instance().playSound(int(index)); }
+	void makeMusic(const std::string fileName)			{ Sound::instance().playMusic(fileName); }
 	void manageSound(Sound::VolumeControl action);
 
 	// Getters.
@@ -46,5 +46,4 @@ private:
 	// SFML.
 	sf::RenderWindow m_window;
 	sf::Clock m_clock;
-	Sound m_sound;
 };

@@ -70,10 +70,7 @@ void Resources::loadResources()
 		}
 
 		if (!this->m_font.loadFromFile(MAIN_FONT))
-		{
-
 			throw std::runtime_error("Cannot set text font\n");
-		}
 	}
 	catch (std::runtime_error& e) // catch exeption if a file is failed to load
 	{

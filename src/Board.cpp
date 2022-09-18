@@ -146,7 +146,7 @@ bool Board::handleFirstClick(sf::Vector2f location)
 	{
 		if (player->checkCollision(location))
 		{
-			//this->m_controller->makeSound(int(Sound::Sounds::CLICK_PLAYER));
+			this->m_controller->makeSound(Sound::Sounds::CLICK_PLAYER);
 			if(m_currPlayer)
 				m_currPlayer->setSelected(false);
 			player->setSelected(true);

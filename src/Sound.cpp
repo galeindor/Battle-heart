@@ -1,6 +1,12 @@
 #include "Sound.h"
 #include "Resources.h"
 
+Sound& Sound::instance()
+{
+	static Sound inst;
+	return inst;
+}
+
 // Constructor.
 Sound::Sound()
 {
@@ -10,6 +16,13 @@ Sound::Sound()
 	setSound(Sound::Sounds::CLICK_PLAYER);
 	setSound(Sound::Sounds::MOVE_PLAYER);
 	setSound(Sound::Sounds::HOVER);
+	setSound(Sound::Sounds::ARROW);
+	setSound(Sound::Sounds::ARROW_RAIN);
+	setSound(Sound::Sounds::HEAL);
+	setSound(Sound::Sounds::DEF_BUFF);
+	setSound(Sound::Sounds::SWORD1);
+	setSound(Sound::Sounds::SWORD2);
+	setSound(Sound::Sounds::NO_SOUND);
 
 	/* Volume initiation. */
 	this->m_volume = DEFAULT_VOLUME;

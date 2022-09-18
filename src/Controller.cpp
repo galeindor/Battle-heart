@@ -62,15 +62,15 @@ void Controller::manageSound(Sound::VolumeControl action)
 	switch (action)
 	{
 	case Sound::VolumeControl::INC:
-		this->m_sound.incVolume();
+		Sound::instance().incVolume();
 		break;
 
 	case Sound::VolumeControl::DEC:
-		this->m_sound.decVolume();
+		Sound::instance().decVolume();
 		break;
 
 	case Sound::VolumeControl::MUTE:
-		this->m_sound.muteVolume();
+		Sound::instance().muteVolume();
 		break;
 
 	default:
@@ -88,6 +88,8 @@ void Controller::initScreens()
 	this->m_screens.push_back(std::make_unique<Help>(this));
 	this->m_screens.push_back(std::make_unique<Settings>(this));
 }
+
+//=======================================================================================
 
 void Controller::swapScreen()
 {

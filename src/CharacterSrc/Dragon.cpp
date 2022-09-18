@@ -11,5 +11,5 @@ Dragon::Dragon()
 // Inits skills.
 void Dragon::initSkills(const int index)
 {
-	this->createSkill(index, _basic, _damage, AttackType::Single , onPlayer, !isActive, _fireBreath); // basic
+	this->createSkill(index, _basic, _damage, AttackType::Single , onPlayer, !isActive, _fireBreath, Sound::Sounds::NO_SOUND); // basic
 }

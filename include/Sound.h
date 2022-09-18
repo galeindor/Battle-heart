@@ -6,6 +6,9 @@
 class Sound
 {
 public:
+
+	static Sound& instance(); // Singleton.
+
 	// Enum for sounds.
 	enum class Sounds
 	{
@@ -13,7 +16,14 @@ public:
 		BUTTON_CLICK,
 		CLICK_PLAYER,
 		MOVE_PLAYER,
-		HOVER
+		HOVER,
+		ARROW,
+		ARROW_RAIN,
+		HEAL,
+		DEF_BUFF,
+		SWORD1,
+		SWORD2,
+		NO_SOUND
 	};
 
 	// Enum for volume control.
@@ -24,7 +34,7 @@ public:
 		MUTE
 	};
 
-	Sound(); // C-tor.
+
 	~Sound() = default; // D-tor.
 
 	// Functions to play/stop music/sound.
@@ -39,6 +49,9 @@ public:
 
 private:
 	// Private methods
+	
+	Sound(); // C-tor.
+
 	void setSound(const Sound::Sounds soundEnum);
 	void setVolume();
 

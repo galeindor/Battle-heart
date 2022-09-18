@@ -28,8 +28,8 @@ bool Cleric::setTarget(std::shared_ptr<Enemy>)
 // Inits skills.
 void Cleric::initSkills(const int index)
 {
-	this->createSkill(index, _basic, _heal, AttackType::Single, onPlayer, !isActive,_healBall); // basic
-	this->createSkill(index, _skill1, _heal, AttackType::Multi, onPlayer, isActive, _healBall); // multi heal
-	this->createSkill(index, _skill2, _defend, AttackType::Single , onPlayer, isActive , _tesla ); // shield
+	this->createSkill(index, _basic, _heal, AttackType::Single, onPlayer, !isActive,_healBall, Sound::Sounds::HEAL); // basic
+	this->createSkill(index, _skill1, _heal, AttackType::Multi, onPlayer, isActive, _healBall, Sound::Sounds::HEAL); // multi heal
+	this->createSkill(index, _skill2, _defend, AttackType::Single , onPlayer, isActive , _tesla, Sound::Sounds::DEF_BUFF); // shield
 }
 

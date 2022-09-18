@@ -15,11 +15,19 @@ using std::vector;
 class Skill
 {
 public:
-	Skill(const sf::Texture* texture, const sf::Vector2f pos, float cooldown,
-		const int effectIndex, AttackType type , bool onPlayer, bool isActive , 
-		float factor , int projType);
-	~Skill() = default;
+	Skill(
+		const sf::Texture* texture,
+		const sf::Vector2f pos, float cooldown,
+		const int effectIndex,
+		AttackType type,
+		bool onPlayer,
+		bool isActive, 
+		float factor ,
+		int projType,
+		Sound::Sounds soundIndex
+		);
 
+	~Skill() = default;
 	// Management
 	void updateSkill(float deltaTime, vector<shared_ptr<Character>> targets, Character* caster);
 	void setTargets(vector<shared_ptr<Character>> targets) { this->m_targets = targets; }
@@ -51,11 +59,12 @@ private:
 
 	// members
 	int m_projType;
+	int m_soundIndex;
 	Effect* m_effect;
+	Timer m_timer;
 	AttackType m_type;
 	bool m_onPlayer;
 	bool m_isActive;
-	Timer m_timer;
 	vector<shared_ptr<Character>> m_targets;
 	vector<Projectile> m_projs;
 	std::string m_info = "";
