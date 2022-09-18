@@ -80,7 +80,14 @@ const std::vector<std::string> soundList = {
 	"buttonClick.wav",
 	"clickPlayer.ogg",
 	"movePlayer.wav",
-	"hoverSound.ogg"
+	"hoverSound.ogg",
+	"arrow.wav",
+	"arrow_rain.wav",
+	"heal.wav",
+	"defence_buff.wav",
+	"sword1.wav",
+	"sword2.wav",
+	"heal.wav"
 };
 
 // ----------------------------------------------

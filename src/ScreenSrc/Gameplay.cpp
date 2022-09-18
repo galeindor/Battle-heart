@@ -154,7 +154,7 @@ void Gameplay::handleMouseClick(const sf::Vector2f& clickPos, sf::RenderWindow& 
 
 	if (this->m_pauseButton.getGlobalBounds().contains(clickPos))
 	{
-		this->m_controller->makeSound(int(Sound::Sounds::BUTTON_CLICK));
+		this->m_controller->makeSound(Sound::Sounds::BUTTON_CLICK);
 		this->m_gameState.setTexture(*Resources::instance().getGameStateText(_pauseLevel));
 		this->m_paused = true;
 	}
@@ -202,7 +202,7 @@ void Gameplay::checkPause(sf::Vector2f hoverPos)
 
 void Gameplay::cont()
 {
-	this->m_controller->makeSound(int(Sound::Sounds::BUTTON_CLICK));
+	this->m_controller->makeSound(Sound::Sounds::BUTTON_CLICK);
 
 	if (this->m_wonLevel)
 	{
@@ -220,7 +220,7 @@ void Gameplay::cont()
 
 void Gameplay::restart()
 {
-	this->m_controller->makeSound(int(Sound::Sounds::BUTTON_CLICK));
+	this->m_controller->makeSound(Sound::Sounds::BUTTON_CLICK);
 
 	if (this->m_wonLevel)
 		this->m_board = Board(this->m_controller->getLevelInfo(--this->m_currLvl), m_controller);
@@ -236,7 +236,7 @@ void Gameplay::restart()
 
 void Gameplay::exitGame()
 {
-	this->m_controller->makeSound(int(Sound::Sounds::BUTTON_CLICK));
+	this->m_controller->makeSound(Sound::Sounds::BUTTON_CLICK);
 	this->m_lost = false;
 	this->m_wonLevel = false;
 	this->m_paused = false;

@@ -153,12 +153,20 @@ bool Character::targetInRange() const
 //=======================================================================================
 // Creates a skill by given parameters.
 void Character::createSkill(const int charIndex, const int skillIndex, const int effectIndex, const AttackType single, 
-	const bool onPlayer, const bool active , const int projType)
+	const bool onPlayer, const bool active , const int projType, Sound::Sounds soundIndex = Sound::Sounds::HEAL)
 {
-	this->addSkill(Skill(Resources::instance().getSkillText(charIndex, skillIndex),
-		sf::Vector2f(skillIndex * (SKILL_GAP) + 30, 30),
-		skillCooldowns[charIndex][skillIndex], effectIndex,
-		single, onPlayer, active, skillFactors[charIndex][skillIndex],projType));
+	this->addSkill(Skill
+		(
+			Resources::instance().getSkillText(charIndex, skillIndex),
+			sf::Vector2f(skillIndex * (SKILL_GAP) + 30, 30),
+			skillCooldowns[charIndex][skillIndex], effectIndex,
+			single,
+			onPlayer,
+			active,
+			skillFactors[charIndex][skillIndex]
+			,projType,
+			soundIndex
+		));
 
 }
 

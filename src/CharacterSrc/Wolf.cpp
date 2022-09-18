@@ -11,5 +11,5 @@ Wolf::Wolf()
 // Inits skills.
 void Wolf::initSkills(const int index)
 {
-	this->createSkill(index, _basic, _damage, AttackType::Single, onPlayer, !isActive, _none); // basic
+	this->createSkill(index, _basic, _damage, AttackType::Single, onPlayer, !isActive, _none, Sound::Sounds::NO_SOUND); // basic
 }
